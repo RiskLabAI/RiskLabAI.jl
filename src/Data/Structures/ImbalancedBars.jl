@@ -66,9 +66,7 @@ end
 
 
 struct ConstImbalanceBars
-
     parent::AbstractImbalanceBars # parent abstractImbalanceBars structure
-
 end
 
 function ConstImbalanceBars(;
