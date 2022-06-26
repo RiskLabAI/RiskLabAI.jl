@@ -2,9 +2,7 @@ using DataFrames
 
 include("AbstractBars.jl")
 
-# Constants
-include("Constants.jl")
-
+include("Constants.jl") # Constants
 
 struct TimeBars
     parent::AbstractBar 
@@ -14,20 +12,15 @@ struct TimeBars
     threshold::Int # nResolutionUnits * thresholdMapping[resolution]
 
     timestamp # timestamp used in time bars
- 
 end
 
 
-function TimeBars(;
-    resolution::String,
-    nResolutionUnits::Int,
-    batchSize::Int=20000000
-)
+function TimeBars(; resolution::String,
+        nResolutionUnits::Int,
+        batchSize::Int=20000000)
 
-    parent = AbstractBar(
-        metric=nothing,
-        batchSize=batchSize,
-    )
+    parent = AbstractBar(metric=nothing,
+            batchSize=batchSize,)
 
     # seconds number in Day, Hour, Minute and Second
     thresholdMapping::Dict = Dict(
