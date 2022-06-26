@@ -3,8 +3,7 @@ using DataFrames
 include("AbstractBars.jl")
 include("utils/ewma.jl")
 
-# Constants
-include("Constants.jl")
+include("Constants.jl") # Constants
 
 
 struct EMARunBars
