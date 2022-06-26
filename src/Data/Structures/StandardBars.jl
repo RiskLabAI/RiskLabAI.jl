@@ -2,9 +2,7 @@ using DataFrames
 
 include("AbstractBars.jl")
 
-# Constants
-include("Constants.jl")
-
+include("Constants.jl") # Constants
 
 struct StandardBars 
 
