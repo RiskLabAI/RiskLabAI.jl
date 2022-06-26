@@ -1,11 +1,9 @@
 # DataFrames Lib (Pandas like in python)
 using DataFrames
 
-# Julia Generator 
-using ResumableFunctions
+using ResumableFunctions # Julia Generator 
 
-# Read CSV File 
-using CSV
+using CSV # Read CSV File 
 
 # Keyword Arguments and Default Arguments
 using Parameters
