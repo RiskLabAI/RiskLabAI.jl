@@ -1,6 +1,6 @@
 name = "RiskLabAI"
 uuid = "a72881da-fdaa-49c1-8962-99caf4ccfee8"
-authors = ["Hamid Arian <arian@sharif.edu>", "Ahmad Aghapour <aghpour@risklab.ai>"]
+authors = ["RiskLab AI <research@risklab.ai>"]
 version = "0.0.1"
 
 [compat]
