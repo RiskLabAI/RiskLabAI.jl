@@ -19,10 +19,10 @@ function selectedRow(
 
 end
 
-"""
-function: Computing Probability Of BacktestOverfitting
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: p.156
+@doc doc"""
+    function: Computing Probability Of BacktestOverfitting
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: p.156
 """
 function ProbabilityOfBacktestOverfitting(
         matrixData, # matrix of T×N for T observation on N strategy 

@@ -24,10 +24,10 @@ function concurrencyEvents(closeIndex, # DataFrame that has events
     return concurrency
 end
 
-"""
-function: sampleWeight with triple barrier
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: 51
+@doc doc"""
+    function: sampleWeight with triple barrier
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: 51
 """
 function sampleWeight(timeStamp, # DataFrame of events start and end for labelling 
                       concurrencyEvents, # Data frame of concurrent events for each events 
@@ -99,8 +99,8 @@ function SequentialBootstrap(IndexMatrix, #matrix that Indicator for events
     return ϕ
 end
 
-"""
-    function:  sample weight with returns 
+@doc doc"""
+    function: sampleWeight with triple barrier
     reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     methodology: 51
 """
