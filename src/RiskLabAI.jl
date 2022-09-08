@@ -7,7 +7,7 @@ export
     ProbabilityOfBacktestOverfitting,
     
     #Betsize 
-    GenerateSignal,
+    GenerateSignal
 
 
     
