@@ -184,7 +184,7 @@ function DiscreteSignal(signal,  # dataframe that contain signals
     return signal
 end
 
-@doc doc"""
+"""
     function: Genetrate Signal 
     reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     methodology: p.145

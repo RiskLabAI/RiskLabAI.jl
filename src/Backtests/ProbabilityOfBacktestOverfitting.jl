@@ -19,7 +19,7 @@ function selectedRow(
 
 end
 
-@doc doc"""
+"""
     function: Computing Probability Of BacktestOverfitting
     reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     methodology: p.156
