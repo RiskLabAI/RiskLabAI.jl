@@ -1,3 +1,18 @@
+#using KernelEstimator
+using Distributions
+using LinearAlgebra
+using DataFrames
+using Statistics
+using BlockArrays
+using Shuffle
+using Random
+using Clustering
+using Dates
+using MarketData
+using CSV
+using StatsBase
+using BlockDiagonals
+@pyimport sklearn.metrics as Metrics
 
 """----------------------------------------------------------------------
 function: Calculate returns
@@ -31,7 +46,7 @@ function clusterKMeansBase(correlation;
     for init ∈ 1:iterations
         for i ∈ 2:numberClusters
             kmeans_ = kmeans(distance, i) # clustering distance with maximum cluster i
-            silh_ = silhouette_samples(distance, assignments(kmeans_)) # silh score of clustering
+            silh_ = Metrics.silhouette_samples(distance, assignments(kmeans_)) # silh score of clustering
             statistic = (mean(silh_)/std(silh_), mean(silh)/std(silh)) # calculate t-statistic
             if isnan(statistic[2]) || statistic[1]>statistic[2]
                 silh, kmeansOut = silh_, kmeans_ # replace better clustering
@@ -71,7 +86,7 @@ function makeNewOutputs(correlation, # corr dataframe
         index = indexin(clustersNew[i], assets) 
         labelsKmeans[index] .= i # label for clusters
     end
-    silhNew = DataFrames.DataFrame(index = assets, silh = silhouette_samples(distance, labelsKmeans)) # silh series
+    silhNew = DataFrames.DataFrame(index = assets, silh = Metrics.silhouette_samples(distance, labelsKmeans)) # silh series
     return correlationNew,clustersNew,silhNew
 end
 
