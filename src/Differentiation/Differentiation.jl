@@ -58,10 +58,10 @@ reference: De Prado, M. (2018) Advances in financial machine learning. John Wile
 methodology: 79
 """
 function plotWeights(degreeRange, # range for degree
-                     numberDegrees, # number of degrees
+                     nDegrees, # number of degrees
                      numberWeights) # number of weights
     ω = DataFrames.DataFrame(index = collect(numberWeights - 1:-1:0)) # dataframe of weights
-    for degree ∈ range(degreeRange[1], degreeRange[2], length = numberDegrees)
+    for degree ∈ range(degreeRange[1], degreeRange[2], length = nDegrees)
         degree = round(degree; digits = 2) # round degree with digits = 2
         thisω = weighting(degree, numberWeights) # calculate weights for each degree
         thisω = DataFrames.DataFrame(index = collect(numberWeights - 1:-1:0), ω = thisω) # dataframe of weights for each degree
@@ -70,7 +70,7 @@ function plotWeights(degreeRange, # range for degree
     # rename columns
     DataFrames.rename!(ω, names(ω)[2:end] .=> string.(range(degreeRange[1], degreeRange[2], length = numberDegrees)))
     plot(ω[:,1], Matrix(ω[:,2:end]), label = reshape(names(ω)[2:end],
-            (1, numberDegrees)), background = :transparent) # plot weights
+            (1, nDegrees)), background = :transparent) # plot weights
 end
 
 """
