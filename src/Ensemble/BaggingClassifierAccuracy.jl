@@ -1,5 +1,3 @@
-module BaggingClassifierAccuracy
-
 """
 function: Calculates accuracy of bagging classifier
 reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
@@ -16,6 +14,4 @@ function baggingClassifierAccuracy(
     end
 
     1 - probabilitySum    
-end
-
 end
