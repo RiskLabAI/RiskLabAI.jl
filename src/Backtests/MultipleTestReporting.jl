@@ -14,14 +14,16 @@ refernce: Fabozzi, F, De Prado, M (2018) Being Honest in Backtest Reporting: A T
 doi: https://doi.org/10.3905/jpm.2018.45.1.141
 """
 function BacktestResultTemplate(nTrials::Int64, # number of trials
-    familySize::Union{UInt64,Nothing}, #  number of significantly different experiments
-    clusteringArgs::Union{Array{DataFrame,UInt64,UInt64},Nothing}, # corr dataframe, number of clusters, number of iterations
-    familyWiseErrorRate::Union{UFloat64,Nothing}, # family-wise error rate
-    typeOneErrorArgs::Union{Array{Float64,UInt64},Nothing}, # z statistic for the estimated Sharpe Ratios, number of tests
-    CalculatePowerOfTest::Bool, # should calculate power of the test
-    powerOfTest::Union{Float64,Nothing}, # power of the test
-    typeTwoErrorArgs::Union{Array{UInt64,Float64},Nothing}, # number of tests, calculated theta parameter
+    familySize::Union{Int64,Nothing}=nothing, # number of significantly different experiments
+    clusteringArgs::Union{Tuple{DataFrame,Int,Int},Nothing}=nothing, # correlation dataframe, number of clusters, number of iterations
+    familyWiseErrorRate::Union{Float64,Nothing}=nothing, # family-wise error rate
+    typeOneErrorArgs::Union{Tuple{Float64,Int64},Nothing}=nothing, # z statistic for the estimated Sharpe Ratios, number of tests
+    CalculatePowerOfTest::Bool=false, # should calculate power of the test
+    powerOfTest::Union{Float64,Nothing}=nothing, # power of the test
+    typeTwoErrorArgs::Union{Tuple{Int64,Float64},Nothing}=nothing # number of tests, calculated theta parameter
 )::Nothing
+    @assert nTrials > 0 "nTrials must be a positive integer"
+
     if familySize === nothing
         println("familySize not provided; using clustering on correlation matrix of backtest returns...")
         @assert clusteringArgs !== nothing "clustering function arguments must be provided"
@@ -29,6 +31,7 @@ function BacktestResultTemplate(nTrials::Int64, # number of trials
         familySize = length(clusters)
         println("calculated familySize: ", familySize)
     else
+        @assert familySize > 0 "familySize must be a positive integer"
         @assert nTrials >= familySize "familySize must be less equal to nTrials"
     end
 
