@@ -1,2 +1,1 @@
-using Test 
-@test true 
+include("Backtests/MultipleTestReportingTest.jl")
