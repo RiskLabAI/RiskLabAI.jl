@@ -46,6 +46,7 @@ function featureImportanceMDA(
         fit = classifier.fit(X0 |> Matrix, y0 |> Matrix |> vec, sample_weight=sampleWeights0)
         
         predictionProbability = fit.predict_proba(X1 |> Matrix)
+
         score0[i, 1] = -Metrics.log_loss(y1 |> Matrix, predictionProbability, sample_weight=sampleWeights1, labels=classifier.classes_)        
         
         for j ∈ names(X)
