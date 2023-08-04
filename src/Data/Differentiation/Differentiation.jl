@@ -1,9 +1,9 @@
 
 
 """
-function: Takes grouped dataframe, combining and creating the new one with info. about prices and volume.
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: n/a
+    function: Takes grouped dataframe, combining and creating the new one with info. about prices and volume.
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: n/a
 """
 function ohlcv(tickDataGrouped) #grouped dataframes
     # combining groups
@@ -22,9 +22,9 @@ function ohlcv(tickDataGrouped) #grouped dataframes
 end
 
 """
-function: Takes dataframe and generating time bar dataframe
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: n/a
+    function: Takes dataframe and generating time bar dataframe
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: n/a
 """
 function timeBar(tickData, # dataframe of tick data
                  frequency = 5) # frequency for rounding date time
@@ -38,9 +38,9 @@ function timeBar(tickData, # dataframe of tick data
 end
 
 """
-function: The sequence of weights used to compute each value of the fractionally differentiated series.
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: 79
+    function: The sequence of weights used to compute each value of the fractionally differentiated series.
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: 79
 """
 function weighting(degree, # degree of binomial series
                    size) # number of weights
@@ -53,9 +53,9 @@ function weighting(degree, # degree of binomial series
 end
 
 """
-function: plot weights
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: 79
+    function: plot weights
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: 79
 """
 function plotWeights(degreeRange, # range for degree
                      numberDegrees, # number of degrees
@@ -74,9 +74,9 @@ function plotWeights(degreeRange, # range for degree
 end
 
 """
-function: standard fractionally differentiated
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: 82
+    function: standard fractionally differentiated
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: 82
 """
 function fracDiff(series, # dataframe of dates and prices
                   degree, # degree of binomial series
@@ -116,9 +116,9 @@ function fracDiff(series, # dataframe of dates and prices
 end
 
 """
-function: weights for fixed-width window method
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: 83
+    function: weights for fixed-width window method
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: 83
 """
 function weightingFFD(degree, # degree of binomial series
                       threshold) # threshold
@@ -133,9 +133,9 @@ function weightingFFD(degree, # degree of binomial series
 end
 
 """
-function: Fixed-width window fractionally differentiated method
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: 83
+    function: Fixed-width window fractionally differentiated method
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: 83
 """
 function fracDiffFixed(series, # dataframe of dates and prices
                        degree, # degree of binomial series
@@ -169,9 +169,9 @@ function fracDiffFixed(series, # dataframe of dates and prices
 end
 
 """
-function: Find the minimum degree value that passes the ADF test
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: 85
+    function: Find the minimum degree value that passes the ADF test
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: 85
 """
 function minFFD(input) # input dataframe
     # output dataframe

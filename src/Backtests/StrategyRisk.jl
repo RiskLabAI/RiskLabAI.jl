@@ -6,9 +6,9 @@ using Statistics
 using SymPy
 
 """
-function: targets a Sharpe ratio as a function of the number of bets
-reference: De Prado, M. (2018) Advances in financial machine learning.
-methodology: page 213, snippet 15.1
+	function: targets a Sharpe ratio as a function of the number of bets
+	reference: De Prado, M. (2018) Advances in financial machine learning.
+	methodology: page 213, snippet 15.1
 """
 function sharpeRatioTrials(
 		p::Float64, # probability of success
@@ -34,9 +34,9 @@ function sharpeRatioTrials(
 end 
 
 """
-function: uses the SymPy library for symbolic operations 
-reference: De Prado, M. (2018) Advances in financial machine learning.
-methodology: page 214, snippet 15.2
+	function: uses the SymPy library for symbolic operations 
+	reference: De Prado, M. (2018) Advances in financial machine learning.
+	methodology: page 214, snippet 15.2
 """
 function targetSharpeRatioSymbolic()
 

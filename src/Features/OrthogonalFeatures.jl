@@ -7,9 +7,9 @@ using Statistics
 @pyimport sklearn.datasets as Datasets
 
 """
-function: Implementation of Orthogonal Features (Compute Eigen Vectors)
-reference: De Prado, M. (2018) Advances In Financial Machine Learning
-methodology: page 119 Orthogonal Features section snippet 8.5
+    function: Implementation of Orthogonal Features (Compute Eigen Vectors)
+    reference: De Prado, M. (2018) Advances In Financial Machine Learning
+    methodology: page 119 Orthogonal Features section snippet 8.5
 """
 function eigenVectors(
     dotProduct::Matrix{<: Number}, # input dot product matrix 
@@ -38,9 +38,9 @@ function eigenVectors(
 end
 
 """
-function: Implementation of Features Matrix Standardization 
-reference: n/a
-methodology: n/a
+    function: Implementation of Features Matrix Standardization 
+    reference: n/a
+    methodology: n/a
 """
 function standardize(
     X # features matrix / dataframe
@@ -49,9 +49,9 @@ function standardize(
 end
 
 """
-function: Implementation of Orthogonal Features
-reference: De Prado, M. (2018) Advances In Financial Machine Learning
-methodology: page 119 Orthogonal Features section snippet 8.5
+    function: Implementation of Orthogonal Features
+    reference: De Prado, M. (2018) Advances In Financial Machine Learning
+    methodology: page 119 Orthogonal Features section snippet 8.5
 """
 function orthogonalFeatures(
     X::Matrix{<: Number}; # features matrix

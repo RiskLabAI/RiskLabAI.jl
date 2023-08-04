@@ -1,9 +1,9 @@
 include("CorwinSchultz.jl")
 
 """
-function: Bekker-Parkinson volatility σ Estimation 
-reference: De Prado, M. (18) Advances in Financial Machine Learning
-methodology: page 286 snippet 19.2
+    function: Bekker-Parkinson volatility σ Estimation 
+    reference: De Prado, M. (18) Advances in Financial Machine Learning
+    methodology: page 286 snippet 19.2
 """
 function σEstimates(
     β::Vector, # β Estimates vector
@@ -20,9 +20,9 @@ function σEstimates(
 end
 
 """
-function: Bekker-Parkinson volatility Estimation
-reference: De Prado, M. (18) Advances in Financial Machine Learning
-methodology: page 286 Corwin and Schultz section 
+    function: Bekker-Parkinson volatility Estimation
+    reference: De Prado, M. (18) Advances in Financial Machine Learning
+    methodology: page 286 Corwin and Schultz section 
 """
 function bekkerParkinsonVolatilityEstimates(
     highPrices::Vector, # high prices vector

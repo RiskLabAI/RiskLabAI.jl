@@ -1,8 +1,8 @@
-"""----------------------------------------------------------------------
+"""
     function: Compute β 
     reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     methodology: snippet 17.4
-----------------------------------------------------------------------"""
+"""
 function ComputeBeta(X, # matrix of independent variable 
                      y) # dependent variable
     β = inv(transpose(X) * X) * transpose(X) * y # Compute β with OLS estimator 
@@ -11,11 +11,11 @@ function ComputeBeta(X, # matrix of independent variable
     return β,BetaVariance
 end
 
-"""----------------------------------------------------------------------
+"""
     function: Prepare Data for test
     reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     methodology: snippet 17.2 & 17.3
-----------------------------------------------------------------------"""
+"""
 function PrepareData(data, # data of price or log price
                      constant, # string thant must be "nc" or "ct" or "ctt"
                      lags) # arrays of lag or integer that show number of lags 
@@ -43,11 +43,11 @@ function PrepareData(data, # data of price or log price
     return X,y
 end
 
-"""----------------------------------------------------------------------
+"""
     function: SADF inner loop
     reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     methodology: snippet 17.1
-----------------------------------------------------------------------"""
+"""
 function ADF(X, # feature matrix that contain data with lags 
              y, # dependent variable
              minSampleLength) # minimum sample length for computing OLS 
@@ -63,11 +63,11 @@ function ADF(X, # feature matrix that contain data with lags
     end
     return ADF_
 end
-"""----------------------------------------------------------------------
+"""
     function: SADF test statatistics
     reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     methodology: -
-----------------------------------------------------------------------"""
+"""
 
 function ADFTestType(data, #dataframe of price that have date indxe 
                      minSampleLength, # minimum sample length for ols estimator
@@ -107,11 +107,11 @@ function ADFTestType(data, #dataframe of price that have date indxe
     return ADFStatistics
 end
 
-"""----------------------------------------------------------------------
+"""
     function: impement Brow-Durbin-Evans cumsum test 
     reference: Techniques for Testing the Constancy of Regression Relationships over Time(1975)
     methodology: -
-----------------------------------------------------------------------"""
+"""
 
 function BrownDurbinEvansTest(X, # feature matrix(price with lags )
                               y, # dependent variable
@@ -138,11 +138,11 @@ function BrownDurbinEvansTest(X, # feature matrix(price with lags )
     BDECstatistics_ = DataFrame(index = index[k:length(y) + lags - 2] ,BDECstatistics = BDEcumsumstatistics )
     return BDECstatistics_
 end
-"""----------------------------------------------------------------------
+"""
     function: implementing of Chu-Stinchcombe-White test 
     reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     methodology: p.251 
-----------------------------------------------------------------------"""
+"""
 function ChuStinchcombeWhiteTest(data, # dataframe of log price with date index  
                                  testType, # type of test it must be one_side or two_sided
                                  interval) # interval that test statatistics compute on it
@@ -172,11 +172,11 @@ function ChuStinchcombeWhiteTest(data, # dataframe of log price with date index
     CSWtest = DataFrame(index = interval , S_n = CSWstatistics , threshold = CSWtreashold)
     return CSWtest    
 end
-"""----------------------------------------------------------------------
+"""
     function: implementing of Chow-Type Dickey-Fuller test inner loop 
     reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     methodology: p.252
-----------------------------------------------------------------------"""
+"""
 function ChowTypeDickeyFullerTestInnderLoop(data, # dataframe of log price with date index  
                                             interval)  # interval that test statatistics compute on it
     DFC = zeros(length(interval))
@@ -191,11 +191,11 @@ function ChowTypeDickeyFullerTestInnderLoop(data, # dataframe of log price with 
     DFCDataframe = DataFrame(index = interval , DFC = DFC)
     return DFCDataframe
 end
-"""----------------------------------------------------------------------
+"""
     function: implementing of Chow-Type Dickey-Fuller test 
     reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     methodology: p.252
-----------------------------------------------------------------------"""
+"""
 function SDFC(data, # dataframe of price or log price with date index 
               interval, # interval that statatistics compute on it 
               τ, # number between 0,1 that we compute interval of ChowTypeDickeyFullerTestInnderLoop function interval based on it 

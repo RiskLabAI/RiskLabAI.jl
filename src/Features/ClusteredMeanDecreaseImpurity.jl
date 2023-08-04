@@ -4,9 +4,9 @@ using PlotlyJS
 using Random
 
 """
-function: skip nan values of input array
-reference: n/a
-methodology: n/a
+    function: skip nan values of input array
+    reference: n/a
+    methodology: n/a
 """
 function skipnan(
     array::Vector # array to skip nan
@@ -16,9 +16,9 @@ end
 
 
 """
-function: Group Mean and Standard Deviation
-reference: De Prado, M. (2020) MACHINE LEARNING FOR ASSET MANAGERS
-methodology: page 86 Clustered MDI section
+    function: Group Mean and Standard Deviation
+    reference: De Prado, M. (2020) MACHINE LEARNING FOR ASSET MANAGERS
+    methodology: page 86 Clustered MDI section
 """
 function groupMeanStd(
     dataframe0, # input dataframe
@@ -36,9 +36,9 @@ end
 
 
 """
-function: Clustered feature importance MDI
-reference: De Prado, M. (2020) MACHINE LEARNING FOR ASSET MANAGERS
-methodology: page 86 Clustered MDI section
+    function: Clustered feature importance MDI
+    reference: De Prado, M. (2020) MACHINE LEARNING FOR ASSET MANAGERS
+    methodology: page 86 Clustered MDI section
 """
 function clusteredFeatureImportanceMDI(
     classifier, # classifier for mdi

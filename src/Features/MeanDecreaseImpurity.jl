@@ -7,9 +7,9 @@ using PlotlyJS
 @pyimport sklearn.ensemble as Ensemble
 
 """
-function: Implementation of an ensemble MDI method
-reference: De Prado, M. (2020) MACHINE LEARNING FOR ASSET MANAGERS
-methodology: page 79 Mean-Decrease Impurity section snippet 6.2 (snippet 8.2 2018)
+    function: Implementation of an ensemble MDI method
+    reference: De Prado, M. (2020) MACHINE LEARNING FOR ASSET MANAGERS
+    methodology: page 79 Mean-Decrease Impurity section snippet 6.2 (snippet 8.2 2018)
 """
 function featureImportanceMDI(
     classifier, # classifier for fit and prediction

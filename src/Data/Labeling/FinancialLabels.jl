@@ -3,9 +3,9 @@ using DataFrames
 using TimeSeries
 
 """
-function: calculates the t-value of a linear trend
-refernce: De Prado, M (2020) Machine Learning for Asset Managers
-methodology: page 68, snippet 5.1
+    function: calculates the t-value of a linear trend
+    refernce: De Prado, M (2020) Machine Learning for Asset Managers
+    methodology: page 68, snippet 5.1
 """
 function tValuesLinearRegression(
     close::TimeArray # time series of close prices
@@ -19,9 +19,9 @@ function tValuesLinearRegression(
 end
 
 """
-function: implements the trend scanning method
-refernce: De Prado, M (2020) Machine Learning for Asset Managers
-methodology: page 68, snippet 5.2
+    function: implements the trend scanning method
+    refernce: De Prado, M (2020) Machine Learning for Asset Managers
+    methodology: page 68, snippet 5.2
 """
 function binsFromTrend(
     molecule::Array, #  index of observations we wish to label

@@ -1,7 +1,7 @@
 """
-function: expand label tO incorporate meta-labeling
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: 51
+    function: expand label tO incorporate meta-labeling
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: 51
 """
 function concurrencyEvents(closeIndex, # DataFrame that has events
                             timestamp, # DateFrame that has return and label of each period
@@ -25,9 +25,9 @@ function concurrencyEvents(closeIndex, # DataFrame that has events
 end
 
 """
-function: sampleWeight with triple barrier
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: 51
+    function: sampleWeight with triple barrier
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: 51
 """
 function sampleWeight(timestamp, # DataFrame of events start and end for labelling 
                       concurrencyEvents, # Data frame of concurrent events for each events 
@@ -42,9 +42,9 @@ function sampleWeight(timestamp, # DataFrame of events start and end for labelli
     return weight
 end
 """
-function: Creating Index matrix 
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: 51
+    function: Creating Index matrix 
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: 51
 """
 function indexMatrix(barIndex, #index of all data 
                      timestamp) #times of events contain starting and ending time 
@@ -57,9 +57,9 @@ function indexMatrix(barIndex, #index of all data
 end
 
 """
-function: compute average uniqueness
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: 51
+    function: compute average uniqueness
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: 51
 """
 function averageUniqueness(indexMatrix) #matrix that Indicator for events 
     concurrency = sum(indexMatrix,dims = 2) #compute concurrency for each evnents 
@@ -77,9 +77,9 @@ function averageUniqueness(indexMatrix) #matrix that Indicator for events
 end
 
 """
-function:  sequentialBootstrap implementation 
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: 51
+    function:  sequentialBootstrap implementation 
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: 51
 """
 function sequentialBootstrap(indexMatrix, #matrix that Indicator for events 
                             SampleLength) # number of sample 

@@ -9,9 +9,9 @@ using TimeSeries
 
 
 """
-function: Corwin and Schultz β Estimation 
-reference: De Prado, M. (18) Advances in Financial Machine Learning
-methodology: page 285 snippet 19.1
+    function: Corwin and Schultz β Estimation 
+    reference: De Prado, M. (18) Advances in Financial Machine Learning
+    methodology: page 285 snippet 19.1
 """
 function βEstimates(
     highPrices::Vector, # high prices vector
@@ -28,9 +28,9 @@ end
 
 
 """
-function: Corwin and Schultz γ Estimation 
-reference: De Prado, M. (18) Advances in Financial Machine Learning
-methodology: page 285 snippet 19.1
+    function: Corwin and Schultz γ Estimation 
+    reference: De Prado, M. (18) Advances in Financial Machine Learning
+    methodology: page 285 snippet 19.1
 """
 function γEstimates(
     highPrices::Vector, # high prices vector
@@ -44,9 +44,9 @@ function γEstimates(
 end
 
 """
-function: Corwin and Schultz α Estimation 
-reference: De Prado, M. (18) Advances in Financial Machine Learning
-methodology: page 285 snippet 19.1
+    function: Corwin and Schultz α Estimation 
+    reference: De Prado, M. (18) Advances in Financial Machine Learning
+    methodology: page 285 snippet 19.1
 """
 function αEstimates(
     β::Vector, # β Estimates vector
@@ -64,9 +64,9 @@ end
 
 
 """
-function: Corwin and Schultz spread estimator 
-reference: De Prado, M. (18) Advances in Financial Machine Learning
-methodology: page 285 snippet 19.1
+    function: Corwin and Schultz spread estimator 
+    reference: De Prado, M. (18) Advances in Financial Machine Learning
+    methodology: page 285 snippet 19.1
 """
 function corwinSchultzEstimator(
     highPrices::Vector, # high prcies vector

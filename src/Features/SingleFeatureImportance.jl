@@ -17,9 +17,9 @@ using Random
 @pyimport sklearn.model_selection as ModelSelection
 
 """
-function: Implementation of SFI method
-reference: De Prado, M. (2018) Advances In Financial Machine Learning
-methodology: page 118 SFI section snippet 8.4
+    function: Implementation of SFI method
+    reference: De Prado, M. (2018) Advances In Financial Machine Learning
+    methodology: page 118 SFI section snippet 8.4
 """
 function featureImportanceSFI(
     classifier, # classifier for fit and prediction
