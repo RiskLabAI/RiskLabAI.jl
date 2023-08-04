@@ -3,9 +3,9 @@ module Entropy
 export shannonEntropy, lempleZivEntropy, probabilityMassFunction, plugInEntropyEstimator, kontoyiannisEntorpy
 
 """
-function: Shannon Entropy 
-reference: De Prado, M. (18) Advances in Financial Machine Learning
-methodology: page 263 SHANNON’S ENTROPY section
+    function: Shannon Entropy 
+    reference: De Prado, M. (18) Advances in Financial Machine Learning
+    methodology: page 263 SHANNON’S ENTROPY section
 """
 function shannonEntropy(
     message::String # input encoded message
@@ -31,9 +31,9 @@ function shannonEntropy(
 end
 
 """
-function: A LIBRARY BUILT USING THE LZ ALGORITHM
-reference: De Prado, M. (18) Advances in Financial Machine Learning
-methodology: page 266 LEMPEL-ZIV ESTIMATORS section
+    function: A LIBRARY BUILT USING THE LZ ALGORITHM
+    reference: De Prado, M. (18) Advances in Financial Machine Learning
+    methodology: page 266 LEMPEL-ZIV ESTIMATORS section
 """
 function lempleZivEntropy(
     message::String # input encoded message
@@ -59,9 +59,9 @@ function lempleZivEntropy(
 end
 
 """
-function: Calculate probability mass function (PMF)
-reference: De Prado, M. (18) Advances in Financial Machine Learning
-methodology: page 265 THE PLUG-IN (OR MAXIMUM LIKELIHOOD) ESTIMATOR section
+    function: Calculate probability mass function (PMF)
+    reference: De Prado, M. (18) Advances in Financial Machine Learning
+    methodology: page 265 THE PLUG-IN (OR MAXIMUM LIKELIHOOD) ESTIMATOR section
 """
 function probabilityMassFunction(
     message::String, # input encoded message
@@ -90,9 +90,9 @@ function probabilityMassFunction(
 end
 
 """
-function: Plug-in Entropy Estimator Implementation
-reference: De Prado, M. (18) Advances in Financial Machine Learning
-methodology: page 265 THE PLUG-IN (OR MAXIMUM LIKELIHOOD) ESTIMATOR section
+    function: Plug-in Entropy Estimator Implementation
+    reference: De Prado, M. (18) Advances in Financial Machine Learning
+    methodology: page 265 THE PLUG-IN (OR MAXIMUM LIKELIHOOD) ESTIMATOR section
 """
 function plugInEntropyEstimator(
     message::String; # input encoded message
@@ -105,9 +105,9 @@ function plugInEntropyEstimator(
 end
 
 """
-function: COMPUTES THE LENGTH OF THE LONGEST MATCH
-reference: De Prado, M. (18) Advances in Financial Machine Learning
-methodology: page 267 LEMPEL-ZIV ESTIMATORS section
+    function: COMPUTES THE LENGTH OF THE LONGEST MATCH
+    reference: De Prado, M. (18) Advances in Financial Machine Learning
+    methodology: page 267 LEMPEL-ZIV ESTIMATORS section
 """
 function longestMatchLength(
     message::String,
@@ -131,9 +131,9 @@ function longestMatchLength(
 end
 
 """
-function: IMPLEMENTATION OF ALGORITHMS DISCUSSED IN GAO ET AL.
-reference: De Prado, M. (18) Advances in Financial Machine Learning
-methodology: page 268 LEMPEL-ZIV ESTIMATORS section
+    function: IMPLEMENTATION OF ALGORITHMS DISCUSSED IN GAO ET AL.
+    reference: De Prado, M. (18) Advances in Financial Machine Learning
+    methodology: page 268 LEMPEL-ZIV ESTIMATORS section
 """
 function kontoyiannisEntorpy(
     message::String; # input encoded message

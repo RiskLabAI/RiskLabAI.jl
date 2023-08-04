@@ -1,8 +1,8 @@
-"""----------------------------------------------------------------------
-function:  Implementation of the symmetric CUSUM filter
-reference: De Prado, M (2018) Advances in financial machine learning
-methodology: page 39
-----------------------------------------------------------------------"""
+"""
+    function:  Implementation of the symmetric CUSUM filter
+    reference: De Prado, M (2018) Advances in financial machine learning
+    methodology: page 39
+"""
 function events(input, # dataframe of prices and dates
                 threshold) # threshold
     
@@ -24,11 +24,11 @@ function events(input, # dataframe of prices and dates
     return timeEvents
 end
 
-"""----------------------------------------------------------------------
+"""
     function: computes the daily volatility at intraday estimation points
     reference: De Prado, M (2018) Advances in financial machine learning
     methodology: Page 44
-----------------------------------------------------------------------"""
+"""
 function dailyVol(close, # dataframe with columns Dates and close prices
                   span = 100) # window for ewma
     
@@ -53,11 +53,11 @@ function dailyVol(close, # dataframe with columns Dates and close prices
     return returnsDataframe, stdDataframe
 end
 
-"""----------------------------------------------------------------------
+"""
     function: computes the ewma, ewma var, and ewma stds
     reference: https://stackoverflow.com/questions/40754262/pandas-ewm-std-calculation
     methodology: n/a
-----------------------------------------------------------------------"""
+"""
 function ewma(data, # array of data
               windowLength = 100) # window for ewma
     N = size(data)[1] # length of array
@@ -82,11 +82,11 @@ function ewma(data, # array of data
 end
 
 
-"""----------------------------------------------------------------------
+"""
     function:  implements the triple-barrier method
     reference: De Prado, M (2018) Advances in financial machine learning
     methodology: Page 45
-----------------------------------------------------------------------"""
+"""
 function tripleBarrier(close, # dataframe of prices and dates
                        events, # dataframe, with columns,timestamp for vertical barrier and targt for unit width of the horizontal barriers
                        profitTakingStopLoss, # list of two non-negative float values that multiply targt
@@ -143,11 +143,11 @@ function tripleBarrier(close, # dataframe of prices and dates
     return output
 end
 
-"""----------------------------------------------------------------------
-function: finds the time of the first barrier touch
-reference: De Prado, M (2018) Advances in financial machine learning
-methodology: 48
-----------------------------------------------------------------------"""
+"""
+    function: finds the time of the first barrier touch
+    reference: De Prado, M (2018) Advances in financial machine learning
+    methodology: 48
+"""
 function events(close, # dataframe of prices and dates
                 timeEvents, # vecotr of timestamps
                 ptsl, # a non-negative float that sets the width of the two barriers
@@ -177,11 +177,11 @@ function events(close, # dataframe of prices and dates
     return events
 end
 
-"""----------------------------------------------------------------------
+"""
     function: shows one way to define a vertical barrier
     reference: De Prado, M (2018) Advances in financial machine learning
     methodology: 49
-----------------------------------------------------------------------"""
+"""
 function verticalBarrier(close, # dataframe of prices and dates
                          timeEvents, # vecotr of timestamps
                          numberDays) # a number of days for vertical barrier
@@ -196,11 +196,11 @@ function verticalBarrier(close, # dataframe of prices and dates
     return timestampArray
 end
 
-"""----------------------------------------------------------------------
+"""
     function: label the observations
     reference: De Prado, M (2018) Advances in financial machine learning
     methodology: 49
-----------------------------------------------------------------------"""
+"""
 function label(events, # dataframe, with columns,timestamp for vertical barrier and target for unit width of the horizontal barriers
                close) # dataframe of prices and dates
     eventsFiltered = filter(row -> row[:timestamp] != NaN, events) # filter events without NaN
@@ -215,11 +215,11 @@ function label(events, # dataframe, with columns,timestamp for vertical barrier 
 end
 
 
-"""----------------------------------------------------------------------
+"""
     function: expand events tO incorporate meta-labeling
     reference: De Prado, M (2018) Advances in financial machine learning
     methodology: 50
-----------------------------------------------------------------------"""
+"""
 function eventsMeta(close, # dataframe of prices and dates
                     timeEvents, # vecotr of timestamps
                     ptsl, # list of two non-negative float values that multiply targt
@@ -257,11 +257,11 @@ function eventsMeta(close, # dataframe of prices and dates
     return events
 end
 
-"""----------------------------------------------------------------------
+"""
     function: expand label tO incorporate meta-labeling
     reference: De Prado, M (2018) Advances in financial machine learning
     methodology: 51
-----------------------------------------------------------------------"""
+"""
 function labelMeta(events, # dataframe, with columns,timestamp for vertical barrier and target for unit width of the horizontal barriers
                    close) # dataframe of prices and dates
     eventsFiltered = filter(row -> row[:timestamp] != NaN, events) # filter events without NaN
@@ -281,11 +281,11 @@ function labelMeta(events, # dataframe, with columns,timestamp for vertical barr
     return out
 end
 
-"""----------------------------------------------------------------------
+"""
     function: presents a procedure that recursively drops observations associated with extremely rare labels
     reference: De Prado, M (2018) Advances in financial machine learning
     methodology: 54
-----------------------------------------------------------------------"""
+"""
 function dropLabel(events; # dataframe, with columns: Dates, ret, and bin
                    percentMin = 0.05) # a fraction to eliminate observation
     # apply weights, drop labels with insufficient examples

@@ -15,9 +15,9 @@ using Random
 
 
 """
-function: Implementation of MDA
-reference: De Prado, M. (2020) MACHINE LEARNING FOR ASSET MANAGERS
-methodology: page 82 Mean-Decrease Accuracy section snippet 6.3 (snippet 8.3 2018)
+    function: Implementation of MDA
+    reference: De Prado, M. (2020) MACHINE LEARNING FOR ASSET MANAGERS
+    methodology: page 82 Mean-Decrease Accuracy section snippet 6.3 (snippet 8.3 2018)
 """
 function featureImportanceMDA(
     classifier, # classifier for fit and prediction

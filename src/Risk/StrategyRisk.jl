@@ -4,9 +4,9 @@ using Statistics
 using SymPy
 
 """
-function: targets a Sharpe ratio as a function of the number of bets
-reference: De Prado, M. (2018) Advances in financial machine learning.
-methodology: page 213, snippet 15.1
+	function: targets a Sharpe ratio as a function of the number of bets
+	reference: De Prado, M. (2018) Advances in financial machine learning.
+	methodology: page 213, snippet 15.1
 """
 function sharpeRatioTrials(p, # probability of success
 						   nRun) # number of runs
@@ -30,9 +30,9 @@ function sharpeRatioTrials(p, # probability of success
 end 
 
 """
-function: uses the SymPy library for symbolic operations 
-reference: De Prado, M. (2018) Advances in financial machine learning.
-methodology: page 214, snippet 15.2
+	function: uses the SymPy library for symbolic operations 
+	reference: De Prado, M. (2018) Advances in financial machine learning.
+	methodology: page 214, snippet 15.2
 """
 function targetSharpeRatioSymbolic()
 
@@ -46,9 +46,9 @@ function targetSharpeRatioSymbolic()
 end
 
 """
-function: computes implied precision 
-reference: De Prado, M. (2018) Advances in financial machine learning.
-methodology: page 214, snippet 15.3
+	function: computes implied precision 
+	reference: De Prado, M. (2018) Advances in financial machine learning.
+	methodology: page 214, snippet 15.3
 """
 function impliedPrecision(stopLoss, # stop loss threshold
 			   			  profitTaking, # profit taking threshold
@@ -64,9 +64,9 @@ function impliedPrecision(stopLoss, # stop loss threshold
 end
 
 """
-function: computes the number of bets/year needed to achieve a Sharpe ratio with a certain precision rate
-reference: De Prado, M. (2018) Advances in financial machine learning.
-methodology: page 215, snippet 15.4
+	function: computes the number of bets/year needed to achieve a Sharpe ratio with a certain precision rate
+	reference: De Prado, M. (2018) Advances in financial machine learning.
+	methodology: page 215, snippet 15.4
 """
 function binFrequency(stopLoss, # stop loss threshold
 					  profitTaking, # profit taking threshold
@@ -85,9 +85,9 @@ function binFrequency(stopLoss, # stop loss threshold
 end
 
 """
-function: calculates the strategy risk in practice
-reference: De Prado, M. (2018) Advances in financial machine learning.
-methodology: page 215, snippet 15.4
+	function: calculates the strategy risk in practice
+	reference: De Prado, M. (2018) Advances in financial machine learning.
+	methodology: page 215, snippet 15.4
 """
 function mixGaussians(μ1, # mean of the first gaussian distribution to generate bet outcomes
 					  μ2, # mean of the second gaussian distribution to generate bet outcomes

@@ -1,9 +1,9 @@
 
-"""----------------------------------------------------------------------
-function: Calculates mutual information score between 2 datasets
-reference: n/a
-methodology: n/a
-----------------------------------------------------------------------"""
+"""
+    function: Calculates mutual information score between 2 datasets
+    reference: n/a
+    methodology: n/a
+"""
 function mutual_info_score(histogramXY) # hist2d matrix of 2 data
     score = 0. # initial score
     histogramX = vec(sum(histogramXY, dims=2)) # hist of first data
@@ -22,11 +22,11 @@ function mutual_info_score(histogramXY) # hist2d matrix of 2 data
     return score
 end
 
-"""----------------------------------------------------------------------
-function: Calculates Variation of Information
-reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-methodology: Snipet 3.2, Page 44
-----------------------------------------------------------------------"""
+"""
+    function: Calculates Variation of Information
+    reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+    methodology: Snipet 3.2, Page 44
+"""
 function variationsInformation(x, # first data
                                y, # second data
                                numberOfBins; # number of bins
@@ -46,11 +46,11 @@ function variationsInformation(x, # first data
     return variationXY
 end
 
-"""----------------------------------------------------------------------
-function: Calculates number of bins for histogram
-reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-methodology: Snipet 3.3, Page 46
-----------------------------------------------------------------------"""
+"""
+    function: Calculates number of bins for histogram
+    reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+    methodology: Snipet 3.3, Page 46
+"""
 function numberBins(numberObservations, # number of obs 
                     correlation = nothing) # corr
     # Optimal number of bins for discretization
@@ -63,11 +63,11 @@ function numberBins(numberObservations, # number of obs
     return Int(bins)
 end
 
-"""----------------------------------------------------------------------
-function: Calculates Variation of Information with calculating number of bins
-reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-methodology: Snipet 3.3, Page 46
-----------------------------------------------------------------------"""
+"""
+    function: Calculates Variation of Information with calculating number of bins
+    reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+    methodology: Snipet 3.3, Page 46
+"""
 function variationsInformationExtended(x, # data1
                                        y; # data2
                                        norm = false) # for normalized variations of info
@@ -88,11 +88,11 @@ function variationsInformationExtended(x, # data1
     return variationXY
 end
 
-"""----------------------------------------------------------------------
-function: Calculates Mutual  Information with calculating number of bins
-reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-methodology: Snipet 3.4, Page 48
-----------------------------------------------------------------------"""
+"""
+    function: Calculates Mutual  Information with calculating number of bins
+    reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+    methodology: Snipet 3.4, Page 48
+"""
 function mutualInformation(x, # data1
                            y; # data2
                            norm = false) # for normalized variations of info
@@ -110,11 +110,11 @@ function mutualInformation(x, # data1
     return mutualInformation
 end
 
-"""----------------------------------------------------------------------
-function: Calculates distance from a dependence matrix
-reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-methodology: n/a
-----------------------------------------------------------------------"""
+"""
+    function: Calculates distance from a dependence matrix
+    reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+    methodology: n/a
+"""
 function distance(dependence::Matrix, # dependence matrix
                   metric::String = "angular") # method
     if metric == "angular"
@@ -125,22 +125,22 @@ function distance(dependence::Matrix, # dependence matrix
     return distanceFunction(dependence)
 end
 
-"""----------------------------------------------------------------------
-function: Calculates KullbackLeibler divergence from two discrete probability distributions defined on the same probability space
-reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-methodology: n/a
-----------------------------------------------------------------------"""
+"""
+    function: Calculates KullbackLeibler divergence from two discrete probability distributions defined on the same probability space
+    reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+    methodology: n/a
+"""
 function KullbackLeibler(p, # first distribution
                          q) # second distribution
     divergence = -sum(p.*log.(q./p))  # calculate divenrgence
     return divergence 
 end
 
-"""----------------------------------------------------------------------
-function: Calculates crossentropy from two discrete probability distributions defined on the same probability space
-reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-methodology: n/a
-----------------------------------------------------------------------"""
+"""
+    function: Calculates crossentropy from two discrete probability distributions defined on the same probability space
+    reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+    methodology: n/a
+"""
 function crossEntropy(p, # first distribution
                       q) # second distribution
     entropy = -sum(p.*log.(q)) # calculate entropy

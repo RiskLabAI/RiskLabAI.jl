@@ -1,7 +1,7 @@
 """
-function: Calculates accuracy of bagging classifier
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: page 96 Improved Accuracy section
+    function: Calculates accuracy of bagging classifier
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: page 96 Improved Accuracy section
 """
 function baggingClassifierAccuracy(
     N::Int, # number of independent classifers

@@ -14,9 +14,9 @@ using Random
 @pyimport sklearn.model_selection as ModelSelection
 
 """
-function: Clustered feature importance MDA
-reference: De Prado, M. (2020) MACHINE LEARNING FOR ASSET MANAGERS
-methodology: page 87 Clustered MDA section
+    function: Clustered feature importance MDA
+    reference: De Prado, M. (2020) MACHINE LEARNING FOR ASSET MANAGERS
+    methodology: page 87 Clustered MDA section
 """
 function clusteredFeatureImportanceMDA(
     classifier, # classifier for fit and prediction

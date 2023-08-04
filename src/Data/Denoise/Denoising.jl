@@ -1,8 +1,8 @@
-"""----------------------------------------------------------------------
+"""
     function:  implements the Marcenko–Pastur PDF in python
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 2.1, Page 25
-----------------------------------------------------------------------"""
+"""
 function pdfMarcenkoPastur(var, # variance of observations
                            ratio, # T/N
                            points) # points for lambda
@@ -16,11 +16,11 @@ function pdfMarcenkoPastur(var, # variance of observations
     return DataFrames.DataFrame(index = eigenValues, values = pdf)
 end
 
-"""----------------------------------------------------------------------
+"""
     function: Get eVal,eVec from a Hermitian matrix
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 2.2, Page 25
-----------------------------------------------------------------------"""
+"""
 function PCA(matrix) # Hermitian matrix
     eigenValues, eigenVectors = LinearAlgebra.eigen(matrix) # compute eigenValues, eigenVectors from matrix
     indices = sortperm(eigenValues, rev = true) # arguments for sorting eigenValues desc
@@ -29,11 +29,11 @@ function PCA(matrix) # Hermitian matrix
     return eigenValues, eigenVectors
 end
 
-"""----------------------------------------------------------------------
+"""
     function: Fit kernel density
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 2.2, Page 25
-----------------------------------------------------------------------"""
+"""
 function KDE(observations; # Series of observations
              bandWidth = 0.25, 
              kernel = Distributions.Normal, # type of kernel
@@ -58,11 +58,11 @@ function KDE(observations; # Series of observations
     return DataFrames.DataFrame(index = vec(valuesForEvaluating), values = density)
 end
 
-"""----------------------------------------------------------------------
+"""
     function: ADD SIGNAL TO A RANDOM COVARIANCE MATRIX
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 2.3, Page 27
-----------------------------------------------------------------------"""
+"""
 function randomCov(numberColumns, # number of columns
                    numberFactors) # number of factors
     data = rand(Normal(), numberColumns, numberFactors) # random data
@@ -71,11 +71,11 @@ function randomCov(numberColumns, # number of columns
     return covData
 end
 
-"""----------------------------------------------------------------------
+"""
     function: Derive the correlation matrix from a covariance matrix
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 2.3, Page 27
-----------------------------------------------------------------------"""
+"""
 function covToCorr(cov) # covariance matrix
     std = sqrt.((diag(cov))) # standard deviations
     corr = cov./(std.*std') # create correlation matrix
@@ -84,13 +84,13 @@ function covToCorr(cov) # covariance matrix
     return corr
 end
 
-"""----------------------------------------------------------------------
+"""
     function: Fits the Marcenko–Pastur PDF to a random covariance
               matrix that contains signal. The objective of the fit is to find the value of σ2 that
               minimizes the sum of the squared differences between the analytical PDF and
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 2.4, Page 27
-----------------------------------------------------------------------"""
+"""
 function errorPDFs(var, # variance
                    eigenValues, # eigenvalues
                    ratio, # T/N
@@ -102,11 +102,11 @@ function errorPDFs(var, # variance
    return sse 
 end 
 
-"""----------------------------------------------------------------------
+"""
     function: Find max random eigenValues by fitting Marcenko’s dist
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 2.4, Page 27
-----------------------------------------------------------------------"""
+"""
 function findMaxEval(eigenValues, # eigenvalues
                      ratio, # T/N
                      bandWidth) # band width for kernel
@@ -120,11 +120,11 @@ function findMaxEval(eigenValues, # eigenvalues
     return λmax, var
 end
    
-"""----------------------------------------------------------------------
+"""
     function: Constant Residual Eigenvalue Method
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 2.5, Page 29
-----------------------------------------------------------------------"""
+"""
 function denoisedCorr(eigenValues, # eigenvalues
                       eigenVectors,  # eigenvectors
                       numberFactors) # number of factors
@@ -136,11 +136,11 @@ function denoisedCorr(eigenValues, # eigenvalues
     return corr2
 end
 
-"""----------------------------------------------------------------------
+"""
     function: DENOISING BY TARGETED SHRINKAGE
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 2.6, Page 31
-----------------------------------------------------------------------"""
+"""
 function denoisedCorrShrinkage(eigenValues, # eigen values
                                eigenVectors, # eigen vectors
                                numberFactors; # number of factors
@@ -155,11 +155,11 @@ function denoisedCorrShrinkage(eigenValues, # eigen values
    return corr2 
 end
 
-"""----------------------------------------------------------------------
+"""
     function: GENERATING A BLOCK-DIAGONAL COVARIANCE MATRIX AND A VECTOR Of MEANS
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 2.7, Page 33
-----------------------------------------------------------------------"""
+"""
 function formBlockMatrix(numberBlocks, # number of blocks
                          sizeBlock, # size of block
                          corrBlock) # correlation in block
@@ -190,22 +190,22 @@ function formTrueMatrix(numberBlocks, # number of blocks
     return mu0, cov0
 end
 
-"""----------------------------------------------------------------------
+"""
     function: Derive the covarinace matrix from a correlation matrix
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 2.7, Page 33
-----------------------------------------------------------------------"""
+"""
 function corrToCov(corr, # correlation matrix
                    std) # standard deviations
     cov = corr.*(std.*std') # covarinance matrix
     return cov
 end
 
-"""----------------------------------------------------------------------
+"""
     function: GENERATE THE EMPIRICAL COVARIANCE MATRIX
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 2.8, Page 33
-----------------------------------------------------------------------"""
+"""
 function simCovMu(mu0, # mean vector
                   cov0, # covariance matrix
                   observations, # number of observations
@@ -220,11 +220,11 @@ function simCovMu(mu0, # mean vector
     return mu1, cov1
 end
 
-"""----------------------------------------------------------------------
+"""
     function: DENOISING OF THE EMPIRICAL COVARIANCE MATRIX
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 2.9, Page 34
-----------------------------------------------------------------------"""
+"""
 function deNoiseCov(cov0, # covarinace matrix
                     ratio, # T/N
                     bandWidth) # band width
@@ -237,11 +237,11 @@ function deNoiseCov(cov0, # covarinace matrix
     return cov1
 end
 
-"""----------------------------------------------------------------------
+"""
     function: Monte Carlo simulation
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 2.10, Page 34
-----------------------------------------------------------------------"""
+"""
 function optPort(cov, # covariance matrix
                  mu = nothing) # mean vector
     inverse = inv(cov) # inverse of cov 

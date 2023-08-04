@@ -207,9 +207,9 @@ function volumeBar(tickData, # dataframe of tick data
 end
 
 """
-function: Takes dataframe and generating volume bar dataframe
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: n/a
+    function: Takes dataframe and generating volume bar dataframe
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: n/a
 """
 function dollarBar(tickData, # dataframe of tick data
                    dollarPerBar = 100000, # dollars in each bar
@@ -234,9 +234,9 @@ function dollarBar(tickData, # dataframe of tick data
 end
    
 """
-function: Calculates hedging weights using cov, risk distribution(risk_dist) and σ
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: page 36
+    function: Calculates hedging weights using cov, risk distribution(risk_dist) and σ
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: page 36
 """
 function PCAWeights(cov, # covariance matrix
                     riskDisturbution = nothing,  # risk distribution
@@ -258,9 +258,9 @@ function PCAWeights(cov, # covariance matrix
 end
 
 """
-function: Implementation of the symmetric CUSUM filter
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: page 39
+    function: Implementation of the symmetric CUSUM filter
+    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    methodology: page 39
 """
 function events(input, # dataframe of prices and dates
                 threshold) # threshold

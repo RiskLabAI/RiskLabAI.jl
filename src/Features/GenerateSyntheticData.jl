@@ -12,9 +12,9 @@ using Distributions
 @pyimport sklearn.datasets as Datasets
 
 """
-function: Generating a set of informed, redundant and explanatory variables
-reference: De Prado, M. (2020) MACHINE LEARNING FOR ASSET MANAGERS
-methodology: page 77 A Few Caveats of p-Values section snippet 6.1 (snippet 8.7 2018)
+    function: Generating a set of informed, redundant and explanatory variables
+    reference: De Prado, M. (2020) MACHINE LEARNING FOR ASSET MANAGERS
+    methodology: page 77 A Few Caveats of p-Values section snippet 6.1 (snippet 8.7 2018)
 """
 function getTestData(;
     nFeatures::Int=100, # total number of features

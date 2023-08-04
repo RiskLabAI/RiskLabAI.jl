@@ -1,8 +1,8 @@
-"""----------------------------------------------------------------------
+"""
     function: Calculate returns
     reference: n/a
     methodology: n/a
-----------------------------------------------------------------------"""
+"""
 function percentChange(prices::DataFrames.DataFrame)
     returns = DataFrames.DataFrame() # empty dataframe of returns
     for sym in names(prices)[2:end]
@@ -17,11 +17,11 @@ function percentChange(prices::DataFrames.DataFrame)
     return returns
 end
 
-"""----------------------------------------------------------------------
+"""
     function: Clustering
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 4.1, Page 56
-----------------------------------------------------------------------"""
+"""
 function clusterKMeansBase(correlation; # corr matrix
                            numberClusters = 10, # maximum number of clusters
                            iterations = 10) # iterations
@@ -45,11 +45,11 @@ function clusterKMeansBase(correlation; # corr matrix
     return correlationNew, clusters, silh, indexNew
 end
 
-"""----------------------------------------------------------------------
+"""
     function: NCO algorithm
     reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 7.6, Page 100
-----------------------------------------------------------------------"""
+"""
 function optPortNCO(covariance; # covariance matrix
                     μ = nothing, # mean vector
                     numberClusters = nothing) # maximum number of clusters

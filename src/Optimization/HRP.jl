@@ -1,8 +1,8 @@
-"""----------------------------------------------------------------------
+"""
     function: Generates random data
     reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 16.4, Page 241
-----------------------------------------------------------------------"""
+"""
 function randomData(numberObservations, #number of observation
                     size0, # size uncorrelated data
                     size1, # size correlated data
@@ -17,11 +17,11 @@ function randomData(numberObservations, #number of observation
 end
 
 
-"""----------------------------------------------------------------------
+"""
     function: Distance from corr matrix
     reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 16.4, Page 241
-----------------------------------------------------------------------"""
+"""
 function distanceCorr(correlation) # correlation matrix
     distance = (1 .- correlation) # each element of corr minus 1
     distance = distance.^0.5 # sqrt of distance
@@ -29,11 +29,11 @@ function distanceCorr(correlation) # correlation matrix
 end
 
 
-"""----------------------------------------------------------------------
+"""
     function: The output is a sorted list of original items to reshape corr matrix
     reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 16.2, Page 229
-----------------------------------------------------------------------"""
+"""
 function quasiDiagonal(link) # linkage matrix
     # Sort clustered items by distance
     link = Int.(floor.(link)) # int each element
@@ -54,11 +54,11 @@ function quasiDiagonal(link) # linkage matrix
 end
 
 
-"""----------------------------------------------------------------------
+"""
     function: The output is a dataframe including weights of assets
     reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     methodology: Snipet 16.2, Page 230
-----------------------------------------------------------------------"""
+"""
 function recursiveBisection(cov, # covariance matrix
                             sortedItems) # sorted items from quasiDiagonal
     # Compute HRP alloc
@@ -81,11 +81,11 @@ function recursiveBisection(cov, # covariance matrix
     return ω
 end
         
-"""----------------------------------------------------------------------
+"""
 function: Compute variance of cluster
 reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
 methodology: Snipet 16.4, Page 240
-----------------------------------------------------------------------""" 
+""" 
 function varianceCluster(cov, # covariance matrix
                          clusteredItems) # clustered items 
     # Compute variance per cluster
@@ -95,11 +95,11 @@ function varianceCluster(cov, # covariance matrix
     return clusterVariance
 end
 
-"""----------------------------------------------------------------------
+"""
 function: inverse variance weights
 reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
 methodology: Snipet 16.4, Page 240
-----------------------------------------------------------------------""" 
+""" 
 function IVP(cov, # covariance matrix
              kwargs...)
     # Compute the inverse-variance portfolio
@@ -108,11 +108,11 @@ function IVP(cov, # covariance matrix
     return ivp
 end   
         
-"""----------------------------------------------------------------------
+"""
 function: random data for MC simulation
 reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
 methodology: Snipet 16.5, Page 242
-----------------------------------------------------------------------"""   
+"""   
 function generalRandomData(numberObservations, # number of observation
                            lengthSample, # starting point for selecting random observation
                            size0, # size of uncorrelated data
@@ -134,11 +134,11 @@ function generalRandomData(numberObservations, # number of observation
     return data, columns
 end
         
-"""----------------------------------------------------------------------
+"""
 function: HRP method
 reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
 methodology: Snipet 16.5, Page 243
-----------------------------------------------------------------------"""  
+"""  
 function HRP(cov::Matrix, # covariance matrix
              corr::Matrix) # correlation matrix
     # Construct a hierarchical portfolio
@@ -149,11 +149,11 @@ function HRP(cov::Matrix, # covariance matrix
     return sort(hrp).weight # array of weights
 end
 
-"""----------------------------------------------------------------------
+"""
 function: MC simulation for out of sample comparison
 reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
 methodology: Snipet 16.5, Page 243
-----------------------------------------------------------------------"""  
+"""  
 function hrpMC(;numberIters = 5e3, # number of iterations
                 numberObservations = 520, # number of observation
                 size0 = 5, # size of uncorrelated data

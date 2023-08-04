@@ -1,7 +1,7 @@
 """
-function: Selecting row from given prartion
-reference: -
-methodology: -
+    function: Selecting row from given prartion
+    reference: -
+    methodology: -
 """
 function selectedRow(
         partition, # index of submatrix 

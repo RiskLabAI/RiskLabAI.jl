@@ -5,11 +5,10 @@ using MLJ
 using MLDataUtils
 
 """
-function: purges test observations in the training set
-reference: De Prado, M. (2018) Advances in financial machine learning.
-methodology: page 106, snippet 7.1
+    function: purges test observations in the training set
+    reference: De Prado, M. (2018) Advances in financial machine learning.
+    methodology: page 106, snippet 7.1
 """
-
 function purgedTrainTimes(data::TimeArray, # Times of entire observations.
                           test::TimeArray)::TimeArray # Times of testing observations.
     # timestamp(TimeArray): Time when the observation started.
@@ -29,11 +28,10 @@ function purgedTrainTimes(data::TimeArray, # Times of entire observations.
 end
 
 """
-function: gets embargo time for each bar
-reference: De Prado, M. (2018) Advances in financial machine learning.
-methodology: page 108, snippet 7.2
+    function: gets embargo time for each bar
+    reference: De Prado, M. (2018) Advances in financial machine learning.
+    methodology: page 108, snippet 7.2
 """
-
 function embargoTimes(times::Array, # Entire observation times
                       percentEmbargo::Float64)::TimeArray # Embargo size percentage divided by 100
     
@@ -51,9 +49,9 @@ function embargoTimes(times::Array, # Entire observation times
 end
 
 """
-struct: performes cross validation when observations overlap
-reference: De Prado, M. (2018) Advances in financial machine learning.
-methodology: page 109, snippet 7.3
+    struct: performes cross validation when observations overlap
+    reference: De Prado, M. (2018) Advances in financial machine learning.
+    methodology: page 109, snippet 7.3
 """
 mutable struct PurgedKFold
     # Modified KFold class to work with labels that span intervals
@@ -75,9 +73,9 @@ mutable struct PurgedKFold
 end
 
 """
-function: splits the data when observations overlap
-reference: De Prado, M. (2018) Advances in financial machine learning.
-methodology: page 109, snippet 7.3
+    function: splits the data when observations overlap
+    reference: De Prado, M. (2018) Advances in financial machine learning.
+    methodology: page 109, snippet 7.3
 """
 function purgedKFoldSplit(self::PurgedKFold, # The PurgedKFold struct containing observations and split information
                           data::TimeArray) # The sample that is going be splited
@@ -114,9 +112,9 @@ end
 
 
 """
-function: uses the PurgedKFold struct and functions
-reference: De Prado, M. (2018) Advances in financial machine learning.
-methodology: page 110, snippet 7.4
+    function: uses the PurgedKFold struct and functions
+    reference: De Prado, M. (2018) Advances in financial machine learning.
+    methodology: page 110, snippet 7.4
 """
 function crossValidationScore(classifier, # A classifier model from MLJ package 
                               data::TimeArray, # The sample that is going be used
@@ -154,10 +152,6 @@ function crossValidationScore(classifier, # A classifier model from MLJ package
         end    
     end
     labels, data = unpack(sample, ==(name), colname -> true) # unpack data
-
-    # println(scitype(data))
-    # println(scitype(labels))
-    # println(models(matching(data,labels)))
 
     machine = MLJ.MLJBase.machine(classifier, data, labels) # initialize learner
     scores = [] # initialize scores

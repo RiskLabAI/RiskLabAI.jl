@@ -1,9 +1,3 @@
-# todo: 
-"""
-List of Collaborators, Developers, and Research Assistants (in alphabetical order)
-Daniel Norouzi 
-"""
-
 using Distributions
 using Statistics
 using Random
@@ -11,9 +5,9 @@ using DataFrames
 
 #---------------------------------------------------
 """
-function: validates the False Strategy Theorem experimentally
-refernce: De Prado, M (2020) Machine Learning for Asset Managers
-methodology: page 110, snippet 8.1
+    function: validates the False Strategy Theorem experimentally
+    refernce: De Prado, M (2020) Machine Learning for Asset Managers
+    methodology: page 110, snippet 8.1
 """
 function expectedMaxSharpeRatio(
     nTrials, # number of trials
@@ -29,7 +23,6 @@ function expectedMaxSharpeRatio(
     return sharpeRatio
 end
 
-#---------------------------------------------------
 function generatedMaxSharpeRatio(
     nSims,#::Int, # number of simulations 
     nTrials,#::Int, # number of trials
@@ -51,12 +44,11 @@ function generatedMaxSharpeRatio(
     end
     return out
 end
-#---------------------------------------------------
 
 """
-function: calculates mean and standard deviation of the predicted errors
-refernce: De Prado, M (2020) Machine Learning for Asset Managers
-methodology: page 112, snippet 8.2
+    function: calculates mean and standard deviation of the predicted errors
+    refernce: De Prado, M (2020) Machine Learning for Asset Managers
+    methodology: page 112, snippet 8.2
 """
 function meanStdError(
     nSims0::Int, # number of max{SR} used to estimate E[max{SR}]
@@ -86,12 +78,11 @@ function meanStdError(
 
     return out
 end
-#---------------------------------------------------
 
 """
-function: calculates type I error probability of stratgies
-refernce: De Prado, M (2020) Machine Learning for Asset Managers
-methodology: page 119, snippet 8.3
+    function: calculates type I error probability of stratgies
+    refernce: De Prado, M (2020) Machine Learning for Asset Managers
+    methodology: page 119, snippet 8.3
 """
 function estimatedSharpeRatioZStatistics(
     sharpeRatio, # estimated Sharpe Ratio
@@ -107,7 +98,6 @@ function estimatedSharpeRatioZStatistics(
     return z
 end
 
-#---------------------------------------------------
 function strategyType1ErrorProbability(z, # z statistic for the estimated Sharpe Ratios
                     k = 1) # number of tests
 
@@ -118,11 +108,10 @@ function strategyType1ErrorProbability(z, # z statistic for the estimated Sharpe
 end
 
 
-#---------------------------------------------------
 """
-function: calculates type II error probability of stratgies
-refernce: De Prado, M (2020) Machine Learning for Asset Managers
-methodology: page 121, snippet 8.4
+    function: calculates type II error probability of stratgies
+    refernce: De Prado, M (2020) Machine Learning for Asset Managers
+    methodology: page 121, snippet 8.4
 """
 function thetaForType2Error(sharpeRatio, # estimated Sharpe Ratio
                t, # number of observations
