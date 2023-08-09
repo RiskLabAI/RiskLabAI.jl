@@ -1,283 +1,364 @@
+using Dates
+
 """
-    function: shows the progress bar
-    reference: n/a
-    methodology: n/a
+Function to show the progress bar.
+
+Args:
+    value (Int): Value of an event.
+    endValue (Int): Length of that event.
+    startTime (Int): Start time of the event.
+    barLength (Int, optional): Length of the progress bar. Default is 20.
+
+Reference:
+    n/a
+
+Methodology:
+    n/a
 """
-function progressBar(value, # value of an event
-                     endValue, # length of that event
-                     startTime, # start time of the event
-                     barLength = 20) # length of bar
-    
-    percent = Float64(value)/endValue # progress in percent
-    
-    if trunc(Int, round(percent*barLength) - 1) < 0 # show positive percents
-        progressValue = 0 # value percent to zero
-    else 
-        progressValue = trunc(Int, round(percent*barLength) - 1) # update progressValue
+function show_progress_bar(value,
+                           endValue,
+                           startTime,
+                           barLength = 20)
+    percent = Float64(value) / endValue
+
+    if trunc(Int, round(percent * barLength) - 1) < 0
+        progressValue = 0
+    else
+        progressValue = trunc(Int, round(percent * barLength) - 1)
     end
-    arrow = string(repeat("-", progressValue), ">") # set the arrow
-    spaces = repeat(" ", (barLength - length(arrow))) # show spaces
-    # calculate remaining time to finish
-    remaining = trunc(Int, ((Dates.value((Dates.now() - Dates.DateTime(1970, 1, 1, 00, 00, 00)))/
-                1000 - startTime)/value)*(endValue - value)/60) # remaining time since 1970.01.01
-    message = string(arrow, spaces) # concatenate arrow and spaces
-    percent = trunc(Int, round(percent*100)) # total percent completed
-    println("Completed: [$message] $percent% - $remaining minutes remaining.") # print state of the progress
+    arrow = string(repeat("-", progressValue), ">")
+    spaces = repeat(" ", (barLength - length(arrow)))
+    remaining = trunc(Int, ((Dates.value((Dates.now() - Dates.DateTime(1970, 1, 1, 00, 00, 00))) /
+        1000 - startTime) / value) * (endValue - value) / 60)
+    message = string(arrow, spaces)
+    percent = trunc(Int, round(percent * 100))
+    println("Completed: [$message] $percent% - $remaining minutes remaining.")
 end
 
 """
-    function: computes the ewma, ewma var, and ewma stds
-    reference: https://stackoverflow.com/questions/40754262/pandas-ewm-std-calculation
-    methodology: n/a
+Function to compute the exponential weighted moving average (EWMA), EWMA variance, and EWMA standard deviations.
+
+Args:
+    data (Array): Array of data.
+    windowLength (Int, optional): Window for EWMA. Default is 100.
+
+Reference:
+    https://stackoverflow.com/questions/40754262/pandas-ewm-std-calculation
+
+Methodology:
+    n/a
 """
-function ewma(data, # array of data
-              windowLength = 100) # window for ewma
-    N = size(data)[1] # length of array
-    ewmaMean = [] # array for output 
-    ewmaVariance = [] # array for output 
-    ewmaStd = [] # array for output 
-    α = 2/Float64(windowLength + 1) # tune parameter for ewma
+function compute_ewma(data,
+                      windowLength = 100)
+    N = size(data)[1]
+    ewma_mean = []
+    ewma_variance = []
+    ewma_std = []
+    α = 2 / Float64(windowLength + 1)
+
     for i ∈ 1:N
-        window = Array(data[1:i,1]) # Get window
-        # Get weights: ω
+        window = Array(data[1:i, 1])
         m = length(window)
-        ω = (1 - α).^range(m - 1, step = -1, stop = 0) # This is reverse order to match Series order
-        ewma = sum(ω.*window)/sum(ω) # Calculate exponential moving average
-        bias = sum(ω)^2/(sum(ω)^2 - sum(ω.^2)) # Calculate bias
-        var = bias*sum(ω.*(window .- ewma).^2)/sum(ω) # Calculate exponential moving variance with bias
-        std = sqrt(var) # Calculate standard deviation
-        append!(ewmaMean,ewma) # append calculated value into array 
-        append!(ewmaVariance,var) # append calculated value into array 
-        append!(ewmaStd,std) # append calculated value into array 
+        ω = (1 - α).^range(m - 1, step = -1, stop = 0)
+        ewma = sum(ω .* window) / sum(ω)
+        bias = sum(ω)^2 / (sum(ω)^2 - sum(ω .^ 2))
+        var = bias * sum(ω .* (window .- ewma).^2) / sum(ω)
+        std = sqrt(var)
+        append!(ewma_mean, ewma)
+        append!(ewma_variance, var)
+        append!(ewma_std, std)
     end
-    return ewmaMean, ewmaVariance, ewmaStd
+    return ewma_mean, ewma_variance, ewma_std
 end
 
 """
-    function: grouping dataframe based on a feature and then calculates thresholds
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: page number
+Function to group a dataframe based on a feature and then calculate thresholds.
+
+Args:
+    target_col (Array): Target column of tick dataframe.
+    tick_expected_init (Int): Initial expected ticks.
+    bar_size (Float64): Initial expected size in each tick.
+
+Reference:
+    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    Page number: n/a
+
+Methodology:
+    Page number: n/a
 """
-function grouping(targetCol, # target column of tick dataframe
-                  tickExpectedInit, # initial expected ticks
-                  barSize) # initial expected size in each tick
+function group_and_calculate_thresholds(target_col,
+                                        tick_expected_init,
+                                        bar_size)
     Δtimes, times = [], []
-    timePrev, tickExpected, barExpectedValue = 0, tickExpectedInit, barSize
-    N = size(targetCol)[1] # number of dates in dataframe
-    θabsolute, thresholds, θs, groupingID = zeros(N), zeros(N), zeros(N), zeros(N)
-    θabsolute[1], θcurrent = abs(targetCol[1]), targetCol[1] # set initial value of θ and |θ|
-    time = Dates.value((Dates.now() - Dates.DateTime(1970, 1, 1, 00, 00, 00)))/1000 # value of time from 1970 in ms
-    groupingIDCurrent = 0 # set first groupingID to 0
+    time_prev, tick_expected, bar_expected_value = 0, tick_expected_init, bar_size
+    N = size(target_col)[1]
+    θ_absolute, thresholds, θs, grouping_id = zeros(N), zeros(N), zeros(N), zeros(N)
+    θ_absolute[1], θ_current = abs(target_col[1]), target_col[1]
+    time = Dates.value((Dates.now() - Dates.DateTime(1970, 1, 1, 00, 00, 00))) / 1000
+    grouping_id_current = 0
+
     for i ∈ 2:N
-        θcurrent +=  targetCol[i] # update θcurrent by adding next value of target
-        θs[i] = θcurrent # update θs
-        thisθabsolute = abs(θcurrent) # absolute value of θcurrent
-        θabsolute[i] = thisθabsolute  # update θabsolute
-        threshold = tickExpected*barExpectedValue # multiply expected ticks and expected value of target to calculating threshold 
-        thresholds[i] = threshold  # update thresholds
-        groupingID[i] = groupingIDCurrent # update groupingID
-        # this stage is for going to next groupingID and resetting parameters
-        if thisθabsolute >= threshold
-            groupingIDCurrent += 1
-            θcurrent = 0
-            append!(Δtimes, Float64(i - timePrev)) # append the length of time values that took untill passing threshold
-            append!(times, i) # append the number of time value that we passed threshold in it
-            timePrev = i
-            tickExpected = ewma(Array(Δtimes), trunc(Int, length(Δtimes)))[1][end] # update expected ticks with ewma
-            barExpectedValue = abs(ewma(targetCol[1:i], trunc(Int,tickExpectedInit*1))[1][end]) # update expected value of b with ewma
-        end 
-        # progressBar(i,n,time) # show progress bar
+        θ_current += target_col[i]
+        θs[i] = θ_current
+        this_θ_absolute = abs(θ_current)
+        θ_absolute[i] = this_θ_absolute
+        threshold = tick_expected * bar_expected_value
+        thresholds[i] = threshold
+        grouping_id[i] = grouping_id_current
+
+        if this_θ_absolute >= threshold
+            grouping_id_current += 1
+            θ_current = 0
+            append!(Δtimes, Float64(i - time_prev))
+            append!(times, i)
+            time_prev = i
+            tick_expected = ewma(Array(Δtimes), trunc(Int, length(Δtimes)))[1][end]
+            bar_expected_value = abs(ewma(target_col[1:i], trunc(Int, tick_expected_init * 1))[1][end])
+        end
     end
-    return Δtimes, θabsolute, thresholds, times, θs, groupingID
+    return Δtimes, θ_absolute, thresholds, times, θs, grouping_id
 end
 
 """
-    function: implements Information-Driven Bars
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: page 29
+Function to implement Information-Driven Bars.
+
+Args:
+    tickData (DataFrame): Dataframe of tick data.
+    type (String, optional): Choose "tick", "volume" or "dollar" types. Default is "volume".
+    tickExpectedInit (Int, optional): The value of the expected tick. Default is 2000.
+
+Reference:
+    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    Page number: 29
+
+Methodology:
+    Page number: 29
 """
-function infoBar(tickData, # dataframe of tick data
-                 type::String = "volume", # choose "tick", "volume" or "dollar" types
-                 tickExpectedInit = 2000) # The value of the expected tick
+function info_driven_bar(tickData,
+                         type::String = "volume",
+                         tickExpectedInit = 2000)
     if type == "volume"
-        inputData = tickData.volumelabeled # use volume column with sign of log return in same day
+        input_data = tickData.volumelabeled
     elseif type == "tick"
-        inputData = tickData.label # use sign of log return column
+        input_data = tickData.label
     elseif type == "dollar"
-        inputData = tickData.dollars # use the value of price * volume with sign of log return
+        input_data = tickData.dollars
     else
         println("Error: unknown type")
     end
-    barExpectedValue = abs(mean(inputData)) # expected value of inputData 
-    Δtimes, θabsolute, thresholds, times, θs, groupingID = grouping(inputData, tickExpectedInit, barExpectedValue) # calculate thresholds
-    tickData[!,:groupingID] = groupingID # generate groupingID column
-    dates = combine(DataFrames.groupby(tickData, :groupingID),:dates => first => :dates) # combine dates by grouping based on Id
-    tickDataGrouped = DataFrames.groupby(tickData, :groupingID) # groupe date times based on groupingID
-    ohlcvDataframe = ohlcv(tickDataGrouped) # create a dataframe based on bars
-    insertcols!(ohlcvDataframe, 1, :dates => dates.dates) # set date column first
-    colDrop = [:groupingID] 
-    ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop)) # drop groupingID
-    return ohlcvDataframe, θabsolute, thresholds
+    bar_expected_value = abs(mean(input_data))
+    Δtimes, θ_absolute, thresholds, times, θs, grouping_id = grouping(input_data, tickExpectedInit, bar_expected_value)
+    tickData[!,:groupingID] = grouping_id
+    dates = combine(DataFrames.groupby(tickData, :groupingID), :dates => first => :dates)
+    tickDataGrouped = DataFrames.groupby(tickData, :groupingID)
+    ohlcvDataframe = ohlcv(tickDataGrouped)
+    insertcols!(ohlcvDataframe, 1, :dates => dates.dates)
+    col_drop = [:groupingID]
+    ohlcvDataframe = select!(ohlcvDataframe, Not(col_drop))
+    return ohlcvDataframe, θ_absolute, thresholds
 end
 
 """
-    function: Takes grouped dataframe, combining and creating the new one with info. about prices and volume.
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: n/a
+Function to take a grouped dataframe, combining and creating the new one with information about prices and volume.
+
+Args:
+    tickDataGrouped (GroupedDataFrame): Grouped dataframes.
+
+Reference:
+    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    Methodology: n/a
 """
-function ohlcv(tickDataGrouped) #grouped dataframes
-    # combining groups
-    ohlcvDataframe = combine(tickDataGrouped, :price => first => :Open, # find open price
-                   :price => maximum => :High, # find highest price
-                   :price => minimum => :Low,  # find lowest price
-                   :price => last => :Close, # find close price
-                   :size => sum => :Volume, # find volume traded
-                   AsTable([:price, :size]) =>x -> sum(x.price.*x.size)/sum(x.size), # find value of trades
-                   :price => mean => :PriceMean, # mean of price
-                   :price => length => :TickCount) # number of ticks
-    DataFrames.rename!(ohlcvDataframe, :price_size_function => :ValueOfTrades) # rename to value of trades
-    ohlcvDataframe.PriceMeanLogReturn = log.(ohlcvDataframe.PriceMean) - log.(circshift(ohlcvDataframe.PriceMean, 1)) # calculate log return
-    ohlcvDataframe.PriceMeanLogReturn[1] = NaN # set first return to NaN
+function ohlcv(tickDataGrouped)
+    ohlcvDataframe = combine(tickDataGrouped, :price => first => :Open,
+                   :price => maximum => :High,
+                   :price => minimum => :Low,
+                   :price => last => :Close,
+                   :size => sum => :Volume,
+                   AsTable([:price, :size]) => x -> sum(x.price .* x.size) / sum(x.size),
+                   :price => mean => :PriceMean,
+                   :price => length => :TickCount)
+    DataFrames.rename!(ohlcvDataframe, :price_size_function => :ValueOfTrades)
+    ohlcvDataframe.PriceMeanLogReturn = log.(ohlcvDataframe.PriceMean) - log.(circshift(ohlcvDataframe.PriceMean, 1))
+    ohlcvDataframe.PriceMeanLogReturn[1] = NaN
     return ohlcvDataframe
 end
 
 """
-    function: Takes dataframe and generating time bar dataframe
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: n/a
+Function to take a dataframe and generate a time bar dataframe.
+
+Args:
+    tickData (DataFrame): Dataframe of tick data.
+    frequency (Int, optional): Frequency for rounding date time. Default is 5.
+
+Reference:
+    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    Methodology: n/a
 """
-function timeBar(tickData, # dataframe of tick data
-                 frequency = 5) # frequency for rounding date time
-    dates = tickData.dates #date time column
+function time_bar(tickData,
+                  frequency = 5)
+    dates = tickData.dates
     datesCopy = copy(dates)
-    tickData.dates = floor.(datesCopy, Dates.Minute(frequency)) # round down date times with frequency freq
-    tickDataGrouped = DataFrames.groupby(tickData, :dates) # group date times based on rounding
-    ohlcvDataframe = ohlcv(tickDataGrouped) # create a dataframe based on time bars with frequency freq
-    tickData.dates = dates # recovery date times
+    tickData.dates = floor.(datesCopy, Dates.Minute(frequency))
+    tickDataGrouped = DataFrames.groupby(tickData, :dates)
+    ohlcvDataframe = ohlcv(tickDataGrouped)
+    tickData.dates = dates
     return ohlcvDataframe
 end
 
 """
-    function: Takes dataframe and generating tick bar dataframe
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: n/a
+Function to take a dataframe and generate a tick bar dataframe.
+
+Args:
+    tickData (DataFrame): Dataframe of tick data.
+    tickPerBar (Int, optional): Number of ticks in each bar. Default is 10.
+    numberBars (Int, optional): Number of bars. Default is nothing.
+
+Reference:
+    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    Methodology: n/a
 """
-function tickBar(tickData, # dataframe of tick data
-                 tickPerBar = 10,  # number of ticks in each bar
-                 numberBars = nothing) # number of bars
-    # if tickPerBar is not mentioned, then calculate it with number of all ticks divided by number of bars
+function tick_bar(tickData,
+                  tickPerBar = 10,
+                  numberBars = nothing)
     if tickPerBar == nothing
-        tickPerBar = floor(size(tickData)[1]/numberBars)
+        tickPerBar = floor(size(tickData)[1] / numberBars)
     end
-    tickData[!, :groupingID] = [x÷tickPerBar for x in 0:size(tickData)[1] - 1] # generate groupingID column for division based on ticks
+    tickData[!, :groupingID] = [x ÷ tickPerBar for x in 0:size(tickData)[1] - 1]
     tickGrouped = copy(tickData)
-    dates = combine(DataFrames.groupby(tickGrouped, :groupingID), :dates => first => :dates) # combine dates 
-    tickDataGrouped = DataFrames.groupby(tickGrouped, :groupingID) # group date times based on groupingID
-    ohlcvDataframe = ohlcv(tickDataGrouped) # create a dataframe based on tickPerBar ticks
-    insertcols!(ohlcvDataframe, 1, :dates => dates.dates) # set date column first
-    colDrop = [:groupingID] 
-    ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop)) # drop groupingID column
+    dates = combine(DataFrames.groupby(tickGrouped, :groupingID), :dates => first => :dates)
+    tickDataGrouped = DataFrames.groupby(tickGrouped, :groupingID)
+    ohlcvDataframe = ohlcv(tickDataGrouped)
+    insertcols!(ohlcvDataframe, 1, :dates => dates.dates)
+    col_drop = [:groupingID]
+    ohlcvDataframe = select!(ohlcvDataframe, Not(col_drop))
     return ohlcvDataframe
 end
 
 """
-function: Takes dataframe and generating volume bar dataframe
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: n/a
+Function to take a dataframe and generate a volume bar dataframe.
+
+Args:
+    tickData (DataFrame): Dataframe of tick data.
+    volumePerBar (Int, optional): Volumes in each bar. Default is 10000.
+    numberBars (Int, optional): Number of bars. Default is nothing.
+
+Reference:
+    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    Methodology: n/a
 """
-function volumeBar(tickData, # dataframe of tick data
-                   volumePerBar = 10000, # volumes in each bar
-                   numberBars = nothing) # number of bars
-    tickData[!, :volumecumulated] = cumsum(tickData.size) # cumulative sum of size(volume)
-    # if volumePerBar is not mentioned, then calculate it with all volumes divided by number of bars
+function volume_bar(tickData,
+                    volumePerBar = 10000,
+                    numberBars = nothing)
+    tickData[!, :volumecumulated] = cumsum(tickData.size)
     if volumePerBar == nothing
         totalVolume = tickData.volumecumulated[end]
-        volumePerBar = totalVolume/numberBars
-        volumePerBar = round(volumePerBar; sigdigits = 2) # round to the nearest hundred
+        volumePerBar = totalVolume / numberBars
+        volumePerBar = round(volumePerBar; sigdigits = 2)
     end
-    tickData[!,:groupingID] = [x÷volumePerBar for x in tickData[!, :volumecumulated]] # generate groupingID column for division based on volums
+    tickData[!, :groupingID] = [x ÷ volumePerBar for x in tickData[!, :volumecumulated]]
     tickGrouped = copy(tickData)
-    dates = combine(DataFrames.groupby(tickGrouped, :groupingID),:dates => first => :dates) # combine dates based on Id
-    tickDataGrouped = DataFrames.groupby(tickGrouped, :groupingID) # group date times based on groupingID
-    ohlcvDataframe = ohlcv(tickDataGrouped) # create a dataframe based on volumePerBar bars
-    insertcols!(ohlcvDataframe, 1, :dates => dates.dates) # set date column first 
-    colDrop = [:groupingID] 
-    ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop)) # drop groupingID column
+    dates = combine(DataFrames.groupby(tickGrouped, :groupingID), :dates => first => :dates)
+    tickDataGrouped = DataFrames.groupby(tickGrouped, :groupingID)
+    ohlcvDataframe = ohlcv(tickDataGrouped)
+    insertcols!(ohlcvDataframe, 1, :dates => dates.dates)
+    col_drop = [:groupingID]
+    ohlcvDataframe = select!(ohlcvDataframe, Not(col_drop))
     return ohlcvDataframe
 end
 
 """
-    function: Takes dataframe and generating volume bar dataframe
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: n/a
+Function to take a dataframe and generate a dollar bar dataframe.
+
+Args:
+    tickData (DataFrame): Dataframe of tick data.
+    dollarPerBar (Int, optional): Dollars in each bar. Default is 100000.
+    numberBars (Int, optional): Number of bars. Default is nothing.
+
+Reference:
+    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    Methodology: n/a
 """
-function dollarBar(tickData, # dataframe of tick data
-                   dollarPerBar = 100000, # dollars in each bar
-                   numberBars = nothing) # number of bars
-    tickData[!, :dollar] = tickData.price.*tickData.size # generate dollar column by multiplying price and size
-    tickData[!, :CumulativeDollars] = cumsum(tickData.dollar) # cumulative sum of dollars
-    # if dollarPerBar is not mentioned, then calculate it with dollars divided by number of bars
+function dollar_bar(tickData,
+                    dollarPerBar = 100000,
+                    numberBars = nothing)
+    tickData[!, :dollar] = tickData.price .* tickData.size
+    tickData[!, :CumulativeDollars] = cumsum(tickData.dollar)
     if dollarPerBar == nothing
         dollarsTotal = tickData.CumulativeDollars[end]
-        dollarPerBar = dollarsTotal/numberBars
-        dollarPerBar = round(dollarPerBar; sigdigits = 2) # round to the nearest hundred
+        dollarPerBar = dollarsTotal / numberBars
+        dollarPerBar = round(dollarPerBar; sigdigits = 2)
     end
-    tickData[!, :groupingID] = [x÷dollarPerBar for x in tickData[!, :CumulativeDollars]] # generate groupingID column for division based on dollars
+    tickData[!, :groupingID] = [x ÷ dollarPerBar for x in tickData[!, :CumulativeDollars]]
     tickGrouped = copy(tickData)
-    dates = combine(DataFrames.groupby(tickGrouped, :groupingID),:dates => first => :dates) # combine dates based on Id
-    tickDataGrouped = DataFrames.groupby(tickGrouped, :groupingID) # group date times based on groupingID
-    ohlcvDataframe = ohlcv(tickDataGrouped) # create a dataframe based on volume_per_bar bars
-    insertcols!(ohlcvDataframe, 1, :dates => dates.dates) # set date column first
-    colDrop = [:groupingID] 
-    ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop)) # drop groupingID column
+    dates = combine(DataFrames.groupby(tickGrouped, :groupingID), :dates => first => :dates)
+    tickDataGrouped = DataFrames.groupby(tickGrouped, :groupingID)
+    ohlcvDataframe = ohlcv(tickDataGrouped)
+    insertcols!(ohlcvDataframe, 1, :dates => dates.dates)
+    col_drop = [:groupingID]
+    ohlcvDataframe = select!(ohlcvDataframe, Not(col_drop))
     return ohlcvDataframe
 end
    
+
 """
-    function: Calculates hedging weights using cov, risk distribution(risk_dist) and σ
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: page 36
+Function to calculate hedging weights using covariance matrix, risk distribution (risk_dist), and risk target (σ).
+
+Args:
+    cov (Matrix): Covariance matrix.
+    riskDisturbution (Vector, optional): Risk distribution. Default is nothing.
+    σ (Float64, optional): Risk target. Default is 1.0.
+
+Reference:
+    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    Methodology: Page 36
 """
-function PCAWeights(cov, # covariance matrix
-                    riskDisturbution = nothing,  # risk distribution
-                    σ = 1.0) # risk target
+function pca_weights(cov,
+                     riskDisturbution = nothing,
+                     σ = 1.0)
     Λ = eigvals(cov)
     V = eigvecs(cov)
-    indices = reverse(sortperm(Λ)) # arguments for sorting eVal descending
-    Λ = Λ[indices] # sort eigen values
-    V = V[:, indices] # sort eigen vectors
-    # if riskDisturbution is nothing, it will assume all risk must be allocated to the principal component with
-    # smallest eigenvalue, and the weights will be the last eigenvector re-scaled to match σ
+    indices = reverse(sortperm(Λ))
+    Λ = Λ[indices]
+    V = V[:, indices]
+    
     if riskDisturbution == nothing
         riskDisturbution = zeros(size(cov)[1])
         riskDisturbution[end] = 1.0
     end
-    loads = σ*(riskDisturbution./Λ).^0.5 # represent the allocation in the new (orthogonal) basis
-    weights = V*loads # calculate weights
+    
+    loads = σ * (riskDisturbution ./ Λ) .^ 0.5
+    weights = V * loads
     return weights
 end
 
 """
-    function: Implementation of the symmetric CUSUM filter
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: page 39
+Function to implement the symmetric CUSUM filter.
+
+Args:
+    input (DataFrame): Dataframe of prices and dates.
+    threshold (Float64): Threshold.
+
+Reference:
+    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    Methodology: Page 39
 """
-function events(input, # dataframe of prices and dates
-                threshold) # threshold
+function symmetric_cusum_filter(input,
+                                 threshold)
     timeEvents, shiftPositive, shiftNegative = [], 0, 0
-    # dataframe with price differences
-    Δprice = DataFrames.DataFrame(hcat(input[2:end, 1], diff(input[:, 2])), :auto) 
+    Δprice = DataFrame(hcat(input[2:end, 1], diff(input[:, 2])), :auto)
+    
     for i ∈ Δprice[:, 1]
-        # compute shiftNegative/shiftPositive with min/max of 0 and ΔPRICE in each day
-        shiftPositive = max(0, shiftPositive+Δprice[Δprice[:, 1] .== i, 2][1]) # compare price diff with zero
-        shiftNegative = min(0, shiftNegative+Δprice[Δprice[:, 1] .== i, 2][1]) # compare price diff with zero
+        shiftPositive = max(0, shiftPositive + Δprice[Δprice[:, 1] .== i, 2][1])
+        shiftNegative = min(0, shiftNegative + Δprice[Δprice[:, 1] .== i, 2][1])
+        
         if shiftNegative < -threshold
-            shiftNegative = 0 # reset shiftNegative to 0
-            append!(timeEvents, [i]) # append this time into timeEvents
+            shiftNegative = 0
+            append!(timeEvents, [i])
         elseif shiftPositive > threshold
-            shiftPositive = 0 # reset shiftPositive to 0
-            append!(timeEvents, [i])  # append this time into timeEvents
+            shiftPositive = 0
+            append!(timeEvents, [i])
         end
     end
+    
     return timeEvents
 end

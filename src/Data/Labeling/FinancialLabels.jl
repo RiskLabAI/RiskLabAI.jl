@@ -3,56 +3,55 @@ using DataFrames
 using TimeSeries
 
 """
-    function: calculates the t-value of a linear trend
-    refernce: De Prado, M (2020) Machine Learning for Asset Managers
-    methodology: page 68, snippet 5.1
+    Function: Calculates the t-value of a linear trend.
+    Reference: De Prado, M (2020) Machine Learning for Asset Managers.
+    Methodology: Page 68, Snippet 5.1.
 """
-function tValuesLinearRegression(
-    close::TimeArray # time series of close prices
+function t_values_linear_regression(
+    close::TimeArray # Time series of close prices
 )::Float64
-    data = DataFrame(Close = values(close)[:,1], Index = collect(1:length(values(close)[:,1]))) # create regression data
+    data = DataFrame(Close = values(close)[:,1], Index = collect(1:length(values(close)[:,1]))) # Create regression data
 
-    OLS = lm(@formula(Close ~ Index), data) # fit linear regression
-    tValue = coef(OLS)[2] / stderror(OLS)[2] # calculate t-value
+    OLS = lm(@formula(Close ~ Index), data) # Fit linear regression
+    t_value = coef(OLS)[2] / stderror(OLS)[2] # Calculate t-value
 
-    return tValue
+    return t_value
 end
 
 """
-    function: implements the trend scanning method
-    refernce: De Prado, M (2020) Machine Learning for Asset Managers
-    methodology: page 68, snippet 5.2
+    Function: Implements the trend scanning method.
+    Reference: De Prado, M (2020) Machine Learning for Asset Managers.
+    Methodology: Page 68, Snippet 5.2.
 """
-function binsFromTrend(
-    molecule::Array, #  index of observations we wish to label
-    close::TimeArray, # time series of close prices
-    spans::Array # the list of values of span lenghts that the algorithm will evaluate, in search for the maximum absolute t-value
+function bins_from_trend(
+    molecule::Array, # Index of observations we wish to label
+    close::TimeArray, # Time series of close prices
+    spans::Array # The list of values of span lengths that the algorithm will evaluate, in search for the maximum absolute t-value
 )
-    
-    outputs = TimeArray((timestamp = Vector{DateTime}(), End_Time = [], tStatistic = [], Trend = [], Close = []), timestamp = :timestamp) # initialize outputs
+    outputs = TimeArray((timestamp = Vector{DateTime}(), End_Time = [], tStatistic = [], Trend = [], Close = []), timestamp = :timestamp) # Initialize outputs
 
     for index in molecule
-        tValues = TimeArray((timestamp = Vector{DateTime}(), tStatistic = []), timestamp = :timestamp) # initialize t-value series
-        location = findfirst(isequal(index), timestamp(close)) # find observation location
+        t_values = TimeArray((timestamp = Vector{DateTime}(), tStatistic = []), timestamp = :timestamp) # Initialize t-value series
+        location = findfirst(isequal(index), timestamp(close)) # Find observation location
 
-        if location + maximum(spans) <= length(values(close)) # check if the window goes out of range
+        if location + maximum(spans) <= length(values(close)) # Check if the window goes out of range
             for span in spans
-                tail = timestamp(close)[location + span] # get window tail index
-                windowPrices = close[index:timestamp(close)[2]-timestamp(close)[1]:tail] # get window prices
+                tail = timestamp(close)[location + span] # Get window tail index
+                window_prices = close[index:timestamp(close)[2]-timestamp(close)[1]:tail] # Get window prices
     
-                tValueTrend = tValuesLinearRegression(windowPrices) # get trend t-value 
-                tValue = TimeArray((timestamp = [tail], tStatistic = [tValueTrend]), timestamp = :timestamp) # get trend t-value as series
-                tValues = [tValues; tValue] # update t-values
+                t_value_trend = t_values_linear_regression(window_prices) # Get trend t-value 
+                t_value = TimeArray((timestamp = [tail], tStatistic = [t_value_trend]), timestamp = :timestamp) # Get trend t-value as series
+                t_values = [t_values; t_value] # Update t-values
             end
 
-            modifyTValue(x) = isinf(x) || isnan(x) ? 0.0 : abs(x) # modify for validity
-            modifiedTvalues = modifyTValue.(tValues[:tStatistic]) # modify for validity
-            bestTail = findwhen(modifiedTvalues[:tStatistic] .== maximum(values(modifiedTvalues[:tStatistic])))[1] # find the t-value's window tail index
+            modify_t_value(x) = isinf(x) || isnan(x) ? 0.0 : abs(x) # Modify for validity
+            modified_t_values = modify_t_value.(t_values[:tStatistic]) # Modify for validity
+            best_tail = findwhen(modified_t_values[:tStatistic] .== maximum(values(modified_t_values[:tStatistic])))[1] # Find the t-value's window tail index
             
-            try # skip infinite t-values
-                bestTValue = values(tValues[:tStatistic][bestTail])[1] # get best t-value
-                output = TimeArray((timestamp = [index], End_Time = [timestamp(tValues)[end]], tStatistic = [bestTValue], Trend = [Int64(sign(bestTValue))], Close = [values(close[index])[1]]), timestamp = :timestamp) # create output row
-                outputs = [outputs; output] # add result
+            try # Skip infinite t-values
+                best_t_value = values(t_values[:tStatistic][best_tail])[1] # Get best t-value
+                output = TimeArray((timestamp = [index], End_Time = [timestamp(t_values)[end]], tStatistic = [best_t_value], Trend = [Int64(sign(best_t_value))], Close = [values(close[index])[1]]), timestamp = :timestamp) # Create output row
+                outputs = [outputs; output] # Add result
             catch
             end
         end
