@@ -1,4 +1,3 @@
-
 using PyCall
 using LinearAlgebra
 using DataFrames
@@ -7,25 +6,28 @@ using Statistics
 @pyimport sklearn.datasets as Datasets
 
 """
-    function: Implementation of Orthogonal Features (Compute Eigen Vectors)
-    reference: De Prado, M. (2018) Advances In Financial Machine Learning
-    methodology: page 119 Orthogonal Features section snippet 8.5
+    Calculate eigen vectors and perform orthogonal features transformation.
+
+    Parameters:
+    - dotProduct::Matrix{<: Number}: Input dot product matrix.
+    - explainedVarianceThreshold::Float64: Threshold for variance filtering.
+
+    Returns:
+    - DataFrame: DataFrame containing eigen values, vectors, and cumulative variance.
 """
-function eigenVectors(
-    dotProduct::Matrix{<: Number}, # input dot product matrix 
-    explainedVarianceThreshold::Float64 # threshold for variance filtering
+function eigen_vectors(
+    dotProduct::Matrix{<: Number},
+    explainedVarianceThreshold::Float64
 )::DataFrame
 
     F = eigen(dotProduct)
     eigenValues = Float64.(F.values)
-    eigenVectors = [eigenVector for eigenVector ∈ eachcol(F.vectors)]
+    eigenVectors = [eigenVector for eigenVector in eachcol(F.vectors)]
 
-    # #2) only positive eVals
-    eigenDataFrame = DataFrame(Index=["PC $i" for i ∈ 1:length(eigenValues)], EigenValue=eigenValues, EigenVector=eigenVectors)
+    eigenDataFrame = DataFrame(Index=["PC $i" for i in 1:length(eigenValues)], EigenValue=eigenValues, EigenVector=eigenVectors)
 
     eigenDataFrame = sort(eigenDataFrame, [:EigenValue], rev=true)
 
-    #3) reduce dimension, form PCs
     cumulativeVariance = cumsum(eigenDataFrame.EigenValue) / sum(eigenDataFrame.EigenValue)
 
     eigenDataFrame.CumulativeVariance = cumulativeVariance
@@ -34,36 +36,40 @@ function eigenVectors(
     eigenDataFrame = eigenDataFrame[1:index, :]
 
     return eigenDataFrame
-
 end
 
 """
-    function: Implementation of Features Matrix Standardization 
-    reference: n/a
-    methodology: n/a
+    Standardize the input matrix.
+
+    Parameters:
+    - X: Features matrix / dataframe.
+
+    Returns:
+    - Matrix: Standardized features matrix.
 """
-function standardize(
-    X # features matrix / dataframe
-) 
+function standardize(X)
     (X .- mean(X, dims=1)) ./ std(X, dims=1)
 end
 
 """
-    function: Implementation of Orthogonal Features
-    reference: De Prado, M. (2018) Advances In Financial Machine Learning
-    methodology: page 119 Orthogonal Features section snippet 8.5
+    Perform orthogonal features transformation.
+
+    Parameters:
+    - X::Matrix{<: Number}: Features matrix.
+    - varianceThreshold::Float64: Threshold for variance filtering.
+
+    Returns:
+    - Tuple{Matrix, DataFrame}: Transformed features matrix P and eigenDataFrame.
 """
-function orthogonalFeatures(
-    X::Matrix{<: Number}; # features matrix
-    varianceThreshold::Float64=0.95 # threshold for variance filtering
+function orthogonal_features(
+    X::Matrix{<: Number},
+    varianceThreshold::Float64=0.95
 )::Tuple{Matrix, DataFrame}
-    # Given a X, compute orthofeatures P
     Z = standardize(X)
     dotProduct = Z' * Z
-    eigenDataFrame = eigenVectors(dotProduct, varianceThreshold)
+    eigenDataFrame = eigen_vectors(dotProduct, varianceThreshold)
 
     W = reduce(hcat, eigenDataFrame.EigenVector)
     P = Z * W
     return P, eigenDataFrame
 end
-

@@ -1,13 +1,31 @@
 module VectorFunctions
 
-export differences, vectorToMatrix
+export differences, vector_to_matrix
 
+"""
+Calculate the differences between consecutive elements of a vector.
+
+Parameters:
+- vector: The input vector.
+
+Returns:
+A new vector with the differences between consecutive elements. The first element is marked as missing.
+"""
 function differences(vector::Vector)::Vector
     result = [missing, (vector |> diff)...]
     result
 end
 
-function vectorToMatrix(vector::Vector)::Matrix
+"""
+Convert a vector into a column matrix.
+
+Parameters:
+- vector: The input vector.
+
+Returns:
+A column matrix where each element of the vector corresponds to a row in the matrix.
+"""
+function vector_to_matrix(vector::Vector)::Matrix
     reshape(vector, length(vector), 1)
 end
 

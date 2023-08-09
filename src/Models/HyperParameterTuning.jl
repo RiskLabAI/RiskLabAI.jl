@@ -1,13 +1,22 @@
 include("PurgedKFoldCV.jl")
 
+"""
+Generate train-test pairs using PurgedKFold.
 
-function MLJBase.train_test_pairs(purgedkfold::PurgedKFold, rows)
-    return collect(purgedKFoldSplit(purgedkfold, rows))
+Reference: Original code
+"""
+function generate_train_test_pairs(purged_kfold::PurgedKFold, rows::AbstractVector)
+    return collect(purged_kfold_split(purged_kfold, rows))
 end
 
-function MLJBase.train_test_pairs(purgedkfold::PurgedKFold, rows::UnitRange)
-    starttime =timestamp(purgedkfold.times)[1]
-    data = DataFrame(t = [starttime + Day(i-1)  for i in rows], k = rows)
-    data = TimeArray(data,timestamp = :t)
-    return collect(purgedKFoldSplit(purgedkfold, data))
+"""
+Generate train-test pairs using PurgedKFold for UnitRange.
+
+Reference: Original code
+"""
+function generate_train_test_pairs(purged_kfold::PurgedKFold, rows::UnitRange)
+    start_time = timestamp(purged_kfold.times)[1]
+    data = DataFrame(t = [start_time + Day(i - 1) for i in rows], k = rows)
+    data = TimeArray(data, timestamp = :t)
+    return collect(purged_kfold_split(purged_kfold, data))
 end
