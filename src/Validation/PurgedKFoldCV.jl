@@ -10,18 +10,18 @@ Function to purge test observations in the training set.
 Reference: De Prado, M. (2018) Advances in financial machine learning.
 Methodology: page 106, snippet 7.1
 """
-function purged_train_times(data::TimeArray, test::TimeArray)::TimeArray
-    train_times = deepcopy(data)
+function purgedTrainTimes(data::TimeArray, test::TimeArray)::TimeArray
+    trainTimes = deepcopy(data)
 
-    for (start_time, end_time) in zip(timestamp(test), values(test)[:, 1])
-        start_within_test_times = timestamp(train_times)[(timestamp(train_times) .>= start_time) .* (timestamp(train_times) .<= end_time)]
-        end_within_test_times = timestamp(train_times)[(values(train_times)[:, 1] .>= start_time) .* (values(train_times)[:, 1] .<= end_time)]
-        envelope_test_times = timestamp(train_times)[(timestamp(train_times) .<= start_time) .* (values(train_times)[:, 1] .>= end_time)]
-        filtered_times = setdiff(timestamp(train_times), union(start_within_test_times, end_within_test_times, envelope_test_times))
-        train_times = train_times[filtered_times]
+    for (startTime, endTime) in zip(timestamp(test), values(test)[:, 1])
+        startWithinTestTimes = timestamp(trainTimes)[(timestamp(trainTimes) .>= startTime) .* (timestamp(trainTimes) .<= endTime)]
+        endWithinTestTimes = timestamp(trainTimes)[(values(trainTimes)[:, 1] .>= startTime) .* (values(trainTimes)[:, 1] .<= endTime)]
+        envelopeTestTimes = timestamp(trainTimes)[(timestamp(trainTimes) .<= startTime) .* (values(trainTimes)[:, 1] .>= endTime)]
+        filteredTimes = setdiff(timestamp(trainTimes), union(startWithinTestTimes, endWithinTestTimes, envelopeTestTimes))
+        trainTimes = trainTimes[filteredTimes]
     end
 
-    return train_times
+    return trainTimes
 end
 
 """
@@ -30,15 +30,15 @@ Function to get embargo time for each bar.
 Reference: De Prado, M. (2018) Advances in financial machine learning.
 Methodology: page 108, snippet 7.2
 """
-function embargo_times(times::Array, percent_embargo::Float64)::TimeArray
-    step = round(Int, length(times) * percent_embargo)
+function embargoTimes(times::Array, percentEmbargo::Float64)::TimeArray
+    step = round(Int, length(times) * percentEmbargo)
 
     if step == 0
         embargo = TimeArray((Times = times, timestamp = times), timestamp = :timestamp)
     else
         embargo = TimeArray((Times = times[step + 1:end], timestamp = times[1:end - step]), timestamp = :timestamp)
-        tail_times = TimeArray((Times = repeat([times[end]], step), timestamp = times[end - step + 1:end]), timestamp = :timestamp)
-        embargo = [embargo; tail_times]
+        tailTimes = TimeArray((Times = repeat([times[end]], step), timestamp = times[end - step + 1:end]), timestamp = :timestamp)
+        embargo = [embargo; tailTimes]
     end
 
     return embargo
@@ -51,12 +51,12 @@ Reference: De Prado, M. (2018) Advances in financial machine learning.
 Methodology: page 109, snippet 7.3
 """
 mutable struct PurgedKFold
-    n_splits::Int64
+    nSplits::Int64
     times::TimeArray
-    percent_embargo::Float64
+    percentEmbargo::Float64
 
-    function PurgedKFold(n_splits::Int = 3, times::TimeArray = nothing, percent_embargo::Float64 = 0.)
-        times isa TimeArray ? new(n_splits, times, percent_embargo) : error("The times parameter should be a TimeArray.")
+    function PurgedKFold(nSplits::Int = 3, times::TimeArray = nothing, percentEmbargo::Float64 = 0.)
+        times isa TimeArray ? new(nSplits, times, percentEmbargo) : error("The times parameter should be a TimeArray.")
     end
 end
 
@@ -66,34 +66,34 @@ Function to split data when observations overlap.
 Reference: De Prado, M. (2018) Advances in financial machine learning.
 Methodology: page 109, snippet 7.3
 """
-function purged_kfold_split(self::PurgedKFold, data::TimeArray)
+function purgedKFoldSplit(self::PurgedKFold, data::TimeArray)
     if timestamp(data) != timestamp(self.times)
         error("data and ThruDateValues must have the same index.")
     end
 
     indices = collect(1:length(data))
-    embargo = round(Int64, length(data) * self.percent_embargo)
-    final_test = []
-    final_train = []
+    embargo = round(Int64, length(data) * self.percentEmbargo)
+    finalTest = []
+    finalTrain = []
 
-    test_ranges = [(i[1], i[end]) for i in [kfolds(collect(1:length(self.times)), k = self.n_splits)[i][2] for i in collect(1:self.n_splits)]]
+    testRanges = [(i[1], i[end]) for i in [kfolds(collect(1:length(self.times)), k = self.nSplits)[i][2] for i in collect(1:self.nSplits)]]
 
-    for (start_index, end_index) in test_ranges
-        first_test_index = timestamp(self.times)[start_index]
-        test_indices = indices[start_index:end_index]
-        max_test_index = searchsortedfirst(timestamp(self.times), maximum(values(self.times)[test_indices, 1]))
-        search_times(y) = findfirst(x -> x == y, timestamp(self.times))
-        train_indices = search_times.(timestamp(self.times)[values(self.times)[:, 1] .<= first_test_index])
+    for (startIndex, endIndex) in testRanges
+        firstTestIndex = timestamp(self.times)[startIndex]
+        testIndices = indices[startIndex:endIndex]
+        maxTestIndex = searchsortedfirst(timestamp(self.times), maximum(values(self.times)[testIndices, 1]))
+        searchTimes(y) = findfirst(x -> x == y, timestamp(self.times))
+        trainIndices = searchTimes.(timestamp(self.times)[values(self.times)[:, 1] .<= firstTestIndex])
 
-        if max_test_index + embargo <= length(values(data))
-            append!(train_indices, indices[max_test_index + embargo:end])
+        if maxTestIndex + embargo <= length(values(data))
+            append!(trainIndices, indices[maxTestIndex + embargo:end])
         end
 
-        append!(final_test, [Int64.(test_indices)])
-        append!(final_train, [Int64.(train_indices)])
+        append!(finalTest, [Int64.(testIndices)])
+        append!(finalTrain, [Int64.(trainIndices)])
     end
 
-    return Tuple(zip(final_train, final_test))
+    return Tuple(zip(finalTrain, finalTest))
 end
 
 """
@@ -102,7 +102,7 @@ Function to calculate cross-validation scores with purging.
 Reference: De Prado, M. (2018) Advances in financial machine learning.
 Methodology: page 110, snippet 7.4
 """
-function cross_validation_score(classifier, data::TimeArray, labels::TimeArray, sample_weights::Array, scoring::String = "Log Loss", times::TimeArray = nothing, cross_validation_generator::PurgedKFold = nothing, n_splits::Int = nothing, percent_embargo::Float64 = 0.0)
+function crossValidationScore(classifier, data::TimeArray, labels::TimeArray, sampleWeights::Array, scoring::String = "Log Loss", times::TimeArray = nothing, crossValidationGenerator::PurgedKFold = nothing, nSplits::Int = nothing, percentEmbargo::Float64 = 0.0)
     if scoring ∉ ["Log Loss", "Accuracy"]
         error("Wrong scoring method.")
     end
@@ -111,8 +111,8 @@ function cross_validation_score(classifier, data::TimeArray, labels::TimeArray, 
         times = TimeArray(DataFrame(startTime = timestamp(data), endTime = append!(timestamp(data)[2:end], [timestamp(data)[end] + (timestamp(data)[2] - timestamp(data)[1])])), timestamp = :startTime)
     end
 
-    if isnothing(cross_validation_generator)
-        cross_validation_generator = PurgedKFold(n_splits, times, percent_embargo)
+    if isnothing(crossValidationGenerator)
+        crossValidationGenerator = PurgedKFold(nSplits, times, percentEmbargo)
     end
 
     name = colnames(labels)[1]
@@ -133,7 +133,7 @@ function cross_validation_score(classifier, data::TimeArray, labels::TimeArray, 
     machine = MLJ.MLJBase.machine(classifier, data, labels)
     scores = []
 
-    for (train, test) in purged_kfold_split(cross_validation_generator, times)
+    for (train, test) in purgedKFoldSplit(crossValidationGenerator, times)
         fit!(machine, rows = train)
 
         if scoring == "Log Loss"
@@ -141,7 +141,7 @@ function cross_validation_score(classifier, data::TimeArray, labels::TimeArray, 
             score = log_loss(predictions, labels[test]) |> mean
         else
             predictions = MLJ.MLJBase.predict_mode(machine, data[test, :])
-            score = accuracy(predictions, labels[test], sample_weights[test]) |> mean
+            score = accuracy(predictions, labels[test], sampleWeights[test]) |> mean
         end
 
         append!(scores, [score])
