@@ -3,136 +3,148 @@ using Statistics
 using Random
 using DataFrames
 
-#---------------------------------------------------
+
 """
-    function: validates the False Strategy Theorem experimentally
-    refernce: De Prado, M (2020) Machine Learning for Asset Managers
-    methodology: page 110, snippet 8.1
+Function to validate the False Strategy Theorem experimentally.
+
+:param nTrials: Number of trials.
+:param meanSharpeRatio: Mean Sharpe Ratio.
+:param stdSharpeRatio: Standard deviation of Sharpe ratios.
+:return: Expected maximum Sharpe ratio.
 """
 function expectedMaxSharpeRatio(
-    nTrials, # number of trials
-    meanSharpeRatio, # mean Sharpe Ratio
-    stdSharpeRatio# standard deviation of Sharpe ratios
+    nTrials, meanSharpeRatio, stdSharpeRatio
 )::Float64
+    emc = MathConstants.eulergamma
 
-    emc = MathConstants.eulergamma # euler gamma constant
+    sharpeRatio = (1 - emc) * quantile(Normal(0, 1), 1 - 1 / nTrials) +
+        emc * quantile(Normal(0, 1), 1 - 1 / (nTrials * MathConstants.e))
+    sharpeRatio = meanSharpeRatio + stdSharpeRatio * sharpeRatio
 
-    sharpeRatio = (1 - emc) * quantile(Normal(0, 1), 1 - 1 / nTrials) + emc * quantile(Normal(0, 1) , 1 - 1 / (nTrials * MathConstants.e)) # get expected value of sharpe ratio by using false strategy theorem
-    sharpeRatio = meanSharpeRatio + stdSharpeRatio * sharpeRatio # get max Sharpe Ratio, controlling for SBuMT
-    
     return sharpeRatio
 end
 
-function generatedMaxSharpeRatio(
-    nSims,#::Int, # number of simulations 
-    nTrials,#::Int, # number of trials
-    stdSharpeRatio,#::Float64, # mean Sharpe Ratio
-    meanSharpeRatio#::Float64 # standard deviation of Sharpe Ratios
-)::DataFrame
-    out = DataFrame() # initialize output
+"""
+Function to generate maximum Sharpe ratio.
 
-    # Monte Carlo of max{SR} on nTrials, from nSims simulations
+:param nSims: Number of simulations.
+:param nTrials: Number of trials.
+:param stdSharpeRatio: Standard deviation of Sharpe Ratios.
+:param meanSharpeRatio: Mean Sharpe Ratio.
+:return: DataFrame containing generated maximum Sharpe ratios.
+"""
+function generatedMaxSharpeRatio(
+    nSims, nTrials, stdSharpeRatio, meanSharpeRatio
+)::DataFrame
+    out = DataFrame()
+
     for nTrials_ in nTrials
-        #1) Simulated Sharpe ratios
-        sharpeRatio = randn((Int64(nSims), Int64(nTrials_))) # generate random numbers for Sharpe Ratios
-        sharpeRatio = (sharpeRatio .- mean(sharpeRatio, dims = 2)) ./std(sharpeRatio, dims = 2) # standardize Sharpe Ratios 
-        sharpeRatio = meanSharpeRatio .+ sharpeRatio .* stdSharpeRatio # set the mean and standard deviation
-        
-        #2) Store output
-        output = DataFrame(maxSharpeRatio = vec(maximum(sharpeRatio, dims = 2)), nTrials = nTrials_) # generate output
-        append!(out, output) # append output
+        sharpeRatio = randn((Int64(nSims), Int64(nTrials_)))
+        sharpeRatio = (sharpeRatio .- mean(sharpeRatio, dims = 2)) ./ std(sharpeRatio, dims = 2)
+        sharpeRatio = meanSharpeRatio .+ sharpeRatio .* stdSharpeRatio
+
+        output = DataFrame(maxSharpeRatio = vec(maximum(sharpeRatio, dims = 2)), nTrials = nTrials_)
+        append!(out, output)
     end
     return out
 end
 
 """
-    function: calculates mean and standard deviation of the predicted errors
-    refernce: De Prado, M (2020) Machine Learning for Asset Managers
-    methodology: page 112, snippet 8.2
+Function to calculate mean and standard deviation of the predicted errors.
+
+:param nSims0: Number of max{SR} used to estimate E[max{SR}].
+:param nSims1: Number of errors on which std is computed.
+:param nTrials: Array of numbers of SR used to derive max{SR}.
+:param stdSharpeRatio: Standard deviation of Sharpe Ratios.
+:param meanSharpeRatio: Mean Sharpe Ratio.
+:return: DataFrame containing mean and standard deviation of errors.
 """
 function meanStdError(
-    nSims0::Int, # number of max{SR} used to estimate E[max{SR}]
-    nSims1::Int, # number of errors on which std is computed
-    nTrials::Vector, # array of numbers of SR used to derive max{SR}
-    stdSharpeRatio::Float64, # mean Sharpe Ratio
-    meanSharpeRatio::Float64 # standard deviation of Sharpe Ratios
+    nSims0, nSims1, nTrials, stdSharpeRatio, meanSharpeRatio
 )::DataFrame
-    # Compute standard deviation of errors per nTrial
-    sharpeRatio0 = DataFrame(nT = nTrials, ExpectedMaxSR = [expectedMaxSharpeRatio(i, meanSharpeRatio, stdSharpeRatio) for i in nTrials]) # compute expected max Sharpe Ratios
-    error = DataFrame() # initialize errors
-    out = DataFrame() # initialize output
+    sharpeRatio0 = DataFrame(nT = nTrials,
+        ExpectedMaxSR = [expectedMaxSharpeRatio(i, meanSharpeRatio, stdSharpeRatio) for i in nTrials])
+    error = DataFrame()
+    out = DataFrame()
 
     for i in 1:nSims1
-        sharpeRatio1 = generatedMaxSharpeRatio(nSims0, nTrials, stdSharpeRatio, meanSharpeRatio) # generate max Sharpe Ratios 
-        sharpeRatio1 = combine(groupby(sharpeRatio1, :nTrials), :maxSharpeRatio => mean; renamecols=false) # calculate mean max Sharpe Ratios 
-        error_ = DataFrame(sharpeRatio1) # create DataFrame of generated Max Sharpe Ratios with errors
-        
-        error_[!, :ExpectedMaxSR] = sharpeRatio0.ExpectedMaxSR # add expected max Sharpe Ratios
-        error_[!, :err] = error_.maxSharpeRatio ./ error_.ExpectedMaxSR .- 1 # calculate errors
-        append!(error, error_) # append errors
-      
+        sharpeRatio1 = generatedMaxSharpeRatio(nSims0, nTrials, stdSharpeRatio, meanSharpeRatio)
+        sharpeRatio1 = combine(groupby(sharpeRatio1, :nTrials), :maxSharpeRatio => mean; renamecols=false)
+        error_ = DataFrame(sharpeRatio1)
+
+        error_[!, :ExpectedMaxSR] = sharpeRatio0.ExpectedMaxSR
+        error_[!, :err] = error_.maxSharpeRatio ./ error_.ExpectedMaxSR .- 1
+        append!(error, error_)
     end    
-    out[!, :meanErr] = combine(groupby(error, :nTrials), :err => mean; renamecols=false).err # calculate mean errors
-    out[!, :nTrials] = combine(groupby(error, :nTrials), :err => mean; renamecols=false).nTrials # add number of trials
-    out[!, :stdErr] = combine(groupby(error, :nTrials), :err => std; renamecols=false).err # calculate standard deviation oferrors
+    out[!, :meanErr] = combine(groupby(error, :nTrials), :err => mean; renamecols=false).err
+    out[!, :nTrials] = combine(groupby(error, :nTrials), :err => mean; renamecols=false).nTrials
+    out[!, :stdErr] = combine(groupby(error, :nTrials), :err => std; renamecols=false).err
 
     return out
 end
 
 """
-    function: calculates type I error probability of stratgies
-    refernce: De Prado, M (2020) Machine Learning for Asset Managers
-    methodology: page 119, snippet 8.3
+Function to calculate type I error probability of strategies.
+
+:param sharpeRatio: Estimated Sharpe Ratio.
+:param t: Number of observations.
+:param sharpeRatio_: True Sharpe Ratio.
+:param skew: Skewness of returns.
+:param kurt: Kurtosis of returns.
+:return: Estimated Z-statistics for the Sharpe Ratios.
 """
 function estimatedSharpeRatioZStatistics(
-    sharpeRatio, # estimated Sharpe Ratio
-    t, # number of observations
-    sharpeRatio_ = 0, # true Sharpe Ratio
-    skew = 0, # skewness of returns
-    kurt = 3 # kurtosis of returns
+    sharpeRatio, t, sharpeRatio_ = 0, skew = 0, kurt = 3
 )::Float64
-
-    z = (sharpeRatio - sharpeRatio_)*(t - 1)^0.5 # calculate first part of z statistic
-    z /= (1 - skew*sr + (kurt - 1) / 4*sr^2)^0.5 # calculate z statistic
+    z = (sharpeRatio - sharpeRatio_) * (t - 1)^0.5
+    z /= (1 - skew * sharpeRatio + (kurt - 1) / 4 * sharpeRatio^2)^0.5
 
     return z
 end
 
-function strategyType1ErrorProbability(z, # z statistic for the estimated Sharpe Ratios
-                    k = 1) # number of tests
+"""
+Function to calculate strategy type I error probability.
 
-    α = cdf(Normal(0, 1), -z) # find false positive rate
-    α_k = 1 - (1 - α) ^ k # correct for multi-testing 
+:param z: Z statistic for the estimated Sharpe Ratios.
+:param k: Number of tests.
+:return: Type I error probability.
+"""
+function strategyType1ErrorProbability(z, k = 1)
+    α = cdf(Normal(0, 1), -z)
+    α_k = 1 - (1 - α)^k
 
     return α_k
 end
 
-
 """
-    function: calculates type II error probability of stratgies
-    refernce: De Prado, M (2020) Machine Learning for Asset Managers
-    methodology: page 121, snippet 8.4
-"""
-function thetaForType2Error(sharpeRatio, # estimated Sharpe Ratio
-               t, # number of observations
-               sharpeRatio_ = 0, # true Sharpe Ratio
-               skew = 0, # skewness of returns
-               kurt = 3) # kurtosis of returns
+Function to calculate theta for type II error probability.
 
-    θ = sharpeRatio_*(t - 1)^0.5 # calculate first part of theta
-    θ /= (1 - skew*sharpeRatio + (kurt - 1) / 4*sharpeRatio^2)^0.5 # calculate theta
+:param sharpeRatio: Estimated Sharpe Ratio.
+:param t: Number of observations.
+:param sharpeRatio_: True Sharpe Ratio.
+:param skew: Skewness of returns.
+:param kurt: Kurtosis of returns.
+:return: Calculated theta parameter.
+"""
+function thetaForType2Error(sharpeRatio, t, sharpeRatio_ = 0, skew = 0, kurt = 3)
+    θ = sharpeRatio_ * (t - 1)^0.5
+    θ /= (1 - skew * sharpeRatio + (kurt - 1) / 4 * sharpeRatio^2)^0.5
 
     return θ
 end
 
-#---------------------------------------------------
-function strategyType2ErrorProbability(α, # type I error
-                    k, # number of tests
-                    θ) # calculated theta parameter
 
-    z = quantile(Normal(0, 1),(1 - α) ^ (1 / k)) # perform Sidak’s correction
-    β = cdf(Normal(0, 1), z - θ) # calculate false negative rate
+"""
+Function to calculate strategy type II error probability.
+
+:param α: Type I error.
+:param k: Number of tests.
+:param θ: Calculated theta parameter.
+:return: Type II error probability.
+"""
+function strategyType2ErrorProbability(α, k, θ)
+    z = quantile(Normal(0, 1), (1 - α)^(1 / k))
+    β = cdf(Normal(0, 1), z - θ)
 
     return β
 end
-
