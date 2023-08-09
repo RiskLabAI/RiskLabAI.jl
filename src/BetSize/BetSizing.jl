@@ -288,57 +288,123 @@ function generateSignal(events::DataFrame, stepSize::Float64, EstimationResult::
     return finalSignal
 end
 
-"""----------------------------------------------------------------------
-    function: DYNAMIC POSITION SIZE AND LIMIT PRICE 
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: p.145 SNIPPET 10.4 
-----------------------------------------------------------------------"""
+"""
+    Calculate the coefficient ω for dynamic position size and limit price.
 
-function ω(x, # divergence between the current market price and the forecast
-           m) # bet size 
-    return x^2*(1/m^2-1)
+    This function calculates the coefficient ω used in dynamic position size and limit price calculations.
+
+    Args:
+        x (Float64): Divergence between the current market price and the forecast.
+        m (Float64): Bet size.
+
+    Returns:
+        Float64: Coefficient ω.
+
+    References:
+        - De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+        - Methodology p.145 SNIPPET 10.4
+
+"""
+function calculate_ω(x::Float64, m::Float64)
+    return x^2 * (1 / m^2 - 1)
 end
 
+"""
+    Calculate the size of bet for dynamic position size.
 
-function SizeOfBet(ω ,# coefficient that regulates the width of the sigmoid function
-                   x) # divergence between the current market price and the forecast               
-    return x*(ω+x^2)^(-0.5)    
+    This function calculates the size of bet based on the coefficient ω and the divergence between the current market price and the forecast.
+
+    Args:
+        ω (Float64): Coefficient that regulates the width of the sigmoid function.
+        x (Float64): Divergence between the current market price and the forecast.
+
+    Returns:
+        Float64: Size of bet.
+
+    References:
+        - De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+        - Methodology p.145 SNIPPET 10.4
+
+"""
+function calculate_size_of_bet(ω::Float64, x::Float64)
+    return x * (ω + x^2)^(-0.5)
 end
 
+"""
+    Calculate the target position size.
 
-function getTPos(ω, # coefficient that regulates the width of the sigmoid function
-                 f, # predicted price
-                 acctualprice , # acctual price 
-                 maximumpositionsize) #  maximum absolute position size
-    return trunc(Int, (SizeOfBet(ω, f-acctualprice)*maximumpositionsize))   
+    This function calculates the target position size based on the coefficient ω, predicted price, actual price, and maximum absolute position size.
+
+    Args:
+        ω (Float64): Coefficient that regulates the width of the sigmoid function.
+        f (Float64): Predicted price.
+        actual_price (Float64): Actual price.
+        maximum_position_size (Int): Maximum absolute position size.
+
+    Returns:
+        Int: Target position size.
+
+    References:
+        - De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+        - Methodology p.145 SNIPPET 10.4
+
+"""
+function calculate_target_position(ω::Float64, f::Float64, actual_price::Float64, maximum_position_size::Int)
+    return trunc(Int, (calculate_size_of_bet(ω, f - actual_price) * maximum_position_size))
 end
 
+"""
+    Calculate the inverse price for dynamic position size.
 
-function InversePrice(f, # predicted price
-                      ω, #coefficient that regulates the width of the sigmoid function
-                      m) # betsize 
-    return f-m*(ω/(1-m^2))^(.5)
+    This function calculates the inverse price based on the predicted price, coefficient ω, and bet size.
+
+    Args:
+        f (Float64): Predicted price.
+        ω (Float64): Coefficient that regulates the width of the sigmoid function.
+        m (Float64): Bet size.
+
+    Returns:
+        Float64: Inverse price.
+
+    References:
+        - De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+        - Methodology p.145 SNIPPET 10.4
+
+"""
+function calculate_inverse_price(f::Float64, ω::Float64, m::Float64)
+    return f - m * (ω / (1 - m^2))^(0.5)
 end
 
+"""
+    Calculate the limit price for dynamic position size.
 
-function limitPrice(TargetPositionSize, #  target position size
-                    cPosition, # current position
-                    f, #  predicted price
-                    ω, # coefficient that regulates the width of the sigmoid function
-                    maximumpositionsize)  # maximum absolute position size
-    if TargetPositionSize >=  cPosition
+    This function calculates the limit price based on the target position size, current position, predicted price, coefficient ω, and maximum absolute position size.
+
+    Args:
+        TargetPositionSize (Int): Target position size.
+        cPosition (Int): Current position.
+        f (Float64): Predicted price.
+        ω (Float64): Coefficient that regulates the width of the sigmoid function.
+        maximum_position_size (Int): Maximum absolute position size.
+
+    Returns:
+        Float64: Limit price.
+
+    References:
+        - De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+        - Methodology p.145 SNIPPET 10.4
+
+"""
+function calculate_limit_price(TargetPositionSize::Int, cPosition::Int, f::Float64, ω::Float64, maximum_position_size::Int)
+    if TargetPositionSize >= cPosition
         sgn = 1
     else
         sgn = -1
     end
     lP = 0
-    for i in abs(cPosition+sgn):abs(TargetPositionSize)
-        lP += invPrice(f,ω,i/float(maximumpositionsize))
+    for i in abs(cPosition + sgn):abs(TargetPositionSize)
+        lP += calculate_inverse_price(f, ω, i / float(maximum_position_size))
     end
-    lP /= TargetPositionSize-cPosition
-    return lP    
+    lP /= TargetPositionSize - cPosition
+    return lP
 end
-
-
-
-
