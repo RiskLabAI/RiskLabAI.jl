@@ -24,7 +24,7 @@ Parameters:
 Returns:
 - DataFrame: DataFrame containing percent changes of prices.
 """
-function percent_change(prices::DataFrame)
+function percentChange(prices::DataFrame)
     returns = DataFrame()
     for sym in names(prices)[2:end]
         data = prices[!, Symbol(sym)]
@@ -50,7 +50,7 @@ Returns:
 - Dict: Clusters of assets.
 - DataFrame: Silhouette scores for each asset.
 """
-function cluster_kmeans_base(correlation, numberClusters = 10, iterations = 10)
+function clusterKMeansBase(correlation, numberClusters = 10, iterations = 10)
     distance = sqrt.((1 .- correlation) / 2)
     silh, kmeansOut = NaN, NaN
     for init ∈ 1:iterations
@@ -85,7 +85,7 @@ Returns:
 - Dict: Merged clusters of assets.
 - DataFrame: Silhouette scores for each asset in the merged clusters.
 """
-function make_new_outputs(correlation, clusters, clusters2)
+function makeNewOutputs(correlation, clusters, clusters2)
     assets = names(correlation)
     clustersNew = Dict()
     for i in keys(clusters)
@@ -122,12 +122,12 @@ Returns:
 - Dict: Clusters of assets.
 - DataFrame: Silhouette scores for each asset.
 """
-function cluster_kmeans_top(correlation, numberClusters = nothing, iterations = 10)
+function clusterKMeansTop(correlation, numberClusters = nothing, iterations = 10)
     if isnothing(numberClusters)
         numberClusters = size(correlation)[2] - 1
     end
     assets = names(correlation)
-    correlationSorted, clusters, silh, indexSorted = cluster_kmeans_base(Matrix(correlation),
+    correlationSorted, clusters, silh, indexSorted = clusterKMeansBase(Matrix(correlation),
         numberClusters = min(numberClusters, size(correlation)[2] - 1), iterations = 10)
     correlationSorted = DataFrame(correlationSorted, :auto)
     DataFrames.rename!(correlationSorted, Symbol.(names(correlationSorted)) .=> assets[indexSorted])
@@ -142,8 +142,8 @@ function cluster_kmeans_top(correlation, numberClusters = nothing, iterations = 
         correlationTemp = correlation[indexin(keysRedo, assets), indexin(keysRedo, assets)]
         assets_ = names(correlationTemp)
         tStatMean = mean([clusterTstats[i] for i in redoClusters])
-        correlationSorted2, clusters2, silh2 = cluster_kmeans_top(correlationTemp, numberClusters = min(numberClusters, size(correlationTemp)[2] - 1), iterations = iterations)
-        correlationNew, clustersNew, silhNew = make_new_outputs(correlation, Dict("$i" => clusters[i] for i in keys(clusters) if i ∉ redoClusters), clusters2)
+        correlationSorted2, clusters2, silh2 = clusterKMeansTop(correlationTemp, numberClusters = min(numberClusters, size(correlationTemp)[2] - 1), iterations = iterations)
+        correlationNew, clustersNew, silhNew = makeNewOutputs(correlation, Dict("$i" => clusters[i] for i in keys(clusters) if i ∉ redoClusters), clusters2)
         newTstatMean = mean([mean(silhNew[indexin(clustersNew[i], silhNew.index), :silh]) /
             std(silhNew[indexin(clustersNew[i], silhNew.index), :silh]) for i in keys(clustersNew)])
         if newTstatMean <= tStatMean
@@ -168,7 +168,7 @@ Parameters:
 Returns:
 - Matrix: Random covariance submatrix.
 """
-function random_covariance_sub(numberObservations, numberColumns, σ, domain)
+function randomCovarianceSub(numberObservations, numberColumns, σ, domain)
     if numberColumns == 1
         return ones(1, 1)
     end
@@ -194,13 +194,13 @@ Parameters:
 Returns:
 - BlockArray: Random block covariance matrix.
 """
-function random_block_covariance(numberColumns, numberBlocks; blockSizeMin = 1, σ = 1.0, domain = nothing)
+function randomBlockCovariance(numberColumns, numberBlocks; blockSizeMin = 1, σ = 1.0, domain = nothing)
     parts = sort(sample(domain, 1:numberColumns - (blockSizeMin - 1) * numberBlocks - 1, numberBlocks - 1, replace = false))
     append!(parts, numberColumns - (blockSizeMin - 1) * numberBlocks)
     parts = append!([parts[1]], diff(parts)) .- 1 .+ blockSizeMin
     covariance = nothing
     for column in parts
-        thisCovariance = random_covariance_sub(Int(max(column * (column + 1) / 2.0, 100)), column, σ, domain)
+        thisCovariance = randomCovarianceSub(Int(max(column * (column + 1) / 2.0, 100)), column, σ, domain)
         if isnothing(covariance)
             covariance = copy(thisCovariance)
         else
@@ -224,10 +224,10 @@ Parameters:
 Returns:
 - DataFrame: Random block correlation matrix.
 """
-function random_block_correlation(numberColumns, numberBlocks; randomState = nothing, blockSizeMin = 1)
+function randomBlockCorrelation(numberColumns, numberBlocks; randomState = nothing, blockSizeMin = 1)
     domain = MersenneTwister(randomState)
-    covariance1 = random_block_covariance(numberColumns, numberBlocks, blockSizeMin = blockSizeMin, σ = 0.5, domain = domain)
-    covariance2 = random_block_covariance(numberColumns, 1, blockSizeMin = blockSizeMin, σ = 1.0, domain = domain)
+    covariance1 = randomBlockCovariance(numberColumns, numberBlocks, blockSizeMin = blockSizeMin, σ = 0.5, domain = domain)
+    covariance2 = randomBlockCovariance(numberColumns, 1, blockSizeMin = blockSizeMin, σ = 1.0, domain = domain)
     covariance1 += covariance2
     correlation = covToCorr(covariance1)
     correlation = DataFrame(correlation, :auto)
@@ -245,7 +245,7 @@ Parameters:
 Returns:
 - Matrix: Correlation matrix.
 """
-function cov_to_corr(covariance)
+function covToCorr(covariance)
     std = sqrt.(diag(covariance))
     correlation = covariance ./ (std .* std')
     correlation[correlation .< -1] .= -1

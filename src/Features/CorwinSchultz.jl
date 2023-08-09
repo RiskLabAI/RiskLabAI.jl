@@ -8,21 +8,21 @@ using TimeSeries
     Estimates β values based on high and low prices.
 
     Parameters:
-    - high_prices::Vector: Vector of high prices.
-    - low_prices::Vector: Vector of low prices.
-    - window_span::Int: Rolling window span.
+    - highPrices::Vector: Vector of high prices.
+    - lowPrices::Vector: Vector of low prices.
+    - windowSpan::Int: Rolling window span.
 
     Returns:
     - β::Vector: Estimated β values.
 """
-function beta_estimates(
-    high_prices::Vector, 
-    low_prices::Vector, 
-    window_span::Int
+function betaEstimates(
+    highPrices::Vector, 
+    lowPrices::Vector, 
+    windowSpan::Int
 )::Vector
-    log_ratios = log.(high_prices ./ low_prices) .^ 2
-    β = rolling(sum, log_ratios, 2)
-    β = rolling(mean, β, window_span)
+    logRatios = log.(highPrices ./ lowPrices) .^ 2
+    β = rolling(sum, logRatios, 2)
+    β = rolling(mean, β, windowSpan)
     return β
 end
 
@@ -32,19 +32,19 @@ end
     Estimates γ values based on high and low prices.
 
     Parameters:
-    - high_prices::Vector: Vector of high prices.
-    - low_prices::Vector: Vector of low prices.
+    - highPrices::Vector: Vector of high prices.
+    - lowPrices::Vector: Vector of low prices.
 
     Returns:
     - γ::Vector: Estimated γ values.
 """
-function gamma_estimates(
-    high_prices::Vector, 
-    low_prices::Vector
+function gammaEstimates(
+    highPrices::Vector, 
+    lowPrices::Vector
 )::Vector
-    high_prices_max = rolling(maximum, high_prices, 2)
-    low_prices_min = rolling(minimum, low_prices, 2)
-    γ = log.(high_prices_max ./ low_prices_min) .^ 2
+    highPricesMax = rolling(maximum, highPrices, 2)
+    lowPricesMin = rolling(minimum, lowPrices, 2)
+    γ = log.(highPricesMax ./ lowPricesMin) .^ 2
     γ
 end
 
@@ -60,7 +60,7 @@ end
     Returns:
     - α::Vector: Estimated α values.
 """
-function alpha_estimates(
+function alphaEstimates(
     β::Vector, 
     γ::Vector
 )::Vector
@@ -77,21 +77,21 @@ end
     Estimates spread values based on α values.
 
     Parameters:
-    - high_prices::Vector: Vector of high prices.
-    - low_prices::Vector: Vector of low prices.
-    - window_span::Int: Rolling window span.
+    - highPrices::Vector: Vector of high prices.
+    - lowPrices::Vector: Vector of low prices.
+    - windowSpan::Int: Rolling window span.
 
     Returns:
     - spread::Vector: Estimated spread values.
 """
-function corwin_schultz_estimator(
-    high_prices::Vector, 
-    low_prices::Vector; 
-    window_span::Int=20
+function corwinSchultzEstimator(
+    highPrices::Vector, 
+    lowPrices::Vector; 
+    windowSpan::Int=20
 )::Vector
-    β = beta_estimates(high_prices, low_prices, window_span)
-    γ = gamma_estimates(high_prices, low_prices)
-    α = alpha_estimates(β, γ)
+    β = betaEstimates(highPrices, lowPrices, windowSpan)
+    γ = gammaEstimates(highPrices, lowPrices)
+    α = alphaEstimates(β, γ)
     spread = 2 .* (α .- 1) ./ (1 .+ exp.(α))
     return spread
 end

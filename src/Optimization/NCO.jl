@@ -4,7 +4,7 @@ Calculate returns from prices DataFrame.
 Reference: n/a
 Methodology: n/a
 """
-function calculate_returns(prices::DataFrames.DataFrame)
+function calculateReturns(prices::DataFrames.DataFrame)
     returns = DataFrames.DataFrame()
     for sym in names(prices)[2:end]
         data = prices[!, Symbol(sym)]
@@ -23,24 +23,24 @@ Perform clustering using K-Means.
 
 Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons. Snippet 4.1, Page 56
 """
-function cluster_kmeans_base(correlation; number_clusters = 10, iterations = 10)
+function clusterKMeansBase(correlation; numberClusters = 10, iterations = 10)
     distance = sqrt.((1 .- correlation) / 2)
-    silh, kmeans_out = [NaN], [NaN]
+    silh, kmeansOut = [NaN], [NaN]
     for init in 1:iterations
-        for i in 2:number_clusters
-            kmeans_ = kmeans(distance, i)
-            silh_ = silhouette_samples(distance, assignments(kmeans_))
-            statistic = (mean(silh_) / std(silh_), mean(silh) / std(silh))
+        for i in 2:numberClusters
+            kmeans = kmeans(distance, i)
+            silhSample = silhouette_samples(distance, assignments(kmeans))
+            statistic = (mean(silhSample) / std(silhSample), mean(silh) / std(silh))
             if isnan(statistic[2]) || statistic[1] > statistic[2]
-                silh, kmeans_out = silh_, kmeans_
+                silh, kmeansOut = silhSample, kmeans
             end
         end
     end
-    index_new = sortperm(assignments(kmeans_out))
-    correlation_new = correlation[index_new, index_new]
-    clusters = Dict("$i"=> filter(p -> assignments(kmeans_out)[p] == i, index_new) for i in unique(assignments(kmeans_out)))
+    indexNew = sortperm(assignments(kmeansOut))
+    correlationNew = correlation[indexNew, indexNew]
+    clusters = Dict("$i"=> filter(p -> assignments(kmeansOut)[p] == i, indexNew) for i in unique(assignments(kmeansOut)))
     silh = DataFrames.DataFrame(silh = silh)
-    return correlation_new, clusters, silh, index_new
+    return correlationNew, clusters, silh, indexNew
 end
 
 """
@@ -48,30 +48,30 @@ Optimal portfolio construction using NCO algorithm.
 
 Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons. Snippet 7.6, Page 100
 """
-function opt_port_nco(covariance; μ = nothing, number_clusters = nothing)
-    correlation = cov_to_corr(covariance)
-    if isnothing(number_clusters)
-        number_clusters = Int(size(correlation)[1] / 2)
+function optPortNCO(covariance; μ = nothing, numberClusters = nothing)
+    correlation = covToCorr(covariance)
+    if isnothing(numberClusters)
+        numberClusters = Int(size(correlation)[1] / 2)
     end
-    correlation, clusters, _, _ = cluster_kmeans_base(correlation, number_clusters = number_clusters, iterations = 10)
-    ω_intra_cluster = DataFrames.DataFrame(repeat([0.], size(covariance)[1], length(keys(clusters))), :auto)
-    DataFrames.rename!(ω_intra_cluster, Symbol.(names(ω_intra_cluster)) .=> Symbol.(keys(clusters)))
+    correlation, clusters, _, _ = clusterKMeansBase(correlation, numberClusters = numberClusters, iterations = 10)
+    ωIntraCluster = DataFrames.DataFrame(repeat([0.], size(covariance)[1], length(keys(clusters))), :auto)
+    DataFrames.rename!(ωIntraCluster, Symbol.(names(ωIntraCluster)) .=> Symbol.(keys(clusters)))
     for i in keys(clusters)
-        covariance_intra_cluster = covariance[clusters[i], clusters[i]]
+        covarianceIntraCluster = covariance[clusters[i], clusters[i]]
         if isnothing(μ)
-            μ_intra_cluster = nothing
+            μIntraCluster = nothing
         else
-            μ_intra_cluster = μ[clusters[i]]
+            μIntraCluster = μ[clusters[i]]
         end
-        ω_intra_cluster[clusters[i], i] .= opt_port(covariance_intra_cluster, μ_intra_cluster)
+        ωIntraCluster[clusters[i], i] .= optPort(covarianceIntraCluster, μIntraCluster)
     end
-    covariance_inter_cluster = transpose(Matrix(ω_intra_cluster)) * (covariance * Matrix(ω_intra_cluster))
+    covarianceInterCluster = transpose(Matrix(ωIntraCluster)) * (covariance * Matrix(ωIntraCluster))
     if isnothing(μ)
-        μ_inter_cluster = nothing
+        μInterCluster = nothing
     else
-        μ_inter_cluster = transpose(Matrix(ω_intra_cluster)) * μ
+        μInterCluster = transpose(Matrix(ωIntraCluster)) * μ
     end
-    ω_inter_cluster = DataFrames.DataFrame(weight = vec(opt_port(covariance_inter_cluster, μ_inter_cluster)))
-    ω_nco = DataFrames.DataFrame(weights = vec(sum(Matrix(ω_intra_cluster) .* Matrix(ω_inter_cluster)', dims = 2)))
-    return ω_nco
+    ωInterCluster = DataFrames.DataFrame(weight = vec(optPort(covarianceInterCluster, μInterCluster)))
+    ωNCO = DataFrames.DataFrame(weights = vec(sum(Matrix(ωIntraCluster) .* Matrix(ωInterCluster)', dims = 2)))
+    return ωNCO
 end

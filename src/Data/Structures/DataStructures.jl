@@ -15,10 +15,10 @@ Reference:
 Methodology:
     n/a
 """
-function show_progress_bar(value,
-                           endValue,
-                           startTime,
-                           barLength = 20)
+function showProgressBar(value,
+                         endValue,
+                         startTime,
+                         barLength = 20)
     percent = Float64(value) / endValue
 
     if trunc(Int, round(percent * barLength) - 1) < 0
@@ -48,12 +48,12 @@ Reference:
 Methodology:
     n/a
 """
-function compute_ewma(data,
-                      windowLength = 100)
+function computeEwma(data,
+                     windowLength = 100)
     N = size(data)[1]
-    ewma_mean = []
-    ewma_variance = []
-    ewma_std = []
+    ewmaMean = []
+    ewmaVariance = []
+    ewmaStd = []
     α = 2 / Float64(windowLength + 1)
 
     for i ∈ 1:N
@@ -64,20 +64,20 @@ function compute_ewma(data,
         bias = sum(ω)^2 / (sum(ω)^2 - sum(ω .^ 2))
         var = bias * sum(ω .* (window .- ewma).^2) / sum(ω)
         std = sqrt(var)
-        append!(ewma_mean, ewma)
-        append!(ewma_variance, var)
-        append!(ewma_std, std)
+        append!(ewmaMean, ewma)
+        append!(ewmaVariance, var)
+        append!(ewmaStd, std)
     end
-    return ewma_mean, ewma_variance, ewma_std
+    return ewmaMean, ewmaVariance, ewmaStd
 end
 
 """
 Function to group a dataframe based on a feature and then calculate thresholds.
 
 Args:
-    target_col (Array): Target column of tick dataframe.
-    tick_expected_init (Int): Initial expected ticks.
-    bar_size (Float64): Initial expected size in each tick.
+    targetCol (Array): Target column of tick dataframe.
+    tickExpectedInit (Int): Initial expected ticks.
+    barSize (Float64): Initial expected size in each tick.
 
 Reference:
     De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
@@ -86,37 +86,37 @@ Reference:
 Methodology:
     Page number: n/a
 """
-function group_and_calculate_thresholds(target_col,
-                                        tick_expected_init,
-                                        bar_size)
+function groupAndCalculateThresholds(targetCol,
+                                     tickExpectedInit,
+                                     barSize)
     Δtimes, times = [], []
-    time_prev, tick_expected, bar_expected_value = 0, tick_expected_init, bar_size
-    N = size(target_col)[1]
-    θ_absolute, thresholds, θs, grouping_id = zeros(N), zeros(N), zeros(N), zeros(N)
-    θ_absolute[1], θ_current = abs(target_col[1]), target_col[1]
+    timePrev, tickExpected, barExpectedValue = 0, tickExpectedInit, barSize
+    N = size(targetCol)[1]
+    θAbsolute, thresholds, θs, groupingId = zeros(N), zeros(N), zeros(N), zeros(N)
+    θAbsolute[1], θCurrent = abs(targetCol[1]), targetCol[1]
     time = Dates.value((Dates.now() - Dates.DateTime(1970, 1, 1, 00, 00, 00))) / 1000
-    grouping_id_current = 0
+    groupingIdCurrent = 0
 
     for i ∈ 2:N
-        θ_current += target_col[i]
-        θs[i] = θ_current
-        this_θ_absolute = abs(θ_current)
-        θ_absolute[i] = this_θ_absolute
-        threshold = tick_expected * bar_expected_value
+        θCurrent += targetCol[i]
+        θs[i] = θCurrent
+        thisθAbsolute = abs(θCurrent)
+        θAbsolute[i] = thisθAbsolute
+        threshold = tickExpected * barExpectedValue
         thresholds[i] = threshold
-        grouping_id[i] = grouping_id_current
+        groupingId[i] = groupingIdCurrent
 
-        if this_θ_absolute >= threshold
-            grouping_id_current += 1
-            θ_current = 0
-            append!(Δtimes, Float64(i - time_prev))
+        if thisθAbsolute ≥ threshold
+            groupingIdCurrent += 1
+            θCurrent = 0
+            append!(Δtimes, Float64(i - timePrev))
             append!(times, i)
-            time_prev = i
-            tick_expected = ewma(Array(Δtimes), trunc(Int, length(Δtimes)))[1][end]
-            bar_expected_value = abs(ewma(target_col[1:i], trunc(Int, tick_expected_init * 1))[1][end])
+            timePrev = i
+            tickExpected = ewma(Array(Δtimes), trunc(Int, length(Δtimes)))[1][end]
+            barExpectedValue = abs(ewma(targetCol[1:i], trunc(Int, tickExpectedInit * 1))[1][end])
         end
     end
-    return Δtimes, θ_absolute, thresholds, times, θs, grouping_id
+    return Δtimes, θAbsolute, thresholds, times, θs, groupingId
 end
 
 """
@@ -134,28 +134,28 @@ Reference:
 Methodology:
     Page number: 29
 """
-function info_driven_bar(tickData,
-                         type::String = "volume",
-                         tickExpectedInit = 2000)
+function infoDrivenBar(tickData,
+                       type::String = "volume",
+                       tickExpectedInit = 2000)
     if type == "volume"
-        input_data = tickData.volumelabeled
+        inputData = tickData.volumelabeled
     elseif type == "tick"
-        input_data = tickData.label
+        inputData = tickData.label
     elseif type == "dollar"
-        input_data = tickData.dollars
+        inputData = tickData.dollars
     else
         println("Error: unknown type")
     end
-    bar_expected_value = abs(mean(input_data))
-    Δtimes, θ_absolute, thresholds, times, θs, grouping_id = grouping(input_data, tickExpectedInit, bar_expected_value)
-    tickData[!,:groupingID] = grouping_id
+    barExpectedValue = abs(mean(inputData))
+    Δtimes, θAbsolute, thresholds, times, θs, groupingId = groupAndCalculateThresholds(inputData, tickExpectedInit, barExpectedValue)
+    tickData[!,:groupingID] = groupingId
     dates = combine(DataFrames.groupby(tickData, :groupingID), :dates => first => :dates)
     tickDataGrouped = DataFrames.groupby(tickData, :groupingID)
     ohlcvDataframe = ohlcv(tickDataGrouped)
     insertcols!(ohlcvDataframe, 1, :dates => dates.dates)
-    col_drop = [:groupingID]
-    ohlcvDataframe = select!(ohlcvDataframe, Not(col_drop))
-    return ohlcvDataframe, θ_absolute, thresholds
+    colDrop = [:groupingID]
+    ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop))
+    return ohlcvDataframe, θAbsolute, thresholds
 end
 
 """
@@ -170,13 +170,13 @@ Reference:
 """
 function ohlcv(tickDataGrouped)
     ohlcvDataframe = combine(tickDataGrouped, :price => first => :Open,
-                   :price => maximum => :High,
-                   :price => minimum => :Low,
-                   :price => last => :Close,
-                   :size => sum => :Volume,
-                   AsTable([:price, :size]) => x -> sum(x.price .* x.size) / sum(x.size),
-                   :price => mean => :PriceMean,
-                   :price => length => :TickCount)
+                             :price => maximum => :High,
+                             :price => minimum => :Low,
+                             :price => last => :Close,
+                             :size => sum => :Volume,
+                             AsTable([:price, :size]) => x -> sum(x.price .* x.size) / sum(x.size),
+                             :price => mean => :PriceMean,
+                             :price => length => :TickCount)
     DataFrames.rename!(ohlcvDataframe, :price_size_function => :ValueOfTrades)
     ohlcvDataframe.PriceMeanLogReturn = log.(ohlcvDataframe.PriceMean) - log.(circshift(ohlcvDataframe.PriceMean, 1))
     ohlcvDataframe.PriceMeanLogReturn[1] = NaN
@@ -194,7 +194,7 @@ Reference:
     De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     Methodology: n/a
 """
-function time_bar(tickData,
+function timeBar(tickData,
                   frequency = 5)
     dates = tickData.dates
     datesCopy = copy(dates)
@@ -217,7 +217,7 @@ Reference:
     De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     Methodology: n/a
 """
-function tick_bar(tickData,
+function tickBar(tickData,
                   tickPerBar = 10,
                   numberBars = nothing)
     if tickPerBar == nothing
@@ -229,8 +229,8 @@ function tick_bar(tickData,
     tickDataGrouped = DataFrames.groupby(tickGrouped, :groupingID)
     ohlcvDataframe = ohlcv(tickDataGrouped)
     insertcols!(ohlcvDataframe, 1, :dates => dates.dates)
-    col_drop = [:groupingID]
-    ohlcvDataframe = select!(ohlcvDataframe, Not(col_drop))
+    colDrop = [:groupingID]
+    ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop))
     return ohlcvDataframe
 end
 
@@ -246,7 +246,7 @@ Reference:
     De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     Methodology: n/a
 """
-function volume_bar(tickData,
+function volumeBar(tickData,
                     volumePerBar = 10000,
                     numberBars = nothing)
     tickData[!, :volumecumulated] = cumsum(tickData.size)
@@ -261,8 +261,8 @@ function volume_bar(tickData,
     tickDataGrouped = DataFrames.groupby(tickGrouped, :groupingID)
     ohlcvDataframe = ohlcv(tickDataGrouped)
     insertcols!(ohlcvDataframe, 1, :dates => dates.dates)
-    col_drop = [:groupingID]
-    ohlcvDataframe = select!(ohlcvDataframe, Not(col_drop))
+    colDrop = [:groupingID]
+    ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop))
     return ohlcvDataframe
 end
 
@@ -278,7 +278,7 @@ Reference:
     De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     Methodology: n/a
 """
-function dollar_bar(tickData,
+function dollarBar(tickData,
                     dollarPerBar = 100000,
                     numberBars = nothing)
     tickData[!, :dollar] = tickData.price .* tickData.size
@@ -294,39 +294,38 @@ function dollar_bar(tickData,
     tickDataGrouped = DataFrames.groupby(tickGrouped, :groupingID)
     ohlcvDataframe = ohlcv(tickDataGrouped)
     insertcols!(ohlcvDataframe, 1, :dates => dates.dates)
-    col_drop = [:groupingID]
-    ohlcvDataframe = select!(ohlcvDataframe, Not(col_drop))
+    colDrop = [:groupingID]
+    ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop))
     return ohlcvDataframe
 end
-   
 
 """
-Function to calculate hedging weights using covariance matrix, risk distribution (risk_dist), and risk target (σ).
+Function to calculate hedging weights using covariance matrix, risk distribution (riskDist), and risk target (σ).
 
 Args:
     cov (Matrix): Covariance matrix.
-    riskDisturbution (Vector, optional): Risk distribution. Default is nothing.
+    riskDistribution (Vector, optional): Risk distribution. Default is nothing.
     σ (Float64, optional): Risk target. Default is 1.0.
 
 Reference:
     De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     Methodology: Page 36
 """
-function pca_weights(cov,
-                     riskDisturbution = nothing,
-                     σ = 1.0)
+function pcaWeights(cov,
+                    riskDistribution = nothing,
+                    σ = 1.0)
     Λ = eigvals(cov)
     V = eigvecs(cov)
     indices = reverse(sortperm(Λ))
     Λ = Λ[indices]
     V = V[:, indices]
     
-    if riskDisturbution == nothing
-        riskDisturbution = zeros(size(cov)[1])
-        riskDisturbution[end] = 1.0
+    if riskDistribution == nothing
+        riskDistribution = zeros(size(cov)[1])
+        riskDistribution[end] = 1.0
     end
     
-    loads = σ * (riskDisturbution ./ Λ) .^ 0.5
+    loads = σ * (riskDistribution ./ Λ) .^ 0.5
     weights = V * loads
     return weights
 end
@@ -342,8 +341,8 @@ Reference:
     De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     Methodology: Page 39
 """
-function symmetric_cusum_filter(input,
-                                 threshold)
+function symmetricCusumFilter(input,
+                              threshold)
     timeEvents, shiftPositive, shiftNegative = [], 0, 0
     Δprice = DataFrame(hcat(input[2:end, 1], diff(input[:, 2])), :auto)
     

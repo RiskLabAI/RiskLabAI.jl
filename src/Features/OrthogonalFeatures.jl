@@ -15,7 +15,7 @@ using Statistics
     Returns:
     - DataFrame: DataFrame containing eigen values, vectors, and cumulative variance.
 """
-function eigen_vectors(
+function eigenVectors(
     dotProduct::Matrix{<: Number},
     explainedVarianceThreshold::Float64
 )::DataFrame
@@ -61,13 +61,13 @@ end
     Returns:
     - Tuple{Matrix, DataFrame}: Transformed features matrix P and eigenDataFrame.
 """
-function orthogonal_features(
+function orthogonalFeatures(
     X::Matrix{<: Number},
     varianceThreshold::Float64=0.95
 )::Tuple{Matrix, DataFrame}
     Z = standardize(X)
     dotProduct = Z' * Z
-    eigenDataFrame = eigen_vectors(dotProduct, varianceThreshold)
+    eigenDataFrame = eigenVectors(dotProduct, varianceThreshold)
 
     W = reduce(hcat, eigenDataFrame.EigenVector)
     P = Z * W

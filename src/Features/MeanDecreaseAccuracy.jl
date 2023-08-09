@@ -26,7 +26,7 @@ using Random
     Returns:
     - DataFrame: DataFrame with feature importance scores.
 """
-function feature_importance_mda(
+function featureImportanceMDA(
     classifier, X::DataFrame, y::DataFrame, nSplits::Int64;
     scoreSampleWeights::Union{Vector, Nothing}=nothing,
     trainSampleWeights::Union{Vector, Nothing}=nothing

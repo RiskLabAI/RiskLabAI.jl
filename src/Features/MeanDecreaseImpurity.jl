@@ -16,7 +16,7 @@ using PlotlyJS
     Returns:
     - DataFrame: DataFrame with feature importance scores.
 """
-function feature_importance_mdi(
+function featureImportanceMDI(
     classifier, featureNames::Vector{String}
 )::DataFrame
     # Feature importance based on IS mean impurity reduction

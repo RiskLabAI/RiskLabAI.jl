@@ -1,7 +1,16 @@
 """
-    function: expand label to incorporate meta-labeling
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: 51
+Expands label to incorporate meta-labeling.
+
+This function calculates the concurrency events, sample weight, index matrix, average uniqueness, 
+sequential bootstrap, sample weight with returns, and time decay for meta-labeling.
+
+Parameters:
+- closeIndex: DataFrame that has events.
+- timestamp: DataFrame that has return and label of each period.
+- molecule: Index that function must apply on.
+
+Returns:
+- DataFrame: Result of the specified function.
 """
 function concurrencyEvents(
     closeIndex, # DataFrame that has events
@@ -23,12 +32,20 @@ function concurrencyEvents(
 end
 
 """
-    function: sampleWeight with triple barrier
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: 51
+Computes sample weight with triple barrier.
+
+This function computes the sample weight with triple barrier for meta-labeling.
+
+Parameters:
+- timestamp: DataFrame of events start and end for labeling.
+- concurrencyEvents: DataFrame of concurrent events for each event.
+- molecule: Index that function must apply on.
+
+Returns:
+- DataFrame: Result of the specified function.
 """
 function sampleWeight(
-    timestamp, # DataFrame of events start and end for labelling 
+    timestamp, # DataFrame of events start and end for labeling 
     concurrencyEvents, # Data frame of concurrent events for each event
     molecule
 ) # index that function must apply on it
@@ -43,9 +60,16 @@ function sampleWeight(
 end
 
 """
-    function: Creating Index matrix
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: 51
+Creates index matrix.
+
+This function creates an index matrix that shows whether an index is in a time horizon or not for meta-labeling.
+
+Parameters:
+- barIndex: Index of all data.
+- timestamp: Times of events containing starting and ending time.
+
+Returns:
+- Matrix: Index matrix.
 """
 function indexMatrix(
     barIndex, # index of all data 
@@ -60,9 +84,15 @@ function indexMatrix(
 end
 
 """
-    function: compute average uniqueness
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: 51
+Computes average uniqueness.
+
+This function computes the average uniqueness for meta-labeling.
+
+Parameters:
+- indexMatrix: Matrix that indicates events.
+
+Returns:
+- Vector: Average uniqueness for each event.
 """
 function averageUniqueness(indexMatrix) # matrix that Indicator for events
     concurrency = sum(indexMatrix, dims=2) # compute concurrency for each event
@@ -80,9 +110,16 @@ function averageUniqueness(indexMatrix) # matrix that Indicator for events
 end
 
 """
-    function:  sequentialBootstrap implementation
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: 51
+Performs sequential bootstrap.
+
+This function performs sequential bootstrap for meta-labeling.
+
+Parameters:
+- indexMatrix: Matrix that indicates events.
+- SampleLength: Number of samples.
+
+Returns:
+- Vector: Sequence of indices for sequential bootstrap.
 """
 function sequentialBootstrap(
     indexMatrix, # matrix that Indicator for events 
@@ -105,9 +142,18 @@ function sequentialBootstrap(
 end
 
 """
-    function:  sample weight with returns
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: 51
+Computes sample weight with returns.
+
+This function computes the sample weight with returns for meta-labeling.
+
+Parameters:
+- timestamp: DataFrame for events.
+- concurrencyEvents: DataFrame that contains the number of concurrent events for each event.
+- returns: Data frame that contains returns.
+- molecule: Molecule.
+
+Returns:
+- DataFrame: Result of the specified function.
 """
 function sampleWeight(
     timestamp, # dataframe for events
@@ -130,9 +176,16 @@ function sampleWeight(
 end
 
 """
-    function:  compute timeDecay
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: 51
+Computes time decay.
+
+This function computes the time decay for meta-labeling.
+
+Parameters:
+- weight: Weight that is computed for each event.
+- clfLastW: Weight of the oldest observation.
+
+Returns:
+- DataFrame: Time decay result.
 """
 function timeDecay(
     weight, # weight that is computed for each event
