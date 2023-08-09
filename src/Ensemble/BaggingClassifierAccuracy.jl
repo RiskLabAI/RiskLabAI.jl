@@ -1,17 +1,26 @@
 """
-    function: Calculates accuracy of bagging classifier
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: page 96 Improved Accuracy section
+Calculates the accuracy of a bagging classifier.
+
+This function calculates the accuracy of a bagging classifier based on the improved accuracy formula
+from De Prado (2018), Advances in financial machine learning, page 96, Improved Accuracy section.
+
+Parameters:
+- N (Int): Number of independent classifiers.
+- p (Float64): The accuracy of a classifier is the probability p of labeling a prediction as 1.
+- k (Int): Number of classes.
+
+Returns:
+- Float64: Accuracy of the bagging classifier.
 """
-function baggingClassifierAccuracy(
-    N::Int, # number of independent classifers
-    p::Float64, # The accuracy of a classifier is the probability p of labeling a prediction as 1
-    k::Int, # number of classes
+function bagging_classifier_accuracy(
+    N::Int,
+    p::Float64,
+    k::Int
 )::Float64
-    probabilitySum = 0
-    for i ∈ 0:Int(trunc(N / k + 1))    
-        probabilitySum += binomial(N |> BigInt, i |> BigInt) * p^i * (1 - p)^(N - i)
+    probability_sum = 0
+    for i in 0:Int(trunc(N / k + 1))
+        probability_sum += binomial(N |> BigInt, i |> BigInt) * p^i * (1 - p)^(N - i)
     end
 
-    1 - probabilitySum    
+    return 1 - probability_sum
 end
