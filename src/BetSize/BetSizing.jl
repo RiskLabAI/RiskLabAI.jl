@@ -305,7 +305,7 @@ end
         - Methodology p.145 SNIPPET 10.4
 
 """
-function calculate_ω(x::Float64, m::Float64)
+function ω(x::Float64, m::Float64)
     return x^2 * (1 / m^2 - 1)
 end
 
@@ -326,7 +326,7 @@ end
         - Methodology p.145 SNIPPET 10.4
 
 """
-function calculate_size_of_bet(ω::Float64, x::Float64)
+function calculateSizeOfBet(ω::Float64, x::Float64)
     return x * (ω + x^2)^(-0.5)
 end
 
@@ -349,7 +349,7 @@ end
         - Methodology p.145 SNIPPET 10.4
 
 """
-function calculate_target_position(ω::Float64, f::Float64, actual_price::Float64, maximum_position_size::Int)
+function calculateTargetPosition(ω::Float64, f::Float64, actual_price::Float64, maximum_position_size::Int)
     return trunc(Int, (calculate_size_of_bet(ω, f - actual_price) * maximum_position_size))
 end
 
@@ -371,7 +371,7 @@ end
         - Methodology p.145 SNIPPET 10.4
 
 """
-function calculate_inverse_price(f::Float64, ω::Float64, m::Float64)
+function calculateInversePrice(f::Float64, ω::Float64, m::Float64)
     return f - m * (ω / (1 - m^2))^(0.5)
 end
 
@@ -395,7 +395,7 @@ end
         - Methodology p.145 SNIPPET 10.4
 
 """
-function calculate_limit_price(TargetPositionSize::Int, cPosition::Int, f::Float64, ω::Float64, maximum_position_size::Int)
+function calculateLimitPrice(TargetPositionSize::Int, cPosition::Int, f::Float64, ω::Float64, maximum_position_size::Int)
     if TargetPositionSize >= cPosition
         sgn = 1
     else
