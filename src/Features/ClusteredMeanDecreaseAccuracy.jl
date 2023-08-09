@@ -28,7 +28,7 @@ Parameters:
 Returns:
 - DataFrame: DataFrame containing clustered feature importances.
 """
-function clustered_feature_importance_MDA(
+function clusteredFeatureImportanceMDA(
     classifier, 
     X::DataFrame, 
     y::DataFrame, 
@@ -36,9 +36,9 @@ function clustered_feature_importance_MDA(
     nSplits::Int64
 )::DataFrame
 
-    cv_generator = ModelSelection.KFold(n_splits=nSplits)    
+    cvGenerator = ModelSelection.KFold(n_splits=nSplits)    
     score0, score1 = DataFrame("value" => zeros(nSplits)), DataFrame([name => zeros(nSplits) for name in names(X)])
-    for (i, (train, test)) ∈ enumerate(cv_generator.split(X |> Matrix))
+    for (i, (train, test)) ∈ enumerate(cvGenerator.split(X |> Matrix))
         println("fold $(i) start ...")
 
         train .+= 1 # Python indexing starts at 0
@@ -49,16 +49,16 @@ function clustered_feature_importance_MDA(
 
         fit = classifier.fit(X0 |> Matrix, y0 |> Matrix |> vec)
 
-        prediction_probability = fit.predict_proba(X1 |> Matrix)
-        score0[i, 1] = -Metrics.log_loss(y1 |> Matrix, prediction_probability, labels=classifier.classes_)        
+        predictionProbability = fit.predict_proba(X1 |> Matrix)
+        score0[i, 1] = -Metrics.log_loss(y1 |> Matrix, predictionProbability, labels=classifier.classes_)        
         for j ∈ names(X)
             X1_ = deepcopy(X1) 
             for k ∈ clusters[j]
                 X1_[:, k] = shuffle(X1_[:, k])
             end
-            prediction_probability = fit.predict_proba(X1_ |> Matrix)
-            log_loss = Metrics.log_loss(y1 |> Matrix, prediction_probability, labels=classifier.classes_)
-            score1[i, j] = -log_loss
+            predictionProbability = fit.predict_proba(X1_ |> Matrix)
+            logLoss = Metrics.log_loss(y1 |> Matrix, predictionProbability, labels=classifier.classes_)
+            score1[i, j] = -logLoss
         end
     end
 

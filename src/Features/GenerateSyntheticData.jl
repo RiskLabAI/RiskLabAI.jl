@@ -24,7 +24,7 @@ using Distributions
     - X::DataFrame: Features dataframe.
     - y::DataFrame: Target variable dataframe.
 """
-function get_test_data(
+function getTestData(
     nFeatures::Int=100,
     nInformative::Int=25,
     nRedundant::Int=25,

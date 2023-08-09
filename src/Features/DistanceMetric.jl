@@ -10,7 +10,7 @@ using StatsBase
     Returns:
     - score::Float64: Mutual information score.
 """
-function mutual_info_score(histogramXY::Matrix)::Float64
+function mutualInfoScore(histogramXY::Matrix)::Float64
     score = 0.0
     histogramX = vec(sum(histogramXY, dims=2))
     histogramY = vec(sum(histogramXY, dims=1))
@@ -46,7 +46,7 @@ function variationsInformation(
     rangeX = range(minimum(x), maximum(x), length = numberOfBins)
     rangeY = range(minimum(y), maximum(y), length = numberOfBins)
     histogramXY = fit(Histogram, (x, y), (rangeX, rangeY)).weights
-    mutualInformation = mutual_info_score(histogramXY)
+    mutualInformation = mutualInfoScore(histogramXY)
     marginalX = entropy(normalize(fit(Histogram, x, rangeX).weights, 1))
     marginalY = entropy(normalize(fit(Histogram, y, rangeY).weights, 1))
     variationXY = marginalX + marginalY - 2 * mutualInformation
@@ -97,7 +97,7 @@ function variationsInformationExtended(
     rangeX = range(minimum(x), maximum(x), length = numberOfBins)
     rangeY = range(minimum(y), maximum(y), length = numberOfBins)
     histogramXY = fit(Histogram, (x, y),(rangeX, rangeY)).weights
-    mutualInformation = mutual_info_score(histogramXY)
+    mutualInformation = mutualInfoScore(histogramXY)
     marginalX = entropy(normalize(fit(Histogram, x, rangeX).weights, 1))
     marginalY = entropy(normalize(fit(Histogram, y, rangeY).weights, 1))
     variationXY = marginalX + marginalY - 2 * mutualInformation
@@ -128,7 +128,7 @@ function mutualInformation(
     rangeX = range(minimum(x), maximum(x), length = numberOfBins)
     rangeY = range(minimum(y), maximum(y), length = numberOfBins)
     histogramXY = fit(Histogram, (x, y),(rangeX, rangeY)).weights
-    mutualInformation = mutual_info_score(histogramXY)
+    mutualInformation = mutualInfoScore(histogramXY)
     if norm
         marginalX = entropy(normalize(fit(Histogram, x, rangeX).weights, 1))
         marginalY = entropy(normalize(fit(Histogram, y, rangeY).weights, 1))

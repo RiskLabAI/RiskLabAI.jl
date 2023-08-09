@@ -28,7 +28,7 @@ using Random
     Returns:
     - DataFrame: DataFrame containing feature importances.
 """
-function feature_importance_sfi(
+function featureImportanceSFI(
     classifier,
     X::DataFrame,
     y::DataFrame,

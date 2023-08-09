@@ -13,7 +13,7 @@ Parameters:
 Returns:
 - Vector: Estimated volatility σ.
 """
-function σ_estimates(
+function σEstimates(
     β::Vector,
     γ::Vector
 )::Vector
@@ -41,14 +41,14 @@ Parameters:
 Returns:
 - Vector: Estimated volatility.
 """
-function bekker_parkinson_volatility_estimates(
+function bekkerParkinsonVolatilityEstimates(
     highPrices::Vector,
     lowPrices::Vector;
     windowSpan::Int=20
 )::Vector
 
-    β = β_estimates(highPrices, lowPrices, windowSpan)
-    γ = γ_estimates(highPrices, lowPrices)
+    β = βEstimates(highPrices, lowPrices, windowSpan)
+    γ = γEstimates(highPrices, lowPrices)
 
-    σ_estimates(β, γ)
+    σEstimates(β, γ)
 end

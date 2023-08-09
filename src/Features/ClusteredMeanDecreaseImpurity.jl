@@ -14,7 +14,7 @@ Parameters:
 Returns:
 - Vector: Array with NaN values removed.
 """
-function skip_nan(
+function skipNaN(
     array::Vector
 )::Vector
     return filter(!isnan, array)
@@ -32,13 +32,13 @@ Parameters:
 Returns:
 - DataFrame: DataFrame containing cluster index, mean, and standard deviation for each cluster.
 """
-function group_mean_std(
+function groupMeanStd(
     dataframe0,
     clusters
 )::DataFrame
     output = DataFrame([name => [] for name in ["ClusterIndex", "Mean", "StandardDeviation"]])
     for (clusterIndex, j) ∈ clusters
-        dataframe1 = sum.(skip_nan.(eachcol(dataframe0[:, j])))
+        dataframe1 = sum.(skipNaN.(eachcol(dataframe0[:, j])))
         push!(output, ["Cluster $clusterIndex", mean(dataframe1), std(dataframe1)])
     end
     return output
@@ -58,7 +58,7 @@ Parameters:
 Returns:
 - DataFrame: DataFrame containing clustered feature importances.
 """
-function clustered_feature_importance_MDI(
+function clusteredFeatureImportanceMDI(
     classifier,
     featureNames,
     clusters
@@ -69,11 +69,11 @@ function clustered_feature_importance_MDI(
     dataframe0 = DataFrame(;[Symbol(k)=>v for (k,v) in dict0]...) |> Matrix |> transpose |> DataFrame
     DataFrames.rename!(dataframe0, featureNames)
     
-    for column_index ∈ 1:ncol(dataframe0)
-        dataframe0[:, column_index] = replace(dataframe0[:, column_index], 0.0 => NaN)
+    for columnIndex ∈ 1:ncol(dataframe0)
+        dataframe0[:, columnIndex] = replace(dataframe0[:, columnIndex], 0.0 => NaN)
     end
 
-    importances = group_mean_std(dataframe0, clusters)
+    importances = groupMeanStd(dataframe0, clusters)
     importances[["Mean", "StandardDeviation"]] = importances[["Mean", "StandardDeviation"]] ./ sum(importances["Mean"])
 
     return importances
