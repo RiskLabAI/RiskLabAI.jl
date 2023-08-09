@@ -1,5 +1,3 @@
-# Snippet 8.4
-
 using DataFrames
 using DataFramesMeta
 
@@ -11,24 +9,33 @@ using Random
 
 @pyimport sklearn.metrics as Metrics
 @pyimport sklearn.ensemble as Ensemble
-
 @pyimport sklearn.datasets as Datasets
 @pyimport sklearn.metrics as Metrics
 @pyimport sklearn.model_selection as ModelSelection
 
 """
-    function: Implementation of SFI method
-    reference: De Prado, M. (2018) Advances In Financial Machine Learning
-    methodology: page 118 SFI section snippet 8.4
+    Implementation of SFI method.
+
+    Parameters:
+    - classifier: Classifier for fit and prediction.
+    - X::DataFrame: Features matrix.
+    - y::DataFrame: Labels vector.
+    - nSplits::Int64: Cross-validation n folds.
+    - scoreSampleWeights::Union{Vector, Nothing}: Sample weights for score step.
+    - trainSampleWeights::Union{Vector, Nothing}: Sample weights for train step.
+    - scoring::String: Classification prediction and true values scoring type.
+
+    Returns:
+    - DataFrame: DataFrame containing feature importances.
 """
-function featureImportanceSFI(
-    classifier, # classifier for fit and prediction
-    X::DataFrame, # features matrix
-    y::DataFrame, # labels vector
-    nSplits::Int64; # cross-validation n folds
-    scoreSampleWeights::Union{Vector, Nothing}=nothing, # sample weights for score step
-    trainSampleWeights::Union{Vector, Nothing}=nothing, # sample weights for train step 
-    scoring::String="log_loss" # classification prediction and true values scoring type 
+function feature_importance_sfi(
+    classifier,
+    X::DataFrame,
+    y::DataFrame,
+    nSplits::Int64;
+    scoreSampleWeights::Union{Vector, Nothing}=nothing,
+    trainSampleWeights::Union{Vector, Nothing}=nothing,
+    scoring::String="log_loss"
 )::DataFrame
 
     trainSampleWeights = isnothing(trainSampleWeights) ? ones(size(X)[1]) : trainSampleWeights
@@ -38,10 +45,10 @@ function featureImportanceSFI(
 
     featureNames = names(X)
     importances = DataFrame([name => [] for name in ["FeatureName", "Mean", "StandardDeviation"]])
-    for featureName ∈ featureNames
+    for featureName in featureNames
         
         scores = []
-        for (i, (train, test)) ∈ enumerate(cvGenerator.split(X |> Matrix))
+        for (i, (train, test)) in enumerate(cvGenerator.split(X |> Matrix))
     
             train .+= 1 # Python indexing starts at 0
             test .+= 1 # Python indexing starts at 0
@@ -53,7 +60,7 @@ function featureImportanceSFI(
 
             if scoring == "log_loss"
                 predictionProbability = fit.predict_proba(X1 |> Matrix)
-                score_ = -Metrics.log_loss(y1 |> Matrix, predictionProbability, sample_weight=sampleWeights1 ,labels=classifier.classes_)        
+                score_ = -Metrics.log_loss(y1 |> Matrix, predictionProbability, sample_weight=sampleWeights1, labels=classifier.classes_)        
             
             elseif scoring == "accuracy"
                 prediction = fit.predict(X1 |> Matrix)
@@ -70,4 +77,3 @@ function featureImportanceSFI(
 
     return importances
 end
-
