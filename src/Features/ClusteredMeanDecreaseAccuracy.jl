@@ -1,6 +1,5 @@
 using DataFrames
 using DataFramesMeta
-
 using PyCall
 using Statistics
 using PlotlyJS
@@ -14,21 +13,32 @@ using Random
 @pyimport sklearn.model_selection as ModelSelection
 
 """
-    function: Clustered feature importance MDA
-    reference: De Prado, M. (2020) MACHINE LEARNING FOR ASSET MANAGERS
-    methodology: page 87 Clustered MDA section
+Clustered feature importance using Clustered MDA.
+
+This function calculates the clustered feature importance using the Clustered MDA method based on the
+methodology presented in De Prado (2020), Machine Learning for Asset Managers, page 87, Clustered MDA section.
+
+Parameters:
+- classifier: Classifier for fitting and prediction.
+- X (DataFrame): Features matrix.
+- y (DataFrame): Labels vector.
+- clusters: Dictionary of feature clusters.
+- nSplits (Int64): Number of cross-validation folds.
+
+Returns:
+- DataFrame: DataFrame containing clustered feature importances.
 """
-function clusteredFeatureImportanceMDA(
-    classifier, # classifier for fit and prediction
-    X::DataFrame, # features matrix
-    y::DataFrame, # labels vector
-    clusters, # clusters
-    nSplits::Int64 # cross-validation n folds
+function clustered_feature_importance_MDA(
+    classifier, 
+    X::DataFrame, 
+    y::DataFrame, 
+    clusters, 
+    nSplits::Int64
 )::DataFrame
 
-    cvGenerator = ModelSelection.KFold(n_splits=nSplits)    
+    cv_generator = ModelSelection.KFold(n_splits=nSplits)    
     score0, score1 = DataFrame("value" => zeros(nSplits)), DataFrame([name => zeros(nSplits) for name in names(X)])
-    for (i, (train, test)) ∈ enumerate(cvGenerator.split(X |> Matrix))
+    for (i, (train, test)) ∈ enumerate(cv_generator.split(X |> Matrix))
         println("fold $(i) start ...")
 
         train .+= 1 # Python indexing starts at 0
@@ -39,15 +49,15 @@ function clusteredFeatureImportanceMDA(
 
         fit = classifier.fit(X0 |> Matrix, y0 |> Matrix |> vec)
 
-        predictionProbability = fit.predict_proba(X1 |> Matrix)
-        score0[i, 1] = -Metrics.log_loss(y1 |> Matrix, predictionProbability, labels=classifier.classes_)        
+        prediction_probability = fit.predict_proba(X1 |> Matrix)
+        score0[i, 1] = -Metrics.log_loss(y1 |> Matrix, prediction_probability, labels=classifier.classes_)        
         for j ∈ names(X)
             X1_ = deepcopy(X1) 
             for k ∈ clusters[j]
                 X1_[:, k] = shuffle(X1_[:, k])
             end
-            predictionProbability = fit.predict_proba(X1_ |> Matrix)
-            log_loss = Metrics.log_loss(y1 |> Matrix, predictionProbability, labels=classifier.classes_)
+            prediction_probability = fit.predict_proba(X1_ |> Matrix)
+            log_loss = Metrics.log_loss(y1 |> Matrix, prediction_probability, labels=classifier.classes_)
             score1[i, j] = -log_loss
         end
     end

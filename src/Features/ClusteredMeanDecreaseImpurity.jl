@@ -4,46 +4,64 @@ using PlotlyJS
 using Random
 
 """
-    function: skip nan values of input array
-    reference: n/a
-    methodology: n/a
+Skip NaN values in an input array.
+
+This function removes NaN values from the input array.
+
+Parameters:
+- array (Vector): Input array containing NaN values.
+
+Returns:
+- Vector: Array with NaN values removed.
 """
-function skipnan(
-    array::Vector # array to skip nan
-)
-    filter(!isnan, array)
+function skip_nan(
+    array::Vector
+)::Vector
+    return filter(!isnan, array)
 end
 
+"""
+Calculate Group Mean and Standard Deviation.
 
+This function calculates the mean and standard deviation for each cluster of features.
+
+Parameters:
+- dataframe0 (DataFrame): Input dataframe.
+- clusters: Clusters of features.
+
+Returns:
+- DataFrame: DataFrame containing cluster index, mean, and standard deviation for each cluster.
 """
-    function: Group Mean and Standard Deviation
-    reference: De Prado, M. (2020) MACHINE LEARNING FOR ASSET MANAGERS
-    methodology: page 86 Clustered MDI section
-"""
-function groupMeanStd(
-    dataframe0, # input dataframe
-    clusters # clusters
+function group_mean_std(
+    dataframe0,
+    clusters
 )::DataFrame
-
-    output = DataFrame([name => [] for name ∈ ["ClusterIndex", "Mean", "StandardDeviation"]])
+    output = DataFrame([name => [] for name in ["ClusterIndex", "Mean", "StandardDeviation"]])
     for (clusterIndex, j) ∈ clusters
-        dataframe1 = sum.(skipnan.(eachcol(dataframe0[:, j])))
-        push!(output, ["Cluster $clusterIndex", mean(dataframe1, ), std(dataframe1, )])
+        dataframe1 = sum.(skip_nan.(eachcol(dataframe0[:, j])))
+        push!(output, ["Cluster $clusterIndex", mean(dataframe1), std(dataframe1)])
     end
-
     return output
 end
 
+"""
+Clustered feature importance using MDI.
 
+This function calculates the clustered feature importance using the MDI (Mean Decrease in Impurity) method based on
+the methodology presented in De Prado (2020), Machine Learning for Asset Managers, page 86, Clustered MDI section.
+
+Parameters:
+- classifier: Classifier for MDI calculation.
+- featureNames: Names of features.
+- clusters: Clusters of features.
+
+Returns:
+- DataFrame: DataFrame containing clustered feature importances.
 """
-    function: Clustered feature importance MDI
-    reference: De Prado, M. (2020) MACHINE LEARNING FOR ASSET MANAGERS
-    methodology: page 86 Clustered MDI section
-"""
-function clusteredFeatureImportanceMDI(
-    classifier, # classifier for mdi
-    featureNames, # feature names
-    clusters # clusters
+function clustered_feature_importance_MDI(
+    classifier,
+    featureNames,
+    clusters
 )::DataFrame
     dict0 = Dict(
         i => tree.feature_importances_ for (i, tree) ∈ enumerate(classifier.estimators_)
@@ -55,9 +73,8 @@ function clusteredFeatureImportanceMDI(
         dataframe0[:, column_index] = replace(dataframe0[:, column_index], 0.0 => NaN)
     end
 
-    importances = groupMeanStd(dataframe0, clusters)
+    importances = group_mean_std(dataframe0, clusters)
     importances[["Mean", "StandardDeviation"]] = importances[["Mean", "StandardDeviation"]] ./ sum(importances["Mean"])
 
-    importances
+    return importances
 end
-
