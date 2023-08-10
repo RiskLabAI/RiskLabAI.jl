@@ -1,4 +1,4 @@
-# TODO:
+# TODO: error?
 # # Mixture model object defination 
 # Base.@kwdef mutable struct M2N
 #     moments 
