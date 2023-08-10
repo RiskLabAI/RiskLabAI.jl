@@ -1,4 +1,3 @@
-
 #include("labeling.jl")
 #include("hpc.jl")
 
@@ -14,7 +13,7 @@ using Distributions
 
     Args:
         events (DataFrame): DataFrame that contains events data.
-        returnandlable (DataFrame): DataFrame that contains return and label of each period.
+        returnandLable (DataFrame): DataFrame that contains return and label of each period.
         molecule (Vector): The index on which the function must apply.
 
     Returns:
@@ -25,40 +24,40 @@ using Distributions
         - Methodology 51
 
 """
-function n_concurrency_events(events::DataFrame, return_and_label::DataFrame, molecule::Vector)
+function nConcurrencyEvents(events::DataFrame, returnedLabel::DataFrame, molecule::Vector)
 
-    events_filtered = filter(row -> row[:date] in molecule, events)
+    eventsFiltered = filter(row -> row[:date] in molecule, events)
     
-    concurrency = DataFrame(Dates = events.date, active_long = zeros(Int, size(events_filtered)[1]), active_short = zeros(Int, size(events_filtered)[1]))
+    concurrency = DataFrame(Dates = events.date, activeLong = zeros(Int, size(eventsFiltered)[1]), activeShort = zeros(Int, size(eventsFiltered)[1]))
     
-    for (i, idx) in enumerate(events_filtered.date)
-        index_less_than_idx = events.date .<= idx
-        events_more_than_idx = events.timestamp .> idx
-        out_is_positive = return_and_label.ret .>= 0
+    for (i, idx) in enumerate(eventsFiltered.date)
+        indexLessThanIdx = events.date .<= idx
+        eventsMoreThanIdx = events.timestamp .> idx
+        outIsPositive = returnedLabel.ret .>= 0
         
-        maximum_length = maximum([length(out_is_positive), length(events_more_than_idx), length(index_less_than_idx)])
+        maximumLength = maximum([length(outIsPositive), length(eventsMoreThanIdx), length(indexLessThanIdx)])
         
-        out_is_positive = vcat(out_is_positive, falses(maximum_length - length(out_is_positive)))
-        index_less_than_idx = vcat(index_less_than_idx, falses(maximum_length - length(index_less_than_idx)))
-        events_more_than_idx = vcat(events_more_than_idx, falses(maximum_length - length(events_more_than_idx)))
+        outIsPositive = vcat(outIsPositive, falses(maximumLength - length(outIsPositive)))
+        indexLessThanIdx = vcat(indexLessThanIdx, falses(maximumLength - length(indexLessThanIdx)))
+        eventsMoreThanIdx = vcat(eventsMoreThanIdx, falses(maximumLength - length(eventsMoreThanIdx)))
 
-        condition = index_less_than_idx .& events_more_than_idx .& out_is_positive
-        my_set = events_filtered.date[condition]
+        condition = indexLessThanIdx .& eventsMoreThanIdx .& outIsPositive
+        mySet = eventsFiltered.date[condition]
 
-        df_long_active_idx = Set(my_set)
-        concurrency.active_long[i] = length(df_long_active_idx)
+        dfLongActiveIdx = Set(mySet)
+        concurrency.activeLong[i] = length(dfLongActiveIdx)
 
-        out_is_negative = return_and_label.ret .< 0
+        outIsNegative = returnedLabel.ret .< 0
         
-        out_is_negative = vcat(out_is_negative, falses(maximum_length - length(out_is_negative)))
-        condition = index_less_than_idx .& events_more_than_idx .& out_is_negative
-        my_set = events_filtered.date[condition]
+        outIsNegative = vcat(outIsNegative, falses(maximumLength - length(outIsNegative)))
+        condition = indexLessThanIdx .& eventsMoreThanIdx .& outIsNegative
+        mySet = eventsFiltered.date[condition]
 
-        df_short_active_index = Set(my_set)
-        concurrency.active_short[i] = length(df_short_active_index)
+        dfShortActiveIndex = Set(mySet)
+        concurrency.activeShort[i] = length(dfShortActiveIndex)
     end
 
-    concurrency.ct = concurrency.active_long - concurrency.active_short
+    concurrency.ct = concurrency.activeLong - concurrency.activeShort
     return concurrency
 end
 
@@ -97,7 +96,7 @@ end
         c (Float64): Concurrency.
         weights (AbstractVector): Weights of the normal distribution for the mixture model.
         means (AbstractVector): Means of the normal distribution.
-        sd (AbstractVector): Standard deviation of the normal distribution.
+        std (AbstractVector): Standard deviation of the normal distribution.
 
     Returns:
         Float64: Calculated bet size.
@@ -107,15 +106,15 @@ end
         - Methodology p.142
 
 """
-function gaussianBet(c::Float64, weights::AbstractVector, means::AbstractVector, sd::AbstractVector)
+function gaussianBet(c::Float64, weights::AbstractVector, means::AbstractVector, std::AbstractVector)
     if c >= 0.0
-        return (mixtureNormalCdf(c; weights=weights, means=means, std=sd) - 
-                mixtureNormalCdf(0; weights=weights, means=means, std=sd)) /
-               (-mixtureNormalCdf(0; weights=weights, means=means, std=sd) + 1)
+        return (mixtureNormalCdf(c; weights=weights, means=means, std=std) - 
+                mixtureNormalCdf(0; weights=weights, means=means, std=std)) /
+               (-mixtureNormalCdf(0; weights=weights, means=means, std=std) + 1)
     else
-        return (mixtureNormalCdf(c; weights=weights, means=means, std=sd) - 
-                mixtureNormalCdf(0; weights=weights, means=means, std=sd)) /
-               mixtureNormalCdf(0; weights=weights, means=means, std=sd)
+        return (mixtureNormalCdf(c; weights=weights, means=means, std=std) - 
+                mixtureNormalCdf(0; weights=weights, means=means, std=std)) /
+               mixtureNormalCdf(0; weights=weights, means=means, std=std)
     end
 end
 
@@ -165,7 +164,7 @@ end
     This function calculates the average active signals based on the DataFrame of signals.
 
     Args:
-        DataFrameofSignals (DataFrame): DataFrame that has signals.
+        dataFrameofSignals (DataFrame): DataFrame that has signals.
 
     Returns:
         DataFrame: DataFrame with calculated average active signals.
@@ -175,12 +174,12 @@ end
         - Methodology p.144
 
 """
-function averageActiveSignals(DataFrameofSignals::DataFrame)
-    setofbarrier = Set((dropmissing(DataFrameofSignals)).t1)
-    setofbarrier = union(setofbarrier, DataFrameofSignals.Dates)
+function averageActiveSignals(dataFrameofSignals::DataFrame)
+    setofbarrier = Set((dropmissing(dataFrameofSignals)).t1)
+    setofbarrier = union(setofbarrier, dataFrameofSignals.Dates)
     index = [i for i in setofbarrier]
     sort!(index)
-    out = mpDataFrameObj(averageActiveSignalsMultiProcessing, :molecule, index; DataFrameofSignals=DataFrameofSignals)
+    out = mpDataFrameObj(averageActiveSignalsMultiProcessing, :molecule, index; dataFrameofSignals=dataFrameofSignals)
     return out
 end
 
@@ -192,7 +191,7 @@ using DataFrames
     This function calculates the average active signals for a given molecule based on the DataFrame of signals.
 
     Args:
-        DataFrameofSignals (DataFrame): DataFrame that has signals.
+        dataFrameofSignals (DataFrame): DataFrame that has signals.
         molecule (AbstractVector): Index that the function must apply on.
 
     Returns:
@@ -203,17 +202,17 @@ using DataFrames
         - Methodology p.144
 
 """
-function averageActiveSignalsMultiProcessing(;DataFrameofSignals, molecule::AbstractVector)
-    signals = copy(DataFrameofSignals) # Filter by molecule
+function averageActiveSignalsMultiProcessing(;dataFrameofSignals, molecule::AbstractVector)
+    signals = copy(dataFrameofSignals) # Filter by molecule
     output = DataFrame(date = molecule, signal = zeros(length(molecule))) # Create DataFrame 
 
     for (i, loc) in enumerate(molecule)
-        sig_lessthan_loc = signals.Dates .<= loc # Select events starting before loc
-        loc_lessthan_t1 = signals.t1 .> loc # Select events ending after loc
+        sigLessThanLoc = signals.Dates .<= loc # Select events starting before loc
+        locLessThant1 = signals.t1 .> loc # Select events ending after loc
 
-        is_missing = ismissing.(signals.t1) # Select missing barriers
+        isMissing = ismissing.(signals.t1) # Select missing barriers
      
-        df0 = sig_lessthan_loc .& (loc_lessthan_t1 .| is_missing) # Select events indices that contain loc 
+        df0 = sigLessThanLoc .& (locLessThant1 .| isMissing) # Select events indices that contain loc 
         act = signals.Dates[df0]     # Select events that contain loc 
         if length(act) > 0
             output[i, :signal] = mean(signals.signal[df0])
@@ -254,7 +253,7 @@ end
     Args:
         events (DataFrame): DataFrame for events.
         stepSize (Float64): Step size for discretization.
-        EstimationResult (DataFrame): DataFrame that contains probability and prediction.
+        estimationResult (DataFrame): DataFrame that contains probability and prediction.
         nClasses (Int): Number of classes.
 
     Returns:
@@ -265,21 +264,21 @@ end
         - Methodology p.145
 
 """
-function generateSignal(events::DataFrame, stepSize::Float64, EstimationResult::DataFrame, nClasses::Int)
+function generateSignal(events::DataFrame, stepSize::Float64, estimationResult::DataFrame, nClasses::Int)
     if size(prob)[1] == 0
         return
     end
-    probability = EstimationResult.probability
-    predictions = EstimationResult.prediction
+    probability = estimationResult.probability
+    predictions = estimationResult.prediction
     signal = (probability .- 1.0/nClasses) ./ sqrt.(probability .* (1 .- probability))
     model = Normal(0, 1)
     signal = predictions .* (2 .* cdf.(model, signal) .- 1)
 
     if "side" in names(events)
-        signal = signal .* filter(row -> row[:Dates] in EstimationResult.date, events).side
+        signal = signal .* filter(row -> row[:Dates] in estimationResult.date, events).side
     end
 
-    finalSignal = DataFrame(Date = EstimationResult.date, signal = signal)
+    finalSignal = DataFrame(Date = estimationResult.date, signal = signal)
     finalSignal.t1 = events.t1
 
     finalSignal = averageActiveSignals(finalSignal)
@@ -338,8 +337,8 @@ end
     Args:
         ω (Float64): Coefficient that regulates the width of the sigmoid function.
         f (Float64): Predicted price.
-        actual_price (Float64): Actual price.
-        maximum_position_size (Int): Maximum absolute position size.
+        actualPrice (Float64): Actual price.
+        maximumPositionSize (Int): Maximum absolute position size.
 
     Returns:
         Int: Target position size.
@@ -349,8 +348,8 @@ end
         - Methodology p.145 SNIPPET 10.4
 
 """
-function calculateTargetPosition(ω::Float64, f::Float64, actual_price::Float64, maximum_position_size::Int)
-    return trunc(Int, (calculate_size_of_bet(ω, f - actual_price) * maximum_position_size))
+function calculateTargetPosition(ω::Float64, f::Float64, actualPrice::Float64, maximumPositionSize::Int)
+    return trunc(Int, (calculateSizeOfBet(ω, f - actualPrice) * maximumPositionSize))
 end
 
 """
@@ -385,7 +384,7 @@ end
         cPosition (Int): Current position.
         f (Float64): Predicted price.
         ω (Float64): Coefficient that regulates the width of the sigmoid function.
-        maximum_position_size (Int): Maximum absolute position size.
+        maximumPositionSize (Int): Maximum absolute position size.
 
     Returns:
         Float64: Limit price.
@@ -395,7 +394,7 @@ end
         - Methodology p.145 SNIPPET 10.4
 
 """
-function calculateLimitPrice(TargetPositionSize::Int, cPosition::Int, f::Float64, ω::Float64, maximum_position_size::Int)
+function calculateLimitPrice(TargetPositionSize::Int, cPosition::Int, f::Float64, ω::Float64, maximumPositionSize::Int)
     if TargetPositionSize >= cPosition
         sgn = 1
     else
@@ -403,7 +402,7 @@ function calculateLimitPrice(TargetPositionSize::Int, cPosition::Int, f::Float64
     end
     lP = 0
     for i in abs(cPosition + sgn):abs(TargetPositionSize)
-        lP += calculate_inverse_price(f, ω, i / float(maximum_position_size))
+        lP += calculateInversePrice(f, ω, i / float(maximumPositionSize))
     end
     lP /= TargetPositionSize - cPosition
     return lP

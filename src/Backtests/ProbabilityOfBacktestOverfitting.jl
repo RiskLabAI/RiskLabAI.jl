@@ -2,7 +2,7 @@
 Selects rows from a given partition.
 
 :param partition: Index of submatrix.
-:param sub_matrix_size: Submatrix size.
+:param subMatrixSize: Submatrix size.
 :return: Array of selected indexes.
 """
 function selectedRow(partition, subMatrixSize)
@@ -26,8 +26,12 @@ Computes the Probability Of Backtest Overfitting.
 :param riskFreeReturn: Risk-free return for calculating Sharpe ratio.
 :return: Tuple containing Probability Of Backtest Overfitting and an array of logit values.
 """
-function probabilityOfBacktestOverfitting(matrixData, nPartitions, metric;
-                                          riskFreeReturn=0.0)
+function probabilityOfBacktestOverfitting(
+        matrixData,
+        nPartitions,
+        metric;
+        riskFreeReturn=0.0
+    )
     if nPartitions % 2 == 1
         println("Number of partitions must be even")
         return

@@ -5,7 +5,7 @@ using DayCounts
 """
 Returns the timing of bets when positions flatten or flip.
 
-:param target_positions: TimeArray of target positions.
+:param targetPositions: TimeArray of target positions.
 :return: TimeArray containing timestamps of bet timings.
 """
 function betTiming(targetPositions::TimeArray)
@@ -30,7 +30,7 @@ end
 """
 Derives the average holding period (in days) using average entry time pairing algorithm.
 
-:param target_positions: TimeArray of target positions.
+:param targetPositions: TimeArray of target positions.
 :return: Tuple containing TimeArray of holding periods and average holding period.
 """
 function holdingPeriod(targetPositions::TimeArray)
@@ -87,7 +87,7 @@ end
 """
 Calculates the Herfindahl-Hirschman Index (HHI).
 
-:param bet_returns: Bet returns series.
+:param betReturns: Bet returns series.
 :return: HHI value.
 """
 function hhi(betReturns)

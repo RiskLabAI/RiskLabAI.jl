@@ -1,64 +1,64 @@
 """
-    Function: Implements the Marcenko–Pastur PDF in python.
-    Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Snippet 2.1, Page 25
+Function: Implements the Marcenko–Pastur PDF in Julia.
+Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 2.1, Page 25
 """
-function pdf_marcenko_pastur(var, ratio, points)
+function pdfMarcenkoPastur(var, ratio, points)
     λmin = var * (1 - sqrt(1 / ratio))^2
     λmax = var * (1 + sqrt(1 / ratio))^2
-    eigen_values = range(λmin, stop=λmax, length=points)
-    diffλ = ((λmax .- eigen_values) .* (eigen_values .- λmin))
+    eigenValues = range(λmin, stop=λmax, length=points)
+    diffλ = ((λmax .- eigenValues) .* (eigenValues .- λmin))
     diffλ[diffλ .< -1E-3] .= 0.
-    pdf = ratio ./ (2 * pi * var * eigen_values) .* diffλ
-    return DataFrames.DataFrame(index=eigen_values, values=pdf)
+    pdf = ratio ./ (2 * pi * var * eigenValues) .* diffλ
+    return DataFrame(index=eigenValues, values=pdf)
 end
 
 """
-    Function: Get eVal, eVec from a Hermitian matrix.
-    Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Snippet 2.2, Page 25
+Function: Get eVal, eVec from a Hermitian matrix.
+Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 2.2, Page 25
 """
 function pca(matrix) # Hermitian matrix
-    eigen_values, eigen_vectors = LinearAlgebra.eigen(matrix)
-    indices = sortperm(eigen_values, rev=true)
-    eigen_values, eigen_vectors = eigen_values[indices], eigen_vectors[:, indices]
-    eigen_values = Diagonal(eigen_values)
-    return eigen_values, eigen_vectors
+    eigenValues, eigenVectors = eigen(matrix)
+    indices = sortperm(eigenValues, rev=true)
+    eigenValues, eigenVectors = eigenValues[indices], eigenVectors[:, indices]
+    eigenValues = Diagonal(eigenValues)
+    return eigenValues, eigenVectors
 end
 
 """
-    Function: Fit kernel density.
-    Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Snippet 2.2, Page 25
+Function: Fit kernel density.
+Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 2.2, Page 25
 """
-function kde(observations; band_width=0.25, kernel=Distributions.Normal, values_for_evaluating=nothing)
-    density = kde(observations, kernel=kernel, bandwidth=band_width)
-    if values_for_evaluating == nothing
-        values_for_evaluating = reshape(reverse(unique(observations)), :, 1)
+function kde(observations; bandwidth=0.25, kernel=Distributions.Normal, valuesForEvaluating=nothing)
+    density = kde(observations, kernel=kernel, bandwidth=bandwidth)
+    if valuesForEvaluating == nothing
+        valuesForEvaluating = reshape(reverse(unique(observations)), :, 1)
     end
-    density = KernelDensity.pdf(density, values_for_evaluating[:])
-    return DataFrames.DataFrame(index=vec(values_for_evaluating), values=density)
+    density = KernelDensity.pdf(density, valuesForEvaluating[:])
+    return DataFrame(index=vec(valuesForEvaluating), values=density)
 end
 
 """
-    Function: Add signal to a random covariance matrix.
-    Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Snippet 2.3, Page 27
+Function: Add signal to a random covariance matrix.
+Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 2.3, Page 27
 """
-function add_signal_to_covariance_matrix(number_columns, number_factors)
-    data = rand(Normal(), number_columns, number_factors)
-    cov_data = data * data'
-    cov_data += Diagonal(rand(Uniform(), number_columns))
-    return cov_data
+function addSignalToCovarianceMatrix(numberColumns, numberFactors)
+    data = rand(Normal(), numberColumns, numberFactors)
+    covData = data * data'
+    covData += Diagonal(rand(Uniform(), numberColumns))
+    return covData
 end
 
 """
-    Function: Derive the correlation matrix from a covariance matrix.
-    Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Snippet 2.3, Page 27
+Function: Derive the correlation matrix from a covariance matrix.
+Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 2.3, Page 27
 """
-function covariance_to_correlation(cov)
-    std = sqrt.((diag(cov)))
+function covarianceToCorrelation(cov)
+    std = sqrt.(diag(cov))
     corr = cov ./ (std .* std')
     corr[corr .< -1] .= -1
     corr[corr .> 1] .= 1
@@ -66,26 +66,26 @@ function covariance_to_correlation(cov)
 end
 
 """
-    Function: Fits the Marcenko–Pastur PDF to a random covariance
-              matrix that contains signal. The objective of the fit is to find the value of σ2 that
-              minimizes the sum of the squared differences between the analytical PDF and.
-    Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Snippet 2.4, Page 27
+Function: Fits the Marcenko–Pastur PDF to a random covariance
+matrix that contains signal. The objective of the fit is to find the value of σ² that
+minimizes the sum of the squared differences between the analytical PDF and.
+Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 2.4, Page 27
 """
-function fit_marcenko_pastur_to_covariance_matrix(var, eigen_values, ratio, band_width, points = 1000)
-    pdf0 = pdf_marcenko_pastur(var, ratio, points)
-    pdf1 = kde(eigen_values, band_width = band_width, kernel = Distributions.Normal, values_for_evaluating = pdf0.index)
+function fitMarcenkoPasturToCovarianceMatrix(var, eigenValues, ratio, bandWidth, points = 1000)
+    pdf0 = pdfMarcenkoPastur(var, ratio, points)
+    pdf1 = kde(eigenValues, bandwidth = bandWidth, kernel = Distributions.Normal, valuesForEvaluating = pdf0.index)
     sse = sum((pdf1.values .- pdf0.values).^2)
     return sse
 end
 
 """
-    Function: Find the maximum random eigenvalues by fitting Marcenko's distribution.
-    Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Snippet 2.4, Page 27
+Function: Find the maximum random eigenvalues by fitting Marcenko's distribution.
+Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 2.4, Page 27
 """
-function find_max_eigenvalues(eigen_values, ratio, band_width)
-    out = optimize(var -> error_PDFs(var, eigen_values, ratio, band_width), 1E-5, 1-1E-5)
+function findMaxEigenvalues(eigenValues, ratio, bandWidth)
+    out = optimize(var -> errorPDFs(var, eigenValues, ratio, bandWidth), 1E-5, 1-1E-5)
     if Optim.converged(out) == true
         var = Optim.minimizer(out)
     else
@@ -96,50 +96,50 @@ function find_max_eigenvalues(eigen_values, ratio, band_width)
 end
 
 """
-    Function: Constant Residual Eigenvalue Method
-    Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Snippet 2.5, Page 29
+Function: Constant Residual Eigenvalue Method
+Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 2.5, Page 29
 """
-function constant_residual_eigenvalue_method(eigen_values, eigen_vectors, number_factors)
-    λ = copy(diag(eigen_values))
-    λ[number_factors:end] .= sum(λ[number_factors:end]) / (size(λ)[1] - number_factors)
-    λ_diag = Diagonal(λ)
-    cov = eigen_vectors * λ_diag * eigen_vectors'
-    corr2 = covariance_to_correlation(cov)
+function constantResidualEigenvalueMethod(eigenValues, eigenVectors, numberFactors)
+    λ = copy(diag(eigenValues))
+    λ[numberFactors:end] .= sum(λ[numberFactors:end]) / (size(λ)[1] - numberFactors)
+    λDiag = Diagonal(λ)
+    cov = eigenVectors * λDiag * eigenVectors'
+    corr2 = covarianceToCorrelation(cov)
     return corr2
 end
 
 """
-    Function: Denoising by Targeted Shrinkage
-    Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Snippet 2.6, Page 31
+Function: Denoising by Targeted Shrinkage
+Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 2.6, Page 31
 """
-function denoised_corr_shrinkage(eigen_values, eigen_vectors, number_factors, α = 0)
-    eigen_values_l = eigen_values[1:number_factors, 1:number_factors]
-    eigen_vectors_l = eigen_vectors[:, 1:number_factors]
-    eigen_values_r = eigen_values[number_factors:end, number_factors:end]
-    eigen_vectors_r = eigen_vectors[:, number_factors:end]
-    corr0 = eigen_vectors_l * eigen_values_l * transpose(eigen_vectors_l)
-    corr1 = eigen_vectors_r * eigen_values_r * transpose(eigen_vectors_r)
+function denoisedCorrelationShrinkage(eigenValues, eigenVectors, numberFactors, α = 0)
+    eigenValuesL = eigenValues[1:numberFactors, 1:numberFactors]
+    eigenVectorsL = eigenVectors[:, 1:numberFactors]
+    eigenValuesR = eigenValues[numberFactors:end, numberFactors:end]
+    eigenVectorsR = eigenVectors[:, numberFactors:end]
+    corr0 = eigenVectorsL * eigenValuesL * transpose(eigenVectorsL)
+    corr1 = eigenVectorsR * eigenValuesR * transpose(eigenVectorsR)
     corr2 = corr0 + α * corr1 + (1 - α) * diagm(diag(corr1))
     return corr2
 end
 
 """
-    Function: Generate a block-diagonal covariance matrix and a vector of means.
-    Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Snippet 2.7, Page 33
+Function: Generate a block-diagonal covariance matrix and a vector of means.
+Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 2.7, Page 33
 """
-function form_block_matrix(number_blocks, size_block, corr_block)
-    block = ones(size_block, size_block) * corr_block
+function formBlockMatrix(numberBlocks, sizeBlock, corrBlock)
+    block = ones(sizeBlock, sizeBlock) * corrBlock
     block[Statistics.diagind(block)] .= 1.0
-    corr = BlockArray{Float64}(undef_blocks, repeat([size_block], number_blocks), repeat([size_block], number_blocks))
-    for i in range(1, stop = number_blocks)
-        for j in range(1, stop = number_blocks)
+    corr = BlockArray{Float64}(undefBlocks, repeat([sizeBlock], numberBlocks), repeat([sizeBlock], numberBlocks))
+    for i in range(1, stop = numberBlocks)
+        for j in range(1, stop = numberBlocks)
             if i == j
                 setblock!(corr, block, i, j)
             else
-                setblock!(corr, zeros(size_block, size_block), i, j)
+                setblock!(corr, zeros(sizeBlock, sizeBlock), i, j)
             end
         end
     end
@@ -147,36 +147,36 @@ function form_block_matrix(number_blocks, size_block, corr_block)
 end
 
 """
-    Function: Generate the true matrix with shuffled columns, mean vector, and covariance matrix.
-    Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Snippet 2.7, Page 33
+Function: Generate the true matrix with shuffled columns, mean vector, and covariance matrix.
+Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 2.7, Page 33
 """
-function generate_true_matrix(number_blocks, size_block, corr_block)
-    corr = form_block_matrix(number_blocks, size_block, corr_block)
-    columns =  Random.shuffle(collect(1:number_blocks * size_block))
+function generateTrueMatrix(numberBlocks, sizeBlock, corrBlock)
+    corr = formBlockMatrix(numberBlocks, sizeBlock, corrBlock)
+    columns =  shuffle(collect(1:numberBlocks * sizeBlock))
     corr = corr[columns, columns]
     std0 = rand(Uniform(0.05, 0.2), size(corr)[1])
-    cov0 = correlation_to_covariance(corr, std0)
+    cov0 = correlationToCovariance(corr, std0)
     mu0 = rand.(Normal.(std0, std0), 1)
     return mu0, cov0
 end
 
 """
-    Function: Derive the covariance matrix from a correlation matrix
-    Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Snippet 2.7, Page 33
+Function: Derive the covariance matrix from a correlation matrix
+Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 2.7, Page 33
 """
-function correlation_to_covariance(corr, std)
+function correlationToCovariance(corr, std)
     cov = corr .* (std .* std')
     return cov
 end
 
 """
-    Function: Generate the empirical covariance matrix using simulations.
-    Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Snippet 2.8, Page 33
+Function: Generate the empirical covariance matrix using simulations.
+Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 2.8, Page 33
 """
-function generate_empirical_covariance(mu0, cov0, observations, shrink = false)
+function generateEmpiricalCovariance(mu0, cov0, observations, shrink = false)
     data = transpose(rand(MvNormal(vcat(mu0...), cov0), observations))
     mu1 = vec(reshape(mean(data, dims = 1), (500, 1)))
     if shrink
@@ -188,26 +188,26 @@ function generate_empirical_covariance(mu0, cov0, observations, shrink = false)
 end
 
 """
-    Function: Denoising of the empirical covariance matrix.
-    Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Snippet 2.9, Page 34
+Function: Denoising of the empirical covariance matrix.
+Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 2.9, Page 34
 """
-function denoise_covariance(cov0, ratio, band_width)
-    corr0 = covariance_to_correlation(cov0)
-    eigen_values0, eigen_vectors0 = principal_component_analysis(corr0)
-    λmax0, var0 = find_max_eigenvalues(diag(eigen_values0), ratio, band_width)
-    number_factors0 = size(eigen_values0)[1] - searchsortedfirst(reverse(diag(eigen_values0)), λmax0) + 1
-    corr1 = constant_residual_eigenvalue_method(eigen_values0, eigen_vectors0, number_factors0)
-    cov1 = correlation_to_covariance(corr1, diag(cov0).^0.5)
+function denoiseCovariance(cov0, ratio, bandWidth)
+    corr0 = covarianceToCorrelation(cov0)
+    eigenValues0, eigenVectors0 = principalComponentAnalysis(corr0)
+    λmax0, var0 = findMaxEigenvalues(diag(eigenValues0), ratio, bandWidth)
+    numberFactors0 = size(eigenValues0)[1] - searchsortedfirst(reverse(diag(eigenValues0)), λmax0) + 1
+    corr1 = constantResidualEigenvalueMethod(eigenValues0, eigenVectors0, numberFactors0)
+    cov1 = correlationToCovariance(corr1, diag(cov0).^0.5)
     return cov1
 end
 
 """
-    Function: Perform Monte Carlo simulation to optimize portfolio weights.
-    Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Snippet 2.10, Page 34
+Function: Perform Monte Carlo simulation to optimize portfolio weights.
+Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 2.10, Page 34
 """
-function monte_carlo_optimize_portfolio(cov, mu = nothing)
+function monteCarloOptimizePortfolio(cov, mu = nothing)
     inverse = inv(cov)
     ones1 = ones(size(inverse)[1], 1)
     if isnothing(mu)
