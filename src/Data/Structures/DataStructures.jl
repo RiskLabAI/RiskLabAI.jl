@@ -15,10 +15,13 @@ Reference:
 Methodology:
     n/a
 """
-function showProgressBar(value,
-                         endValue,
-                         startTime,
-                         barLength = 20)
+function showProgressBar(
+        value,
+        endValue,
+        startTime,
+        barLength = 20
+    )
+
     percent = Float64(value) / endValue
 
     if trunc(Int, round(percent * barLength) - 1) < 0
@@ -48,8 +51,11 @@ Reference:
 Methodology:
     n/a
 """
-function computeEwma(data,
-                     windowLength = 100)
+function computeEwma(
+        data,
+        windowLength = 100
+    )
+
     N = size(data)[1]
     ewmaMean = []
     ewmaVariance = []
@@ -86,10 +92,13 @@ Reference:
 Methodology:
     Page number: n/a
 """
-function groupAndCalculateThresholds(targetCol,
-                                     tickExpectedInit,
-                                     barSize)
-    Δtimes, times = [], []
+function groupAndCalculateThresholds(
+        targetCol,
+        tickExpectedInit,
+        barSize
+    )
+
+    ΔTimes, times = [], []
     timePrev, tickExpected, barExpectedValue = 0, tickExpectedInit, barSize
     N = size(targetCol)[1]
     θAbsolute, thresholds, θs, groupingId = zeros(N), zeros(N), zeros(N), zeros(N)
@@ -109,14 +118,14 @@ function groupAndCalculateThresholds(targetCol,
         if thisθAbsolute ≥ threshold
             groupingIdCurrent += 1
             θCurrent = 0
-            append!(Δtimes, Float64(i - timePrev))
+            append!(ΔTimes, Float64(i - timePrev))
             append!(times, i)
             timePrev = i
-            tickExpected = ewma(Array(Δtimes), trunc(Int, length(Δtimes)))[1][end]
+            tickExpected = ewma(Array(ΔTimes), trunc(Int, length(ΔTimes)))[1][end]
             barExpectedValue = abs(ewma(targetCol[1:i], trunc(Int, tickExpectedInit * 1))[1][end])
         end
     end
-    return Δtimes, θAbsolute, thresholds, times, θs, groupingId
+    return ΔTimes, θAbsolute, thresholds, times, θs, groupingId
 end
 
 """
@@ -134,9 +143,12 @@ Reference:
 Methodology:
     Page number: 29
 """
-function infoDrivenBar(tickData,
-                       type::String = "volume",
-                       tickExpectedInit = 2000)
+function infoDrivenBar(
+        tickData,
+        type::String = "volume",
+        tickExpectedInit = 2000
+    )
+
     if type == "volume"
         inputData = tickData.volumelabeled
     elseif type == "tick"
@@ -147,7 +159,7 @@ function infoDrivenBar(tickData,
         println("Error: unknown type")
     end
     barExpectedValue = abs(mean(inputData))
-    Δtimes, θAbsolute, thresholds, times, θs, groupingId = groupAndCalculateThresholds(inputData, tickExpectedInit, barExpectedValue)
+    ΔTimes, θAbsolute, thresholds, times, θs, groupingId = groupAndCalculateThresholds(inputData, tickExpectedInit, barExpectedValue)
     tickData[!,:groupingID] = groupingId
     dates = combine(DataFrames.groupby(tickData, :groupingID), :dates => first => :dates)
     tickDataGrouped = DataFrames.groupby(tickData, :groupingID)
@@ -169,14 +181,16 @@ Reference:
     Methodology: n/a
 """
 function ohlcv(tickDataGrouped)
-    ohlcvDataframe = combine(tickDataGrouped, :price => first => :Open,
-                             :price => maximum => :High,
-                             :price => minimum => :Low,
-                             :price => last => :Close,
-                             :size => sum => :Volume,
-                             AsTable([:price, :size]) => x -> sum(x.price .* x.size) / sum(x.size),
-                             :price => mean => :PriceMean,
-                             :price => length => :TickCount)
+    ohlcvDataframe = combine(
+        tickDataGrouped, :price => first => :Open,
+        :price => maximum => :High,
+        :price => minimum => :Low,
+        :price => last => :Close,
+        :size => sum => :Volume,
+        AsTable([:price, :size]) => x -> sum(x.price .* x.size) / sum(x.size),
+        :price => mean => :PriceMean,
+        :price => length => :TickCount
+    )
     DataFrames.rename!(ohlcvDataframe, :price_size_function => :ValueOfTrades)
     ohlcvDataframe.PriceMeanLogReturn = log.(ohlcvDataframe.PriceMean) - log.(circshift(ohlcvDataframe.PriceMean, 1))
     ohlcvDataframe.PriceMeanLogReturn[1] = NaN
@@ -194,8 +208,11 @@ Reference:
     De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     Methodology: n/a
 """
-function timeBar(tickData,
-                  frequency = 5)
+function timeBar(
+        tickData,
+        frequency = 5
+    )
+    
     dates = tickData.dates
     datesCopy = copy(dates)
     tickData.dates = floor.(datesCopy, Dates.Minute(frequency))
@@ -217,9 +234,12 @@ Reference:
     De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     Methodology: n/a
 """
-function tickBar(tickData,
-                  tickPerBar = 10,
-                  numberBars = nothing)
+function tickBar(
+        tickData,
+        tickPerBar = 10,
+        numberBars = nothing
+    )
+
     if tickPerBar == nothing
         tickPerBar = floor(size(tickData)[1] / numberBars)
     end
@@ -246,9 +266,12 @@ Reference:
     De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     Methodology: n/a
 """
-function volumeBar(tickData,
-                    volumePerBar = 10000,
-                    numberBars = nothing)
+function volumeBar(
+        tickData,
+        volumePerBar = 10000,
+        numberBars = nothing
+    )
+
     tickData[!, :volumecumulated] = cumsum(tickData.size)
     if volumePerBar == nothing
         totalVolume = tickData.volumecumulated[end]
@@ -278,9 +301,12 @@ Reference:
     De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     Methodology: n/a
 """
-function dollarBar(tickData,
-                    dollarPerBar = 100000,
-                    numberBars = nothing)
+function dollarBar(
+        tickData,
+        dollarPerBar = 100000,
+        numberBars = nothing
+    )
+
     tickData[!, :dollar] = tickData.price .* tickData.size
     tickData[!, :CumulativeDollars] = cumsum(tickData.dollar)
     if dollarPerBar == nothing
@@ -311,9 +337,12 @@ Reference:
     De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     Methodology: Page 36
 """
-function pcaWeights(cov,
-                    riskDistribution = nothing,
-                    σ = 1.0)
+function pcaWeights(
+        cov,
+        riskDistribution = nothing,
+        σ = 1.0
+    )
+
     Λ = eigvals(cov)
     V = eigvecs(cov)
     indices = reverse(sortperm(Λ))
@@ -341,8 +370,11 @@ Reference:
     De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
     Methodology: Page 39
 """
-function symmetricCusumFilter(input,
-                              threshold)
+function symmetricCusumFilter(
+        input,
+        threshold
+    )
+
     timeEvents, shiftPositive, shiftNegative = [], 0, 0
     Δprice = DataFrame(hcat(input[2:end, 1], diff(input[:, 2])), :auto)
     

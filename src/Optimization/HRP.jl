@@ -1,183 +1,218 @@
-"""----------------------------------------------------------------------
-    function: Distance from corr matrix
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: Snipet 16.4, Page 241
-----------------------------------------------------------------------"""
+"""
+Calculate the distance matrix from a correlation matrix.
+
+Reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 16.4, Page 241
+"""
 function distanceCorr(
-    correlation::AbstractMatrix # correlation matrix
+    correlation::AbstractMatrix  # correlation matrix
 ) 
-    return (1 .- correlation)^.5
+    return (1 .- correlation)^0.5
 end
 
 
-"""----------------------------------------------------------------------
-    function: The output is a sorted list of original items to reshape corr matrix
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: Snipet 16.2, Page 229
-----------------------------------------------------------------------"""
-function quasiDiagonal(linkageMatrix) # linkage matrix
+"""
+Create a sorted list of original items to reshape the correlation matrix.
+
+Reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 16.2, Page 229
+"""
+function quasiDiagonal(linkageMatrix)
     # Sort clustered items by distance
-    linkageMatrix = Int.(floor.(linkageMatrix)) # int each element
-    sortedItems = DataFrames.DataFrame(index = [1, 2], value = [linkageMatrix[end,1], linkageMatrix[end, 2]]) # initialize sorted array
-    nItems = linkageMatrix[end, 4] # number of original items
-    while maximum(sortedItems.value) >= nItems 
-        sortedItems.index = range(0,stop = size(sortedItems)[1]*2 - 1, step = 2) # make space
-        dataframe = sortedItems[sortedItems.value .>= nItems, :]  # find clusters
-        index = dataframe.index # index
-        value = dataframe.value .- nItems # value
-        sortedItems[in.(sortedItems.index, (index,)),:value] = linkageMatrix[value .+ 1,1]  # item 1
-        dataframe = DataFrames.DataFrame(index = index .+ 1, value = linkageMatrix[value .+ 1, 2])
-        sortedItems = vcat(sortedItems, dataframe) # item 2
-        sort!(sortedItems, by = x->x[1]) # re-sort
-        sortedItems.index = range(0, length = size(sortedItems)[1]) # re-index
+    linkageMatrix = Int.(floor.(linkageMatrix))  # Convert to integers
+    sortedItems = DataFrames.DataFrame(index = [1, 2], value = [linkageMatrix[end, 1], linkageMatrix[end, 2]])  # Initialize sorted array
+    nItems = linkageMatrix[end, 4]  # Number of original items
+    
+    while maximum(sortedItems.value) >= nItems
+        sortedItems.index = range(0, stop = size(sortedItems)[1] * 2 - 1, step = 2)  # Make space
+        dataframe = sortedItems[sortedItems.value .>= nItems, :]  # Find clusters
+        index = dataframe.index
+        value = dataframe.value .- nItems
+        sortedItems[in.(sortedItems.index, (index,)), :value] = linkageMatrix[value .+ 1, 1]  # Item 1
+        
+        dataframe = DataFrames.DataFrame(index = index .+ 1, value = linkageMatrix[value .+ 1, 2])  # Create DataFrame for item 2
+        sortedItems = vcat(sortedItems, dataframe)  # Append item 2
+        sort!(sortedItems, by = x -> x[1])  # Re-sort
+        sortedItems.index = range(0, length = size(sortedItems)[1])  # Re-index
     end
+    
     return sortedItems.value
 end
 
 
-"""----------------------------------------------------------------------
-    function: The output is a dataframe including weights of assets
-    reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    methodology: Snipet 16.2, Page 230
-----------------------------------------------------------------------"""
+"""
+Calculate the weights of assets using recursive bisection.
+
+Reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 16.2, Page 230
+"""
 function recursiveBisection(
-        cov::Matrix, # covariance matrix
+        cov::Matrix,  # Covariance matrix
         sortedItems
-) # sorted items from quasiDiagonal
-    # Compute HRP alloc
-    ω = DataFrames.DataFrame(index = sortedItems, weight = repeat([1.], length(sortedItems))) # initialize weight dataframe
-    clusteredItems = [sortedItems] # initial cluster
-
-    while length(clusteredItems) > 0 
-        clusteredItems=[i[j:k] for i in clusteredItems for (j, k) in ((1, div(length(i), 2)), (div(length(i), 2) + 1, length(i))) if length(i) > 1] # bi-section
+    )
+    # Compute HRP allocations
+    ω = DataFrames.DataFrame(index = sortedItems, weight = repeat([1.], length(sortedItems)))  # Initialize weight DataFrame
+    clusteredItems = [sortedItems]  # Initial cluster
+    
+    while length(clusteredItems) > 0
+        clusteredItems = [i[j:k] for i in clusteredItems for (j, k) in ((1, div(length(i), 2)), (div(length(i), 2) + 1, length(i))) if length(i) > 1]  # Bisection
+        
         for i in range(1, stop = length(clusteredItems), step = 2)
-            clusteredItems0 = clusteredItems[i] # cluster 1
-            clusteredItems1 = clusteredItems[i + 1] # cluster 2
-            clusterVariance0 = clusterVariance(cov, clusteredItems0) # variance of cluster 1
-            clusterVariance1 = clusterVariance(cov, clusteredItems1) # variance of cluster 2
-            α = 1 - clusterVariance0/(clusterVariance0 + clusterVariance1) # set alpha
-
-            ω[in.(ω.index, (clusteredItems0,)), :weight] .*= α # weight 1
-            ω[in.(ω.index, (clusteredItems1,)), :weight] .*= 1 - α # weight 2
+            clusteredItems0 = clusteredItems[i]  # Cluster 1
+            clusteredItems1 = clusteredItems[i + 1]  # Cluster 2
+            
+            clusterVariance0 = clusterVariance(cov, clusteredItems0)  # Variance of cluster 1
+            clusterVariance1 = clusterVariance(cov, clusteredItems1)  # Variance of cluster 2
+            α = 1 - clusterVariance0 / (clusterVariance0 + clusterVariance1)  # Set alpha
+            
+            ω[in.(ω.index, (clusteredItems0,)), :weight] .*= α  # Weight 1
+            ω[in.(ω.index, (clusteredItems1,)), :weight] .*= 1 - α  # Weight 2
         end
     end
+    
     return ω
 end
-        
-"""----------------------------------------------------------------------
-function: Compute variance of cluster
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: Snipet 16.4, Page 240
-----------------------------------------------------------------------""" 
+
+
+"""
+Calculate the variance of a cluster.
+
+Reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 16.4, Page 240
+"""
 function clusterVariance(
-        cov::Matrix, # covariance matrix
-        clusteredItems # clustered items 
-)
+        cov::Matrix,  # Covariance matrix
+        clusteredItems  # Clustered items 
+    )
+
     # Compute variance per cluster
-    covSlice = cov[clusteredItems .+ 1, clusteredItems .+ 1] # matrix slice
-    ω = inverseVariancePortfolio(covSlice) # weight from inverse variance 
-    clusterVariance = (transpose(ω)*covSlice)*ω #compute variance
+    covSlice = cov[clusteredItems .+ 1, clusteredItems .+ 1]  # Matrix slice
+    ω = inverseVariancePortfolio(covSlice)  # Weight from inverse variance 
+    clusterVariance = (transpose(ω) * covSlice) * ω  # Compute variance
     return clusterVariance
 end
 
-"""----------------------------------------------------------------------
-function: inverse variance weights
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: Snipet 16.4, Page 240
-----------------------------------------------------------------------""" 
-function inverseVariancePortfolio(cov, # covariance matrix
-             kwargs...)
+
+"""
+Calculate inverse variance weights.
+
+Reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 16.4, Page 240
+"""
+function inverseVariancePortfolio(
+        cov,  # Covariance matrix
+        kwargs...
+    )
     # Compute the inverse-variance portfolio
-    ω = 1 ./Statistics.diag(cov) # inverse of diag of cov matrix
-    ω /= sum(ω) # divide by sum(ivp)
+    ω = 1 ./ Statistics.diag(cov)  # Inverse of diagonal of covariance matrix
+    ω /= sum(ω)  # Normalize
     return ω
-end   
-        
-"""----------------------------------------------------------------------
-function: random data for MC simulation
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: Snipet 16.5, Page 242
-----------------------------------------------------------------------"""   
-function generalRandomData(nObservations, # number of observation
-                           lengthSample, # starting point for selecting random observation
-                           size0, # size of uncorrelated data
-                           size1,  # size of correlated data
-                           mu0,  # mu for uncorrelated data
-                           sigma0, # sigma for uncorrelated data
-                           sigma1) # sigma for correlated data
-    data1 = rand(Normal(mu0, sigma0), nObservations, size0) # generate random uncorrelated data
+end
+
+
+"""
+Generate random data for Monte Carlo simulation.
+
+Reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 16.5, Page 242
+"""
+function generalRandomData(
+        nObservations,  # Number of observations
+        lengthSample,  # Starting point for selecting random observations
+        size0,  # Size of uncorrelated data
+        size1,  # Size of correlated data
+        mu0,  # Mean for uncorrelated data
+        sigma0,  # Standard deviation for uncorrelated data
+        sigma1  # Standard deviation for correlated data
+    )
+    data1 = rand(Normal(mu0, sigma0), nObservations, size0)  # Generate random uncorrelated data
     
-    columns = rand(1:size0, size1) # select random number of columns
-    data2 = data1[:, columns] + rand(Normal(0, sigma0*sigma1), nObservations, length(columns)) # create correlation between the variables
-    data = hcat(data1, data2) # merge data sets
-    point = rand(lengthSample:nObservations, 2) # randomly select elements
-    data[append!(point, [columns[1], size0])] = [-.5, -.5, 2, 2] # add common random shock
-    point = rand(lengthSample:nObservations, 2) # randomly select elements
-    data[point,columns[end]] = [-.5, 2] # add specific random shock
+    columns = rand(1:size0, size1)  # Select random columns
+    data2 = data1[:, columns] + rand(Normal(0, sigma0 * sigma1), nObservations, length(columns))  # Create correlation between the variables
+    data = hcat(data1, data2)  # Merge data sets
+    
+    point = rand(lengthSample:nObservations, 2)  # Randomly select elements
+    data[append!(point, [columns[1], size0])] = [-0.5, -0.5, 2, 2]  # Add common random shock
+    
+    point = rand(lengthSample:nObservations, 2)  # Randomly select elements
+    data[point, columns[end]] = [-0.5, 2]  # Add specific random shock
 
     return data, columns
-
 end
-        
-"""----------------------------------------------------------------------
-function: HRP method
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: Snipet 16.5, Page 243
-----------------------------------------------------------------------"""  
-function hierarchicalRiskParity(cov::Matrix, # covariance matrix
-             corr::Matrix) # correlation matrix
+
+
+"""
+Calculate hierarchical risk parity (HRP) portfolio weights.
+
+Reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 16.5, Page 243
+"""
+function hierarchicalRiskParity(
+        cov::Matrix,  # Covariance matrix
+        corr::Matrix  # Correlation matrix
+    )
     # Construct a hierarchical portfolio
-    distance = distanceCorr(corr) # distance matrix
-    linkageMatrix = sch.linkage(distance,"single") # linkage matrix
-    sortedItems = quasiDiagonal(linkageMatrix) # sorted items
-    hrp = recursiveBisection(cov, sortedItems) # dataframe of weights
-    return sort(hrp).weight # array of weights
+    distance = distanceCorr(corr)  # Distance matrix
+    linkageMatrix = sch.linkage(distance, "single")  # Linkage matrix
+    sortedItems = quasiDiagonal(linkageMatrix)  # Sorted items
+    hrp = recursiveBisection(cov, sortedItems)  # DataFrame of weights
+    return sort(hrp).weight  # Array of weights
 end
 
-"""----------------------------------------------------------------------
-function: MC simulation for out of sample comparison
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: Snipet 16.5, Page 243
-----------------------------------------------------------------------"""  
-function hrpMC(;nIterations = 5e3, # number of iterations
-                nObservations = 520, # number of observation
-                size0 = 5, # size of uncorrelated data
-                size1 = 5, # size of correlated data
-                mu0 = 0, # mu for uncorrelated data
-                sigma0 = 1e-2, # sigma for uncorrelated data
-                sigma1 = .25, # sigma for correlated data
-                lengthSample = 260, # length for in sample
-                testSize = 20) # observation for test set
-    methods = [inverseVariancePortfolio, hierarchicalRiskParity] # methods
-    results, numIter = Dict(String.(Symbol.(methods)) .=> [[]]), 0 # initialize results and number of iteration
-    pointers = range(lengthSample + 1, stop = nObservations, step = testSize) # pointers for inSample and outSample
+
+"""
+Perform Monte Carlo simulation for out-of-sample comparison.
+
+Reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+Methodology: Snippet 16.5, Page 243
+"""
+function hrpMC(;
+        nIterations = 5e3,  # Number of iterations
+        nObservations = 520,  # Number of observations
+        size0 = 5,  # Size of uncorrelated data
+        size1 = 5,  # Size of correlated data
+        mu0 = 0,  # Mean for uncorrelated data
+        sigma0 = 1e-2,  # Standard deviation for uncorrelated data
+        sigma1 = 0.25,  # Standard deviation for correlated data
+        lengthSample = 260,  # Length for in-sample
+        testSize = 20  # Number of observations in the test set
+    )
+    methods = [inverseVariancePortfolio, hierarchicalRiskParity]  # Methods
+    results, numIter = Dict(String.(Symbol.(methods)) .=> [[]]), 0  # Initialize results and number of iterations
+    pointers = range(lengthSample + 1, stop = nObservations, step = testSize)  # Pointers for in-sample and out-sample
+    
     while numIter < nIterations
-        # println(numIter)
         data, columns = generalRandomData(nObservations, lengthSample, size0, size1, mu0, sigma0, sigma1)  # Prepare data for one experiment
-        returns = Dict(String.(Symbol.(methods)) .=> [[]]) # initialize returns
+        returns = Dict(String.(Symbol.(methods)) .=> [[]])  # Initialize returns
+        
         # Compute portfolios in-sample
         for pointer in pointers
-            inSample = data[pointer - lengthSample:pointer - 1, :] # in sample
-            covariance = cov(inSample) # covariance of sample
-            correlation = cor(inSample) # correlation of sample
+            inSample = data[pointer - lengthSample:pointer - 1, :]  # In-sample
+            covariance = cov(inSample)  # Covariance of sample
+            correlation = cor(inSample)  # Correlation of sample
+            
             # Compute performance out-of-sample
-            outSample = data[pointer:pointer + testSize - 1, :] # out of sample 
+            outSample = data[pointer:pointer + testSize - 1, :]  # Out-of-sample 
+            
             for func in methods
-                weights = func(covariance, correlation) # call methods
-                ret = outSample*weights # returns
-                returns[String(Symbol(func))] = vcat(returns[String(Symbol(func))], ret) # update returns dictionary
+                weights = func(covariance, correlation)  # Calculate portfolio weights
+                ret = outSample * weights  # Calculate returns
+                returns[String(Symbol(func))] = vcat(returns[String(Symbol(func))], ret)  # Update returns dictionary
             end
         end
+        
         # Evaluate and store results
         for func in methods
-            ret = returns[String(Symbol(func))] # return column of each method
-            cumprodReturn = cumprod(ret.+1) # cumprod of returns
-            results[String(Symbol(func))] = vcat(results[String(Symbol(func))], [cumprodReturn[end] - 1])  # update results
+            ret = returns[String(Symbol(func))]  # Returns for each method
+            cumprodReturn = cumprod(ret .+ 1)  # Cumulative product of returns
+            results[String(Symbol(func))] = vcat(results[String(Symbol(func))], [cumprodReturn[end] - 1])  # Update results
         end
-        numIter += 1 # next iteration
+        
+        numIter += 1  # Next iteration
     end
+    
     # Report results
-    results = DataFrames.DataFrame(results) # dataframe of results
-    stdResults, varResults = std.(eachcol(results)), var.(eachcol(results)) # std and var of each method
-    return hcat(stdResults, varResults, varResults./varResults[2] .- 1)
+    results = DataFrames.DataFrame(results)  # DataFrame of results
+    stdResults, varResults = std.(eachcol(results)), var.(eachcol(results))  # Standard deviation and variance of each method
+    return hcat(stdResults, varResults, varResults ./ varResults[2] .- 1)
 end
