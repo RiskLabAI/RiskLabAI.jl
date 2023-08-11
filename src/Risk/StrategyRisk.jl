@@ -38,7 +38,13 @@ end
 Compute implied precision.
 Reference: De Prado, M. (2018) Advances in financial machine learning. Page 214, Snippet 15.3
 """
-function impliedPrecision(stopLoss, profitTaking, freq, targetSharpeRatio)
+function impliedPrecision(
+        stopLoss,
+        profitTaking,
+        freq,
+        targetSharpeRatio
+    )
+
     a = (freq + targetSharpeRatio^2) * (profitTaking - stopLoss)^2
     b = (2 * freq * stopLoss - targetSharpeRatio^2 * (profitTaking - stopLoss)) * (profitTaking - stopLoss)
     c = freq * stopLoss^2
@@ -50,7 +56,13 @@ end
 Compute the number of bets per year needed to achieve a Sharpe ratio with a certain precision rate.
 Reference: De Prado, M. (2018) Advances in financial machine learning. Page 215, Snippet 15.4
 """
-function binFrequency(stopLoss, profitTaking, precision, targetSharpeRatio)
+function binFrequency(
+        stopLoss,
+        profitTaking,
+        precision,
+        targetSharpeRatio
+    )
+
     freq = (targetSharpeRatio * (profitTaking - stopLoss))^2 * precision * (1 - precision) / ((profitTaking - stopLoss) * precision + stopLoss)^2
     binSr(sl0, pt0, freq0, p0) = (((pt0 - sl0) * p0 + sl0) * freq0^0.5) / ((pt0 - sl0) * (p0 * (1 - p0))^0.5)
     if !isapprox(binSr(stopLoss, profitTaking, freq, precision), targetSharpeRatio, atol = 0.5)
@@ -63,7 +75,15 @@ end
 Calculate the strategy risk in practice.
 Reference: De Prado, M. (2018) Advances in financial machine learning. Page 215, Snippet 15.4
 """
-function mixGaussians(μ1, μ2, σ1, σ2, probability1, nObs)
+function mixGaussians(
+        μ1,
+        μ2,
+        σ1,
+        σ2,
+        probability1,
+        nObs
+    )
+
     return1 = rand(Normal(μ1, σ1), trunc(Int, nObs * probability1))
     return2 = rand(Normal(μ2, σ2), trunc(Int, nObs) - trunc(Int, nObs * probability1))
     returns = append!(return1, return2)
@@ -79,7 +99,17 @@ function failureProbability(returns, freq, targetSharpeRatio)
     return risk
 end
 
-function calculateStrategyRisk(μ1, μ2, σ1, σ2, probability1, nObs, freq, targetSharpeRatio)
+function calculateStrategyRisk(
+        μ1,
+        μ2,
+        σ1,
+        σ2,
+        probability1,
+        nObs,
+        freq,
+        targetSharpeRatio
+    )
+    
     returns = mixGaussians(μ1, μ2, σ1, σ2, probability1, nObs)
     probabilityFail = failureProbability(returns, freq, targetSharpeRatio)
     println("Probability strategy will fail: ", probabilityFail)

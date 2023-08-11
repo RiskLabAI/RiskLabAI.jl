@@ -11,14 +11,18 @@ Returns:
 - DataFrame: OHLCV data.
 """
 function ohlcv(tickDataGrouped) 
-    ohlcvDataframe = combine(tickDataGrouped, :price => first => :open, 
-                             :price => maximum => :high,
-                             :price => minimum => :low,
-                             :price => last => :close,
-                             :size => sum => :volume,
-                             AsTable([:price, :size]) => x -> sum(x.price .* x.size) / sum(x.size), 
-                             :price => mean => :priceMean,
-                             :price => length => :tickCount)
+    
+    ohlcvDataframe = combine(
+        tickDataGrouped, :price => first => :open, 
+        :price => maximum => :high,
+        :price => minimum => :low,
+        :price => last => :close,
+        :size => sum => :volume,
+        AsTable([:price, :size]) => x -> sum(x.price .* x.size) / sum(x.size), 
+        :price => mean => :priceMean,
+        :price => length => :tickCount
+    )
+    
     DataFrames.rename!(ohlcvDataframe, :price_size_function => :valueOfTrades)
     ohlcvDataframe.priceMeanLogReturn = log.(ohlcvDataframe.priceMean) - log.(circshift(ohlcvDataframe.priceMean, 1))
     ohlcvDataframe.priceMeanLogReturn[1] = NaN
@@ -37,7 +41,11 @@ Parameters:
 Returns:
 - DataFrame: Time bar dataframe.
 """
-function timeBar(tickData, frequency = 5)
+function timeBar(
+        tickData,
+        frequency = 5
+    )
+
     dates = tickData.dates
     datesCopy = copy(dates)
     tickData.dates = floor.(datesCopy, Dates.Minute(frequency))
@@ -59,7 +67,11 @@ Parameters:
 Returns:
 - Vector: Sequence of weights.
 """
-function weighting(degree, size)
+function weighting(
+        degree,
+        size
+    )
+
     ω = [1.]
     for k ∈ 2:size
         thisω = -ω[end] / (k - 1) * (degree - k + 2)
@@ -78,7 +90,12 @@ Parameters:
 - nDegrees: Number of degrees.
 - numberWeights: Number of weights.
 """
-function plotWeights(degreeRange, nDegrees, numberWeights)
+function plotWeights(
+        degreeRange,
+        nDegrees,
+        numberWeights
+    )
+
     ω = DataFrames.DataFrame(index = collect(numberWeights - 1:-1:0))
     for degree ∈ range(degreeRange[1], degreeRange[2], length = nDegrees)
         degree = round(degree; digits = 2)
@@ -103,7 +120,12 @@ Parameters:
 Returns:
 - DataFrame: Fractionally differentiated series.
 """
-function fracDiff(series, degree, threshold = 0.01)
+function fracDiff(
+        series,
+        degree,
+        threshold = 0.01
+    )
+    
     weights = weighting(degree, size(series)[1])
     weightsNormalized = cumsum(broadcast(abs, weights), dims = 1)
     weightsNormalized /= weightsNormalized[end]
@@ -147,7 +169,11 @@ Parameters:
 Returns:
 - Vector: Sequence of weights.
 """
-function weightingFFD(degree, threshold)
+function weightingFFD(
+        degree,
+        threshold
+    )
+
     ω = [1.]
     k = 1
     while abs(ω[end]) >= threshold 
@@ -171,7 +197,11 @@ Parameters:
 Returns:
 - DataFrame: Fractionally differentiated series.
 """
-function fracDiffFixed(series, degree, threshold = 1e-5)
+function fracDiffFixed(
+        series,
+        degree,
+        threshold = 1e-5
+    )
     weights = weightingFFD(degree, threshold)
     width = length(weights) - 1
     

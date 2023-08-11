@@ -122,9 +122,9 @@ Returns:
 - Vector: Sequence of indices for sequential bootstrap.
 """
 function sequentialBootstrap(
-    indexMatrix, # matrix that Indicator for events 
-    SampleLength # number of samples
-)
+        indexMatrix, # matrix that Indicator for events 
+        SampleLength # number of samples
+    )
     if isnan(SampleLength) # check if SampleLength is NaN or not
         SampleLength = size(indexMatrix)[2] # if SampleLength is NaN, initialize it with the number of columns of indexMatrix (number of events)
     end
@@ -156,11 +156,12 @@ Returns:
 - DataFrame: Result of the specified function.
 """
 function sampleWeight(
-    timestamp, # dataframe for events
-    concurrencyEvents, # dataframe that contains the number of concurrent events for each event
-    returns, # data frame that contains returns
-    molecule
-) # molecule
+        timestamp, # dataframe for events
+        concurrencyEvents, # dataframe that contains the number of concurrent events for each event
+        returns, # data frame that contains returns
+        molecule
+    ) # molecule
+
     eventsfiltered = filter(row -> row[:date] in molecule, timestamp) # filter timestamp with molecule
     weight = DataFrame(date=molecule, weight=zeros(length(molecule))) # create weight dataframe for results
     priceReturn = copy(returns)
@@ -188,9 +189,9 @@ Returns:
 - DataFrame: Time decay result.
 """
 function timeDecay(
-    weight, # weight that is computed for each event
-    clfLastW = 1.0 # weight of the oldest observation
-) 
+        weight, # weight that is computed for each event
+        clfLastW = 1.0 # weight of the oldest observation
+    ) 
     timedecay = sort(weight, [:date]) # sort weight with date index
     timedecay[!, :timedecay] = cumsum(timedecay[!, :weight]) # compute cumulative sum
     slope = 0.0 

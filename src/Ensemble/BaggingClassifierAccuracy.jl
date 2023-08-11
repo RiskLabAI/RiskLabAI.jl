@@ -13,10 +13,11 @@ Returns:
 - Float64: Accuracy of the bagging classifier.
 """
 function baggingClassifierAccuracy(
-    n::Int,
-    p::Float64,
-    k::Int
-)::Float64
+        n::Int,
+        p::Float64,
+        k::Int
+    )::Float64
+    
     probabilitySum = 0
     for i in 0:Int(trunc(n / k + 1))
         probabilitySum += binomial(BigInt(n), BigInt(i)) * p^i * (1 - p)^(n - i)

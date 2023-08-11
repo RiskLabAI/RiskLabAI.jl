@@ -1,109 +1,158 @@
 using Distributions
 using Statistics
-using PyCall
-using IterTools
-using DataFrames, GLM
+using DataFrames
+using GLM
 using LinearAlgebra
 using PlotlyJS
 
-"""----------------------------------------------------------------------
-function: backtesting with synthetic data
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: p.175 snippet 13.1
-----------------------------------------------------------------------"""
+"""
+Function to perform backtesting with synthetic data.
 
-function Syntheticbacktesting(forcast, # long run price 
-                              HalfLife, # half life of model 
-                              σ; # standadrd deviation that use in model
-                              maximumIteration =1e3, # maximum number of Iteration
-                              maximumHoldingPeriod = 100, # maximum Holding Period
-                              profitTakingRange = LinRange(0.5,10,20), # profit Taking Range
-                              stopLossRange = LinRange(0.5,10,20), #  stop Loss Range
-                              seed = 0) # starting price 
+This function implements the methodology from De Prado's book "Advances in Financial Machine Learning" (p.175 snippet 13.1).
 
-    ϕ = 2^(-1/HalfLife) # compute ρ coeficient frome halfLife
-    output  = zeros((20,20)) # initial output with zero 
-    standardNormalDistribution = Normal() # create object of Normal Distribution
-    for (i_idx, i) in enumerate(profitTakingRange) 
-        for (j_idx,j) in enumerate(stopLossRange)
-            output2 = [] # create output2 for store Profit and loss in every iteration 
+Args:
+    forecast::Float64: Long run price.
+    halfLife::Float64: Half life of the model.
+    σ::Float64: Standard deviation used in the model.
+    maximumIteration::Int: Maximum number of iterations.
+    maximumHoldingPeriod::Int: Maximum holding period.
+    profitTakingRange::LinRange: Profit taking range.
+    stopLossRange::LinRange: Stop loss range.
+    seed::Float64: Starting price.
+
+Returns:
+    Array{Float64, 2}: Resulting Sharpe ratio values.
+"""
+function syntheticBacktesting(
+    forecast::Float64,
+    halfLife::Float64,
+    σ::Float64;
+    maximumIteration::Int = 1e3,
+    maximumHoldingPeriod::Int = 100,
+    profitTakingRange::LinRange = LinRange(0.5, 10, 20),
+    stopLossRange::LinRange = LinRange(0.5, 10, 20),
+    seed::Float64 = 0.0
+)
+    ϕ = 2^(-1 / halfLife)
+    output = zeros(Float64, length(profitTakingRange), length(stopLossRange))
+    standardNormalDistribution = Normal()
+
+    for (iIdx, i) in enumerate(profitTakingRange)
+        for (jIdx, j) in enumerate(stopLossRange)
+            output2 = Float64[]
             for _ in 1:maximumIteration
-                price ,HoldingPeriod = seed , 0 
-                while true 
-                    r = rand(standardNormalDistribution) # random sample from standardNormalDistribution
-                    price = (1 - ϕ) * forcast + ϕ * price + σ * r # O_U process 
-                    priceDifference = price -seed # diffrence between current price and first price 
-                    HoldingPeriod += 1 # increase holdingperiod by 1 
-                    if priceDifference > i* σ || priceDifference <-1*j* σ || HoldingPeriod > maximumHoldingPeriod # check stop condition and then append Profit to output2
-                        append!(output2,priceDifference)
+                price, holdingPeriod = seed, 0
+                while true
+                    r = rand(standardNormalDistribution)
+                    price = (1 - ϕ) * forecast + ϕ * price + σ * r
+                    priceDifference = price - seed
+                    holdingPeriod += 1
+                    if priceDifference > i * σ || priceDifference < -j * σ || holdingPeriod > maximumHoldingPeriod
+                        push!(output2, priceDifference)
                         break
                     end
                 end
             end
-            mean , std = Statistics.mean(output2) , Statistics.std(output2) # compute mean and standadrd deviation for fixed stop loss and profit taking 
-            output[i_idx,j_idx] = mean/std # compute sharp ratio and store it 
+            meanVal, stdVal = mean(output2), std(output2)
+            output[iIdx, jIdx] = meanVal / stdVal
         end
     end
     return output
 end
 
-"""----------------------------------------------------------------------
-function: fitting O-U process on data
-reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-methodology: p.173 
-----------------------------------------------------------------------"""
-function fit_O_U_process(price) # vector of stock price 
-    data = DataFrame(Y = price[2:end] .- price[1:end-1] , X = price[1:end-1]) # creat dataframe with one columns Y(dependent variable) and X(independent variable)
-    ols = lm(@formula(Y ~ X), data) # fit OLS 
-    
-    #get coeficient of OLS
-    ρ = GLM.coef(ols)[2] + 1  
-    future = GLM.coef(ols)[1]/(1-ρ)
-    σ = std(data[!,:Y] .- GLM.coef(ols)[1] .- GLM.coef(ols)[2]*data[!,:X])
+"""
+Function to fit an Ornstein-Uhlenbeck (O-U) process on data.
 
-    return ρ,future,σ
+This function implements the methodology from De Prado's book "Advances in Financial Machine Learning" (p.173).
+
+Args:
+    price::Vector{Float64}: Vector of stock prices.
+
+Returns:
+    Tuple{Float64, Float64, Float64}: Coefficients ρ, future, and σ of the fitted O-U process.
+"""
+function fitOuProcess(price::Vector{Float64})
+    data = DataFrame(
+        Y = price[2:end] .- price[1:end-1],
+        X = price[1:end-1]
+    )
+    ols = lm(@formula(Y ~ X), data)
+    ρ = GLM.coef(ols)[2] + 1
+    future = GLM.coef(ols)[1] / (1 - ρ)
+    σ = std(data[!,:Y] .- GLM.coef(ols)[1] .- GLM.coef(ols)[2] * data[!,:X])
+    return ρ, future, σ
 end
 
-"""----------------------------------------------------------------------
-function: simulate O-U process on data
-reference: -
-methodology: -
-----------------------------------------------------------------------"""
+"""
+Function to simulate an Ornstein-Uhlenbeck (O-U) process on data.
 
-function simulate_O_U_process(ρ, #coeficient that related to halfLife 
-                              future, # long run price 
-                              σ, # standadrd deviation of model 
-                              P_0, # starting price 
-                              periodlength) # number of day that we want to simulate 
+Args:
+    ρ::Float64: Coefficient related to half-life.
+    future::Float64: Long run price.
+    σ::Float64: Standard deviation of the model.
+    p0::Float64: Starting price.
+    periodLength::Int: Number of days to simulate.
 
-    price = zeros(periodlength) # creat array wtih periodlength zeros
-    price[1] = P_0 # set first elements of array to P_0
-    standardnormaldistribution = Normal() # creat an object of Normal Distribution
-    for i in 2:periodlength
-        r = rand(standardnormaldistribution) # random sample of Normal Distribution
-        price[i] =(1 - ρ) * future + ρ * price[i-1] +σ* r # simulate O-U process
+Returns:
+    Vector{Float64}: Simulated prices.
+"""
+function simulateOuProcess(
+    ρ::Float64,
+    future::Float64,
+    σ::Float64,
+    p0::Float64,
+    periodLength::Int
+)
+    price = Vector{Float64}(undef, periodLength)
+    price[1] = p0
+    standardNormalDistribution = Normal()
+
+    for i in 2:periodLength
+        r = rand(standardNormalDistribution)
+        price[i] = (1 - ρ) * future + ρ * price[i - 1] + σ * r
     end
     return price
 end
 
-"""----------------------------------------------------------------------
-function: backtesting with synthetic data for specefice prices 
-reference: -
-methodology: -
-----------------------------------------------------------------------"""
+"""
+Function to perform backtesting with synthetic data for specific prices.
 
-function Syntheticbacktesting(price; # vector of stock price 
-                              maximumIteration =1e5, # maximum number of Iteration
-                              maximumHoldingPeriod = 100, # maximum Holding Period
-                              profitTakingRange = LinRange(0.5,10,20), # profit Taking Range
-                              stopLossRange = LinRange(0.5,10,20), # stop Loss Range
-                              seed = 0) # starting price 
+Args:
+    price::Vector{Float64}: Vector of stock prices.
+    maximumIteration::Int: Maximum number of iterations.
+    maximumHoldingPeriod::Int: Maximum holding period.
+    profitTakingRange::LinRange: Profit taking range.
+    stopLossRange::LinRange: Stop loss range.
+    seed::Float64: Starting price.
 
-    ρ,future,σ = fit_O_U_process(price) # fit O-U process on data 
-    out = Syntheticbacktesting(future,-1.0/log2(ρ),σ;maximumHoldingPeriod = maximumHoldingPeriod , maximumIteration =maximumIteration,seed = seed) # backtesting with recent line parameters 
-    Plots.display(heatmap(profitTakingRange,stopLossRange,transpose(out),c=cgrad([:black, :white]), xlabel = "Profit-Taking",ylabel = "Stop-Loss",title = "Forecast = $(round(future,digits = 3)) | H-L=$(round((-1.0/log2(ρ)),digits = 3)) | Sigma=$(round(σ,digits = 3))"))
+Returns:
+    Array{Float64, 2}: Resulting Sharpe ratio values.
+"""
+function syntheticBacktesting(
+    price::Vector{Float64};
+    maximumIteration::Int = 1e5,
+    maximumHoldingPeriod::Int = 100,
+    profitTakingRange::LinRange = LinRange(0.5, 10, 20),
+    stopLossRange::LinRange = LinRange(0.5, 10, 20),
+    seed::Float64 = 0.0
+)
+    ρ, future, σ = fitOuProcess(price)
+    out = syntheticBacktesting(
+        future, -1.0 / log2(ρ), σ;
+        maximumHoldingPeriod = maximumHoldingPeriod,
+        maximumIteration = maximumIteration,
+        seed = seed
+    )
+    
+    p = heatmap(
+        profitTakingRange,
+        stopLossRange,
+        transpose(out),
+        c = cgrad([:black, :white]),
+        xlabel = "Profit-Taking",
+        ylabel = "Stop-Loss",
+        title = "Forecast = $(round(future, digits = 3)) | H-L=$(round((-1.0 / log2(ρ)), digits = 3)) | Sigma=$(round(σ, digits = 3))"
+    )
+    Plots.display(p)
     return out
 end
-
-
-

@@ -66,7 +66,11 @@ Function to split data when observations overlap.
 Reference: De Prado, M. (2018) Advances in financial machine learning.
 Methodology: page 109, snippet 7.3
 """
-function purgedKFoldSplit(self::PurgedKFold, data::TimeArray)
+function purgedKFoldSplit(
+        self::PurgedKFold,
+        data::TimeArray
+    )
+
     if timestamp(data) != timestamp(self.times)
         error("data and ThruDateValues must have the same index.")
     end
@@ -102,7 +106,18 @@ Function to calculate cross-validation scores with purging.
 Reference: De Prado, M. (2018) Advances in financial machine learning.
 Methodology: page 110, snippet 7.4
 """
-function crossValidationScore(classifier, data::TimeArray, labels::TimeArray, sampleWeights::Array, scoring::String = "Log Loss", times::TimeArray = nothing, crossValidationGenerator::PurgedKFold = nothing, nSplits::Int = nothing, percentEmbargo::Float64 = 0.0)
+function crossValidationScore(
+        classifier,
+        data::TimeArray,
+        labels::TimeArray,
+        sampleWeights::Array,
+        scoring::String = "Log Loss",
+        times::TimeArray = nothing,
+        crossValidationGenerator::PurgedKFold = nothing,
+        nSplits::Int = nothing,
+        percentEmbargo::Float64 = 0.0
+    )
+    
     if scoring ∉ ["Log Loss", "Accuracy"]
         error("Wrong scoring method.")
     end

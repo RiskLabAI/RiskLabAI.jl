@@ -14,7 +14,13 @@ Parameters:
 Returns:
 An array of computed values with rolling window.
 """
-function rolling(mapping, vector1, vector2, windowSpan)
+function rolling(
+        mapping,
+        vector1,
+        vector2,
+        windowSpan
+    )
+
     @assert length(vector1) == length(vector2)
     n = length(vector1)
     result = []
@@ -38,7 +44,12 @@ Parameters:
 Returns:
 An array of computed values with rolling window.
 """
-function rolling(mapping, vector, windowSpan)
+function rolling(
+        mapping,
+        vector,
+        windowSpan
+    )
+    
     n = length(vector)
     result = []
     for i in 1:n

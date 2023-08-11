@@ -4,7 +4,10 @@ Calculate returns from prices DataFrame.
 Reference: n/a
 Methodology: n/a
 """
-function calculateReturns(prices::DataFrames.DataFrame)
+function calculateReturns(
+        prices::DataFrames.DataFrame
+    )
+
     returns = DataFrames.DataFrame()
     for sym in names(prices)[2:end]
         data = prices[!, Symbol(sym)]
@@ -23,7 +26,12 @@ Perform clustering using K-Means.
 
 Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons. Snippet 4.1, Page 56
 """
-function clusterKMeansBase(correlation; numberClusters = 10, iterations = 10)
+function clusterKMeansBase(
+        correlation;
+        numberClusters = 10,
+        iterations = 10
+    )
+
     distance = sqrt.((1 .- correlation) / 2)
     silh, kmeansOut = [NaN], [NaN]
     for init in 1:iterations
@@ -48,7 +56,12 @@ Optimal portfolio construction using NCO algorithm.
 
 Reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons. Snippet 7.6, Page 100
 """
-function optPortNCO(covariance; μ = nothing, numberClusters = nothing)
+function optPortNCO(
+        covariance;
+        μ = nothing,
+        numberClusters = nothing
+    )
+        
     correlation = covToCorr(covariance)
     if isnothing(numberClusters)
         numberClusters = Int(size(correlation)[1] / 2)

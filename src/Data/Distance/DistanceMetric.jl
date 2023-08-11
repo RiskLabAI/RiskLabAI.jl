@@ -1,148 +1,174 @@
+"""
+Function: Calculates mutual information score between 2 datasets.
 
-"""----------------------------------------------------------------------
-function: Calculates mutual information score between 2 datasets
-reference: n/a
-methodology: n/a
-----------------------------------------------------------------------"""
-function mutualInfoScore(histogramXY) # hist2d matrix of 2 data
-    score = 0. # initial score
-    histogramX = vec(sum(histogramXY, dims=2)) # hist of first data
-    histogramY = vec(sum(histogramXY, dims=1)) # hist of second data
+Calculates mutual information score between two datasets.
+
+:param histogramXY: 2D histogram matrix of the two datasets.
+:return: score::Float64: Mutual information score.
+"""
+function mutualInfoScore(histogramXY)
+    score = 0.0
+    histogramX = vec(sum(histogramXY, dims=2))
+    histogramY = vec(sum(histogramXY, dims=1))
+    
     for i in 1:size(histogramXY)[1]
         for j in 1:size(histogramXY)[2]
             if histogramXY[i, j] != 0
-                # update score 
-                score += (histogramXY[i, j]/sum(histogramXY))*
-                         log(sum(histogramXY)*histogramXY[i, j]/(histogramX[i]*histogramY[j]))
+                score += (histogramXY[i, j] / sum(histogramXY)) *
+                         log(sum(histogramXY) * histogramXY[i, j] / (histogramX[i] * histogramY[j]))
             else
-                score += 0.
+                score += 0.0
             end
         end
     end
+    
     return score
 end
 
-"""----------------------------------------------------------------------
-function: Calculates Variation of Information
-reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-methodology: Snipet 3.2, Page 44
-----------------------------------------------------------------------"""
-function variationsInformation(x, # first data
-                               y, # second data
-                               numberOfBins; # number of bins
-                               norm = false) # for normalized
-    rangeX = range(minimum(x), maximum(x), length = numberOfBins) # range for hist
-    rangeY = range(minimum(y), maximum(y), length = numberOfBins)# range for hist
-    # variation of information
-    histogramXY = fit(Histogram, (x, y), (rangeX, rangeY)).weights # hist2d of x, y
-    mutualInformation = mutualInfoScore(histogramXY) # mutual score from hist2d
-    marginalX = entropy(normalize(fit(Histogram, x, rangeX).weights, 1)) # marginal
-    marginalY = entropy(normalize(fit(Histogram, y, rangeY).weights, 1)) # marginal
-    variationXY = marginalX + marginalY -2*mutualInformation # variation of information
+"""
+Function: Calculates Variation of Information between two datasets.
+
+Calculates Variation of Information between two datasets.
+
+:param x: First dataset.
+:param y: Second dataset.
+:param numberOfBins: Number of bins for discretization.
+:param norm: Normalize the result (default = false).
+:return: variationXY::Float64: Variation of Information.
+"""
+function variationsInformation(x, y, numberOfBins; norm = false)
+    rangeX = range(minimum(x), maximum(x), length = numberOfBins)
+    rangeY = range(minimum(y), maximum(y), length = numberOfBins)
+    histogramXY = fit(Histogram, (x, y), (rangeX, rangeY)).weights
+    mutualInformation = mutualInfoScore(histogramXY)
+    marginalX = entropy(normalize(fit(Histogram, x, rangeX).weights, 1))
+    marginalY = entropy(normalize(fit(Histogram, y, rangeY).weights, 1))
+    variationXY = marginalX + marginalY - 2 * mutualInformation
+    
     if norm
-        jointXY = marginalX + marginalY - mutualInformation # joint
-        variationXY /= jointXY # normalized variation of information
+        jointXY = marginalX + marginalY - mutualInformation
+        variationXY /= jointXY
     end
+    
     return variationXY
 end
 
-"""----------------------------------------------------------------------
-function: Calculates number of bins for histogram
-reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-methodology: Snipet 3.3, Page 46
-----------------------------------------------------------------------"""
-function numberBins(numberObservations, # number of obs 
-                    correlation = nothing) # corr
-    # Optimal number of bins for discretization
-    if isnothing(correlation) # univariate case
-        z = (8 + 324*numberObservations + 12*sqrt(36*numberObservations + 729*numberObservations^2))^(1/3)
-        bins = round(z/6 + 2/(3*z) + 1/3) # bins
-    else # bivariate case
-        bins = round(2^-.5*sqrt(1 + sqrt(1 + 24*numberObservations/(1 - correlation^2)))) # bins
+"""
+Function: Calculates the number of bins for histogram.
+
+Calculates the number of bins for histogram based on the number of observations and correlation.
+
+:param numberObservations: Number of observations.
+:param correlation: Correlation between two datasets (default = nothing).
+:return: bins::Int: Number of bins.
+"""
+function numberBins(numberObservations, correlation = nothing)
+    if isnothing(correlation)
+        z = (8 + 324 * numberObservations + 12 * sqrt(36 * numberObservations + 729 * numberObservations^2))^(1/3)
+        bins = round(z / 6 + 2 / (3 * z) + 1 / 3)
+    else
+        bins = round(2^-0.5 * sqrt(1 + sqrt(1 + 24 * numberObservations / (1 - correlation^2))))
     end
     return Int(bins)
 end
 
-"""----------------------------------------------------------------------
-function: Calculates Variation of Information with calculating number of bins
-reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-methodology: Snipet 3.3, Page 46
-----------------------------------------------------------------------"""
-function variationsInformationExtended(x, # data1
-                                       y; # data2
-                                       norm = false) # for normalized variations of info
-    #variation of information
-    numberOfBins = numberBins(size(x)[1], cor(x, y)) # calculate number of bins
-    rangeX = range(minimum(x), maximum(x), length = numberOfBins) # range for hist
-    rangeY = range(minimum(y), maximum(y), length = numberOfBins) # range for hist
-    # variation of information
-    histogramXY = fit(Histogram, (x, y),(rangeX, rangeY)).weights # hist2d of x,y
-    mutualInformation = mutualInfoScore(histogramXY) # mutual score
-    marginalX = entropy(normalize(fit(Histogram, x, rangeX).weights, 1)) # marginal
-    marginalY = entropy(normalize(fit(Histogram, y, rangeY).weights, 1)) # marginal
-    variationXY = marginalX + marginalY - 2*mutualInformation # variation of information
+"""
+Function: Calculates Variation of Information with calculating the number of bins.
+
+Calculates Variation of Information between two datasets while calculating the number of bins.
+
+:param x: First dataset.
+:param y: Second dataset.
+:param norm: Normalize the result (default = false).
+:return: variationXY::Float64: Variation of Information.
+"""
+function variationsInformationExtended(x, y; norm = false)
+    numberOfBins = numberBins(size(x)[1], cor(x, y))
+    rangeX = range(minimum(x), maximum(x), length = numberOfBins)
+    rangeY = range(minimum(y), maximum(y), length = numberOfBins)
+    histogramXY = fit(Histogram, (x, y), (rangeX, rangeY)).weights
+    mutualInformation = mutualInfoScore(histogramXY)
+    marginalX = entropy(normalize(fit(Histogram, x, rangeX).weights, 1))
+    marginalY = entropy(normalize(fit(Histogram, y, rangeY).weights, 1))
+    variationXY = marginalX + marginalY - 2 * mutualInformation
+    
     if norm
-        jointXY = marginalX + marginalY - mutualInformation # joint
-        variationXY /= jointXY # normalized variation of information 
+        jointXY = marginalX + marginalY - mutualInformation
+        variationXY /= jointXY
     end
+    
     return variationXY
 end
 
-"""----------------------------------------------------------------------
-function: Calculates Mutual  Information with calculating number of bins
-reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-methodology: Snipet 3.4, Page 48
-----------------------------------------------------------------------"""
-function mutualInformation(x, # data1
-                           y; # data2
-                           norm = false) # for normalized variations of info
-    # mutual information
-    numberOfBins = numberBins(size(x)[1], cor(x, y)) # calculate number of bins
-    rangeX = range(minimum(x), maximum(x), length = numberOfBins) # range of x for histogram
-    rangeY = range(minimum(y), maximum(y), length = numberOfBins) # range of y for histogram
-    histogramXY = fit(Histogram, (x, y),(rangeX, rangeY)).weights  # hist2d of x,y
-    mutualInformation = mutualInfoScore(histogramXY) # mutual score
+"""
+Function: Calculates Mutual Information with calculating the number of bins.
+
+Calculates Mutual Information between two datasets while calculating the number of bins.
+
+:param x: First dataset.
+:param y: Second dataset.
+:param norm: Normalize the result (default = false).
+:return: mutualInformation::Float64: Mutual Information.
+"""
+function mutualInformation(x, y; norm = false)
+    numberOfBins = numberBins(size(x)[1], cor(x, y))
+    rangeX = range(minimum(x), maximum(x), length = numberOfBins)
+    rangeY = range(minimum(y), maximum(y), length = numberOfBins)
+    histogramXY = fit(Histogram, (x, y), (rangeX, rangeY)).weights
+    mutualInformation = mutualInfoScore(histogramXY)
+    
     if norm
-        marginalX = entropy(normalize(fit(Histogram, x, rangeX).weights, 1)) # marginal
-        marginalY = entropy(normalize(fit(Histogram, y, rangeY).weights, 1)) # marginal
-        mutualInformation /= min(marginalX, marginalY) # normalized mutual information
+        marginalX = entropy(normalize(fit(Histogram, x, rangeX).weights, 1))
+        marginalY = entropy(normalize(fit(Histogram, y, rangeY).weights, 1))
+        mutualInformation /= min(marginalX, marginalY)
     end
+    
     return mutualInformation
 end
 
-"""----------------------------------------------------------------------
-function: Calculates distance from a dependence matrix
-reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-methodology: n/a
-----------------------------------------------------------------------"""
-function distance(dependence::Matrix, # dependence matrix
-                  metric::String = "angular") # method
+"""
+Function: Calculates the distance from a dependence matrix.
+
+Calculates the distance from a dependence matrix using the specified metric.
+
+:param dependence: Dependence matrix.
+:param metric: Metric to use ("angular" or "absolute_angular").
+:return: distance::Float64: Distance value.
+"""
+function distance(dependence::Matrix, metric::String = "angular")
     if metric == "angular"
-        distanceFunction = q -> sqrt((1 - q).round(5)/2.)
+        distanceFunction = q -> sqrt((1 - q).round(5) / 2.)
     elseif metric == "absolute_angular"
-        distanceFunction = q -> sqrt((1 - abs(q)).round(5)/2.)
+        distanceFunction = q -> sqrt((1 - abs(q)).round(5) / 2.)
     end
+    
     return distanceFunction(dependence)
 end
 
-"""----------------------------------------------------------------------
-function: Calculates KullbackLeibler divergence from two discrete probability distributions defined on the same probability space
-reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-methodology: n/a
-----------------------------------------------------------------------"""
-function KullbackLeibler(p, # first distribution
-                         q) # second distribution
-    divergence = -sum(p.*log.(q./p))  # calculate divenrgence
+"""
+Function: Calculates Kullback-Leibler divergence between two discrete probability distributions.
+
+Calculates Kullback-Leibler divergence between two discrete probability distributions defined on the same probability space.
+
+:param p: First distribution.
+:param q: Second distribution.
+:return: divergence::Float64: Kullback-Leibler divergence.
+"""
+function KullbackLeibler(p, q)
+    divergence = -sum(p .* log.(q ./ p))
     return divergence 
 end
 
-"""----------------------------------------------------------------------
-function: Calculates crossentropy from two discrete probability distributions defined on the same probability space
-reference: De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons.
-methodology: n/a
-----------------------------------------------------------------------"""
-function crossEntropy(p, # first distribution
-                      q) # second distribution
-    entropy = -sum(p.*log.(q)) # calculate entropy
+"""
+Function: Calculates cross-entropy between two discrete probability distributions.
+
+Calculates cross-entropy between two discrete probability distributions defined on the same probability space.
+
+:param p: First distribution.
+:param q: Second distribution.
+:return: entropy::Float64: Cross-entropy.
+"""
+function crossEntropy(p, q)
+    entropy = -sum(p .* log.(q))
     return entropy
 end

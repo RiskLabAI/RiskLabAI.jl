@@ -1,7 +1,3 @@
-using GLM
-using DataFrames
-using TimeSeries
-
 """
 Function: Combines grouped dataframe to create a new one with information about prices and volume.
 
@@ -47,7 +43,7 @@ function timeBar(tickData, frequency = 5)
 end
 
 """
-Function: The sequence of weights used to compute each value of the fractionally differentiated series.
+Function: Generates the sequence of weights used to compute each value of the fractionally differentiated series.
 
 Generates the sequence of weights used to compute each value of the fractionally differentiated series.
 
@@ -86,9 +82,7 @@ function plotWeights(degreeRange, numberDegrees, numberWeights)
 end
 
 """
-Function: Standard fractionally differentiated.
-
-Performs standard fractionally differentiation on the given series.
+Function: Performs standard fractionally differentiation on the given series.
 
 :param series: Input time series data.
 :param degree: Degree of differentiation.
@@ -128,9 +122,7 @@ function fracDiff(series, degree, threshold = 0.01)
 end
 
 """
-Function: Weights for fixed-width window method.
-
-Calculates the weights for the fixed-width window method of fractionally differentiation.
+Function: Calculates the weights for the fixed-width window method of fractionally differentiation.
 
 :param degree: Degree of differentiation.
 :param threshold: Threshold for drop in weights.
@@ -148,9 +140,7 @@ function weightingFfd(degree, threshold)
 end
 
 """
-Function: Fixed-width window fractionally differentiated method.
-
-Applies the fixed-width window method of fractionally differentiation to the given series.
+Function: Applies the fixed-width window method of fractionally differentiation to the given series.
 
 :param series: Input time series data.
 :param degree: Degree of differentiation.
@@ -184,15 +174,13 @@ function fracDiffFixed(series, degree, threshold = 1e-5)
 end
 
 """
-Function: Find the minimum degree value that passes the ADF test.
-
-Finds the minimum degree value that passes the ADF test for fractionally differentiated series.
+Function: Finds the minimum degree value that passes the ADF test for fractionally differentiated series.
 
 :param input: Input time series data.
 :return: out::DataFrame: Results dataframe with ADF statistics.
 """
 function minFFD(input)
-    out = DataFrames.DataFrame(d = [], adfStat = [], pVal = [], lags = [], nObs = [], ninetyFivePerConf = [], corr = [])
+    out = DataFrames.DataFrame(d = [], adfStat = [], pVal = [], lags = [], nObs = [], nintyfiveperconf = [], corr = [])
     for d in range(0, 1, length = 11)
         dataframe = DataFrames.DataFrame(dates = Date.(input[:, 1]), priceLog = log.(input[:, :close]))
         differentiated = fracDiffFixed(dataframe, d, .01)
