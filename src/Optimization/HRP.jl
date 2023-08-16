@@ -1,46 +1,4 @@
 """
-Calculate the distance matrix from a correlation matrix.
-
-Reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-Methodology: Snippet 16.4, Page 241
-"""
-function distanceCorr(
-    correlation::AbstractMatrix  # correlation matrix
-) 
-    return (1 .- correlation)^0.5
-end
-
-
-"""
-Create a sorted list of original items to reshape the correlation matrix.
-
-Reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-Methodology: Snippet 16.2, Page 229
-"""
-function quasiDiagonal(linkageMatrix)
-    # Sort clustered items by distance
-    linkageMatrix = Int.(floor.(linkageMatrix))  # Convert to integers
-    sortedItems = DataFrames.DataFrame(index = [1, 2], value = [linkageMatrix[end, 1], linkageMatrix[end, 2]])  # Initialize sorted array
-    nItems = linkageMatrix[end, 4]  # Number of original items
-    
-    while maximum(sortedItems.value) >= nItems
-        sortedItems.index = range(0, stop = size(sortedItems)[1] * 2 - 1, step = 2)  # Make space
-        dataframe = sortedItems[sortedItems.value .>= nItems, :]  # Find clusters
-        index = dataframe.index
-        value = dataframe.value .- nItems
-        sortedItems[in.(sortedItems.index, (index,)), :value] = linkageMatrix[value .+ 1, 1]  # Item 1
-        
-        dataframe = DataFrames.DataFrame(index = index .+ 1, value = linkageMatrix[value .+ 1, 2])  # Create DataFrame for item 2
-        sortedItems = vcat(sortedItems, dataframe)  # Append item 2
-        sort!(sortedItems, by = x -> x[1])  # Re-sort
-        sortedItems.index = range(0, length = size(sortedItems)[1])  # Re-index
-    end
-    
-    return sortedItems.value
-end
-
-
-"""
 Calculate the weights of assets using recursive bisection.
 
 Reference: De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
