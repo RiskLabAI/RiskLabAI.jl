@@ -16,7 +16,10 @@ Args:
 Returns:
     DataFrame: DataFrame containing calculated returns for each asset.
 """
-function percentChange(prices::DataFrame)
+function percentChange(
+    prices::DataFrame
+)::DataFrame
+
     returns = DataFrame() # Empty DataFrame for returns
     for sym in names(prices)[2:end]
         data = prices[!, Symbol(sym)] # Prices of each asset
@@ -44,10 +47,11 @@ Returns:
     Tuple{DataFrame, Dict, DataFrame}: Resulting correlation matrix, clusters, and silhouette scores.
 """
 function clusterKMeansBase(
-        correlation; 
-        numberClusters = 10, 
-        iterations = 10
-    )
+    correlation::DataFrame; 
+    numberClusters::Int = 10, 
+    iterations::Int = 10
+)::Tuple{DataFrame, Dict, DataFrame}
+
     distance = sqrt.((1 .- correlation) / 2) # Distance matrix
     silh, kmeansOut = [NaN], [NaN] # Initial values for silhouette and kmeans
     for init ∈ 1:iterations
@@ -82,10 +86,11 @@ Returns:
     Tuple{DataFrame, Dict, DataFrame}: Resulting correlation matrix, combined clusters, and silhouette scores.
 """
 function makeNewOutputs(
-        correlation,
-        clusters,
-        clusters2
-    )
+    correlation::DataFrame,
+    clusters::Dict,
+    clusters2::Dict,
+)::Tuple{DataFrame, Dict, DataFrame}
+
     assets = names(correlation) # Names of the columns in the correlation matrix
     # Merge two sets of clusters
     clustersNew = Dict()
@@ -121,10 +126,10 @@ Returns:
     Tuple{DataFrame, Dict, DataFrame}: Resulting correlation matrix, clusters, and silhouette scores.
 """
 function clusterKMeansTop(
-        correlation; 
-        numberClusters = nothing, 
-        iterations = 10
-    )
+    correlation::DataFrame; 
+    numberClusters::Int = nothing, 
+    iterations::Int = 10
+)::Tuple{DataFrame, Dict, DataFrame}
     if isnothing(numberClusters)
         numberClusters = size(correlation)[2] - 1 # Set number of clusters
     end
@@ -176,11 +181,11 @@ Returns:
     Matrix{Float64}: Sub covariance matrix.
 """
 function randomCovarianceSub(
-        numberObservations, 
-        numberColumns,
-        σ,
-        domain
-    )
+    numberObservations::Int, 
+    numberColumns::Int,
+    σ::Float64,
+    domain
+)::Matrix{Float64}
     # Sub covariance matrix
     if numberColumns == 1
         return ones(1, 1)
@@ -208,12 +213,12 @@ Returns:
     AbstractMatrix: Random block covariance matrix.
 """
 function randomBlockCovariance(
-        numberColumns,
-        numberBlocks;
-        blockSizeMin = 1,
-        σ = 1.0,
-        domain = nothing
-    )
+    numberColumns::Int,
+    numberBlocks::Int;
+    blockSizeMin::Int = 1,
+    σ::Float64 = 1.0,
+    domain = nothing
+)::AbstractMatrix
     # Generate a block random covariance matrix
     parts = sort(StatsBase.sample(domain, 1:numberColumns - (blockSizeMin - 1) * numberBlocks - 1, numberBlocks - 1, replace = false))
     append!(parts, numberColumns - (blockSizeMin - 1) * numberBlocks)
@@ -245,11 +250,11 @@ Returns:
     DataFrame: Random block correlation matrix.
 """
 function randomBlockCorrelation(
-        numberColumns,
-        numberBlocks,
-        randomState = nothing,
-        blockSizeMin = 1
-    )
+    numberColumns::Int,
+    numberBlocks::Int,
+    randomState::Int = nothing,
+    blockSizeMin::Int = 1
+)::DataFrame
     # Set seed
     domain = MersenneTwister(randomState)
     # Generate two random block diagonal covariance matrices
@@ -272,7 +277,9 @@ Args:
 Returns:
     Matrix{Float64}: Correlation matrix.
 """
-function covToCorr(covariance)
+function covToCorr(
+    covariance::Matrix
+)::Matrix::Float64
     std = sqrt.((diag(covariance))) # Standard deviations
     correlation = covariance ./ (std .* std') # Create correlation matrix
     correlation[correlation .< -1] .= -1 # Handle numerical errors

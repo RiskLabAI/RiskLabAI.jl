@@ -1,23 +1,27 @@
+using StatsBase, LinearAlgebra, Statistics
+
 """
-Function: Calculates mutual information score between 2 datasets.
+    mutualInformationScore(histogramXY::Array{Int, 2})::Float64
 
 Calculates mutual information score between two datasets.
 
-:param histogramXY: 2D histogram matrix of the two datasets.
-:return: score::Float64: Mutual information score.
+# Arguments
+- `histogramXY::Array{Int, 2}`: 2D histogram matrix of the two datasets.
+
+# Returns
+- `Float64`: Mutual information score.
 """
-function mutualInfoScore(histogramXY)
+function mutualInformationScore(histogramXY::Array{Int, 2})
     score = 0.0
     histogramX = vec(sum(histogramXY, dims=2))
     histogramY = vec(sum(histogramXY, dims=1))
-    
+    total = sum(histogramXY)
+
     for i in 1:size(histogramXY)[1]
         for j in 1:size(histogramXY)[2]
             if histogramXY[i, j] != 0
-                score += (histogramXY[i, j] / sum(histogramXY)) *
-                         log(sum(histogramXY) * histogramXY[i, j] / (histogramX[i] * histogramY[j]))
-            else
-                score += 0.0
+                score += (histogramXY[i, j] / total) *
+                         log(total * histogramXY[i, j] / (histogramX[i] * histogramY[j]))
             end
         end
     end
@@ -26,21 +30,24 @@ function mutualInfoScore(histogramXY)
 end
 
 """
-Function: Calculates Variation of Information between two datasets.
+    variationOfInformation(x::Array{Float64}, y::Array{Float64}, numberOfBins::Int; norm::Bool=false)::Float64
 
 Calculates Variation of Information between two datasets.
 
-:param x: First dataset.
-:param y: Second dataset.
-:param numberOfBins: Number of bins for discretization.
-:param norm: Normalize the result (default = false).
-:return: variationXY::Float64: Variation of Information.
+# Arguments
+- `x::Array{Float64}`: First dataset.
+- `y::Array{Float64}`: Second dataset.
+- `numberOfBins::Int`: Number of bins for discretization.
+- `norm::Bool=false`: Normalize the result.
+
+# Returns
+- `Float64`: Variation of Information.
 """
-function variationsInformation(x, y, numberOfBins; norm = false)
-    rangeX = range(minimum(x), maximum(x), length = numberOfBins)
-    rangeY = range(minimum(y), maximum(y), length = numberOfBins)
+function variationOfInformation(x::Array{Float64}, y::Array{Float64}, numberOfBins::Int; norm::Bool=false)
+    rangeX = range(minimum(x), maximum(x), length=numberOfBins)
+    rangeY = range(minimum(y), maximum(y), length=numberOfBins)
     histogramXY = fit(Histogram, (x, y), (rangeX, rangeY)).weights
-    mutualInformation = mutualInfoScore(histogramXY)
+    mutualInformation = mutualInformationScore(histogramXY)
     marginalX = entropy(normalize(fit(Histogram, x, rangeX).weights, 1))
     marginalY = entropy(normalize(fit(Histogram, y, rangeY).weights, 1))
     variationXY = marginalX + marginalY - 2 * mutualInformation
@@ -54,72 +61,66 @@ function variationsInformation(x, y, numberOfBins; norm = false)
 end
 
 """
-Function: Calculates the number of bins for histogram.
+    numberOfBins(numberObservations::Int, correlation::Union{Nothing, Float64}=nothing)::Int
 
 Calculates the number of bins for histogram based on the number of observations and correlation.
 
-:param numberObservations: Number of observations.
-:param correlation: Correlation between two datasets (default = nothing).
-:return: bins::Int: Number of bins.
+# Arguments
+- `numberObservations::Int`: Number of observations.
+- `correlation::Union{Nothing, Float64}=nothing`: Correlation between two datasets.
+
+# Returns
+- `Int`: Number of bins.
 """
-function numberBins(numberObservations, correlation = nothing)
+function numberOfBins(numberObservations::Int, correlation::Union{Nothing, Float64}=nothing)
     if isnothing(correlation)
         z = (8 + 324 * numberObservations + 12 * sqrt(36 * numberObservations + 729 * numberObservations^2))^(1/3)
         bins = round(z / 6 + 2 / (3 * z) + 1 / 3)
     else
         bins = round(2^-0.5 * sqrt(1 + sqrt(1 + 24 * numberObservations / (1 - correlation^2))))
     end
+
     return Int(bins)
 end
 
 """
-Function: Calculates Variation of Information with calculating the number of bins.
+    variationOfInformationExtended(x::Array{Float64}, y::Array{Float64}; norm::Bool=false)::Float64
 
 Calculates Variation of Information between two datasets while calculating the number of bins.
 
-:param x: First dataset.
-:param y: Second dataset.
-:param norm: Normalize the result (default = false).
-:return: variationXY::Float64: Variation of Information.
+# Arguments
+- `x::Array{Float64}`: First dataset.
+- `y::Array{Float64}`: Second dataset.
+- `norm::Bool=false`: Normalize the result.
+
+# Returns
+- `Float64`: Variation of Information.
 """
-function variationsInformationExtended(x, y; norm = false)
-    numberOfBins = numberBins(size(x)[1], cor(x, y))
-    rangeX = range(minimum(x), maximum(x), length = numberOfBins)
-    rangeY = range(minimum(y), maximum(y), length = numberOfBins)
-    histogramXY = fit(Histogram, (x, y), (rangeX, rangeY)).weights
-    mutualInformation = mutualInfoScore(histogramXY)
-    marginalX = entropy(normalize(fit(Histogram, x, rangeX).weights, 1))
-    marginalY = entropy(normalize(fit(Histogram, y, rangeY).weights, 1))
-    variationXY = marginalX + marginalY - 2 * mutualInformation
-    
-    if norm
-        jointXY = marginalX + marginalY - mutualInformation
-        variationXY /= jointXY
-    end
-    
-    return variationXY
+function variationOfInformationExtended(x::Array{Float64}, y::Array{Float64}; norm::Bool=false)
+    numberOfBins = numberOfBins(size(x)[1], cor(x, y))
+    return variationOfInformation(x, y, numberOfBins; norm=norm)
 end
 
 """
-Function: Calculates Mutual Information with calculating the number of bins.
+    mutualInformation(x::Array{Float64}, y::Array{Float64}; norm::Bool=false)::Float64
 
 Calculates Mutual Information between two datasets while calculating the number of bins.
 
-:param x: First dataset.
-:param y: Second dataset.
-:param norm: Normalize the result (default = false).
-:return: mutualInformation::Float64: Mutual Information.
+# Arguments
+- `x::Array{Float64}`: First dataset.
+- `y::Array{Float64}`: Second dataset.
+- `norm::Bool=false`: Normalize the result.
+
+# Returns
+- `Float64`: Mutual Information.
 """
-function mutualInformation(x, y; norm = false)
-    numberOfBins = numberBins(size(x)[1], cor(x, y))
-    rangeX = range(minimum(x), maximum(x), length = numberOfBins)
-    rangeY = range(minimum(y), maximum(y), length = numberOfBins)
-    histogramXY = fit(Histogram, (x, y), (rangeX, rangeY)).weights
-    mutualInformation = mutualInfoScore(histogramXY)
+function mutualInformation(x::Array{Float64}, y::Array{Float64}; norm::Bool=false)
+    numberOfBins = numberOfBins(size(x)[1], cor(x, y))
+    mutualInformation = mutualInformationScore(fit(Histogram, (x, y), (range(minimum(x), maximum(x), length=numberOfBins), range(minimum(y), maximum(y), length=numberOfBins))).weights)
     
     if norm
-        marginalX = entropy(normalize(fit(Histogram, x, rangeX).weights, 1))
-        marginalY = entropy(normalize(fit(Histogram, y, rangeY).weights, 1))
+        marginalX = entropy(normalize(fit(Histogram, x, range(minimum(x), maximum(x), length=numberOfBins)).weights, 1))
+        marginalY = entropy(normalize(fit(Histogram, y, range(minimum(y), maximum(y), length=numberOfBins)).weights, 1))
         mutualInformation /= min(marginalX, marginalY)
     end
     
@@ -127,15 +128,18 @@ function mutualInformation(x, y; norm = false)
 end
 
 """
-Function: Calculates the distance from a dependence matrix.
+    distance(dependence::Matrix, metric::String="angular")::Float64
 
 Calculates the distance from a dependence matrix using the specified metric.
 
-:param dependence: Dependence matrix.
-:param metric: Metric to use ("angular" or "absolute_angular").
-:return: distance::Float64: Distance value.
+# Arguments
+- `dependence::Matrix`: Dependence matrix.
+- `metric::String="angular"`: Metric to use ("angular" or "absolute_angular").
+
+# Returns
+- `Float64`: Distance value.
 """
-function distance(dependence::Matrix, metric::String = "angular")
+function distance(dependence::Matrix, metric::String="angular")
     if metric == "angular"
         distanceFunction = q -> sqrt((1 - q).round(5) / 2.)
     elseif metric == "absolute_angular"
@@ -146,29 +150,33 @@ function distance(dependence::Matrix, metric::String = "angular")
 end
 
 """
-Function: Calculates Kullback-Leibler divergence between two discrete probability distributions.
+    kullbackLeibler(p::Array{Float64}, q::Array{Float64})::Float64
 
 Calculates Kullback-Leibler divergence between two discrete probability distributions defined on the same probability space.
 
-:param p: First distribution.
-:param q: Second distribution.
-:return: divergence::Float64: Kullback-Leibler divergence.
+# Arguments
+- `p::Array{Float64}`: First distribution.
+- `q::Array{Float64}`: Second distribution.
+
+# Returns
+- `Float64`: Kullback-Leibler divergence.
 """
-function KullbackLeibler(p, q)
-    divergence = -sum(p .* log.(q ./ p))
-    return divergence 
+function kullbackLeibler(p::Array{Float64}, q::Array{Float64})
+    return -sum(p .* log.(q ./ p))
 end
 
 """
-Function: Calculates cross-entropy between two discrete probability distributions.
+    crossEntropy(p::Array{Float64}, q::Array{Float64})::Float64
 
 Calculates cross-entropy between two discrete probability distributions defined on the same probability space.
 
-:param p: First distribution.
-:param q: Second distribution.
-:return: entropy::Float64: Cross-entropy.
+# Arguments
+- `p::Array{Float64}`: First distribution.
+- `q::Array{Float64}`: Second distribution.
+
+# Returns
+- `Float64`: Cross-entropy.
 """
-function crossEntropy(p, q)
-    entropy = -sum(p .* log.(q))
-    return entropy
+function crossEntropy(p::Array{Float64}, q::Array{Float64})
+    return -sum(p .* log.(q))
 end
