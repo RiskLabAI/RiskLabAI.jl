@@ -1,112 +1,113 @@
 using Dates
+using DataFrames
 
 """
-Function to show the progress bar.
+    showProgressBar(value::Int, endValue::Int, startTime::Int, barLength::Int=20)
 
-Args:
-    value (Int): Value of an event.
-    endValue (Int): Length of that event.
-    startTime (Int): Start time of the event.
-    barLength (Int, optional): Length of the progress bar. Default is 20.
+Show a progress bar indicating the completion percentage and remaining time.
 
-Reference:
-    n/a
+# Arguments
+- `value::Int`: Current progress value.
+- `endValue::Int`: Maximum progress value.
+- `startTime::Int`: Start time of the event.
+- `barLength::Int=20`: Length of the progress bar.
 
-Methodology:
-    n/a
+# Returns
+- None. Prints the progress bar to the console.
 """
 function showProgressBar(
-        value,
-        endValue,
-        startTime,
-        barLength = 20
+        value::Int,
+        endValue::Int,
+        startTime::Int,
+        barLength::Int=20
     )
 
     percent = Float64(value) / endValue
-
-    if trunc(Int, round(percent * barLength) - 1) < 0
-        progressValue = 0
-    else
-        progressValue = trunc(Int, round(percent * barLength) - 1)
-    end
+    progressValue = max(0, trunc(Int, round(percent * barLength) - 1))
     arrow = string(repeat("-", progressValue), ">")
-    spaces = repeat(" ", (barLength - length(arrow)))
-    remaining = trunc(Int, ((Dates.value((Dates.now() - Dates.DateTime(1970, 1, 1, 00, 00, 00))) /
+    spaces = repeat(" ", barLength - length(arrow))
+    remaining = trunc(Int, ((Dates.value(Dates.now() - Dates.DateTime(1970, 1, 1, 0, 0, 0))) /
         1000 - startTime) / value) * (endValue - value) / 60)
     message = string(arrow, spaces)
-    percent = trunc(Int, round(percent * 100))
-    println("Completed: [$message] $percent% - $remaining minutes remaining.")
+    println("Completed: [$message] $(trunc(Int, round(percent * 100)))% - $remaining minutes remaining.")
 end
 
 """
-Function to compute the exponential weighted moving average (EWMA), EWMA variance, and EWMA standard deviations.
+    computeEwma(data::Array{Float64}, windowLength::Int=100)
 
-Args:
-    data (Array): Array of data.
-    windowLength (Int, optional): Window for EWMA. Default is 100.
+Compute the Exponential Weighted Moving Average (EWMA), EWMA variance, and EWMA standard deviations.
 
-Reference:
-    https://stackoverflow.com/questions/40754262/pandas-ewm-std-calculation
+# Arguments
+- `data::Array{Float64}`: Array of data.
+- `windowLength::Int=100`: Window length for EWMA.
 
-Methodology:
-    n/a
+# Returns
+- `(ewmaMean, ewmaVariance, ewmaStd)`: Tuple of EWMA mean, variance, and standard deviation.
+
+# Reference
+- [Pandas ewm std calculation](https://stackoverflow.com/questions/40754262/pandas-ewm-std-calculation)
 """
 function computeEwma(
-        data,
-        windowLength = 100
+        data::Array{Float64},
+        windowLength::Int=100
     )
 
-    N = size(data)[1]
-    ewmaMean = []
-    ewmaVariance = []
-    ewmaStd = []
+    N = length(data)
+    ewmaMean = Float64[]
+    ewmaVariance = Float64[]
+    ewmaStd = Float64[]
     α = 2 / Float64(windowLength + 1)
 
-    for i ∈ 1:N
-        window = Array(data[1:i, 1])
+    for i in 1:N
+        window = data[1:i]
         m = length(window)
-        ω = (1 - α).^range(m - 1, step = -1, stop = 0)
+        ω = (1 - α) .^ range(m - 1, step = -1, stop = 0)
         ewma = sum(ω .* window) / sum(ω)
         bias = sum(ω)^2 / (sum(ω)^2 - sum(ω .^ 2))
         var = bias * sum(ω .* (window .- ewma).^2) / sum(ω)
         std = sqrt(var)
-        append!(ewmaMean, ewma)
-        append!(ewmaVariance, var)
-        append!(ewmaStd, std)
+        push!(ewmaMean, ewma)
+        push!(ewmaVariance, var)
+        push!(ewmaStd, std)
     end
+
     return ewmaMean, ewmaVariance, ewmaStd
 end
 
 """
-Function to group a dataframe based on a feature and then calculate thresholds.
+    groupAndCalculateThresholds(targetCol::Array{Float64}, tickExpectedInit::Int, barSize::Float64)
 
-Args:
-    targetCol (Array): Target column of tick dataframe.
-    tickExpectedInit (Int): Initial expected ticks.
-    barSize (Float64): Initial expected size in each tick.
+Group a dataframe based on a feature and then calculate thresholds.
 
-Reference:
-    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    Page number: n/a
+# Arguments
+- `targetCol::Array{Float64}`: Target column of tick dataframe.
+- `tickExpectedInit::Int`: Initial expected ticks.
+- `barSize::Float64`: Initial expected size in each tick.
 
-Methodology:
-    Page number: n/a
+# Returns
+- `(ΔTimes, θAbsolute, thresholds, times, θs, groupingId)`: Tuple of various statistics and grouping information.
+
+# Reference
+- De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
 """
 function groupAndCalculateThresholds(
-        targetCol,
-        tickExpectedInit,
-        barSize
+        targetCol::Array{Float64},
+        tickExpectedInit::Int,
+        barSize::Float64
     )
 
-    ΔTimes, times = [], []
+    ΔTimes, times = Float64[], Int[]
     timePrev, tickExpected, barExpectedValue = 0, tickExpectedInit, barSize
-    N = size(targetCol)[1]
-    θAbsolute, thresholds, θs, groupingId = zeros(N), zeros(N), zeros(N), zeros(N)
+    N = length(targetCol)
+    θAbsolute = zeros(N)
+    thresholds = zeros(N)
+    θs = zeros(N)
+    groupingId = zeros(Int, N)
     θAbsolute[1], θCurrent = abs(targetCol[1]), targetCol[1]
-    time = Dates.value((Dates.now() - Dates.DateTime(1970, 1, 1, 00, 00, 00))) / 1000
+    time = Dates.value(Dates.now() - Dates.DateTime(1970, 1, 1, 0, 0, 0)) / 1000
     groupingIdCurrent = 0
 
-    for i ∈ 2:N
+    for i in 2:N
         θCurrent += targetCol[i]
         θs[i] = θCurrent
         thisθAbsolute = abs(θCurrent)
@@ -115,16 +116,20 @@ function groupAndCalculateThresholds(
         thresholds[i] = threshold
         groupingId[i] = groupingIdCurrent
 
-        if thisθAbsolute ≥ threshold
-            groupingIdCurrent += 1
+        if thisθAbsolute >= threshold
+            push!(ΔTimes, time - timePrev)
+            push!(times, time)
+            tickExpected = max(tickExpectedInit, trunc(Int, i / length(ΔTimes)))
+            barExpectedValue = barSize * tickExpected / tickExpectedInit
             θCurrent = 0
-            append!(ΔTimes, Float64(i - timePrev))
-            append!(times, i)
-            timePrev = i
-            tickExpected = ewma(Array(ΔTimes), trunc(Int, length(ΔTimes)))[1][end]
-            barExpectedValue = abs(ewma(targetCol[1:i], trunc(Int, tickExpectedInit * 1))[1][end])
+            timePrev = time
+            groupingIdCurrent += 1
+            groupingId[i] = groupingIdCurrent
         end
+
+        time += Dates.value(Dates.now() - Dates.DateTime(1970, 1, 1, 0, 0, 0)) / 1000
     end
+
     return ΔTimes, θAbsolute, thresholds, times, θs, groupingId
 end
 
