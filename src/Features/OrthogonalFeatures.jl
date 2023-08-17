@@ -6,60 +6,64 @@ using Statistics
 @pyimport sklearn.datasets as Datasets
 
 """
-    Calculate eigen vectors and perform orthogonal features transformation.
+    calculateEigenVectors
 
-    Parameters:
-    - dotProduct::Matrix{<: Number}: Input dot product matrix.
-    - explainedVarianceThreshold::Float64: Threshold for variance filtering.
+Calculate eigen vectors and perform orthogonal features transformation.
 
-    Returns:
-    - DataFrame: DataFrame containing eigen values, vectors, and cumulative variance.
+Parameters:
+- `dotProduct::Matrix{<: Number}`: Input dot product matrix.
+- `explainedVarianceThreshold::Float64`: Threshold for variance filtering.
+
+Returns:
+- `DataFrame`: DataFrame containing eigen values, vectors, and cumulative variance.
 """
-function eigenVectors(
+function calculateEigenVectors(
     dotProduct::Matrix{<: Number},
     explainedVarianceThreshold::Float64
 )::DataFrame
 
-    F = eigen(dotProduct)
-    eigenValues = Float64.(F.values)
-    eigenVectors = [eigenVector for eigenVector in eachcol(F.vectors)]
+    eigDecomposition = eigen(dotProduct)
+    eigenValues = Float64.(eigDecomposition.values)
+    eigenVectors = [eigenVector for eigenVector in eachcol(eigDecomposition.vectors)]
 
     eigenDataFrame = DataFrame(Index=["PC $i" for i in 1:length(eigenValues)], EigenValue=eigenValues, EigenVector=eigenVectors)
 
-    eigenDataFrame = sort(eigenDataFrame, [:EigenValue], rev=true)
+    sort!(eigenDataFrame, [:EigenValue], rev=true)
 
     cumulativeVariance = cumsum(eigenDataFrame.EigenValue) / sum(eigenDataFrame.EigenValue)
 
     eigenDataFrame.CumulativeVariance = cumulativeVariance
     index = searchsortedfirst(cumulativeVariance, explainedVarianceThreshold)
 
-    eigenDataFrame = eigenDataFrame[1:index, :]
-
-    return eigenDataFrame
+    return eigenDataFrame[1:index, :]
 end
 
 """
-    Standardize the input matrix.
+    standardize
 
-    Parameters:
-    - X: Features matrix / dataframe.
+Standardize the input matrix.
 
-    Returns:
-    - Matrix: Standardized features matrix.
+Parameters:
+- `X`: Features matrix / dataframe.
+
+Returns:
+- `Matrix`: Standardized features matrix.
 """
 function standardize(X)
     (X .- mean(X, dims=1)) ./ std(X, dims=1)
 end
 
 """
-    Perform orthogonal features transformation.
+    orthogonalFeatures
 
-    Parameters:
-    - X::Matrix{<: Number}: Features matrix.
-    - varianceThreshold::Float64: Threshold for variance filtering.
+Perform orthogonal features transformation.
 
-    Returns:
-    - Tuple{Matrix, DataFrame}: Transformed features matrix P and eigenDataFrame.
+Parameters:
+- `X::Matrix{<: Number}`: Features matrix.
+- `varianceThreshold::Float64`: Threshold for variance filtering.
+
+Returns:
+- `Tuple{Matrix, DataFrame}`: Transformed features matrix P and eigenDataFrame.
 """
 function orthogonalFeatures(
     X::Matrix{<: Number},
@@ -67,7 +71,7 @@ function orthogonalFeatures(
 )::Tuple{Matrix, DataFrame}
     Z = standardize(X)
     dotProduct = Z' * Z
-    eigenDataFrame = eigenVectors(dotProduct, varianceThreshold)
+    eigenDataFrame = calculateEigenVectors(dotProduct, varianceThreshold)
 
     W = reduce(hcat, eigenDataFrame.EigenVector)
     P = Z * W

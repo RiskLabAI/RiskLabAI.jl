@@ -133,266 +133,357 @@ function groupAndCalculateThresholds(
     return ΔTimes, θAbsolute, thresholds, times, θs, groupingId
 end
 
+using DataFrames
+using Statistics
+using Combinatorics
+using Dates
+
 """
-Function to implement Information-Driven Bars.
+    generateInfoDrivenBars(tickData::DataFrame, barType::String="volume", tickExpectedInit::Int=2000)
 
-Args:
-    tickData (DataFrame): Dataframe of tick data.
-    type (String, optional): Choose "tick", "volume" or "dollar" types. Default is "volume".
-    tickExpectedInit (Int, optional): The value of the expected tick. Default is 2000.
+Generate information-driven bars, which can be of type "tick", "volume", or "dollar".
 
-Reference:
-    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    Page number: 29
+# Arguments
 
-Methodology:
-    Page number: 29
+- `tickData::DataFrame`: A DataFrame of tick data, which should include columns: "volumelabeled", "label", and "dollars".
+- `barType::String`: The type of bar to generate. Choose "tick", "volume" or "dollar". Default is "volume".
+- `tickExpectedInit::Int`: The value of the expected tick. Default is 2000.
+
+# Returns
+- `DataFrame`: A DataFrame of the generated bars with columns: "dates", "open", "high", "low", "close", "volume".
+
+# Related Mathematical Formulae
+
+- The bar expected value is calculated as the absolute mean of the input data.
+
+# References
+
+- De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+- Page number: 29
+
+# Methodology
+
+- The methodology is described in De Prado's book, page number 29.
 """
-function infoDrivenBar(
-        tickData,
-        type::String = "volume",
-        tickExpectedInit = 2000
-    )
+function generateInfoDrivenBars(
+        tickData::DataFrame,
+        barType::String="volume",
+        tickExpectedInit::Int=2000
+    )::DataFrame
 
-    if type == "volume"
+    if barType == "volume"
         inputData = tickData.volumelabeled
-    elseif type == "tick"
+    elseif barType == "tick"
         inputData = tickData.label
-    elseif type == "dollar"
+    elseif barType == "dollar"
         inputData = tickData.dollars
     else
-        println("Error: unknown type")
+        throw(ArgumentError("Error: unknown barType"))
     end
+
     barExpectedValue = abs(mean(inputData))
     ΔTimes, θAbsolute, thresholds, times, θs, groupingId = groupAndCalculateThresholds(inputData, tickExpectedInit, barExpectedValue)
-    tickData[!,:groupingID] = groupingId
-    dates = combine(DataFrames.groupby(tickData, :groupingID), :dates => first => :dates)
-    tickDataGrouped = DataFrames.groupby(tickData, :groupingID)
+    tickData[!, :groupingID] = groupingId
+    dates = combine(groupby(tickData, :groupingID), :dates => first => :dates)
+    tickDataGrouped = groupby(tickData, :groupingID)
     ohlcvDataframe = ohlcv(tickDataGrouped)
     insertcols!(ohlcvDataframe, 1, :dates => dates.dates)
     colDrop = [:groupingID]
-    ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop))
+    select!(ohlcvDataframe, Not(colDrop))
     return ohlcvDataframe, θAbsolute, thresholds
 end
 
-"""
-Function to take a grouped dataframe, combining and creating the new one with information about prices and volume.
+using DataFrames
+using Statistics
 
-Args:
-    tickDataGrouped (GroupedDataFrame): Grouped dataframes.
-
-Reference:
-    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: n/a
 """
-function ohlcv(tickDataGrouped)
+    generateOhlcvData(tickDataGrouped::GroupedDataFrame) -> DataFrame
+
+Generate OHLCV (Open, High, Low, Close, Volume) data from a grouped DataFrame of tick data.
+This function also calculates the value of trades, mean price, and the mean log return.
+
+# Arguments
+
+- `tickDataGrouped::GroupedDataFrame`: Grouped dataframes with tick data, which should include columns: "price" and "size".
+
+# Returns
+
+- `DataFrame`: A DataFrame of the generated OHLCV data with columns: "Open", "High", "Low", "Close", "Volume", "ValueOfTrades", "PriceMean", "TickCount", and "PriceMeanLogReturn".
+
+# Related Mathematical Formulae
+
+- The value of trades is calculated as the sum of the product of price and size divided by the sum of the size.
+- The mean log return is calculated as the logarithm of the mean price minus the logarithm of the mean price of the previous row.
+
+# References
+
+- De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+"""
+function generateOhlcvData(
+        tickDataGrouped::GroupedDataFrame
+    )::DataFrame
+
     ohlcvDataframe = combine(
         tickDataGrouped, :price => first => :Open,
         :price => maximum => :High,
         :price => minimum => :Low,
         :price => last => :Close,
         :size => sum => :Volume,
-        AsTable([:price, :size]) => x -> sum(x.price .* x.size) / sum(x.size),
+        AsTable([:price, :size]) => x -> sum(x.price .* x.size) / sum(x.size) => :ValueOfTrades,
         :price => mean => :PriceMean,
         :price => length => :TickCount
     )
-    DataFrames.rename!(ohlcvDataframe, :price_size_function => :ValueOfTrades)
-    ohlcvDataframe.PriceMeanLogReturn = log.(ohlcvDataframe.PriceMean) - log.(circshift(ohlcvDataframe.PriceMean, 1))
-    ohlcvDataframe.PriceMeanLogReturn[1] = NaN
+
+    ohlcvDataframe[!, :PriceMeanLogReturn] = log.(ohlcvDataframe.PriceMean) - log.(circshift(ohlcvDataframe.PriceMean, 1))
+    ohlcvDataframe[1, :PriceMeanLogReturn] = NaN
     return ohlcvDataframe
 end
 
-"""
-Function to take a dataframe and generate a time bar dataframe.
+using DataFrames
+using Dates
 
-Args:
-    tickData (DataFrame): Dataframe of tick data.
-    frequency (Int, optional): Frequency for rounding date time. Default is 5.
-
-Reference:
-    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: n/a
 """
-function timeBar(
-        tickData,
-        frequency = 5
-    )
+    generateTimeBar(tickData::DataFrame, frequency::Int=5) -> DataFrame
+
+Generate a time bar DataFrame from tick data by rounding the datetime of each tick to the nearest specified frequency (in minutes).
+
+# Arguments
+
+- `tickData::DataFrame`: A DataFrame of tick data, which should include a column: "dates".
+- `frequency::Int`: Frequency for rounding date time (in minutes). Default is 5.
+
+# Returns
+
+- `DataFrame`: A DataFrame of the generated time bars with columns: "Open", "High", "Low", "Close", "Volume", "ValueOfTrades", "PriceMean", "TickCount", and "PriceMeanLogReturn".
+
+# Related Mathematical Formulae
+
+- The datetime of each tick is rounded to the nearest specified frequency (in minutes).
+
+# References
+
+- De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+"""
+function generateTimeBar(
+        tickData::DataFrame,
+        frequency::Int=5
+    )::DataFrame
+
+    originalDates = tickData.dates
+    roundedDates = floor.(originalDates, Dates.Minute(frequency))
+    tickData[!, :roundedDates] = roundedDates
+    tickDataGrouped = groupby(tickData, :roundedDates)
+    ohlcvDataframe = generateOhlcvData(tickDataGrouped)
+    return ohlcvDataframe
+end
+
+using DataFrames
+using Statistics
+
+"""
+    generateTickBar(tickData::DataFrame, ticksPerBar::Int=10, numberOfBars::Int=nothing) -> DataFrame
+
+Generate a tick bar DataFrame from tick data by grouping the ticks into bars based on a specified number of ticks per bar or a specified total number of bars.
+
+# Arguments
+
+- `tickData::DataFrame`: A DataFrame of tick data, which should include a column: "dates".
+- `ticksPerBar::Int`: Number of ticks in each bar. Default is 10.
+- `numberOfBars::Int`: Total number of bars. Default is nothing.
+
+# Returns
+
+- `DataFrame`: A DataFrame of the generated tick bars with columns: "Open", "High", "Low", "Close", "Volume", "ValueOfTrades", "PriceMean", "TickCount", and "PriceMeanLogReturn".
+
+# Related Mathematical Formulae
+
+- The tick data is divided into bars by grouping the ticks based on a specified number of ticks per bar or a specified total number of bars.
+
+# References
+
+- De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+"""
+function generateTickBar(
+        tickData::DataFrame,
+        ticksPerBar::Int=10,
+        numberOfBars::Int=nothing
+    )::DataFrame
+
+    if numberOfBars !== nothing
+        ticksPerBar = floor(Int, size(tickData, 1) / numberOfBars)
+    end
     
-    dates = tickData.dates
-    datesCopy = copy(dates)
-    tickData.dates = floor.(datesCopy, Dates.Minute(frequency))
-    tickDataGrouped = DataFrames.groupby(tickData, :dates)
-    ohlcvDataframe = ohlcv(tickDataGrouped)
-    tickData.dates = dates
-    return ohlcvDataframe
-end
-
-"""
-Function to take a dataframe and generate a tick bar dataframe.
-
-Args:
-    tickData (DataFrame): Dataframe of tick data.
-    tickPerBar (Int, optional): Number of ticks in each bar. Default is 10.
-    numberBars (Int, optional): Number of bars. Default is nothing.
-
-Reference:
-    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: n/a
-"""
-function tickBar(
-        tickData,
-        tickPerBar = 10,
-        numberBars = nothing
-    )
-
-    if tickPerBar == nothing
-        tickPerBar = floor(size(tickData)[1] / numberBars)
-    end
-    tickData[!, :groupingID] = [x ÷ tickPerBar for x in 0:size(tickData)[1] - 1]
-    tickGrouped = copy(tickData)
-    dates = combine(DataFrames.groupby(tickGrouped, :groupingID), :dates => first => :dates)
-    tickDataGrouped = DataFrames.groupby(tickGrouped, :groupingID)
-    ohlcvDataframe = ohlcv(tickDataGrouped)
+    groupingId = [div(x, ticksPerBar) for x in 0:size(tickData, 1) - 1]
+    tickData[!, :groupingId] = groupingId
+    tickDataGrouped = groupby(tickData, :groupingId)
+    ohlcvDataframe = generateOhlcvData(tickDataGrouped)
+    dates = combine(tickDataGrouped, :dates => first => :dates)
     insertcols!(ohlcvDataframe, 1, :dates => dates.dates)
-    colDrop = [:groupingID]
-    ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop))
+    select!(ohlcvDataframe, Not(:groupingId))
     return ohlcvDataframe
 end
 
+using DataFrames
+using Statistics
+
 """
-Function to take a dataframe and generate a volume bar dataframe.
+    generateVolumeBar(tickData::DataFrame, volumePerBar::Int=10000, numberOfBars::Int=nothing) -> DataFrame
 
-Args:
-    tickData (DataFrame): Dataframe of tick data.
-    volumePerBar (Int, optional): Volumes in each bar. Default is 10000.
-    numberBars (Int, optional): Number of bars. Default is nothing.
+Generate a volume bar DataFrame from tick data by grouping the ticks into bars based on a specified volume per bar or a specified total number of bars.
 
-Reference:
-    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: n/a
+# Arguments
+
+- `tickData::DataFrame`: A DataFrame of tick data, which should include columns: "dates" and "size".
+- `volumePerBar::Int`: Volume in each bar. Default is 10000.
+- `numberOfBars::Int`: Total number of bars. Default is nothing.
+
+# Returns
+
+- `DataFrame`: A DataFrame of the generated volume bars with columns: "Open", "High", "Low", "Close", "Volume", "ValueOfTrades", "PriceMean", "TickCount", and "PriceMeanLogReturn".
+
+# References
+
+- De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
 """
-function volumeBar(
-        tickData,
-        volumePerBar = 10000,
-        numberBars = nothing
-    )
+function generateVolumeBar(
+        tickData::DataFrame,
+        volumePerBar::Int=10000,
+        numberOfBars::Int=nothing
+    )::DataFrame
 
-    tickData[!, :volumecumulated] = cumsum(tickData.size)
-    if volumePerBar == nothing
-        totalVolume = tickData.volumecumulated[end]
-        volumePerBar = totalVolume / numberBars
-        volumePerBar = round(volumePerBar; sigdigits = 2)
+    tickData[!, :volumeCumulated] = cumsum(tickData.size)
+    if numberOfBars !== nothing
+        totalVolume = tickData.volumeCumulated[end]
+        volumePerBar = round(totalVolume / numberOfBars; digits = 2)
     end
-    tickData[!, :groupingID] = [x ÷ volumePerBar for x in tickData[!, :volumecumulated]]
-    tickGrouped = copy(tickData)
-    dates = combine(DataFrames.groupby(tickGrouped, :groupingID), :dates => first => :dates)
-    tickDataGrouped = DataFrames.groupby(tickGrouped, :groupingID)
-    ohlcvDataframe = ohlcv(tickDataGrouped)
+    tickData[!, :groupingId] = div.(tickData.volumeCumulated, volumePerBar)
+    tickDataGrouped = groupby(tickData, :groupingId)
+    ohlcvDataframe = generateOhlcvData(tickDataGrouped)
+    dates = combine(tickDataGrouped, :dates => first => :dates)
     insertcols!(ohlcvDataframe, 1, :dates => dates.dates)
-    colDrop = [:groupingID]
-    ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop))
+    select!(ohlcvDataframe, Not(:groupingId))
     return ohlcvDataframe
 end
 
 """
-Function to take a dataframe and generate a dollar bar dataframe.
+    generateDollarBar(tickData::DataFrame, dollarPerBar::Int=100000, numberOfBars::Int=nothing) -> DataFrame
 
-Args:
-    tickData (DataFrame): Dataframe of tick data.
-    dollarPerBar (Int, optional): Dollars in each bar. Default is 100000.
-    numberBars (Int, optional): Number of bars. Default is nothing.
+Generate a dollar bar DataFrame from tick data by grouping the ticks into bars based on a specified dollar amount per bar or a specified total number of bars.
 
-Reference:
-    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: n/a
+# Arguments
+
+- `tickData::DataFrame`: A DataFrame of tick data, which should include columns: "dates", "price", and "size".
+- `dollarPerBar::Int`: Dollar amount in each bar. Default is 100000.
+- `numberOfBars::Int`: Total number of bars. Default is nothing.
+
+# Returns
+
+- `DataFrame`: A DataFrame of the generated dollar bars with columns: "Open", "High", "Low", "Close", "Volume", "ValueOfTrades", "PriceMean", "TickCount", and "PriceMeanLogReturn".
+
+# References
+
+- De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
 """
-function dollarBar(
-        tickData,
-        dollarPerBar = 100000,
-        numberBars = nothing
-    )
+function generateDollarBar(
+        tickData::DataFrame,
+        dollarPerBar::Int=100000,
+        numberOfBars::Int=nothing
+    )::DataFrame
 
     tickData[!, :dollar] = tickData.price .* tickData.size
-    tickData[!, :CumulativeDollars] = cumsum(tickData.dollar)
-    if dollarPerBar == nothing
-        dollarsTotal = tickData.CumulativeDollars[end]
-        dollarPerBar = dollarsTotal / numberBars
-        dollarPerBar = round(dollarPerBar; sigdigits = 2)
+    tickData[!, :cumulativeDollars] = cumsum(tickData.dollar)
+    if numberOfBars !== nothing
+        dollarsTotal = tickData.cumulativeDollars[end]
+        dollarPerBar = round(dollarsTotal / numberOfBars; digits = 2)
     end
-    tickData[!, :groupingID] = [x ÷ dollarPerBar for x in tickData[!, :CumulativeDollars]]
-    tickGrouped = copy(tickData)
-    dates = combine(DataFrames.groupby(tickGrouped, :groupingID), :dates => first => :dates)
-    tickDataGrouped = DataFrames.groupby(tickGrouped, :groupingID)
-    ohlcvDataframe = ohlcv(tickDataGrouped)
+    tickData[!, :groupingId] = div.(tickData.cumulativeDollars, dollarPerBar)
+    tickDataGrouped = groupby(tickData, :groupingId)
+    ohlcvDataframe = generateOhlcvData(tickDataGrouped)
+    dates = combine(tickDataGrouped, :dates => first => :dates)
     insertcols!(ohlcvDataframe, 1, :dates => dates.dates)
-    colDrop = [:groupingID]
-    ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop))
+    select!(ohlcvDataframe, Not(:groupingId))
     return ohlcvDataframe
 end
 
+using LinearAlgebra
+using DataFrames
+
 """
-Function to calculate hedging weights using covariance matrix, risk distribution (riskDist), and risk target (σ).
+    pcaWeights(covarianceMatrix::Matrix, riskDistribution::Vector{Float64}=ones(size(covarianceMatrix, 1)), riskTarget::Float64=1.0) -> Vector{Float64}
 
-Args:
-    cov (Matrix): Covariance matrix.
-    riskDistribution (Vector, optional): Risk distribution. Default is nothing.
-    σ (Float64, optional): Risk target. Default is 1.0.
+Calculate hedging weights using covariance matrix, risk distribution (riskDistribution), and risk target (riskTarget).
 
-Reference:
-    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Page 36
+# Arguments
+
+- `covarianceMatrix::Matrix`: Covariance matrix.
+- `riskDistribution::Vector{Float64}`: Risk distribution. Default is a vector of ones with the same length as the number of assets in the covariance matrix.
+- `riskTarget::Float64`: Risk target. Default is 1.0.
+
+# Returns
+
+- `Vector{Float64}`: The vector of hedging weights.
+
+# Related Mathematical Formulae
+
+Given a covariance matrix `Σ`, the eigendecomposition of `Σ` is `Σ = VΛV'`, where `V` is the matrix of eigenvectors, and `Λ` is the diagonal matrix of eigenvalues. The hedging weights are given by `weights = V * loads`, where `loads = σ * (riskDistribution ./ Λ) .^ 0.5`.
+
+# References
+
+- De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons. Methodology: Page 36
 """
 function pcaWeights(
-        cov,
-        riskDistribution = nothing,
-        σ = 1.0
-    )
+        covarianceMatrix::Matrix,
+        riskDistribution::Vector{Float64}=ones(size(covarianceMatrix, 1)),
+        riskTarget::Float64=1.0
+    )::Vector{Float64}
 
-    Λ = eigvals(cov)
-    V = eigvecs(cov)
-    indices = reverse(sortperm(Λ))
-    Λ = Λ[indices]
+    Λ, V = eigen(covarianceMatrix)
+    indices = reverse(sortperm(Λ.values))
+    Λ = Diagonal(Λ.values[indices])
     V = V[:, indices]
-    
-    if riskDistribution == nothing
-        riskDistribution = zeros(size(cov)[1])
-        riskDistribution[end] = 1.0
-    end
-    
-    loads = σ * (riskDistribution ./ Λ) .^ 0.5
+
+    loads = riskTarget * (riskDistribution ./ diagm(Λ)) .^ 0.5
     weights = V * loads
     return weights
 end
 
 """
-Function to implement the symmetric CUSUM filter.
+    symmetricCusumFilter(input::DataFrame, threshold::Float64) -> Vector{Any}
 
-Args:
-    input (DataFrame): Dataframe of prices and dates.
-    threshold (Float64): Threshold.
+Implement the symmetric CUSUM filter.
 
-Reference:
-    De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-    Methodology: Page 39
+# Arguments
+
+- `input::DataFrame`: DataFrame of prices and dates.
+- `threshold::Float64`: Threshold.
+
+# Returns
+
+- `Vector{Any}`: The vector of timestamps when the filter triggers.
+
+# References
+
+- De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons. Methodology: Page 39
 """
 function symmetricCusumFilter(
-        input,
-        threshold
-    )
+        input::DataFrame,
+        threshold::Float64
+    )::Vector{Any}
 
-    timeEvents, shiftPositive, shiftNegative = [], 0, 0
-    Δprice = DataFrame(hcat(input[2:end, 1], diff(input[:, 2])), :auto)
-    
-    for i ∈ Δprice[:, 1]
-        shiftPositive = max(0, shiftPositive + Δprice[Δprice[:, 1] .== i, 2][1])
-        shiftNegative = min(0, shiftNegative + Δprice[Δprice[:, 1] .== i, 2][1])
-        
+    timeEvents = []
+    shiftPositive, shiftNegative = 0.0, 0.0
+    Δprice = diff(input[:, 2])
+
+    for i in 1:length(Δprice)
+        shiftPositive = max(0.0, shiftPositive + Δprice[i])
+        shiftNegative = min(0.0, shiftNegative + Δprice[i])
+
         if shiftNegative < -threshold
-            shiftNegative = 0
-            append!(timeEvents, [i])
+            shiftNegative = 0.0
+            push!(timeEvents, input[i+1, 1])
         elseif shiftPositive > threshold
-            shiftPositive = 0
-            append!(timeEvents, [i])
+            shiftPositive = 0.0
+            push!(timeEvents, input[i+1, 1])
         end
     end
     

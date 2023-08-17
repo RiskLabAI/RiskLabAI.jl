@@ -1,25 +1,38 @@
 using DataFrames
 using PyCall
 using Statistics
-using PlotlyJS
+using Missings
 
 @pyimport sklearn.datasets as Datasets
 @pyimport sklearn.ensemble as Ensemble
 
 """
-    Calculate feature importance using Mean-Decrease Impurity (MDI) method.
+    featureImportanceMDI
 
-    Parameters:
-    - classifier: Classifier for fit and prediction.
-    - featureNames::Vector{String}: Vector of feature names.
+Calculate feature importance using Mean-Decrease Impurity (MDI) method.
 
-    Returns:
-    - DataFrame: DataFrame with feature importance scores.
+Parameters:
+- `classifier`: Classifier for fit and prediction.
+- `featureNames::Vector{String}`: Vector of feature names.
+
+Returns:
+- `DataFrame`: DataFrame with feature importance scores.
+
+The feature importance is calculated based on the mean impurity reduction,
+which is represented by the formula:
+
+.. math:: \text{Importance}(f) = \frac{1}{N} \sum_{i=1}^{N} I(f, t_i)
+
+where:
+- :math:`f` is the feature,
+- :math:`N` is the number of trees in the forest,
+- :math:`t_i` is the i-th tree in the forest,
+- :math:`I(f, t_i)` is the impurity reduction of feature `f` in tree `t_i`.
 """
 function featureImportanceMDI(
-    classifier, featureNames::Vector{String}
+    classifier,
+    featureNames::Vector{String}
 )::DataFrame
-    # Feature importance based on IS mean impurity reduction
     featureImportanceDataFrame = DataFrame([[] for _ in featureNames], featureNames)
 
     for tree in classifier.estimators_
@@ -33,7 +46,5 @@ function featureImportanceMDI(
 
     featureImportances = means ./ sum(means)
 
-    result = DataFrame(FeatureName=featureNames, FeatureImportance=featureImportances, Std=stds)
-
-    return result
+    return DataFrame(FeatureName=featureNames, FeatureImportance=featureImportances, Std=stds)
 end

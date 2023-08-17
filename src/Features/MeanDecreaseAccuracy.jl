@@ -1,10 +1,7 @@
 using DataFrames
-using DataFramesMeta
+using Random
 using PyCall
 using Statistics
-using PlotlyJS
-using TimeSeries
-using Random
 
 @pyimport sklearn.metrics as Metrics
 @pyimport sklearn.ensemble as Ensemble
@@ -13,21 +10,26 @@ using Random
 @pyimport sklearn.model_selection as ModelSelection
 
 """
-    Calculate feature importance using Mean-Decrease Accuracy (MDA) method.
+    featureImportanceMDA
 
-    Parameters:
-    - classifier: Classifier for fit and prediction.
-    - X::DataFrame: Features matrix.
-    - y::DataFrame: Labels vector.
-    - nSplits::Int64: Number of cross-validation folds.
-    - scoreSampleWeights::Union{Vector, Nothing}: Sample weights for score step.
-    - trainSampleWeights::Union{Vector, Nothing}: Sample weights for train step.
+Calculate feature importance using Mean-Decrease Accuracy (MDA) method.
 
-    Returns:
-    - DataFrame: DataFrame with feature importance scores.
+Parameters:
+- `classifier`: Classifier for fit and prediction.
+- `X::DataFrame`: Features matrix.
+- `y::DataFrame`: Labels vector.
+- `nSplits::Int64`: Number of cross-validation folds.
+- `scoreSampleWeights::Union{Vector, Nothing}`: Sample weights for score step.
+- `trainSampleWeights::Union{Vector, Nothing}`: Sample weights for train step.
+
+Returns:
+- `DataFrame`: DataFrame with feature importance scores.
 """
 function featureImportanceMDA(
-    classifier, X::DataFrame, y::DataFrame, nSplits::Int64;
+    classifier,
+    X::DataFrame,
+    y::DataFrame,
+    nSplits::Int64;
     scoreSampleWeights::Union{Vector, Nothing}=nothing,
     trainSampleWeights::Union{Vector, Nothing}=nothing
 )::DataFrame
@@ -35,12 +37,11 @@ function featureImportanceMDA(
     trainSampleWeights = isnothing(trainSampleWeights) ? ones(size(X, 1)) : trainSampleWeights
     scoreSampleWeights = isnothing(scoreSampleWeights) ? ones(size(X, 1)) : scoreSampleWeights
 
-    cvGenerator = ModelSelection.KFold(n_splits=nSplits)    
+    cvGenerator = ModelSelection.KFold(n_splits=nSplits)
     score0, score1 = DataFrame("value" => zeros(nSplits)), DataFrame([name => zeros(nSplits) for name in names(X)])
 
     for (i, (train, test)) in enumerate(cvGenerator.split(Matrix(X)))
-        println("fold $(i) start ...")
-
+        println("Fold $(i) start ...")
         train .+= 1  # Python indexing starts at 0
         test .+= 1   # Python indexing starts at 0
 
@@ -50,7 +51,6 @@ function featureImportanceMDA(
         fit = classifier.fit(Matrix(X0), vec(Matrix(y0)), sample_weight=sampleWeights0)
 
         predictionProbability = fit.predict_proba(Matrix(X1))
-
         score0[i, 1] = -Metrics.log_loss(Matrix(y1), predictionProbability, sample_weight=sampleWeights1, labels=classifier.classes_)
 
         for j in names(X)
@@ -58,8 +58,8 @@ function featureImportanceMDA(
             X1_[!, j] = shuffle(X1_[!, j])
 
             predictionProbability = fit.predict_proba(Matrix(X1_))
-            log_loss = Metrics.log_loss(Matrix(y1), predictionProbability, labels=classifier.classes_)
-            score1[i, j] = -log_loss
+            logLoss = Metrics.log_loss(Matrix(y1), predictionProbability, labels=classifier.classes_)
+            score1[i, j] = -logLoss
         end
     end
 
