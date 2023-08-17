@@ -1,121 +1,130 @@
-#include("labeling.jl")
-#include("hpc.jl")
-
 using DataFrames
 using Distributions
-
-
-"""
-    Calculate the number of concurrent events for each event in a given molecule.
-
-    This function computes the number of concurrent events (both long and short) for each event in a given molecule, 
-    based on the provided events and their corresponding returns and labels.
-
-    Args:
-        events (DataFrame): DataFrame that contains events data.
-        returnandLable (DataFrame): DataFrame that contains return and label of each period.
-        molecule (Vector): The index on which the function must apply.
-
-    Returns:
-        DataFrame: A DataFrame containing the number of concurrent long and short events for each event.
-
-    References:
-        - De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-        - Methodology 51
+using Statistics
 
 """
-function nConcurrencyEvents(events::DataFrame, returnedLabel::DataFrame, molecule::Vector)
+    numberConcurrentEvents(events::DataFrame, returnedLabel::DataFrame, molecule::Vector)
 
+Compute the number of concurrent events (both long and short) for each event in a given molecule.
+
+# Parameters:
+- `events::DataFrame`: DataFrame containing events data.
+- `returnedLabel::DataFrame`: DataFrame containing return and label for each period.
+- `molecule::Vector`: Index on which the function must apply.
+
+# Returns:
+- `DataFrame`: DataFrame containing the number of concurrent long and short events for each event.
+
+# References:
+- De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+- Methodology 51
+"""
+function numberConcurrentEvents(
+        events::DataFrame,
+        returnedLabel::DataFrame,
+        molecule::Vector
+    )
     eventsFiltered = filter(row -> row[:date] in molecule, events)
     
-    concurrency = DataFrame(Dates = events.date, activeLong = zeros(Int, size(eventsFiltered)[1]), activeShort = zeros(Int, size(eventsFiltered)[1]))
+    concurrency = DataFrame(
+        Dates = events.date,
+        activeLong = zeros(Int, size(eventsFiltered, 1)),
+        activeShort = zeros(Int, size(eventsFiltered, 1))
+    )
     
     for (i, idx) in enumerate(eventsFiltered.date)
-        indexLessThanIdx = events.date .<= idx
-        eventsMoreThanIdx = events.timestamp .> idx
-        outIsPositive = returnedLabel.ret .>= 0
+        idxFilter = events.date .<= idx
+        activeFilter = events.timestamp .> idx
+        positiveReturn = returnedLabel.ret .>= 0
         
-        maximumLength = maximum([length(outIsPositive), length(eventsMoreThanIdx), length(indexLessThanIdx)])
+        maxlen = maximum([length(positiveReturn), length(activeFilter), length(idxFilter)])
         
-        outIsPositive = vcat(outIsPositive, falses(maximumLength - length(outIsPositive)))
-        indexLessThanIdx = vcat(indexLessThanIdx, falses(maximumLength - length(indexLessThanIdx)))
-        eventsMoreThanIdx = vcat(eventsMoreThanIdx, falses(maximumLength - length(eventsMoreThanIdx)))
-
-        condition = indexLessThanIdx .& eventsMoreThanIdx .& outIsPositive
-        mySet = eventsFiltered.date[condition]
-
-        dfLongActiveIdx = Set(mySet)
-        concurrency.activeLong[i] = length(dfLongActiveIdx)
-
-        outIsNegative = returnedLabel.ret .< 0
+        positiveReturn = vcat(positiveReturn, falses(maxlen - length(positiveReturn)))
+        idxFilter = vcat(idxFilter, falses(maxlen - length(idxFilter)))
+        activeFilter = vcat(activeFilter, falses(maxlen - length(activeFilter)))
         
-        outIsNegative = vcat(outIsNegative, falses(maximumLength - length(outIsNegative)))
-        condition = indexLessThanIdx .& eventsMoreThanIdx .& outIsNegative
-        mySet = eventsFiltered.date[condition]
-
-        dfShortActiveIndex = Set(mySet)
-        concurrency.activeShort[i] = length(dfShortActiveIndex)
+        condition = idxFilter .& activeFilter .& positiveReturn
+        activeLongSet = Set(eventsFiltered.date[condition])
+        concurrency.activeLong[i] = length(activeLongSet)
+        
+        negativeReturn = returnedLabel.ret .< 0
+        negativeReturn = vcat(negativeReturn, falses(maxlen - length(negativeReturn)))
+        condition = idxFilter .& activeFilter .& negativeReturn
+        activeShortSet = Set(eventsFiltered.date[condition])
+        concurrency.activeShort[i] = length(activeShortSet)
     end
 
     concurrency.ct = concurrency.activeLong - concurrency.activeShort
     return concurrency
 end
 
-
 """
-    Calculate the cumulative distribution function (CDF) of a mixture model.
+    mixtureNormalCdf(x::AbstractVector; weights=[0.647, 0.353], means=[2.79, -3.03], std=[9.62, 12.0])
 
-    This function computes the CDF of a mixture model given input data.
+Compute the cumulative distribution function (CDF) of a mixture model.
 
-    Args:
-        x (AbstractVector): Input data for calculating the CDF on it.
-        weights (AbstractVector): Weights for the mixture model.
-        means (AbstractVector): Means of each Gaussian distribution in the model.
-        std (AbstractVector): Standard deviation of each Gaussian distribution in the model.
+# Parameters:
+- `x::AbstractVector`: Input data for calculating the CDF.
+- `weights::AbstractVector`: Weights for the mixture model (default: [0.647, 0.353]).
+- `means::AbstractVector`: Means of each Gaussian distribution in the model (default: [2.79, -3.03]).
+- `std::AbstractVector`: Standard deviations of each Gaussian distribution in the model (default: [9.62, 12.0]).
 
-    Returns:
-        Float64: The calculated CDF value.
-
+# Returns:
+- `Float64`: Calculated CDF value.
 """
-function mixtureNormalCdf(x::AbstractVector; weights=[0.647, 0.353], means=[2.79, -3.03], std=[9.62, 12.0])
-    mix = MixtureModel(Normal[
-        Normal(means[1], std[1]),
-        Normal(means[2], std[2])],
-        [weights[1], weights[2]])
-
+function mixtureNormalCdf(
+        x::AbstractVector;
+        weights::AbstractVector=[0.647, 0.353],
+        means::AbstractVector=[2.79, -3.03],
+        std::AbstractVector=[9.62, 12.0]
+    )
+    mix = MixtureModel(Normal[Normal(means[1], std[1]), Normal(means[2], std[2])], weights)
     mcdf = cdf(mix, x)
     return float(mcdf)
 end
+
+using DataFrames, Statistics, Distributions
 
 """
     Calculate the bet size using a Gaussian mixture model.
 
     This function calculates the bet size based on the given concurrency and Gaussian mixture model parameters.
 
-    Args:
-        c (Float64): Concurrency.
-        weights (AbstractVector): Weights of the normal distribution for the mixture model.
-        means (AbstractVector): Means of the normal distribution.
-        std (AbstractVector): Standard deviation of the normal distribution.
+    Parameters
+    ----------
+    concurrency : Float64
+        Concurrency.
+    weights : AbstractVector
+        Weights of the normal distribution for the mixture model.
+    means : AbstractVector
+        Means of the normal distribution.
+    standardDeviations : AbstractVector
+        Standard deviation of the normal distribution.
 
-    Returns:
-        Float64: Calculated bet size.
+    Returns
+    -------
+    Float64
+        Calculated bet size.
 
-    References:
-        - De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-        - Methodology p.142
+    References
+    ----------
+    - De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    - Methodology p.142
 
 """
-function gaussianBet(c::Float64, weights::AbstractVector, means::AbstractVector, std::AbstractVector)
-    if c >= 0.0
-        return (mixtureNormalCdf(c; weights=weights, means=means, std=std) - 
-                mixtureNormalCdf(0; weights=weights, means=means, std=std)) /
-               (-mixtureNormalCdf(0; weights=weights, means=means, std=std) + 1)
-    else
-        return (mixtureNormalCdf(c; weights=weights, means=means, std=std) - 
-                mixtureNormalCdf(0; weights=weights, means=means, std=std)) /
-               mixtureNormalCdf(0; weights=weights, means=means, std=std)
-    end
+function calculateGaussianBet(
+    concurrency::Float64,
+    weights::AbstractVector,
+    means::AbstractVector,
+    standardDeviations::AbstractVector
+) :: Float64
+
+    mixCDF = x -> sum(w * cdf(Normal(m, s), x) for (w, m, s) in zip(weights, means, standardDeviations))
+
+    numerator = mixCDF(concurrency) - mixCDF(0)
+    denominator = mixCDF(0) * (concurrency >= 0.0 ? -1.0 + 1.0 : 1.0)
+
+    return numerator / denominator
 end
 
 """
@@ -123,22 +132,33 @@ end
 
     This function calculates statistics related to bet sizes based on the given probability and number of label classes.
 
-    Args:
-        probability (AbstractVector): Probability that the label takes place.
-        nClasses (Int): Number of label classes.
+    Parameters
+    ----------
+    probability : AbstractVector
+        Probability that the label takes place.
+    numberOfClasses : Int
+        Number of label classes.
 
-    Returns:
-        AbstractVector: Calculated bet size statistics.
+    Returns
+    -------
+    AbstractVector
+        Calculated bet size statistics.
 
-    References:
-        - De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-        - Methodology p.142
+    References
+    ----------
+    - De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    - Methodology p.142
 
 """
-function betSizeProbability(probability::AbstractVector, nClasses::Int)
-    statistic = (probability .- (1/nClasses)) ./ sqrt.(probability .* (1 .- probability))
+function betSizeStatistics(
+    probability::AbstractVector,
+    numberOfClasses::Int
+) :: AbstractVector
+
+    statistic = (probability .- (1 / numberOfClasses)) ./ sqrt.(probability .* (1 .- probability))
     model = Normal(0, 1)
-    return 2*cdf(model, statistic) .- 1
+
+    return 2 * cdf(model, statistic) .- 1
 end
 
 """
@@ -146,16 +166,25 @@ end
 
     This function calculates bet size statistics for a range of label class probabilities.
 
-    Args:
-        nClasses (Int): Number of label classes.
+    Parameters
+    ----------
+    numberOfClasses : Int
+        Number of label classes.
 
-    Returns:
-        DataFrame: DataFrame with calculated bet size statistics for the given range of probabilities.
+    Returns
+    -------
+    DataFrame
+        DataFrame with calculated bet size statistics for the given range of probabilities.
 
 """
-function betSizeForRange(nClasses::Int)
+function betSizeForRange(
+    numberOfClasses::Int
+) :: DataFrame
+
     prob = range(0, stop=1, length=10000)
-    return DataFrame(probability = betSizeProbability(prob, nClasses), index=prob)
+    stats = betSizeStatistics(prob, numberOfClasses)
+
+    return DataFrame(probability = prob, statistics = stats)
 end
 
 """
@@ -163,66 +192,70 @@ end
 
     This function calculates the average active signals based on the DataFrame of signals.
 
-    Args:
-        dataFrameofSignals (DataFrame): DataFrame that has signals.
+    Parameters
+    ----------
+    dataFrameOfSignals : DataFrame
+        DataFrame that has signals.
 
-    Returns:
-        DataFrame: DataFrame with calculated average active signals.
+    Returns
+    -------
+    DataFrame
+        DataFrame with calculated average active signals.
 
-    References:
-        - De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-        - Methodology p.144
+    References
+    ----------
+    - De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    - Methodology p.144
 
 """
-function averageActiveSignals(dataFrameofSignals::DataFrame)
-    setofbarrier = Set((dropmissing(dataFrameofSignals)).t1)
-    setofbarrier = union(setofbarrier, dataFrameofSignals.Dates)
-    index = [i for i in setofbarrier]
-    sort!(index)
-    out = mpDataFrameObj(averageActiveSignalsMultiProcessing, :molecule, index; dataFrameofSignals=dataFrameofSignals)
+function averageActiveSignals(
+    dataFrameOfSignals::DataFrame
+) :: DataFrame
+
+    barrierSet = union(Set(dropmissing(dataFrameOfSignals).t1), Set(dataFrameOfSignals.Dates))
+    index = sort(collect(barrierSet))
+    out = averageActiveSignalsMultiProcessing(dataFrameOfSignals, index)
+
     return out
 end
-
-using DataFrames
 
 """
     Calculate average active signals for a molecule.
 
     This function calculates the average active signals for a given molecule based on the DataFrame of signals.
 
-    Args:
-        dataFrameofSignals (DataFrame): DataFrame that has signals.
-        molecule (AbstractVector): Index that the function must apply on.
+    Parameters
+    ----------
+    dataFrameOfSignals : DataFrame
+        DataFrame that has signals.
+    molecule : AbstractVector
+        Index that the function must apply on.
 
-    Returns:
-        DataFrame: DataFrame with calculated average active signals for the given molecule.
+    Returns
+    -------
+    DataFrame
+        DataFrame with calculated average active signals for the given molecule.
 
-    References:
-        - De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
-        - Methodology p.144
+    References
+    ----------
+    - De Prado, M. (2018) Advances in financial machine learning. John Wiley & Sons.
+    - Methodology p.144
 
 """
-function averageActiveSignalsMultiProcessing(;dataFrameofSignals, molecule::AbstractVector)
-    signals = copy(dataFrameofSignals) # Filter by molecule
-    output = DataFrame(date = molecule, signal = zeros(length(molecule))) # Create DataFrame 
+function averageActiveSignalsMultiProcessing(
+    dataFrameOfSignals::DataFrame,
+    molecule::AbstractVector
+) :: DataFrame
+
+    signals = copy(dataFrameOfSignals)
+    output = DataFrame(date = molecule, signal = zeros(length(molecule)))
 
     for (i, loc) in enumerate(molecule)
-        sigLessThanLoc = signals.Dates .<= loc # Select events starting before loc
-        locLessThant1 = signals.t1 .> loc # Select events ending after loc
-
-        isMissing = ismissing.(signals.t1) # Select missing barriers
-     
-        df0 = sigLessThanLoc .& (locLessThant1 .| isMissing) # Select events indices that contain loc 
-        act = signals.Dates[df0]     # Select events that contain loc 
-        if length(act) > 0
-            output[i, :signal] = mean(signals.signal[df0])
-        else
-            output[i, :signal]  = 0
-        end
+        activeEvents = filter(row -> row[:Dates] <= loc && (ismissing(row[:t1]) || row[:t1] > loc), signals)
+        output[i, :signal] = isempty(activeEvents) ? 0.0 : mean(activeEvents[:signal])
     end
-    output = sort!(output, [:date])  # Sort DataFrame by date 
 
-    return output
+    return sort!(output, [:date])
 end
 
 """
@@ -238,7 +271,11 @@ end
         AbstractVector: Discretized signal.
 
 """
-function discreteSignal(signal::AbstractVector, stepSize::Float64)
+function discreteSignal(
+    signal::AbstractVector,
+    stepSize::Float64
+)::AbstractVector
+
     signal = round.(signal ./ stepSize) * stepSize
     signal[signal .> 1] .= 1
     signal[signal .< -1] .= -1
@@ -264,7 +301,12 @@ end
         - Methodology p.145
 
 """
-function generateSignal(events::DataFrame, stepSize::Float64, estimationResult::DataFrame, nClasses::Int)
+function generateSignal(
+    events::DataFrame,
+    stepSize::Float64,
+    estimationResult::DataFrame,
+    nClasses::Int
+)::DataFrame
     if size(prob)[1] == 0
         return
     end
@@ -304,7 +346,11 @@ end
         - Methodology p.145 SNIPPET 10.4
 
 """
-function ω(x::Float64, m::Float64)
+function ω(
+    x::Float64,
+    m::Float64
+)::Float64
+
     return x^2 * (1 / m^2 - 1)
 end
 
@@ -325,7 +371,11 @@ end
         - Methodology p.145 SNIPPET 10.4
 
 """
-function calculateSizeOfBet(ω::Float64, x::Float64)
+function calculateSizeOfBet(
+    ω::Float64,
+    x::Float64
+)::Float64
+
     return x * (ω + x^2)^(-0.5)
 end
 
@@ -348,7 +398,13 @@ end
         - Methodology p.145 SNIPPET 10.4
 
 """
-function calculateTargetPosition(ω::Float64, f::Float64, actualPrice::Float64, maximumPositionSize::Int)
+function calculateTargetPosition(
+    ω::Float64,
+    f::Float64,
+    actualPrice::Float64,
+    maximumPositionSize::Int
+)::Int
+
     return trunc(Int, (calculateSizeOfBet(ω, f - actualPrice) * maximumPositionSize))
 end
 
@@ -370,7 +426,12 @@ end
         - Methodology p.145 SNIPPET 10.4
 
 """
-function calculateInversePrice(f::Float64, ω::Float64, m::Float64)
+function calculateInversePrice(
+    f::Float64,
+    ω::Float64,
+    m::Float64
+)::Float64
+
     return f - m * (ω / (1 - m^2))^(0.5)
 end
 
@@ -380,7 +441,7 @@ end
     This function calculates the limit price based on the target position size, current position, predicted price, coefficient ω, and maximum absolute position size.
 
     Args:
-        TargetPositionSize (Int): Target position size.
+        targetPositionSize (Int): Target position size.
         cPosition (Int): Current position.
         f (Float64): Predicted price.
         ω (Float64): Coefficient that regulates the width of the sigmoid function.
@@ -394,16 +455,23 @@ end
         - Methodology p.145 SNIPPET 10.4
 
 """
-function calculateLimitPrice(TargetPositionSize::Int, cPosition::Int, f::Float64, ω::Float64, maximumPositionSize::Int)
-    if TargetPositionSize >= cPosition
+function calculateLimitPrice(
+    targetPositionSize::Int,
+    cPosition::Int,
+    f::Float64,
+    ω::Float64,
+    maximumPositionSize::Int
+)::Float64
+
+    if targetPositionSize >= cPosition
         sgn = 1
     else
         sgn = -1
     end
     lP = 0
-    for i in abs(cPosition + sgn):abs(TargetPositionSize)
+    for i in abs(cPosition + sgn):abs(targetPositionSize)
         lP += calculateInversePrice(f, ω, i / float(maximumPositionSize))
     end
-    lP /= TargetPositionSize - cPosition
+    lP /= targetPositionSize - cPosition
     return lP
 end

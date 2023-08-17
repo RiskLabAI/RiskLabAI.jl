@@ -1,37 +1,51 @@
+using Combinatorics
+using Base.Threads
+using Statistics
+
 """
+    selectRows(partition::Vector{Int}, subMatrixSize::Int) -> Vector{Int}
+
 Selects rows from a given partition.
 
-:param partition: Index of submatrix.
-:param subMatrixSize: Submatrix size.
-:return: Array of selected indexes.
+# Arguments
+- `partition::Vector{Int}`: Index of submatrix.
+- `subMatrixSize::Int`: Submatrix size.
+
+# Returns
+- `Vector{Int}`: Array of selected indexes.
+
 """
-function selectedRow(partition, subMatrixSize)
-    array = []
-    
-    for p in partition
-        start = (p - 1) * subMatrixSize + 1
-        ends = p * subMatrixSize
-        append!(array, [start:ends])
-    end
-    
+function selectRows(partition::Vector{Int}, subMatrixSize::Int) -> Vector{Int}
+    array = [((p - 1) * subMatrixSize + 1):(p * subMatrixSize) for p in partition]
     return vcat(array...)
 end
 
 """
+    probabilityOfBacktestOverfitting(
+        matrixData::Matrix{Float64},
+        nPartitions::Int,
+        metric::Function;
+        riskFreeReturn::Float64 = 0.0
+    ) -> Tuple{Float64, Vector{Float64}}
+
 Computes the Probability Of Backtest Overfitting.
 
-:param matrixData: Matrix of T×N for T observations on N strategies.
-:param nPartitions: Number of partitions (must be even).
-:param metric: Metric function for evaluating strategy.
-:param riskFreeReturn: Risk-free return for calculating Sharpe ratio.
-:return: Tuple containing Probability Of Backtest Overfitting and an array of logit values.
+# Arguments
+- `matrixData::Matrix{Float64}`: Matrix of T×N for T observations on N strategies.
+- `nPartitions::Int`: Number of partitions (must be even).
+- `metric::Function`: Metric function for evaluating strategy.
+- `riskFreeReturn::Float64`: Risk-free return for calculating Sharpe ratio.
+
+# Returns
+- `Tuple{Float64, Vector{Float64}}`: Tuple containing Probability Of Backtest Overfitting and an array of logit values.
+
 """
 function probabilityOfBacktestOverfitting(
-        matrixData,
-        nPartitions,
-        metric;
-        riskFreeReturn=0.0
-    )
+    matrixData::Matrix{Float64},
+    nPartitions::Int,
+    metric::Function;
+    riskFreeReturn::Float64 = 0.0
+) -> Tuple{Float64, Vector{Float64}}
     if nPartitions % 2 == 1
         println("Number of partitions must be even")
         return
@@ -47,8 +61,7 @@ function probabilityOfBacktestOverfitting(
     resultInThreads = [[] for _ in 1:Threads.nthreads()]
     
     Threads.@threads for p in partition
-        index = 1:nObservation
-        selectedRowIndices = selectedRow(p, subMatrixSize)
+        selectedRowIndices = selectRows(p, subMatrixSize)
         trainData = matrix[selectedRowIndices, :]
         evaluate = [metric(trainData[:, i], riskFreeReturn) for i in 1:nStrategy]
         bestStrategy = argmax(evaluate)
