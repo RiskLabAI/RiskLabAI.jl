@@ -3,25 +3,24 @@ Compute the exponentially weighted moving average (EWMA), EWMA variance, and EWM
 
 Reference: https://stackoverflow.com/questions/40754262/pandas-ewm-std-calculation
 """
-function ewma(
-        arrIn::Vector,
+function calculate_ewma(
+        arr_in::Vector{Float64},
         window::Int
-    )
-    
-    arrLength = length(arrIn)
-    ewmaArr = zeros(arrLength)
+    )::Vector{Float64}
+    arr_length = length(arr_in)
+    ewma_arr = zeros(Float64, arr_length)
 
     alpha = 2 / (window + 1)
-    weight = 1
+    weight = 1.0
 
-    ewmaOld = arrIn[1]
-    ewmaArr[1] = ewmaOld
+    ewma_old = arr_in[1]
+    ewma_arr[1] = ewma_old
 
-    for i in 2:arrLength
+    for i in 2:arr_length
         weight += (1 - alpha) ^ i
-        ewmaOld = ewmaOld * (1 - alpha) + arrIn[i]
-        ewmaArr[i] = ewmaOld / weight
+        ewma_old = ewma_old * (1 - alpha) + arr_in[i]
+        ewma_arr[i] = ewma_old / weight
     end
 
-    ewmaArr
+    return ewma_arr
 end
