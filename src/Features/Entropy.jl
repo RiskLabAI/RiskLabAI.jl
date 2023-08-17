@@ -1,30 +1,34 @@
 module Entropy
 
-export shannonEntropy, lempleZivEntropy, probabilityMassFunction, plugInEntropyEstimator, kontoyiannisEntropy, longestMatchLength
+using Base.Iterators: partition
+using DataStructures: DefaultDict
+
+export shannonEntropy, lempelZivEntropy, probabilityMassFunction, plugInEntropyEstimator, kontoyiannisEntropy, longestMatchLength
 
 """
-    Calculate Shannon Entropy
+    shannonEntropy(message::String)::Float64
 
-    Parameters:
-    - message::String: Input encoded message.
+Calculate Shannon Entropy.
 
-    Returns:
-    - entropy::Float64: Shannon Entropy score.
+# Arguments
+- `message::String`: Input encoded message.
+
+# Returns
+- `::Float64`: Shannon Entropy score.
 """
-function shannonEntropy(message::String)::Float64
-    charToCount = Dict()
+function shannonEntropy(
+    message::String
+)::Float64
+
+    charToCount = DefaultDict{Char, Int}(0)
     entropy = 0.0
     messageLength = length(message)
 
-    for character ∈ message
-        try
-            charToCount[character] += 1
-        catch
-            charToCount[character] = 1
-        end
+    for character in message
+        charToCount[character] += 1
     end
 
-    for count ∈ values(charToCount)
+    for count in values(charToCount)
         frequency = count / messageLength
         entropy -= frequency * log2(frequency)
     end
@@ -33,21 +37,26 @@ function shannonEntropy(message::String)::Float64
 end
 
 """
-    Calculate Lemple-Ziv Entropy
+    lempelZivEntropy(message::String)::Float64
 
-    Parameters:
-    - message::String: Input encoded message.
+Calculate Lempel-Ziv Entropy.
 
-    Returns:
-    - entropy::Float64: Lemple-Ziv Entropy score.
+# Arguments
+- `message::String`: Input encoded message.
+
+# Returns
+- `::Float64`: Lempel-Ziv Entropy score.
 """
-function lempleZivEntropy(message::String)::Float64
+function lempelZivEntropy(
+    message::String
+)::Float64
+
     i, library = 1, Set{String}([message[1] |> string])
     messageLength = length(message)
 
     while i < messageLength
         lastJValue = messageLength - 1
-        for j ∈ i:messageLength - 1
+        for j in i:messageLength - 1
             message_ = message[i + 1:j + 1]
             if message_ ∉ library
                 push!(library, message_)
@@ -62,66 +71,80 @@ function lempleZivEntropy(message::String)::Float64
 end
 
 """
-    Calculate probability mass function (PMF)
+    probabilityMassFunction(message::String, approximateWordLength::Int)::Dict
 
-    Parameters:
-    - message::String: Input encoded message.
-    - approximateWordLength::Int: Approximation of word length.
+Calculate probability mass function (PMF).
 
-    Returns:
-    - pmf::Dict: Probability mass function.
+# Arguments
+- `message::String`: Input encoded message.
+- `approximateWordLength::Int`: Approximation of word length.
+
+# Returns
+- `::Dict`: Probability mass function.
 """
-function probabilityMassFunction(message::String, approximateWordLength::Int)::Dict
-    library = Dict()
+function probabilityMassFunction(
+    message::String,
+    approximateWordLength::Int
+)::Dict
+
+    library = DefaultDict{String, Vector{Int}}(Vector{Int})
     messageLength = length(message)
 
-    for index ∈ approximateWordLength:messageLength - 1
+    for index in approximateWordLength:messageLength - 1
         message_ = message[index - approximateWordLength + 1:index]
-
-        if message_ ∉ keys(library)
-            library[message_] = [index - approximateWordLength + 1]
-        else
-            append!(library[message_], index - approximateWordLength + 1)
-        end
+        push!(library[message_], index - approximateWordLength + 1)
     end
 
     denominator = (messageLength - approximateWordLength) |> float
-    pmf = Dict([key => length(library[key]) / denominator for key ∈ keys(library)])
+    pmf = Dict([key => length(library[key]) / denominator for key in keys(library)])
     return pmf
 end
 
 """
-    Calculate Plug-in Entropy Estimator
+    plugInEntropyEstimator(message::String, approximateWordLength::Int=1)::Float64
 
-    Parameters:
-    - message::String: Input encoded message.
-    - approximateWordLength::Int: Approximation of word length.
+Calculate Plug-in Entropy Estimator.
 
-    Returns:
-    - entropy::Float64: Plug-in Entropy Estimator score.
+# Arguments
+- `message::String`: Input encoded message.
+- `approximateWordLength::Int=1`: Approximation of word length.
+
+# Returns
+- `::Float64`: Plug-in Entropy Estimator score.
 """
-function plugInEntropyEstimator(message::String, approximateWordLength::Int=1)::Float64
+function plugInEntropyEstimator(
+    message::String,
+    approximateWordLength::Int=1
+)::Float64
+
     pmf = probabilityMassFunction(message, approximateWordLength)
-    plugInEntropyEstimator = -sum([pmf[key] * log2(pmf[key]) for key ∈ keys(pmf)]) / approximateWordLength
+    plugInEntropyEstimator = -sum([pmf[key] * log2(pmf[key]) for key in keys(pmf)]) / approximateWordLength
     return plugInEntropyEstimator
 end
 
 """
-    Calculate the length of the longest match
+    longestMatchLength(message::String, i::Int, n::Int)::Tuple{Int, String}
 
-    Parameters:
-    - message::String: Input encoded message.
-    - i::Int: Starting index for the search.
-    - n::Int: Length of the expanding window.
+Calculate the length of the longest match.
 
-    Returns:
-    - matchLength::Tuple{Int, String}: Match length and matched substring.
+# Arguments
+- `message::String`: Input encoded message.
+- `i::Int`: Starting index for the search.
+- `n::Int`: Length of the expanding window.
+
+# Returns
+- `::Tuple{Int, String}`: Match length and matched substring.
 """
-function longestMatchLength(message::String, i::Int, n::Int)::Tuple{Int, String}
+function longestMatchLength(
+    message::String,
+    i::Int,
+    n::Int
+)::Tuple{Int, String}
+
     subString = ""
-    for l ∈ 1:n
+    for l in 1:n
         message1 = message[i:i + l]
-        for j ∈ i - n + 1:i
+        for j in i - n + 1:i
             message0 = message[j:j + l]
             if message1 == message0
                 subString = message1
@@ -134,27 +157,33 @@ function longestMatchLength(message::String, i::Int, n::Int)::Tuple{Int, String}
 end
 
 """
-    Calculate Kontoyiannis Entropy
+    kontoyiannisEntropy(message::String, window::Int=0)::Float64
 
-    Parameters:
-    - message::String: Input encoded message.
-    - window::Int: Length of the expanding window.
+Calculate Kontoyiannis Entropy.
 
-    Returns:
-    - entropy::Float64: Kontoyiannis Entropy score.
+# Arguments
+- `message::String`: Input encoded message.
+- `window::Int=0`: Length of the expanding window.
+
+# Returns
+- `::Float64`: Kontoyiannis Entropy score.
 """
-function kontoyiannisEntropy(message::String, window::Int=0)::Float64
+function kontoyiannisEntropy(
+    message::String,
+    window::Int=0
+)::Float64
+
     output = Dict("num" => 0, "sum" => 0, "subString" => [])
 
-    if window === nothing
+    if window === 0
         points = 2:length(message) ÷ 2 + 1
     else
         window = min(window, length(message) ÷ 2)
         points = window + 1:length(message) - window + 1
     end
 
-    for i ∈ points
-        if window === nothing
+    for i in points
+        if window === 0
             (l, message_) = longestMatchLength(message, i, i)
             output["sum"] += log2(i) / l  # to avoid Doeblin condition
         else

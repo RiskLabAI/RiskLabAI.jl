@@ -1,10 +1,8 @@
 using DataFrames
 using DataFramesMeta
-using PyCall
+using ScikitLearn
 using Statistics
-using PlotlyJS
-using TimeSeries
-using Random
+using PyCall
 
 @pyimport sklearn.metrics as Metrics
 @pyimport sklearn.ensemble as Ensemble
@@ -13,47 +11,58 @@ using Random
 @pyimport sklearn.model_selection as ModelSelection
 
 """
+    clusteredFeatureImportanceMDA(
+        classifier,
+        X::DataFrame,
+        y::DataFrame,
+        clusters::Dict{Symbol, Vector{Symbol}},
+        nSplits::Int
+    )::DataFrame
+
 Clustered feature importance using Clustered MDA.
 
 This function calculates the clustered feature importance using the Clustered MDA method based on the
 methodology presented in De Prado (2020), Machine Learning for Asset Managers, page 87, Clustered MDA section.
 
-Parameters:
-- classifier: Classifier for fitting and prediction.
-- X (DataFrame): Features matrix.
-- y (DataFrame): Labels vector.
-- clusters: Dictionary of feature clusters.
-- nSplits (Int64): Number of cross-validation folds.
+# Parameters
+- `classifier`: Classifier for fitting and prediction.
+- `X::DataFrame`: Features matrix.
+- `y::DataFrame`: Labels vector.
+- `clusters::Dict{Symbol, Vector{Symbol}}`: Dictionary of feature clusters.
+- `nSplits::Int`: Number of cross-validation folds.
 
-Returns:
-- DataFrame: DataFrame containing clustered feature importances.
+# Returns
+- `DataFrame`: DataFrame containing clustered feature importances.
+
+# References
+- De Prado, M. (2020), Machine Learning for Asset Managers, page 87, Clustered MDA section.
 """
 function clusteredFeatureImportanceMDA(
-    classifier, 
-    X::DataFrame, 
-    y::DataFrame, 
-    clusters, 
-    nSplits::Int64
-)::DataFrame
+        classifier,
+        X::DataFrame,
+        y::DataFrame,
+        clusters::Dict{Symbol, Vector{Symbol}},
+        nSplits::Int
+    )::DataFrame
 
-    cvGenerator = ModelSelection.KFold(n_splits=nSplits)    
-    score0, score1 = DataFrame("value" => zeros(nSplits)), DataFrame([name => zeros(nSplits) for name in names(X)])
-    for (i, (train, test)) ∈ enumerate(cvGenerator.split(X |> Matrix))
-        println("fold $(i) start ...")
+    cvGenerator = ModelSelection.KFold(n_splits=nSplits)
+    score0 = DataFrame("value" => zeros(nSplits))
+    score1 = DataFrame([name => zeros(nSplits) for name in names(X)])
 
-        train .+= 1 # Python indexing starts at 0
-        test .+= 1 # Python indexing starts at 0
+    for (i, (train, test)) in enumerate(cvGenerator.split(X |> Matrix))
+        println("Fold $(i) start ...")
 
-        X0, y0 = X[train, :], y[train, :] 
-        X1, y1 = X[test, :], y[test, :]
+        X0, y0 = X[train .+ 1, :], y[train .+ 1, :]
+        X1, y1 = X[test .+ 1, :], y[test .+ 1, :]
 
         fit = classifier.fit(X0 |> Matrix, y0 |> Matrix |> vec)
 
         predictionProbability = fit.predict_proba(X1 |> Matrix)
-        score0[i, 1] = -Metrics.log_loss(y1 |> Matrix, predictionProbability, labels=classifier.classes_)        
-        for j ∈ names(X)
-            X1_ = deepcopy(X1) 
-            for k ∈ clusters[j]
+        score0[i, 1] = -Metrics.log_loss(y1 |> Matrix, predictionProbability, labels=classifier.classes_)
+
+        for j in names(X)
+            X1_ = deepcopy(X1)
+            for k in clusters[j]
                 X1_[:, k] = shuffle(X1_[:, k])
             end
             predictionProbability = fit.predict_proba(X1_ |> Matrix)
@@ -69,4 +78,4 @@ function clusteredFeatureImportanceMDA(
     importances[!, :importancesStd] = std.(eachcol(importances))
 
     return importances
-end 
+end

@@ -1,34 +1,33 @@
 using DataFrames
 using DataFramesMeta
-
 using PyCall
 using Statistics
-using PlotlyJS
 using TimeSeries
 using Random
 
 @pyimport sklearn.metrics as Metrics
 @pyimport sklearn.ensemble as Ensemble
 @pyimport sklearn.datasets as Datasets
-@pyimport sklearn.metrics as Metrics
 @pyimport sklearn.model_selection as ModelSelection
 
 """
-    Implementation of SFI method.
+    featureImportanceSingleFeature
 
-    Parameters:
-    - classifier: Classifier for fit and prediction.
-    - X::DataFrame: Features matrix.
-    - y::DataFrame: Labels vector.
-    - nSplits::Int64: Cross-validation n folds.
-    - scoreSampleWeights::Union{Vector, Nothing}: Sample weights for score step.
-    - trainSampleWeights::Union{Vector, Nothing}: Sample weights for train step.
-    - scoring::String: Classification prediction and true values scoring type.
+Compute the importance of features using Single Feature Importance (SFI) method.
 
-    Returns:
-    - DataFrame: DataFrame containing feature importances.
+Parameters:
+- `classifier`: Classifier for fit and prediction.
+- `X::DataFrame`: Features matrix.
+- `y::DataFrame`: Labels vector.
+- `nSplits::Int64`: Cross-validation n folds.
+- `scoreSampleWeights::Union{Vector, Nothing}`: Sample weights for score step.
+- `trainSampleWeights::Union{Vector, Nothing}`: Sample weights for train step.
+- `scoring::String`: Classification prediction and true values scoring type.
+
+Returns:
+- `DataFrame`: DataFrame containing feature importances with their mean and standard deviation.
 """
-function featureImportanceSFI(
+function featureImportanceSingleFeature(
     classifier,
     X::DataFrame,
     y::DataFrame,
@@ -38,41 +37,40 @@ function featureImportanceSFI(
     scoring::String="log_loss"
 )::DataFrame
 
-    trainSampleWeights = isnothing(trainSampleWeights) ? ones(size(X)[1]) : trainSampleWeights
-    scoreSampleWeights = isnothing(scoreSampleWeights) ? ones(size(X)[1]) : scoreSampleWeights
+    trainSampleWeights = isnothing(trainSampleWeights) ? ones(nrow(X)) : trainSampleWeights
+    scoreSampleWeights = isnothing(scoreSampleWeights) ? ones(nrow(X)) : scoreSampleWeights
 
     cvGenerator = ModelSelection.KFold(n_splits=nSplits)
 
     featureNames = names(X)
-    importances = DataFrame([name => [] for name in ["FeatureName", "Mean", "StandardDeviation"]])
+    importances = DataFrame(FeatureName=String[], Mean=Float64[], StandardDeviation=Float64[])
+    
     for featureName in featureNames
-        
         scores = []
-        for (i, (train, test)) in enumerate(cvGenerator.split(X |> Matrix))
-    
-            train .+= 1 # Python indexing starts at 0
-            test .+= 1 # Python indexing starts at 0
-    
-            X0, y0, sampleWeights0 = X[train, [featureName]], y[train, :], trainSampleWeights[train]
-            X1, y1, sampleWeights1 = X[test, [featureName]], y[test, :], scoreSampleWeights[test]
+        for (trainIndices, testIndices) in cvGenerator.split(Matrix(X))
+            # Adjusting for 1-based Julia indexing
+            trainIndices .+= 1
+            testIndices .+= 1
+
+            XTrainSubset, yTrainSubset, trainWeightsSubset = X[trainIndices, [featureName]], y[trainIndices, :], trainSampleWeights[trainIndices]
+            XTestSubset, yTestSubset, scoreWeightsSubset = X[testIndices, [featureName]], y[testIndices, :], scoreSampleWeights[testIndices]
             
-            fit = classifier.fit(X0 |> Matrix, y0 |> Matrix |> vec, sample_weight=sampleWeights0)
+            fit = classifier.fit(Matrix(XTrainSubset), vec(Matrix(yTrainSubset)), sample_weight=trainWeightsSubset)
 
             if scoring == "log_loss"
-                predictionProbability = fit.predict_proba(X1 |> Matrix)
-                score_ = -Metrics.log_loss(y1 |> Matrix, predictionProbability, sample_weight=sampleWeights1, labels=classifier.classes_)        
-            
+                predictionProbability = fit.predict_proba(Matrix(XTestSubset))
+                score = -Metrics.log_loss(Matrix(yTestSubset), predictionProbability, sample_weight=scoreWeightsSubset, labels=classifier.classes_)        
             elseif scoring == "accuracy"
-                prediction = fit.predict(X1 |> Matrix)
-                score_ = Metrics.accuracy_score(y1 |> Matrix, prediction, sample_weight=sampleWeights1)
-            
+                prediction = fit.predict(Matrix(XTestSubset))
+                score = Metrics.accuracy_score(Matrix(yTestSubset), prediction, sample_weight=scoreWeightsSubset)
             else
-                throw("'$scoring' method not defined.")
+                throw(ArgumentError("The scoring method '$scoring' is not defined."))
             end
-            append!(scores, score_)
+            
+            push!(scores, score)
         end
 
-        push!(importances, [featureName, mean(scores), std(scores) * size(scores)[1] ^ -0.5])        
+        push!(importances, (FeatureName=featureName, Mean=mean(scores), StandardDeviation=std(scores) / sqrt(length(scores))))        
     end
 
     return importances
