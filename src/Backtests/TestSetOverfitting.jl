@@ -3,17 +3,27 @@ using Statistics
 using Random
 using DataFrames
 
-
 """
-Function to validate the False Strategy Theorem experimentally.
+    expectedMaxSharpeRatio(
+        nTrials::Int,
+        meanSharpeRatio::Float64,
+        stdSharpeRatio::Float64
+    )::Float64
 
-:param nTrials: Number of trials.
-:param meanSharpeRatio: Mean Sharpe Ratio.
-:param stdSharpeRatio: Standard deviation of Sharpe ratios.
-:return: Expected maximum Sharpe ratio.
+Validate the False Strategy Theorem experimentally.
+
+# Arguments
+- `nTrials::Int`: Number of trials.
+- `meanSharpeRatio::Float64`: Mean Sharpe Ratio.
+- `stdSharpeRatio::Float64`: Standard deviation of Sharpe ratios.
+
+# Returns
+- `Float64`: Expected maximum Sharpe ratio.
 """
 function expectedMaxSharpeRatio(
-    nTrials, meanSharpeRatio, stdSharpeRatio
+    nTrials::Int,
+    meanSharpeRatio::Float64,
+    stdSharpeRatio::Float64
 )::Float64
     emc = MathConstants.eulergamma
 
@@ -25,91 +35,147 @@ function expectedMaxSharpeRatio(
 end
 
 """
-Function to generate maximum Sharpe ratio.
+    generateMaxSharpeRatio(
+        nSims::Int,
+        nTrials::Vector{Int},
+        stdSharpeRatio::Float64,
+        meanSharpeRatio::Float64
+    )::DataFrame
 
-:param nSims: Number of simulations.
-:param nTrials: Number of trials.
-:param stdSharpeRatio: Standard deviation of Sharpe Ratios.
-:param meanSharpeRatio: Mean Sharpe Ratio.
-:return: DataFrame containing generated maximum Sharpe ratios.
+Generate maximum Sharpe ratio.
+
+# Arguments
+- `nSims::Int`: Number of simulations.
+- `nTrials::Vector{Int}`: Number of trials.
+- `stdSharpeRatio::Float64`: Standard deviation of Sharpe Ratios.
+- `meanSharpeRatio::Float64`: Mean Sharpe Ratio.
+
+# Returns
+- `DataFrame`: Contains generated maximum Sharpe ratios.
 """
-function generatedMaxSharpeRatio(
-    nSims, nTrials, stdSharpeRatio, meanSharpeRatio
+function generateMaxSharpeRatio(
+    nSims::Int,
+    nTrials::Vector{Int},
+    stdSharpeRatio::Float64,
+    meanSharpeRatio::Float64
 )::DataFrame
     out = DataFrame()
 
-    for nTrials_ in nTrials
-        sharpeRatio = randn((Int64(nSims), Int64(nTrials_)))
+    for trials in nTrials
+        sharpeRatio = randn(nSims, trials)
         sharpeRatio = (sharpeRatio .- mean(sharpeRatio, dims = 2)) ./ std(sharpeRatio, dims = 2)
         sharpeRatio = meanSharpeRatio .+ sharpeRatio .* stdSharpeRatio
 
-        output = DataFrame(maxSharpeRatio = vec(maximum(sharpeRatio, dims = 2)), nTrials = nTrials_)
+        output = DataFrame(maxSharpeRatio = vec(maximum(sharpeRatio, dims = 2)), nTrials = trials)
         append!(out, output)
     end
     return out
 end
 
 """
-Function to calculate mean and standard deviation of the predicted errors.
+    meanStdError(
+        numSimulations0::Int,
+        numSimulations1::Int,
+        numTrials::Vector{Int},
+        stdSharpeRatio::Float64,
+        meanSharpeRatio::Float64
+    )::DataFrame
 
-:param nSims0: Number of max{SR} used to estimate E[max{SR}].
-:param nSims1: Number of errors on which std is computed.
-:param nTrials: Array of numbers of SR used to derive max{SR}.
-:param stdSharpeRatio: Standard deviation of Sharpe Ratios.
-:param meanSharpeRatio: Mean Sharpe Ratio.
-:return: DataFrame containing mean and standard deviation of errors.
+Calculate the mean and standard deviation of the predicted errors.
+
+Parameters
+----------
+- `numSimulations0`: Number of max{SR} used to estimate E[max{SR}].
+- `numSimulations1`: Number of errors on which std is computed.
+- `numTrials`: Array of numbers of SR used to derive max{SR}.
+- `stdSharpeRatio`: Standard deviation of Sharpe Ratios.
+- `meanSharpeRatio`: Mean Sharpe Ratio.
+
+Returns
+-------
+- DataFrame containing mean and standard deviation of errors.
 """
 function meanStdError(
-    nSims0, nSims1, nTrials, stdSharpeRatio, meanSharpeRatio
+    numSimulations0::Int,
+    numSimulations1::Int,
+    numTrials::Vector{Int},
+    stdSharpeRatio::Float64,
+    meanSharpeRatio::Float64
 )::DataFrame
-    sharpeRatio0 = DataFrame(nT = nTrials,
-        ExpectedMaxSR = [expectedMaxSharpeRatio(i, meanSharpeRatio, stdSharpeRatio) for i in nTrials])
-    error = DataFrame()
-    out = DataFrame()
+    sharpeRatio0 = DataFrame(
+        nT = numTrials,
+        ExpectedMaxSR = [expectedMaxSharpeRatio(i, meanSharpeRatio, stdSharpeRatio) for i in numTrials]
+    )
+    errors = DataFrame()
+    output = DataFrame()
 
-    for i in 1:nSims1
-        sharpeRatio1 = generatedMaxSharpeRatio(nSims0, nTrials, stdSharpeRatio, meanSharpeRatio)
+    for i in 1:numSimulations1
+        sharpeRatio1 = generatedMaxSharpeRatio(numSimulations0, numTrials, stdSharpeRatio, meanSharpeRatio)
         sharpeRatio1 = combine(groupby(sharpeRatio1, :nTrials), :maxSharpeRatio => mean; renamecols=false)
-        error_ = DataFrame(sharpeRatio1)
+        error = DataFrame(sharpeRatio1)
 
-        error_[!, :ExpectedMaxSR] = sharpeRatio0.ExpectedMaxSR
-        error_[!, :err] = error_.maxSharpeRatio ./ error_.ExpectedMaxSR .- 1
-        append!(error, error_)
-    end    
-    out[!, :meanErr] = combine(groupby(error, :nTrials), :err => mean; renamecols=false).err
-    out[!, :nTrials] = combine(groupby(error, :nTrials), :err => mean; renamecols=false).nTrials
-    out[!, :stdErr] = combine(groupby(error, :nTrials), :err => std; renamecols=false).err
+        error[!, :ExpectedMaxSR] = sharpeRatio0.ExpectedMaxSR
+        error[!, :err] = error.maxSharpeRatio ./ error.ExpectedMaxSR .- 1
+        append!(errors, error)
+    end
+    output[!, :meanErr] = combine(groupby(errors, :nTrials), :err => mean; renamecols=false).err
+    output[!, :nTrials] = combine(groupby(errors, :nTrials), :err => mean; renamecols=false).nTrials
+    output[!, :stdErr] = combine(groupby(errors, :nTrials), :err => std; renamecols=false).err
 
-    return out
+    return output
 end
 
 """
-Function to calculate type I error probability of strategies.
+    estimatedSharpeRatioZStatistics(
+        sharpeRatio::Float64,
+        t::Int,
+        sharpeRatio_::Float64 = 0,
+        skew::Float64 = 0,
+        kurt::Float64 = 3
+    )::Float64
 
-:param sharpeRatio: Estimated Sharpe Ratio.
-:param t: Number of observations.
-:param sharpeRatio_: True Sharpe Ratio.
-:param skew: Skewness of returns.
-:param kurt: Kurtosis of returns.
-:return: Estimated Z-statistics for the Sharpe Ratios.
+Calculate the estimated Z-statistics for the Sharpe Ratios.
+
+Parameters
+----------
+- `sharpeRatio`: Estimated Sharpe Ratio.
+- `t`: Number of observations.
+- `sharpeRatio_`: True Sharpe Ratio.
+- `skew`: Skewness of returns.
+- `kurt`: Kurtosis of returns.
+
+Returns
+-------
+- Estimated Z-statistics for the Sharpe Ratios.
 """
 function estimatedSharpeRatioZStatistics(
-    sharpeRatio, t, sharpeRatio_ = 0, skew = 0, kurt = 3
+    sharpeRatio::Float64,
+    t::Int,
+    sharpeRatio_::Float64 = 0,
+    skew::Float64 = 0,
+    kurt::Float64 = 3
 )::Float64
-    z = (sharpeRatio - sharpeRatio_) * (t - 1)^0.5
-    z /= (1 - skew * sharpeRatio + (kurt - 1) / 4 * sharpeRatio^2)^0.5
+    z = (sharpeRatio - sharpeRatio_) * sqrt(t - 1)
+    z /= sqrt(1 - skew * sharpeRatio + (kurt - 1) / 4 * sharpeRatio^2)
 
     return z
 end
 
 """
-Function to calculate strategy type I error probability.
+    strategyType1ErrorProbability(z::Float64, k::Int = 1)
 
-:param z: Z statistic for the estimated Sharpe Ratios.
-:param k: Number of tests.
-:return: Type I error probability.
+Calculate the type I error probability of strategies.
+
+Parameters
+----------
+- `z`: Z statistic for the estimated Sharpe Ratios.
+- `k`: Number of tests.
+
+Returns
+-------
+- Type I error probability.
 """
-function strategyType1ErrorProbability(z, k = 1)
+function strategyType1ErrorProbability(z::Float64, k::Int = 1)
     α = cdf(Normal(0, 1), -z)
     α_k = 1 - (1 - α)^k
 
@@ -117,32 +183,57 @@ function strategyType1ErrorProbability(z, k = 1)
 end
 
 """
-Function to calculate theta for type II error probability.
+    thetaForType2Error(
+        sharpeRatio::Float64,
+        t::Int,
+        sharpeRatio_::Float64 = 0,
+        skew::Float64 = 0,
+        kurt::Float64 = 3
+    )
 
-:param sharpeRatio: Estimated Sharpe Ratio.
-:param t: Number of observations.
-:param sharpeRatio_: True Sharpe Ratio.
-:param skew: Skewness of returns.
-:param kurt: Kurtosis of returns.
-:return: Calculated theta parameter.
+Calculate the theta parameter for type II error probability.
+
+Parameters
+----------
+- `sharpeRatio`: Estimated Sharpe Ratio.
+- `t`: Number of observations.
+- `sharpeRatio_`: True Sharpe Ratio.
+- `skew`: Skewness of returns.
+- `kurt`: Kurtosis of returns.
+
+Returns
+-------
+- Calculated theta parameter.
 """
-function thetaForType2Error(sharpeRatio, t, sharpeRatio_ = 0, skew = 0, kurt = 3)
-    θ = sharpeRatio_ * (t - 1)^0.5
-    θ /= (1 - skew * sharpeRatio + (kurt - 1) / 4 * sharpeRatio^2)^0.5
+function thetaForType2Error(
+    sharpeRatio::Float64,
+    t::Int,
+    sharpeRatio_::Float64 = 0,
+    skew::Float64 = 0,
+    kurt::Float64 = 3
+)
+    θ = sharpeRatio_ * sqrt(t - 1)
+    θ /= sqrt(1 - skew * sharpeRatio + (kurt - 1) / 4 * sharpeRatio^2)
 
     return θ
 end
 
-
 """
-Function to calculate strategy type II error probability.
+    strategyType2ErrorProbability(α::Float64, k::Int, θ::Float64)
 
-:param α: Type I error.
-:param k: Number of tests.
-:param θ: Calculated theta parameter.
-:return: Type II error probability.
+Calculate the strategy type II error probability.
+
+Parameters
+----------
+- `α`: Type I error.
+- `k`: Number of tests.
+- `θ`: Calculated theta parameter.
+
+Returns
+-------
+- Type II error probability.
 """
-function strategyType2ErrorProbability(α, k, θ)
+function strategyType2ErrorProbability(α::Float64, k::Int, θ::Float64)
     z = quantile(Normal(0, 1), (1 - α)^(1 / k))
     β = cdf(Normal(0, 1), z - θ)
 

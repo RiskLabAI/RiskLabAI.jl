@@ -6,22 +6,33 @@ using LinearAlgebra
 using PlotlyJS
 
 """
-Function to perform backtesting with synthetic data.
+    syntheticBacktesting(
+        forecast::Float64,
+        halfLife::Float64,
+        σ::Float64;
+        maximumIteration::Int = 1e3,
+        maximumHoldingPeriod::Int = 100,
+        profitTakingRange::LinRange = LinRange(0.5, 10, 20),
+        stopLossRange::LinRange = LinRange(0.5, 10, 20),
+        seed::Float64 = 0.0
+    ) -> Array{Float64, 2}
+
+Perform backtesting with synthetic data.
 
 This function implements the methodology from De Prado's book "Advances in Financial Machine Learning" (p.175 snippet 13.1).
 
-Args:
-    forecast::Float64: Long run price.
-    halfLife::Float64: Half life of the model.
-    σ::Float64: Standard deviation used in the model.
-    maximumIteration::Int: Maximum number of iterations.
-    maximumHoldingPeriod::Int: Maximum holding period.
-    profitTakingRange::LinRange: Profit taking range.
-    stopLossRange::LinRange: Stop loss range.
-    seed::Float64: Starting price.
+# Arguments
+- `forecast::Float64`: Long run price.
+- `halfLife::Float64`: Half life of the model.
+- `σ::Float64`: Standard deviation used in the model.
+- `maximumIteration::Int`: Maximum number of iterations.
+- `maximumHoldingPeriod::Int`: Maximum holding period.
+- `profitTakingRange::LinRange`: Profit taking range.
+- `stopLossRange::LinRange`: Stop loss range.
+- `seed::Float64`: Starting price.
 
-Returns:
-    Array{Float64, 2}: Resulting Sharpe ratio values.
+# Returns
+- `Array{Float64, 2}`: Resulting Sharpe ratio values.
 """
 function syntheticBacktesting(
     forecast::Float64,
@@ -32,7 +43,7 @@ function syntheticBacktesting(
     profitTakingRange::LinRange = LinRange(0.5, 10, 20),
     stopLossRange::LinRange = LinRange(0.5, 10, 20),
     seed::Float64 = 0.0
-)
+) -> Array{Float64, 2}
     ϕ = 2^(-1 / halfLife)
     output = zeros(Float64, length(profitTakingRange), length(stopLossRange))
     standardNormalDistribution = Normal()
@@ -61,17 +72,19 @@ function syntheticBacktesting(
 end
 
 """
-Function to fit an Ornstein-Uhlenbeck (O-U) process on data.
+    fitOuProcess(price::Vector{Float64}) -> Tuple{Float64, Float64, Float64}
+
+Fit an Ornstein-Uhlenbeck (O-U) process on data.
 
 This function implements the methodology from De Prado's book "Advances in Financial Machine Learning" (p.173).
 
-Args:
-    price::Vector{Float64}: Vector of stock prices.
+# Arguments
+- `price::Vector{Float64}`: Vector of stock prices.
 
-Returns:
-    Tuple{Float64, Float64, Float64}: Coefficients ρ, future, and σ of the fitted O-U process.
+# Returns
+- `Tuple{Float64, Float64, Float64}`: Coefficients ρ, future, and σ of the fitted O-U process.
 """
-function fitOuProcess(price::Vector{Float64})
+function fitOuProcess(price::Vector{Float64}) -> Tuple{Float64, Float64, Float64}
     data = DataFrame(
         Y = price[2:end] .- price[1:end-1],
         X = price[1:end-1]
@@ -79,22 +92,30 @@ function fitOuProcess(price::Vector{Float64})
     ols = lm(@formula(Y ~ X), data)
     ρ = GLM.coef(ols)[2] + 1
     future = GLM.coef(ols)[1] / (1 - ρ)
-    σ = std(data[!,:Y] .- GLM.coef(ols)[1] .- GLM.coef(ols)[2] * data[!,:X])
+    σ = std(data[!, :Y] .- GLM.coef(ols)[1] .- GLM.coef(ols)[2] * data[!, :X])
     return ρ, future, σ
 end
 
 """
-Function to simulate an Ornstein-Uhlenbeck (O-U) process on data.
+    simulateOuProcess(
+        ρ::Float64,
+        future::Float64,
+        σ::Float64,
+        p0::Float64,
+        periodLength::Int
+    ) -> Vector{Float64}
 
-Args:
-    ρ::Float64: Coefficient related to half-life.
-    future::Float64: Long run price.
-    σ::Float64: Standard deviation of the model.
-    p0::Float64: Starting price.
-    periodLength::Int: Number of days to simulate.
+Simulate an Ornstein-Uhlenbeck (O-U) process on data.
 
-Returns:
-    Vector{Float64}: Simulated prices.
+# Arguments
+- `ρ::Float64`: Coefficient related to half-life.
+- `future::Float64`: Long run price.
+- `σ::Float64`: Standard deviation of the model.
+- `p0::Float64`: Starting price.
+- `periodLength::Int`: Number of days to simulate.
+
+# Returns
+- `Vector{Float64}`: Simulated prices.
 """
 function simulateOuProcess(
     ρ::Float64,
@@ -102,7 +123,7 @@ function simulateOuProcess(
     σ::Float64,
     p0::Float64,
     periodLength::Int
-)
+) -> Vector{Float64}
     price = Vector{Float64}(undef, periodLength)
     price[1] = p0
     standardNormalDistribution = Normal()
@@ -115,18 +136,27 @@ function simulateOuProcess(
 end
 
 """
-Function to perform backtesting with synthetic data for specific prices.
+    syntheticBacktesting(
+        price::Vector{Float64};
+        maximumIteration::Int = 1e5,
+        maximumHoldingPeriod::Int = 100,
+        profitTakingRange::LinRange = LinRange(0.5, 10, 20),
+        stopLossRange::LinRange = LinRange(0.5, 10, 20),
+        seed::Float64 = 0.0
+    ) -> Array{Float64, 2}
 
-Args:
-    price::Vector{Float64}: Vector of stock prices.
-    maximumIteration::Int: Maximum number of iterations.
-    maximumHoldingPeriod::Int: Maximum holding period.
-    profitTakingRange::LinRange: Profit taking range.
-    stopLossRange::LinRange: Stop loss range.
-    seed::Float64: Starting price.
+Perform backtesting with synthetic data for specific prices.
 
-Returns:
-    Array{Float64, 2}: Resulting Sharpe ratio values.
+# Arguments
+- `price::Vector{Float64}`: Vector of stock prices.
+- `maximumIteration::Int`: Maximum number of iterations.
+- `maximumHoldingPeriod::Int`: Maximum holding period.
+- `profitTakingRange::LinRange`: Profit taking range.
+- `stopLossRange::LinRange`: Stop loss range.
+- `seed::Float64`: Starting price.
+
+# Returns
+- `Array{Float64, 2}`: Resulting Sharpe ratio values.
 """
 function syntheticBacktesting(
     price::Vector{Float64};
@@ -135,7 +165,7 @@ function syntheticBacktesting(
     profitTakingRange::LinRange = LinRange(0.5, 10, 20),
     stopLossRange::LinRange = LinRange(0.5, 10, 20),
     seed::Float64 = 0.0
-)
+) -> Array{Float64, 2}
     ρ, future, σ = fitOuProcess(price)
     out = syntheticBacktesting(
         future, -1.0 / log2(ρ), σ;
