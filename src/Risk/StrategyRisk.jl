@@ -157,8 +157,6 @@ function calculateBetsPerYear(
     return frequency
 end
 
-using Random
-using Distributions
 
 """
     calculateStrategyRisk(
@@ -200,8 +198,6 @@ function calculateStrategyRisk(
     shuffle!(returns)
     return returns
 end
-using Distributions
-using Statistics
 
 """
     failureProbability(
@@ -235,10 +231,6 @@ function failureProbability(
     risk = cdf(Normal(p, p * (1 - p)), thresholdP)
     return risk
 end
-
-using Distributions
-using Random
-using Statistics
 
 """
     calculateStrategyRisk(

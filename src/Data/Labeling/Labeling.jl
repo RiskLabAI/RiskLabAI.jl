@@ -41,8 +41,6 @@ function symmetricCusumFilter(
     return timeEvents
 end
 
-using DataFrames
-
 """
     dailyVolatility(close::DataFrame, span::Int=100)::Tuple{DataFrame, DataFrame}
 
@@ -89,9 +87,6 @@ function dailyVolatility(
 
     return returnsDataframe, ewmaStdDataframe
 end
-
-using DataFrames
-using Dates
 
 """
     ewma(data::Vector{Float64}, windowLength::Int)::Tuple{Vector{Float64}, Vector{Float64}, Vector{Float64}}
@@ -278,8 +273,6 @@ function verticalBarrier(
 
     return timestampArray
 end
-
-using DataFrames, Dates
 
 """
     labelObservations(events, close)

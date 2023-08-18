@@ -30,10 +30,6 @@ function marcenkoPasturPdf(
     pdf = ratio ./ (2 * π * var * eigenValues) .* diffλ
     return DataFrame(index=eigenValues, values=pdf)
 end
-using LinearAlgebra
-using Distributions
-using KernelDensity
-using DataFrames
 
 """
     principalComponentAnalysis(matrix::AbstractMatrix{<:Real})
@@ -123,9 +119,6 @@ function generateCovarianceWithSignal(
     covarianceMatrix += Diagonal(rand(Uniform(), numberColumns))
     return covarianceMatrix
 end
-using LinearAlgebra
-using Distributions
-using KernelDensity
 
 """
     covarianceToCorrelation(cov::Matrix{Float64})::Matrix{Float64}
@@ -188,9 +181,6 @@ function fitMarcenkoPasturToCovarianceMatrix(
     sse = sum((pdf1.values .- pdf0.values).^2)
     return sse
 end
-
-using LinearAlgebra
-using Optim
 
 """
     findMaxEigenvalues(

@@ -12,6 +12,9 @@ using CSV
 using StatsBase
 using BlockDiagonals
 using PyCall
+using StatsBase
+using Random
+
 
 Metrics = pyimport("sklearn.metrics")
 
@@ -131,14 +134,6 @@ function mergeClusters(
     return correlationNew, clustersNew, silhNew
 end
 
-using Distributions
-using DataFrames
-using LinearAlgebra
-using Clustering
-using BlockDiagonals
-using StatsBase
-using Random
-using PyCall
 
 const Metrics = pyimport("sklearn.metrics")
 
@@ -308,10 +303,6 @@ function clusterKMeansTop(
         end
     end
 end
-
-using Random
-using LinearAlgebra
-using DataFrames
 
 """
     randomBlockCorrelation(

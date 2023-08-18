@@ -1,6 +1,7 @@
 using DataFrames
 using Plots
 using Statistics
+using HypothesisTests
 
 """
     calculateOhlcv(tickDataGrouped::GroupedDataFrame) -> DataFrame
@@ -125,8 +126,6 @@ function plotWeights(
     rename!(ω, names(ω)[2:end] .=> string.(range(degreeRange[1], degreeRange[2], length = nDegrees)))
     plot(ω[:, 1], Matrix(ω[:, 2:end]), label = reshape(names(ω)[2:end], (1, nDegrees)), background = :transparent)
 end
-
-using DataFrames, Statistics, HypothesisTests
 
 """
     fractionalDifferentiation(

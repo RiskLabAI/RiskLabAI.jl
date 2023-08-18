@@ -139,8 +139,6 @@ function failureProbability(
     
     return risk
 end
-using Distributions
-using Statistics
 
 """
     calculateStrategyRisk(
