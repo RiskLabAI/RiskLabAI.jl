@@ -1,4 +1,5 @@
 using DataFrames
+using StatsBase
 
 """
     concurrencyEvents(closeIndex::DataFrame, timestamp::DataFrame, molecule::Vector) -> DataFrame
@@ -119,8 +120,6 @@ function averageUniqueness(indexMatrix::Matrix{Float64})::Vector{Float64}
     return averageUniqueness_
 end
 
-using DataFrames
-using StatsBase
 
 """
     calculateConcurrency(events::DataFrame, molecule::Vector{Date})::DataFrame

@@ -5,80 +5,137 @@ using MLJ
 using MLDataUtils
 
 """
-Function to purge test observations in the training set.
+.. function:: purgeTrainingTimes(data::TimeArray, test::TimeArray)::TimeArray
 
-Reference: De Prado, M. (2018) Advances in financial machine learning.
-Methodology: page 106, snippet 7.1
+    Remove test observations from the training set.
+
+    This function removes observations from the training data that fall within the time periods covered by the test data.
+
+    :param data: Time series data for training.
+    :type data: TimeArray
+    :param test: Time series data for testing.
+    :type test: TimeArray
+
+    :returns: Training data with test observations removed.
+    :rtype: TimeArray
+
+    **Reference:** De Prado, M. (2018) *Advances in Financial Machine Learning*. Methodology: page 106, snippet 7.1
 """
-function purgedTrainTimes(data::TimeArray, test::TimeArray)::TimeArray
-    trainTimes = deepcopy(data)
+function purgeTrainingTimes(
+    data::TimeArray,
+    test::TimeArray
+)::TimeArray
+
+    trainingTimes = deepcopy(data)
 
     for (startTime, endTime) in zip(timestamp(test), values(test)[:, 1])
-        startWithinTestTimes = timestamp(trainTimes)[(timestamp(trainTimes) .>= startTime) .* (timestamp(trainTimes) .<= endTime)]
-        endWithinTestTimes = timestamp(trainTimes)[(values(trainTimes)[:, 1] .>= startTime) .* (values(trainTimes)[:, 1] .<= endTime)]
-        envelopeTestTimes = timestamp(trainTimes)[(timestamp(trainTimes) .<= startTime) .* (values(trainTimes)[:, 1] .>= endTime)]
-        filteredTimes = setdiff(timestamp(trainTimes), union(startWithinTestTimes, endWithinTestTimes, envelopeTestTimes))
-        trainTimes = trainTimes[filteredTimes]
+        startWithinTestTimes = filter(t -> t >= startTime && t <= endTime, timestamp(trainingTimes))
+        endWithinTestTimes = filter(t -> values(trainingTimes)[findfirst(==(t), timestamp(trainingTimes)), 1] >= startTime && values(trainingTimes)[findfirst(==(t), timestamp(trainingTimes)), 1] <= endTime, timestamp(trainingTimes))
+        envelopeTestTimes = filter(t -> t <= startTime && values(trainingTimes)[findfirst(==(t), timestamp(trainingTimes)), 1] >= endTime, timestamp(trainingTimes))
+        filteredTimes = setdiff(timestamp(trainingTimes), union(startWithinTestTimes, endWithinTestTimes, envelopeTestTimes))
+        trainingTimes = trainingTimes[filteredTimes]
     end
 
-    return trainTimes
+    return trainingTimes
 end
 
 """
-Function to get embargo time for each bar.
+.. function:: getEmbargoTimes(times::Array{DateTime}, percentEmbargo::Float64)::TimeArray
 
-Reference: De Prado, M. (2018) Advances in financial machine learning.
-Methodology: page 108, snippet 7.2
+    Calculate the embargo time for each bar based on a given percentage.
+
+    This function calculates the embargo time for each bar by adding a certain percentage of the total bars as embargo time to each bar.
+
+    :param times: Array of bar times.
+    :type times: Array{DateTime}
+    :param percentEmbargo: Percentage of embargo.
+    :type percentEmbargo: Float64
+
+    :returns: Array of embargo times.
+    :rtype: TimeArray
+
+    **Reference:** De Prado, M. (2018) *Advances in Financial Machine Learning*. Methodology: page 108, snippet 7.2
+
+    .. math::
+
+        \text{step} = \text{round}\left(\text{length}(\text{times}) \times \text{percentEmbargo}\right)
 """
-function embargoTimes(times::Array, percentEmbargo::Float64)::TimeArray
+function getEmbargoTimes(
+        times::Array{DateTime},
+        percentEmbargo::Float64
+    )::TimeArray
+
     step = round(Int, length(times) * percentEmbargo)
 
     if step == 0
-        embargo = TimeArray((Times = times, timestamp = times), timestamp = :timestamp)
+        embargo = TimeArray((Times = times, Timestamp = times), timestamp = :Timestamp)
     else
-        embargo = TimeArray((Times = times[step + 1:end], timestamp = times[1:end - step]), timestamp = :timestamp)
-        tailTimes = TimeArray((Times = repeat([times[end]], step), timestamp = times[end - step + 1:end]), timestamp = :timestamp)
+        embargo = TimeArray((Times = times[step + 1:end], Timestamp = times[1:end - step]), timestamp = :Timestamp)
+        tailTimes = TimeArray((Times = repeat([times[end]], step), Timestamp = times[end - step + 1:end]), timestamp = :Timestamp)
         embargo = [embargo; tailTimes]
     end
 
     return embargo
 end
 
-"""
-Custom struct for cross validation with purging of overlapping observations.
 
-Reference: De Prado, M. (2018) Advances in financial machine learning.
-Methodology: page 109, snippet 7.3
+"""
+.. struct:: PurgedKFold
+
+    Custom struct for cross-validation with purging of overlapping observations.
+
+    **Reference:** De Prado, M. (2018) *Advances in Financial Machine Learning*. Methodology: page 109, snippet 7.3
 """
 mutable struct PurgedKFold
-    nSplits::Int64
-    times::TimeArray
-    percentEmbargo::Float64
+nSplits::Int64
+times::TimeArray
+percentEmbargo::Float64
 
-    function PurgedKFold(nSplits::Int = 3, times::TimeArray = nothing, percentEmbargo::Float64 = 0.)
+    """
+    .. function:: PurgedKFold(nSplits::Int = 3, times::TimeArray = nothing, percentEmbargo::Float64 = 0.0)
+
+        Create a new PurgedKFold instance.
+
+        :param nSplits: Number of splits.
+        :type nSplits: Int
+        :param times: TimeArray of data times.
+        :type times: TimeArray
+        :param percentEmbargo: Percentage of embargo.
+        :type percentEmbargo: Float64
+
+        :returns: A new PurgedKFold instance.
+        :rtype: PurgedKFold
+    """
+    function PurgedKFold(
+        nSplits::Int = 3,
+        times::TimeArray = nothing,
+        percentEmbargo::Float64 = 0.0
+    )
+    
         times isa TimeArray ? new(nSplits, times, percentEmbargo) : error("The times parameter should be a TimeArray.")
     end
 end
 
 """
-Function to split data when observations overlap.
+.. function:: purgedKFoldSplit(self::PurgedKFold, data::TimeArray)
 
-Reference: De Prado, M. (2018) Advances in financial machine learning.
-Methodology: page 109, snippet 7.3
+    Split data when observations overlap with purging.
+
+    **Reference:** De Prado, M. (2018) *Advances in Financial Machine Learning*. Methodology: page 109, snippet 7.3
 """
 function purgedKFoldSplit(
-        self::PurgedKFold,
-        data::TimeArray
-    )
+    self::PurgedKFold,
+    data::TimeArray
+)::Tuple{Vector{Vector{Int64}}, Vector{Vector{Int64}}}
 
     if timestamp(data) != timestamp(self.times)
-        error("data and ThruDateValues must have the same index.")
+        error("data and times must have the same index.")
     end
 
     indices = collect(1:length(data))
     embargo = round(Int64, length(data) * self.percentEmbargo)
-    finalTest = []
-    finalTrain = []
+    finalTest = Vector{Vector{Int64}}()
+    finalTrain = Vector{Vector{Int64}}()
 
     testRanges = [(i[1], i[end]) for i in [kfolds(collect(1:length(self.times)), k = self.nSplits)[i][2] for i in collect(1:self.nSplits)]]
 
@@ -93,32 +150,63 @@ function purgedKFoldSplit(
             append!(trainIndices, indices[maxTestIndex + embargo:end])
         end
 
-        append!(finalTest, [Int64.(testIndices)])
-        append!(finalTrain, [Int64.(trainIndices)])
+        push!(finalTest, Int64.(testIndices))
+        push!(finalTrain, Int64.(trainIndices))
     end
 
-    return Tuple(zip(finalTrain, finalTest))
+    return (finalTrain, finalTest)
 end
 
 """
-Function to calculate cross-validation scores with purging.
-
-Reference: De Prado, M. (2018) Advances in financial machine learning.
-Methodology: page 110, snippet 7.4
-"""
-function crossValidationScore(
+.. function:: crossValidationScore(
         classifier,
         data::TimeArray,
         labels::TimeArray,
-        sampleWeights::Array,
-        scoring::String = "Log Loss",
+        sampleWeights::Vector{Float64},
+        scoring::String = "LogLoss",
         times::TimeArray = nothing,
         crossValidationGenerator::PurgedKFold = nothing,
         nSplits::Int = nothing,
-        percentEmbargo::Float64 = 0.0
-    )
+        percentEmbargo::Float64 = 0.0)
+
+    Function to calculate cross-validation scores with purging.
+
+    **Reference:** De Prado, M. (2018) *Advances in Financial Machine Learning*. Methodology: page 110, snippet 7.4
+
+    :param classifier: The classifier model.
+    :param data: The TimeArray with the data.
+    :type data: TimeArray
+    :param labels: The TimeArray with the labels.
+    :type labels: TimeArray
+    :param sampleWeights: The sample weights.
+    :type sampleWeights: Vector{Float64}
+    :param scoring: The scoring method. Options are "LogLoss" or "Accuracy".
+    :type scoring: String
+    :param times: The TimeArray with the times. If not provided, it will be created from the data.
+    :type times: TimeArray
+    :param crossValidationGenerator: The cross-validation generator. If not provided, a default PurgedKFold will be created.
+    :type crossValidationGenerator: PurgedKFold
+    :param nSplits: The number of splits for the cross-validation generator.
+    :type nSplits: Int
+    :param percentEmbargo: The percentage of embargo.
+    :type percentEmbargo: Float64
+
+    :returns: The cross-validation scores.
+    :rtype: Vector{Float64}
+"""
+function crossValidationScore(
+    classifier,
+    data::TimeArray,
+    labels::TimeArray,
+    sampleWeights::Vector{Float64},
+    scoring::String = "LogLoss",
+    times::TimeArray = nothing,
+    crossValidationGenerator::PurgedKFold = nothing,
+    nSplits::Int = nothing,
+    percentEmbargo::Float64 = 0.0
+)::Vector{Float64}
     
-    if scoring ∉ ["Log Loss", "Accuracy"]
+    if scoring ∉ ["LogLoss", "Accuracy"]
         error("Wrong scoring method.")
     end
 
@@ -145,21 +233,21 @@ function crossValidationScore(
     end
     labels, data = unpack(sample, ==(name), colname -> true)
 
-    machine = MLJ.MLJBase.machine(classifier, data, labels)
-    scores = []
+    machine = machine(classifier, data, labels)
+    scores = Vector{Float64}()
 
     for (train, test) in purgedKFoldSplit(crossValidationGenerator, times)
         fit!(machine, rows = train)
 
-        if scoring == "Log Loss"
-            predictions = MLJ.MLJBase.predict(machine, data[test, :])
-            score = log_loss(predictions, labels[test]) |> mean
+        if scoring == "LogLoss"
+            predictions = predict(machine, data[test, :])
+            score = mean(log_loss(predictions, labels[test]))
         else
-            predictions = MLJ.MLJBase.predict_mode(machine, data[test, :])
-            score = accuracy(predictions, labels[test], sampleWeights[test]) |> mean
+            predictions = predict_mode(machine, data[test, :])
+            score = mean(accuracy(predictions, labels[test], sampleWeights[test]))
         end
 
-        append!(scores, [score])
+        push!(scores, score)
     end
 
     return scores

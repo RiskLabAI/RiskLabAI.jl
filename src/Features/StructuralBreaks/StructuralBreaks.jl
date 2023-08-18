@@ -1,6 +1,8 @@
 using LinearAlgebra
 using Statistics
 using DataFrames
+using Dates
+
 
 """
     computeBeta(X::Matrix, y::Vector)::Tuple{Vector, Matrix}
@@ -167,9 +169,6 @@ function adfTestType(
     return adfStatistics
 end
 
-using DataFrames
-using LinearAlgebra
-using Statistics
 
 """
     brownDurbinEvansTest(
@@ -272,11 +271,6 @@ function chuStinchcombeWhiteTest(
     cswTest = DataFrame(index = interval, S_n = cswStats, threshold = cswThreshold)
     return cswTest
 end
-
-
-using DataFrames
-using Statistics
-using Dates
 
 """
     chowTypeDickeyFullerTestInnerLoop(

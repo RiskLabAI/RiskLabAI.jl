@@ -82,9 +82,6 @@ function holdingPeriod(targetPositions::TimeArray)::Tuple{TimeArray, Float64}
     return (TimeArray(holdPeriod; timestamp=:index), meanHold)
 end
 
-using TimeSeries
-using DataFrames
-using Dates
 
 """
     hhiConcentration(returns::TimeArray)::Tuple{Float64, Float64, Float64}

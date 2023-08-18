@@ -1,4 +1,4 @@
-using DataFrames, Statistics, LinearAlgebra, Random, Distributions
+using DataFrames, Statistics, LinearAlgebra, Random, Distributions, Clustering, Distances
 
 """
     recursiveBisection(cov::Matrix, sortedItems::Vector{Int})
@@ -143,7 +143,6 @@ function generateRandomData(
 
     return data, columns
 end
-using LinearAlgebra, Statistics, DataFrames, Clustering, Distributions, Distances
 
 """
     hierarchicalRiskParity(cov::Matrix, corr::Matrix)
