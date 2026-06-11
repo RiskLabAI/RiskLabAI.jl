@@ -15,7 +15,7 @@ Selects rows from a given partition.
 - `Vector{Int}`: Array of selected indexes.
 
 """
-function selectRows(partition::Vector{Int}, subMatrixSize::Int) -> Vector{Int}
+function selectRows(partition::Vector{Int}, subMatrixSize::Int)::Vector{Int}
     array = [((p - 1) * subMatrixSize + 1):(p * subMatrixSize) for p in partition]
     return vcat(array...)
 end
@@ -45,7 +45,7 @@ function probabilityOfBacktestOverfitting(
     nPartitions::Int,
     metric::Function;
     riskFreeReturn::Float64 = 0.0
-) -> Tuple{Float64, Vector{Float64}}
+)::Tuple{Float64, Vector{Float64}}
     if nPartitions % 2 == 1
         println("Number of partitions must be even")
         return

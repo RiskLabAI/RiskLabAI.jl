@@ -43,7 +43,7 @@ function syntheticBacktesting(
     profitTakingRange::LinRange = LinRange(0.5, 10, 20),
     stopLossRange::LinRange = LinRange(0.5, 10, 20),
     seed::Float64 = 0.0
-) -> Array{Float64, 2}
+)::Array{Float64, 2}
     ϕ = 2^(-1 / halfLife)
     output = zeros(Float64, length(profitTakingRange), length(stopLossRange))
     standardNormalDistribution = Normal()
@@ -84,7 +84,7 @@ This function implements the methodology from De Prado's book "Advances in Finan
 # Returns
 - `Tuple{Float64, Float64, Float64}`: Coefficients ρ, future, and σ of the fitted O-U process.
 """
-function fitOuProcess(price::Vector{Float64}) -> Tuple{Float64, Float64, Float64}
+function fitOuProcess(price::Vector{Float64})::Tuple{Float64, Float64, Float64}
     data = DataFrame(
         Y = price[2:end] .- price[1:end-1],
         X = price[1:end-1]
@@ -123,7 +123,7 @@ function simulateOuProcess(
     σ::Float64,
     p0::Float64,
     periodLength::Int
-) -> Vector{Float64}
+)::Vector{Float64}
     price = Vector{Float64}(undef, periodLength)
     price[1] = p0
     standardNormalDistribution = Normal()
@@ -165,7 +165,7 @@ function syntheticBacktesting(
     profitTakingRange::LinRange = LinRange(0.5, 10, 20),
     stopLossRange::LinRange = LinRange(0.5, 10, 20),
     seed::Float64 = 0.0
-) -> Array{Float64, 2}
+)::Array{Float64, 2}
     ρ, future, σ = fitOuProcess(price)
     out = syntheticBacktesting(
         future, -1.0 / log2(ρ), σ;
