@@ -1,32 +1,56 @@
-# [.github/workflows/CI.yml]
 name: CI
+
 on:
   push:
-    branches:
-      - main
-    tags: '*'
+    branches: [main]
+    tags: ["*"]
   pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
-    name: Julia ${{ matrix.version }} - ${{ matrix.os }} - ${{ matrix.arch }}
+    name: Julia ${{ matrix.version }} - ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         version:
-          - '1.6'
+          - "1.10"   # supported floor (LTS)
+          - "1"      # latest stable
         os:
           - ubuntu-latest
           - macOS-latest
           - windows-latest
-        arch:
-          - x64
     steps:
-      - uses: actions/checkout@v1
-      - uses: julia-actions/setup-julia@latest
+      - uses: actions/checkout@v4
+      - uses: julia-actions/setup-julia@v2
         with:
           version: ${{ matrix.version }}
-          arch: ${{ matrix.arch }}
-      - uses: julia-actions/julia-runtest@latest
-      - uses: julia-actions/julia-uploadcodecov@latest
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - uses: julia-actions/cache@v2
+      - uses: julia-actions/julia-buildpkg@v1
+      - uses: julia-actions/julia-runtest@v1
+      - uses: julia-actions/julia-processcoverage@v1
+      - uses: codecov/codecov-action@v4
+        continue-on-error: true
+        with:
+          files: lcov.info
+
+  format:
+    name: JuliaFormatter (advisory until format pass lands)
+    runs-on: ubuntu-latest
+    # Non-blocking until the mechanical JuliaFormatter commit lands;
+    # then remove continue-on-error to make style CI-enforced.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: "1"
+      - run: |
+          julia -e 'using Pkg; Pkg.add("JuliaFormatter")
+                    using JuliaFormatter
+                    format("src"; verbose=true) || exit(0)'
+          git diff --exit-code
