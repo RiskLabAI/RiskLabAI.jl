@@ -54,6 +54,6 @@ end
 
 # Helper function to calculate the number of combinatorial backtest paths.
 # Assuming this function is already defined or will be defined in your code.
-function backtestPathsNumber(nSplits::Int, nTestSplits::Int) -> Int
+function backtestPathsNumber(nSplits::Int, nTestSplits::Int)::Int
     return binomial(nSplits, nTestSplits)
 end

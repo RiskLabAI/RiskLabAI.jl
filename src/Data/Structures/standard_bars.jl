@@ -1,92 +1,68 @@
-using DataFrames
+# Standard (threshold) bars: sample a bar when cumulative dollar / volume /
+# ticks reaches a fixed threshold. Mirrors RiskLabAI.py
+# `data/structures/standard_bars.py`. `using` is centralized in `Data`.
 
 @field_inherit StandardBars{T<:Metric} StandardBarsType{T} AbstractBars begin
-    threshold::Float64 # threshold to sample
+    threshold::Float64  # threshold at which to sample a bar
 end
 
+"""
+    StandardBars{T}(; bar_type::String, threshold::Float64) where {T<:Metric}
+
+Construct standard bars. `T` selects the sampling metric (`Dollar`, `Volume`,
+or `Tick`); `threshold` is the sampling threshold.
+"""
 function StandardBars{T}(;
-    barType::String,
-    threshold::Float64
+    bar_type::String,
+    threshold::Float64,
 ) where {T<:Metric}
-    """
-    StandardBars constructor function
-    :param barType: type of bar. e.g. dollar_standard_bars, tick_standard_bars etc.
-    :param threshold: threshold that used to sampling process
-    """
-
-    abstractBars = AbstractBars(
-        barType,
-    )
-
-    return StandardBars{T}(
-        values(abstractBars)...,
-        threshold,
-    )
+    base = AbstractBars(bar_type)
+    return StandardBars{T}(values(base)..., threshold)
 end
 
-function constructBarsFromData(
-    standardBars::StandardBars{T};
-    data
-)::Vector{Vector{Union{Int,Float64,DateTime}}} where {T<:Metric}
-    """
-    The function is used to construct bars from input ticks data.
-    :param data: tabular data that contains date_time, price, and volume columns
-    :return: constructed bars
-    """
-    barsList = Vector[]
+"""
+Construct standard bars from tick data. `data` is iterated row-by-row; each row
+provides `(date_time, price, volume)`.
+"""
+function construct_bars_from_data(standard_bars::StandardBars{T}; data) where {T<:Metric}
+    bars_list = Vector{Union{DateTime,Int,Float64}}[]
 
-    tickCounter = standardBars.tickCounter
-    for row ∈ eachrow(data)
-        tickCounter += 1
-        (dateTime, price, volume) = row
+    tick_counter = standard_bars.tick_counter
+    for row in eachrow(data)
+        tick_counter += 1
+        (date_time, price, volume) = row
 
-        signedTick = tickRule(standardBars, price)
-        updateBaseFields(standardBars, price, signedTick, volume)
+        signed_tick = tick_rule(standard_bars, Float64(price))
+        update_base_fields(standard_bars, Float64(price), signed_tick, Float64(volume))
 
-        # If threshold reached then take a sample
-        threshold = standardBars.threshold
-        isConstructionConditionMet = barConstructionCondition(standardBars, threshold)
-        if isConstructionConditionMet
-            nextBar = constructNextBar(
-                standardBars,
-                dateTime,
-                tickCounter,
-                price,
-                standardBars.highPrice,
-                standardBars.lowPrice,
-                threshold
+        threshold = standard_bars.threshold
+        if bar_construction_condition(standard_bars, threshold)
+            next_bar = construct_next_bar(
+                standard_bars,
+                date_time,
+                tick_counter,
+                Float64(price),
+                standard_bars.high_price,
+                standard_bars.low_price,
+                threshold,
             )
-
-            push!(barsList, nextBar)
-
-            # reset bars properties
-            resetCachedFields(standardBars)
+            push!(bars_list, next_bar)
+            reset_cached_fields(standard_bars)
         end
     end
 
-    return barsList
+    return bars_list
 end
 
-function barConstructionCondition(standardBars::StandardBars{Dollar}, threshold::Float64)::Bool
-    """
-    Compute the condition of whether next bar should sample with current and previous tick datas or not.
-    :return: whether next bar should form with current and previous tick datas or not.
-    """
-    return standardBars.cumulativeDollar ≥ threshold
+# Sampling condition, dispatched on the metric type.
+function bar_construction_condition(standard_bars::StandardBars{Dollar}, threshold::Float64)::Bool
+    return standard_bars.cumulative_dollar ≥ threshold
 end
 
-function barConstructionCondition(standardBars::StandardBars{Volume}, threshold::Float64)::Bool
-    """
-    Compute the condition of whether next bar should sample with current and previous tick datas or not.
-    :return: whether next bar should form with current and previous tick datas or not.
-    """
-    return standardBars.cumulativeVolume ≥ threshold
+function bar_construction_condition(standard_bars::StandardBars{Volume}, threshold::Float64)::Bool
+    return standard_bars.cumulative_volume ≥ threshold
 end
 
-function barConstructionCondition(standardBars::StandardBars{Tick}, threshold::Float64)::Bool
-    """
-    Compute the condition of whether next bar should sample with current and previous tick datas or not.
-    :return: whether next bar should form with current and previous tick datas or not.
-    """
-    return standardBars.cumulativeTicks ≥ threshold
+function bar_construction_condition(standard_bars::StandardBars{Tick}, threshold::Float64)::Bool
+    return standard_bars.cumulative_ticks ≥ threshold
 end

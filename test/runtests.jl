@@ -1,2 +1,186 @@
-using Test 
-@test true 
+using Test
+using Dates
+using DataFrames
+using RiskLabAI
+
+@testset "RiskLabAI smoke tests" begin
+    # The package loads and the exported symbols actually exist
+    # (the old exports referenced undefined, wrongly-cased names).
+    @test isdefined(RiskLabAI, :probabilityOfBacktestOverfitting)
+    @test isdefined(RiskLabAI, :generateSignal)
+
+    # discreteSignal: rounds to step size and caps at +/- 1
+    s = RiskLabAI.discreteSignal([0.26, 0.94, -1.4], 0.1)
+    @test s ≈ [0.3, 0.9, -1.0]
+
+    # selectRows: contiguous row blocks for the chosen partitions
+    @test RiskLabAI.selectRows([1, 3], 2) == [1, 2, 5, 6]
+end
+
+@testset "Utils" begin
+    # ewma matches the Python RiskLabAI.utils.ewma exactly (same denominator
+    # 1 + (1-a) + (1-a)^2 + ...). Values computed from both implementations.
+    result = RiskLabAI.ewma([1.0, 2.0, 3.0, 4.0, 5.0], 3)
+    expected = [1.0, 1.6666666667, 2.4285714286, 3.2666666667, 4.1612903226]
+    @test result ≈ expected atol = 1e-9
+
+    # First element is always the seed value; output length matches input.
+    @test result[1] == 1.0
+    @test length(result) == 5
+
+    # Constants are defined, with ASCII identifiers.
+    @test RiskLabAI.Utils.CUMULATIVE_DOLLAR == "Cumulative Dollar Value"
+    @test isascii(string(:CUMULATIVE_THETA))
+
+    # The struct-field-inheritance macro is available.
+    @test isdefined(RiskLabAI.Utils, Symbol("@field_inherit"))
+end
+
+@testset "Data.Structures — standard bars (parity with Python)" begin
+    # Same fixture as the Python test_standard_bars.py.
+    # Bar row layout: [date_time, idx, open, high, low, close, volume,
+    #                  buy_vol, sell_vol, ticks, dollar, threshold]  (1-indexed)
+    ticks = DataFrame(
+        date_time = DateTime.([
+            "2020-01-01T10:00:00", "2020-01-01T10:00:01", "2020-01-01T10:00:02",
+            "2020-01-01T10:00:03", "2020-01-01T10:00:04", "2020-01-01T10:00:05",
+            "2020-01-01T10:00:06",
+        ]),
+        price = [100, 101, 100, 101, 102, 103, 102],
+        volume = [10, 5, 20, 10, 10, 10, 5],
+    )
+
+    # Tick bars, threshold 3
+    tb = RiskLabAI.Data.StandardBars{RiskLabAI.Data.Tick}(bar_type = "tick", threshold = 3.0)
+    bars = RiskLabAI.Data.construct_bars_from_data(tb; data = ticks)
+    @test length(bars) == 2
+    @test bars[1][1] == DateTime("2020-01-01T10:00:02")
+    @test bars[1][3] == 100.0   # open
+    @test bars[1][4] == 101.0   # high
+    @test bars[1][5] == 100.0   # low
+    @test bars[1][6] == 100.0   # close
+    @test bars[1][10] == 3.0    # ticks
+    @test bars[2][1] == DateTime("2020-01-01T10:00:05")
+    @test bars[2][3] == 101.0
+    @test bars[2][4] == 103.0
+    @test bars[2][5] == 101.0
+    @test bars[2][6] == 103.0
+    @test bars[2][10] == 3.0
+
+    # Volume bars, threshold 35
+    vb = RiskLabAI.Data.StandardBars{RiskLabAI.Data.Volume}(bar_type = "volume", threshold = 35.0)
+    vbars = RiskLabAI.Data.construct_bars_from_data(vb; data = ticks)
+    @test length(vbars) == 2
+    @test vbars[1][7] == 35.0
+    @test vbars[2][7] == 35.0
+
+    # Dollar bars, threshold 3500
+    db = RiskLabAI.Data.StandardBars{RiskLabAI.Data.Dollar}(bar_type = "dollar", threshold = 3500.0)
+    dbars = RiskLabAI.Data.construct_bars_from_data(db; data = ticks)
+    @test length(dbars) == 2
+    @test dbars[1][11] == 3505.0
+    @test dbars[2][11] == 3570.0
+end
+
+@testset "Data.Structures — time bars (parity with Python)" begin
+    # Same fixture as the Python test_time_bars.py (1-second bars).
+    ticks = DataFrame(
+        date_time = DateTime.([
+            "2020-01-01T10:00:00.100", "2020-01-01T10:00:00.500",
+            "2020-01-01T10:00:01.200", "2020-01-01T10:00:01.800",
+            "2020-01-01T10:00:02.100", "2020-01-01T10:00:02.500",
+        ]),
+        price = [100, 101, 100, 101, 102, 103],
+        volume = [10, 5, 20, 10, 10, 10],
+    )
+
+    tb = RiskLabAI.Data.TimeBars(resolution_type = "S", resolution_units = 1)
+    bars = RiskLabAI.Data.construct_bars_from_data(tb; data = ticks)
+
+    @test length(bars) == 2
+    @test bars[1][1] == DateTime("2020-01-01T10:00:01")  # end time = bucket boundary
+    @test bars[1][3] == 100.0   # open
+    @test bars[1][4] == 101.0   # high
+    @test bars[1][5] == 100.0   # low
+    @test bars[1][6] == 101.0   # close (previous tick)
+    @test bars[1][10] == 2.0    # ticks
+    @test bars[2][1] == DateTime("2020-01-01T10:00:02")
+    @test bars[2][3] == 100.0
+    @test bars[2][4] == 101.0
+    @test bars[2][5] == 100.0
+    @test bars[2][6] == 101.0
+    @test bars[2][10] == 2.0
+end
+
+@testset "Data.Structures — imbalance bars (parity with Python)" begin
+    # Same fixture as Python test_imbalance_bars.py.
+    # Prices 100..103..100 -> tick imbalances [0,1,1,1,-1,-1,-1].
+    ticks = DataFrame(
+        date_time = DateTime.([
+            "2020-01-01T10:00:00", "2020-01-01T10:00:01", "2020-01-01T10:00:02",
+            "2020-01-01T10:00:03", "2020-01-01T10:00:04", "2020-01-01T10:00:05",
+            "2020-01-01T10:00:06",
+        ]),
+        price = [100, 101, 102, 103, 102, 101, 100],
+        volume = [10, 10, 10, 10, 10, 10, 10],
+    )
+
+    # Fixed E[T] = 2  ->  2 bars with 3 and 4 ticks.
+    fb = RiskLabAI.Data.FixedImbalanceBars{RiskLabAI.Data.Tick}(
+        bar_type = "tick_imbalance",
+        expected_imbalance_window = 10,
+        initial_estimate_of_expected_n_ticks_in_bar = 2.0,
+    )
+    fbars = RiskLabAI.Data.construct_bars_from_data(fb; data = ticks)
+    @test length(fbars) == 2
+    @test fbars[1][10] == 3.0   # ticks in bar 1
+    @test fbars[2][10] == 4.0   # ticks in bar 2
+
+    # Expected E[T] (EWMA, init 2, window 10) -> 1 bar with 3 ticks.
+    eb = RiskLabAI.Data.ExpectedImbalanceBars{RiskLabAI.Data.Tick}(
+        bar_type = "tick_imbalance",
+        window_size_for_expected_n_ticks_estimation = 10,
+        expected_imbalance_window = 10,
+        initial_estimate_of_expected_n_ticks_in_bar = 2.0,
+    )
+    ebars = RiskLabAI.Data.construct_bars_from_data(eb; data = ticks)
+    @test length(ebars) == 1
+    @test ebars[1][10] == 3.0
+end
+
+@testset "Data.Structures — run bars (parity with Python)" begin
+    # Same fixture as Python test_run_bars.py.
+    # Prices 100..103..100 -> buy run then sell run. The threshold stays Inf
+    # until both buy- and sell-imbalance EWMAs warm up (>= E[T] obs each), so
+    # the first (and only) bar forms at the last tick with all 7 ticks.
+    ticks = DataFrame(
+        date_time = DateTime.([
+            "2020-01-01T10:00:00", "2020-01-01T10:00:01", "2020-01-01T10:00:02",
+            "2020-01-01T10:00:03", "2020-01-01T10:00:04", "2020-01-01T10:00:05",
+            "2020-01-01T10:00:06",
+        ]),
+        price = [100, 101, 102, 103, 102, 101, 100],
+        volume = [10, 10, 10, 10, 10, 10, 10],
+    )
+
+    # Fixed E[T] = 3 -> 1 bar with 7 ticks.
+    fb = RiskLabAI.Data.FixedRunBars{RiskLabAI.Data.Tick}(
+        bar_type = "tick_run",
+        expected_imbalance_window = 10,
+        initial_estimate_of_expected_n_ticks_in_bar = 3.0,
+    )
+    fbars = RiskLabAI.Data.construct_bars_from_data(fb; data = ticks)
+    @test length(fbars) == 1
+    @test fbars[1][10] == 7.0
+
+    # Expected E[T] (init 3) -> same single 7-tick bar on this fixture.
+    eb = RiskLabAI.Data.ExpectedRunBars{RiskLabAI.Data.Tick}(
+        bar_type = "tick_run",
+        window_size_for_expected_n_ticks_estimation = 10,
+        expected_imbalance_window = 10,
+        initial_estimate_of_expected_n_ticks_in_bar = 3.0,
+    )
+    ebars = RiskLabAI.Data.construct_bars_from_data(eb; data = ticks)
+    @test length(ebars) == 1
+    @test ebars[1][10] == 7.0
+end

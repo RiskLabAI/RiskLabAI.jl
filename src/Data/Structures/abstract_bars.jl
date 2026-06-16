@@ -1,202 +1,162 @@
-using DataFrames
-using ResumableFunctions
-using CSV
-using Parameters
-using Dates
+# Base struct + shared logic for every bar type (standard, time, imbalance,
+# run). Mirrors RiskLabAI.py `data/structures/abstract_bars.py`.
+# `using` statements are centralized in the parent `Data` module.
 
+"""
+    AbstractBars
+
+Base mutable struct holding the properties shared by all bar subtypes
+(`StandardBars`, `TimeBars`, and the information-driven bars). Concrete bar
+types inherit these fields via `@field_inherit`.
+"""
 mutable struct AbstractBars <: AbstractBarsType
-    """
-    Abstract structure that contains the base properties which are shared between the subtypes.
-    This structure subtypes are as follows:
-        1- AbstractImbalanceBars
-        2- AbstractRunBars
-        3- StandardBars
-        4- TimeBars
-    """
-
     # Base properties
-    const barType::String
-    tickCounter::Int
+    bar_type::String
+    tick_counter::Int
 
-    # Cache properties
-    previousTickPrice::Float64
+    # Cache properties (current bar in progress)
+    previous_tick_price::Float64
 
-    openPrice::Float64
-    closePrice::Float64
+    open_price::Float64
+    close_price::Float64
 
-    lowPrice::Float64
-    highPrice::Float64
+    low_price::Float64
+    high_price::Float64
 
-    previousTickRule::Float64
-    cumulativeTicks::Float64
-    cumulativeDollar::Float64
-    cumulativeVolume::Float64
-    cumulativeBuyVolume::Float64
-    nTicksOnBarFormation::Int
+    previous_tick_rule::Float64
+    cumulative_ticks::Float64
+    cumulative_dollar::Float64
+    cumulative_volume::Float64
+    cumulative_buy_volume::Float64
+    n_ticks_on_bar_formation::Int
 end
 
-function AbstractBars(barType::String)::NamedTuple
-    """
-    AbstractBars constructor function
-    :param bar_type: type of bar. e.g. time_bars, expected_dollar_imbalance_bars, fixed_tick_run_bars, volume_standard_bars etc.
-    """
+"""
+    AbstractBars(bar_type::String) -> NamedTuple
 
-    tickCounter = 0
-    previousTickPrice = NaN
-
-    openPrice = NaN
-    closePrice = NaN
-
-    lowPrice = NaN
-    highPrice = NaN
-
+Return the initial values for the shared base fields, in declaration order, so a
+concrete constructor can splat them ahead of its own extra fields.
+"""
+function AbstractBars(bar_type::String)::NamedTuple
     return (
-        barType=barType,
-        tickCounter=tickCounter,
-        previousTickPrice=previousTickPrice,
-        openPrice=openPrice,
-        closePrice=closePrice,
-        lowPrice=lowPrice,
-        highPrice=highPrice,
-        previousTickRule=0,
-        cumulativeTicks=0,
-        cumulativeDollar=0.0,
-        cumulativeVolume=0,
-        cumulativeBuyVolume=0,
-        nTicksOnBarFormation=0,
+        bar_type = bar_type,
+        tick_counter = 0,
+        previous_tick_price = NaN,
+        open_price = NaN,
+        close_price = NaN,
+        # Seed high/low to -Inf/+Inf so the first bar's max()/min() work
+        # (NaN would propagate through max/min). Matches reset_cached_fields
+        # and the Python implementation.
+        low_price = Inf,
+        high_price = -Inf,
+        previous_tick_rule = 0.0,
+        cumulative_ticks = 0.0,
+        cumulative_dollar = 0.0,
+        cumulative_volume = 0.0,
+        cumulative_buy_volume = 0.0,
+        n_ticks_on_bar_formation = 0,
     )
 end
 
-function updateBaseFields(abstractBars::AbstractBarsType, price::Float64, tickRule::Float64, volume::Float64)
-    """
-    Update the base fields (that all bars have them.) with price, tick rule and volume of current tick
-    :param price: price of current tick
-    :param tick_rule: tick rule of current tick computed before
-    :param volume: volume of current tick
-    :return:
-    """
-
-    dollarValue = price * volume
-
-    abstractBars.openPrice = isnan(abstractBars.openPrice) ? price : abstractBars.openPrice
-    abstractBars.highPrice, abstractBars.lowPrice = highAndLowPriceUpdate(abstractBars, price)
-    abstractBars.cumulativeTicks += 1
-
-    abstractBars.cumulativeDollar += dollarValue
-    abstractBars.cumulativeVolume += volume
-
-    if tickRule == 1
-        abstractBars.cumulativeBuyVolume += volume
-    end
-end
-
-function resetCachedFields(abstractBars::AbstractBarsType)
-    """
-    This function is used (directly or override) by all concrete or abstract subtypes. The function is used to reset cached fields in bars construction process when next bar is sampled.
-    :return:
-    """
-
-    abstractBars.openPrice = NaN
-    abstractBars.highPrice, abstractBars.lowPrice = -Inf, +Inf
-
-
-    abstractBars.cumulativeTicks = 0
-    abstractBars.cumulativeDollar = 0
-    abstractBars.cumulativeVolume = 0
-    abstractBars.cumulativeBuyVolume = 0
-end
-
-function tickRule(
-    abstractBars::AbstractBarsType,
+"""
+Update the shared base fields with the current tick's price, tick rule and
+volume.
+"""
+function update_base_fields(
+    bars::AbstractBarsType,
     price::Float64,
-)::Float64
-    """
-    Compute the tick rule term as explained on page 29 of Advances in Financial Machine Learning
-    :param price: price of current tick
-    :return: tick rule
-    """
+    tick_rule::Float64,
+    volume::Float64,
+)
+    dollar_value = price * volume
 
-    tickDifference = isnan(abstractBars.previousTickPrice) ? 0 : price - abstractBars.previousTickPrice
+    bars.open_price = isnan(bars.open_price) ? price : bars.open_price
+    bars.high_price, bars.low_price = high_and_low_price_update(bars, price)
+    bars.cumulative_ticks += 1
 
-    if tickDifference != 0
-        abstractBars.previousTickRule = signedTick = sign(tickDifference)
+    bars.cumulative_dollar += dollar_value
+    bars.cumulative_volume += volume
+
+    if tick_rule == 1
+        bars.cumulative_buy_volume += volume
+    end
+end
+
+"""
+Reset the cached fields after a bar is sampled.
+"""
+function reset_cached_fields(bars::AbstractBarsType)
+    bars.open_price = NaN
+    bars.high_price, bars.low_price = -Inf, +Inf
+
+    bars.cumulative_ticks = 0
+    bars.cumulative_dollar = 0
+    bars.cumulative_volume = 0
+    bars.cumulative_buy_volume = 0
+end
+
+"""
+Compute the tick rule (signed tick), AFML p.29. Carries forward the previous
+non-zero sign when the price is unchanged.
+"""
+function tick_rule(bars::AbstractBarsType, price::Float64)::Float64
+    tick_difference = isnan(bars.previous_tick_price) ? 0 : price - bars.previous_tick_price
+
+    if tick_difference != 0
+        bars.previous_tick_rule = signed_tick = sign(tick_difference)
     else
-        signedTick = abstractBars.previousTickRule
+        signed_tick = bars.previous_tick_rule
     end
 
-    # update previous price
-    abstractBars.previousTickPrice = price
-
-    return signedTick
+    bars.previous_tick_price = price
+    return signed_tick
 end
 
-function highAndLowPriceUpdate(
-    abstractBars::AbstractBarsType, # abstract bar struct to use to construct the financial data structure.
-    price::Float64, # price to be replaced with old prices if they are lower or higher than the current price.
+"""
+Update the running high/low with the current tick price.
+"""
+function high_and_low_price_update(
+    bars::AbstractBarsType,
+    price::Float64,
 )::Tuple{Float64,Float64}
-    """
-    Update the high and low prices using the current tick price.
-    :param price: price of current tick
-    :return: updated high and low prices
-    """
-
-    highPrice = max(price, abstractBars.highPrice)
-    lowPrice = min(price, abstractBars.lowPrice)
-
-    return (highPrice, lowPrice)
+    high_price = max(price, bars.high_price)
+    low_price = min(price, bars.low_price)
+    return (high_price, low_price)
 end
 
-function constructNextBar(
-    abstractBars::AbstractBarsType, # abstract bar struct to use to construct the financial data structure.
-    dateTime::Union{DateTime,String}, # bar timeframe 
-    tickIndex::Int,
-    price::Float64, # current price
-    highPrice::Float64, # high price
-    lowPrice::Float64, # low price
-    threshold::Float64, # threshold
+"""
+Build the next bar row:
+`[date_time, tick_index, open, high, low, close, cumulative_volume,
+cumulative_buy_volume, cumulative_sell_volume, cumulative_ticks,
+cumulative_dollar_value, threshold]` (same column order as the Python package).
+"""
+function construct_next_bar(
+    bars::AbstractBarsType,
+    date_time::Union{DateTime,String},
+    tick_index::Int,
+    price::Float64,
+    high_price::Float64,
+    low_price::Float64,
+    threshold::Float64,
 )::Vector{Union{DateTime,Int,Float64}}
-    """
-    sample next bar, given ticks data. the bar's fields are as follows:
-        1- date_time
-        2- open
-        3- high
-        4- low
-        5- close
-        6- cumulative_volume: total cumulative volume of to be constructed bar ticks
-        7- cumulative_buy_volume: total cumulative buy volume of to be constructed bar ticks
-        8- cumulative_ticks total cumulative ticks number of to be constructed bar ticks
-        9- cumulative_dollar_value total cumulative dollar value (price * volume) of to be constructed bar ticks
+    open_price = bars.open_price
+    high_price = max(high_price, open_price)
+    low_price = min(low_price, open_price)
+    close_price = price
 
-    the bar will have appended to the total list of sampled bars.
+    cumulative_volume = bars.cumulative_volume
+    cumulative_buy_volume = bars.cumulative_buy_volume
+    cumulative_sell_volume = cumulative_volume - cumulative_buy_volume
+    cumulative_ticks = bars.cumulative_ticks
+    cumulative_dollar_value = bars.cumulative_dollar
 
-    :param date_time: timestamp of the to be constructed bar
-    :param tick_index:
-    :param price: price of last tick of to be constructed bar (used as close price)
-    :param high_price: highest price of ticks in the period of bar sampling process
-    :param low_price: lowest price of ticks in the period of bar sampling process
-    :return: sampled bar
-    """
-
-    openPrice = abstractBars.openPrice
-    highPrice = max(highPrice, openPrice)
-    lowPrice = min(lowPrice, openPrice)
-    closePrice = price
-
-    cumulativeVolume = abstractBars.cumulativeVolume
-    cumulativeBuyVolume = abstractBars.cumulativeBuyVolume
-    cumulativeSellVolume = cumulativeVolume - cumulativeBuyVolume
-    cumulativeTicks = abstractBars.cumulativeTicks
-    cumulativeDollarValue = abstractBars.cumulativeDollar
-
-    nextBar = [
-        dateTime,
-        tickIndex,
-        openPrice, highPrice, lowPrice, closePrice,
-        cumulativeVolume, cumulativeBuyVolume, cumulativeSellVolume,
-        cumulativeTicks,
-        cumulativeDollarValue,
+    return Union{DateTime,Int,Float64}[
+        date_time,
+        tick_index,
+        open_price, high_price, low_price, close_price,
+        cumulative_volume, cumulative_buy_volume, cumulative_sell_volume,
+        cumulative_ticks,
+        cumulative_dollar_value,
         threshold,
     ]
-
-    return nextBar
 end
