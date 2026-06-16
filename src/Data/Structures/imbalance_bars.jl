@@ -1,113 +1,75 @@
-using DataFrames
-
-# include("abstract_bars.jl")
-# include("controller/data_structure_controller.jl")
-# include("abstract_information_driven_bars.jl")
-# include("abstract_imbalance_bars.jl")
-# include("utils/ewma.jl")
-# include("utils/constants.jl")
+# Concrete imbalance bars: ExpectedImbalanceBars (EWMA-based E[T]) and
+# FixedImbalanceBars (constant E[T]). Mirrors RiskLabAI.py
+# data/structures/imbalance_bars.py. `using` centralized in `Data`.
 
 @field_inherit ExpectedImbalanceBars{T<:Metric} ExpectedImbalanceBarsType{T} AbstractImbalanceBars{T} where {T<:Metric} begin
-    # Imbalance specific hyper parameters
-    expectedTicksNumberLowerBound::Float64 # minimum possible number of expected ticks.
-    expectedTicksNumberUpperBound::Float64 # maximum possible number of expected ticks.
+    expected_ticks_number_lower_bound::Float64
+    expected_ticks_number_upper_bound::Float64
 end
 
+"""
+    ExpectedImbalanceBars{T}(; ...) where {T<:Metric}
+
+Imbalance bars whose E[T] is an EWMA of previous bars' tick counts, optionally
+clamped to `expected_ticks_number_bounds`.
+"""
 function ExpectedImbalanceBars{T}(;
-    barType::String,
-    windowSizeForExpectedNTicksEstimation::Int,
-    expectedImbalanceWindow::Int,
-    initialEstimateOfExpectedNTicksInBar::Float64,
-    expectedTicksNumberBounds::Union{Tuple{Float64,Float64},Nothing},
-    doesAnalyseThresholds::Bool
+    bar_type::String,
+    window_size_for_expected_n_ticks_estimation::Int,
+    expected_imbalance_window::Int,
+    initial_estimate_of_expected_n_ticks_in_bar::Float64,
+    expected_ticks_number_bounds::Union{Tuple{Float64,Float64},Nothing} = nothing,
+    does_analyse_thresholds::Bool = false,
 ) where {T<:Metric}
-    """
-    ExpectedImbalanceBars constructor function
-    :param barType: type of bar. e.g. expected_dollar_imbalance_bars, fixed_tick_imbalance_bars etc.
-    :param windowSizeForExpectedNTicksEstimation: window size used to estimate number of ticks expectation
-    :param initialEstimateOfExpectedNTicksInBar: initial estimate of number of ticks expectation window size
-    :param expectedImbalanceWindow: window size used to estimate imbalance expectation
-    :param expectedTicksNumberBounds lower and upper bound of possible number of expected ticks that used to force bars sampling convergence.
-    :param doesAnalyseThresholds: whether return thresholds values (θ, number of ticks expectation, imbalance expectation) in a tabular format
-    """
-
-    abstractImbalanceBars = AbstractImbalanceBars{T}(
-        barType=barType,
-        windowSizeForExpectedNTicksEstimation=windowSizeForExpectedNTicksEstimation,
-        expectedImbalanceWindow=expectedImbalanceWindow,
-        initialEstimateOfExpectedNTicksInBar=initialEstimateOfExpectedNTicksInBar,
-        doesAnalyseThresholds=doesAnalyseThresholds
+    base = AbstractImbalanceBars{T}(
+        bar_type = bar_type,
+        window_size_for_expected_n_ticks_estimation = window_size_for_expected_n_ticks_estimation,
+        expected_imbalance_window = expected_imbalance_window,
+        initial_estimate_of_expected_n_ticks_in_bar = initial_estimate_of_expected_n_ticks_in_bar,
+        does_analyse_thresholds = does_analyse_thresholds,
     )
 
-    if isnothing(expectedTicksNumberBounds)
-        expectedTicksNumberLowerBound, expectedTicksNumberUpperBound = 0, typemax(Float64)
-    else
-        expectedTicksNumberLowerBound, expectedTicksNumberUpperBound = expectedTicksNumberBounds
-    end
+    lower, upper = isnothing(expected_ticks_number_bounds) ?
+        (0.0, typemax(Float64)) : expected_ticks_number_bounds
 
-    return ExpectedImbalanceBars{T}(
-        values(abstractImbalanceBars)...,
-        expectedTicksNumberLowerBound,
-        expectedTicksNumberUpperBound,
+    return ExpectedImbalanceBars{T}(values(base)..., lower, upper)
+end
+
+function expected_number_of_ticks(bars::ExpectedImbalanceBarsType)::Float64
+    previous = bars.previous_bars_number_of_ticks
+    isempty(previous) && return bars.expected_ticks_number  # no bars yet
+
+    window = bars.window_size_for_expected_n_ticks_estimation
+    expected = ewma(collect(Float64, last(previous, window)), window)[end]
+    return min(
+        max(expected, bars.expected_ticks_number_lower_bound),
+        bars.expected_ticks_number_upper_bound,
     )
 end
 
-function expectedNumberOfTicks(
-    expectedImbalanceBars::ExpectedImbalanceBarsType
-)::Float64
-    """
-    Calculate number of ticks expectation when new imbalance bar is sampled.
-
-    :return: number of ticks expectation.
-    """
-
-    expectedTicksNumber = ewma(
-        last(expectedImbalanceBars.previousBarsNumberOfTicks, expectedImbalanceBars.windowSizeForExpectedNTicksEstimation),
-        expectedImbalanceBars.windowSizeForExpectedNTicksEstimation
-    )[end]
-
-    return min(max(expectedTicksNumber, expectedImbalanceBars.expectedTicksNumberLowerBound), expectedImbalanceBars.expectedTicksNumberUpperBound)
+@field_inherit FixedImbalanceBars{T<:Metric} FixedImbalanceBarsType{T} AbstractImbalanceBars{T} where {T<:Metric} begin
 end
 
-#todo: this is from mlfinlab. I guess de prado does not define constance imbalance bars. where can we refer to type of bar to? is there any reference other than mlfinlab?
-@field_inherit FixedImbalanceBars{T<:Metric} FixedImbalanceBarsType{T} AbstractImbalanceBars{T} where {T<:Metric} begin end
+"""
+    FixedImbalanceBars{T}(; ...) where {T<:Metric}
 
+Imbalance bars with a constant E[T] (the initial estimate).
+"""
 function FixedImbalanceBars{T}(;
-    barType::String,
-    windowSizeForExpectedNTicksEstimation::Union{Int,Nothing},
-    expectedImbalanceWindow::Int,
-    initialEstimateOfExpectedNTicksInBar::Float64,
-    doesAnalyseThresholds::Bool
+    bar_type::String,
+    expected_imbalance_window::Int,
+    initial_estimate_of_expected_n_ticks_in_bar::Float64,
+    window_size_for_expected_n_ticks_estimation::Union{Int,Nothing} = nothing,
+    does_analyse_thresholds::Bool = false,
 ) where {T<:Metric}
-    """
-    FixedImbalanceBars constructor function
-    :param barType: type of bar. e.g. expected_dollar_imbalance_bars, fixed_tick_imbalance_bars etc.
-    :param windowSizeForExpectedNTicksEstimation: window size used to estimate number of ticks expectation
-    :param initialEstimateOfExpectedNTicksInBar: initial estimate of number of ticks expectation window size
-    :param expectedImbalanceWindow: window size used to estimate imbalance expectation
-    :param doesAnalyseThresholds: whether return thresholds values (θ, number of ticks expectation, imbalance expectation) in a tabular format
-    """
-
-    abstractImbalanceBars = AbstractImbalanceBars{T}(
-        barType=barType,
-        windowSizeForExpectedNTicksEstimation=windowSizeForExpectedNTicksEstimation,
-        expectedImbalanceWindow=expectedImbalanceWindow,
-        initialEstimateOfExpectedNTicksInBar=initialEstimateOfExpectedNTicksInBar,
-        doesAnalyseThresholds=doesAnalyseThresholds
+    base = AbstractImbalanceBars{T}(
+        bar_type = bar_type,
+        window_size_for_expected_n_ticks_estimation = window_size_for_expected_n_ticks_estimation,
+        expected_imbalance_window = expected_imbalance_window,
+        initial_estimate_of_expected_n_ticks_in_bar = initial_estimate_of_expected_n_ticks_in_bar,
+        does_analyse_thresholds = does_analyse_thresholds,
     )
-
-    FixedImbalanceBars{T}(
-        values(abstractImbalanceBars)...,
-    )
+    return FixedImbalanceBars{T}(values(base)...)
 end
 
-function expectedNumberOfTicks(
-    constImbalanceBars::FixedImbalanceBarsType # abstract bar struct to use to calcualte expected number of ticks
-)::Int
-    """
-    Calculate number of ticks expectation when new imbalance bar is sampled.
-
-    :return: number of ticks expectation.
-    """
-    return constImbalanceBars.expectedTicksNumber
-end
+expected_number_of_ticks(bars::FixedImbalanceBarsType)::Float64 = bars.expected_ticks_number

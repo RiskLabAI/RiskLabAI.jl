@@ -1,123 +1,58 @@
-using DataFrames
-using ResumableFunctions
-using CSV
-using Parameters
-using Dates
+# Base for information-driven bars (imbalance + run). Mirrors RiskLabAI.py
+# data/structures/abstract_information_driven_bars.py. `using` centralized in
+# the parent `Data` module (was: ResumableFunctions/CSV/Parameters — unused).
 
 @field_inherit AbstractInformationDrivenBars{T<:Metric} AbstractInformationDrivenBarsType{T} AbstractBars begin
-    expectedTicksNumber::Float64
-    expectedImbalanceWindow::Int
-    windowSizeForExpectedNTicksEstimation::Union{Int, Nothing} 
+    expected_ticks_number::Float64
+    expected_imbalance_window::Int
+    window_size_for_expected_n_ticks_estimation::Union{Int,Nothing}
 end
 
-#todo: the list of parameters in the comments section is snake case but in the function signature it is camel case
+"""
+Initial field values (NamedTuple, in declaration order) for an
+information-driven bar; concrete constructors splat these ahead of their own
+fields.
+"""
 function AbstractInformationDrivenBars{T}(;
-    barType::String,
-    windowSizeForExpectedNTicksEstimation::Union{Int, Nothing},
-    initialEstimateOfExpectedNTicksInBar::Float64,
-    expectedImbalanceWindow::Int,
-    ) where {T<:Metric}
-    """
-    AbstractInformationDrivenBars constructor function
-    :param barType: type of bar. e.g. expected_dollar_imbalance_bars, fixed_tick_run_bars etc.
-    :param windowSizeForExpectedNTicksEstimation: window size used to estimate number of ticks expectation
-    :param initialEstimateOfExpectedNTicksInBar: initial estimate of number of ticks expectation window size
-    :param expectedImbalanceWindow: window size used to estimate imbalance expectation
-    """
-
-    abstractBars = AbstractBars(barType)
-    
-    expectedTicksNumber = initialEstimateOfExpectedNTicksInBar
-    expectedImbalanceWindow = expectedImbalanceWindow
-
+    bar_type::String,
+    window_size_for_expected_n_ticks_estimation::Union{Int,Nothing},
+    initial_estimate_of_expected_n_ticks_in_bar::Float64,
+    expected_imbalance_window::Int,
+) where {T<:Metric}
+    base = AbstractBars(bar_type)
     return (
-        abstractBars...,
-        expectedTicksNumber = initialEstimateOfExpectedNTicksInBar,
-        expectedImbalanceWindow = expectedImbalanceWindow,
-        windowSizeForExpectedNTicksEstimation=windowSizeForExpectedNTicksEstimation,
+        base...,
+        expected_ticks_number = initial_estimate_of_expected_n_ticks_in_bar,
+        expected_imbalance_window = expected_imbalance_window,
+        window_size_for_expected_n_ticks_estimation =
+            window_size_for_expected_n_ticks_estimation,
     )
 end
 
-function ewmaExpectedImbalance(
-    abstractInformationDrivenBars::AbstractInformationDrivenBarsType,
-    array::Union{SubArray, Vector{Float64}},
+"""
+EWMA of the expected imbalance E[b] over the most recent `window` observed
+imbalances (AFML p.29). With `warm_up`, returns `NaN` until at least E[T]
+ticks have been seen.
+"""
+function ewma_expected_imbalance(
+    bars::AbstractInformationDrivenBarsType,
+    array::AbstractVector{<:Real},
     window::Int;
-    warmUp::Bool=false
-    )::Float64
-    """
-    Calculates expected imbalance (2P[b_t=1]-1) using EWMA as defined on page 29 of Advances in Financial Machine Learning.
-    :param array: imbalances list
-    :param window: EWMA window for expectation calculation
-    :param warmUp: whether warm up period passed or not
-    :return: expected_imbalance: 2P[b_t=1]-1 which approximated using EWMA expectation
-    """
-
-    if length(array) < abstractInformationDrivenBars.expectedTicksNumber && warmUp
-        ewmaWindow = NaN
-    else
-        ewmaWindow = trunc(min(length(array), window))
+    warm_up::Bool = false,
+)::Float64
+    if warm_up && (isnan(bars.expected_ticks_number) ||
+                   length(array) < bars.expected_ticks_number)
+        return NaN
     end
-
-    if isnan(ewmaWindow)
-        expectedImbalance = NaN
-    else
-        expectedImbalance = ewma(
-            last(array, ewmaWindow),
-            ewmaWindow
-        )[end]
-    end
-    
-    return expectedImbalance
+    ewma_window = Int(min(length(array), window))
+    ewma_window == 0 && return NaN
+    return ewma(collect(Float64, last(array, ewma_window)), ewma_window)[end]
 end
 
-#todo: what's the deal with the first argument?
-#todo: the function seems quite trivial returning signedTick. why?
-function imbalanceAtTick(
-    ::Type{Tick},
-    price::Float64,
-    signedTick::Float64, 
-    volume::Float64
-    )::Float64
-    """
-    Calculate the imbalance at tick t (current tick) (θ_t) using tick data as defined on page 29 of Advances in Financial Machine Learning
-    :param price: price of tick
-    :param signed_tick: tick rule of current tick computed before
-    :param volume: volume of current tick
-    :return: imbalance: imbalance of current tick
-    """ 
-    return signedTick
-end
-
-function imbalanceAtTick(
-    ::Type{Volume},
-    price::Float64,
-    signedTick::Float64, 
-    volume::Float64
-    )::Float64
-    """
-    Calculate the imbalance at tick t (current tick) (θ_t) using tick data as defined on page 29 of Advances in Financial Machine Learning
-    :param price: price of tick
-    :param signed_tick: tick rule of current tick computed before
-    :param volume: volume of current tick
-    :return: imbalance: imbalance of current tick
-    """ 
-
-    return signedTick * volume
-end
-
-function imbalanceAtTick(
-    ::Type{Dollar},
-    price::Float64,
-    signedTick::Float64, 
-    volume::Float64
-    )::Float64
-    """
-    Calculate the imbalance at tick t (current tick) (θ_t) using tick data as defined on page 29 of Advances in Financial Machine Learning
-    :param price: price of tick
-    :param signed_tick: tick rule of current tick computed before
-    :param volume: volume of current tick
-    :return: imbalance: imbalance of current tick
-    """ 
-
-    return signedTick * volume * price
-end
+# Per-tick imbalance θ_t, dispatched on the metric (AFML p.29).
+imbalance_at_tick(::Type{Tick}, price::Float64, signed_tick::Float64, volume::Float64)::Float64 =
+    signed_tick
+imbalance_at_tick(::Type{Volume}, price::Float64, signed_tick::Float64, volume::Float64)::Float64 =
+    signed_tick * volume
+imbalance_at_tick(::Type{Dollar}, price::Float64, signed_tick::Float64, volume::Float64)::Float64 =
+    signed_tick * volume * price
