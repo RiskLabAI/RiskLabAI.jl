@@ -22,6 +22,9 @@ include("BacktestStatistics.jl")
 include("ProbabilisticSharpeRatio.jl")
 include("TestSetOverfitting.jl")
 
+# Strategy risk: binomial betting, implied precision, failure probability (AFML Ch. 15).
+include("StrategyRisk.jl")
+
 export
     # backtest statistics
     sharpe_ratio,
@@ -40,6 +43,15 @@ export
     estimated_sharpe_ratio_z_statistics,
     strategy_type1_error_probability,
     theta_for_type2_error,
-    strategy_type2_error_probability
+    strategy_type2_error_probability,
+    # strategy risk
+    sharpe_ratio_trials,
+    target_sharpe_ratio_symbolic,
+    implied_precision,
+    bin_frequency,
+    binomial_sharpe_ratio,
+    mix_gaussians,
+    failure_probability,
+    calculate_strategy_risk
 
 end # module Backtest

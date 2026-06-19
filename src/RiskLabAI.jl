@@ -21,7 +21,10 @@ using .Backtest: sharpe_ratio, bet_timing, calculate_holding_period,
     probabilistic_sharpe_ratio, benchmark_sharpe_ratio,
     expected_max_sharpe_ratio, generate_max_sharpe_ratios, mean_std_error,
     estimated_sharpe_ratio_z_statistics, strategy_type1_error_probability,
-    theta_for_type2_error, strategy_type2_error_probability
+    theta_for_type2_error, strategy_type2_error_probability,
+    sharpe_ratio_trials, target_sharpe_ratio_symbolic, implied_precision,
+    bin_frequency, binomial_sharpe_ratio, mix_gaussians, failure_probability,
+    calculate_strategy_risk
 
 # --------------------------------------------------------------------------- #
 # Top-level exports.
@@ -41,6 +44,10 @@ export
     expected_max_sharpe_ratio, generate_max_sharpe_ratios, mean_std_error,
     estimated_sharpe_ratio_z_statistics, strategy_type1_error_probability,
     theta_for_type2_error, strategy_type2_error_probability,
+    # Backtest — strategy risk
+    sharpe_ratio_trials, target_sharpe_ratio_symbolic, implied_precision,
+    bin_frequency, binomial_sharpe_ratio, mix_gaussians, failure_probability,
+    calculate_strategy_risk,
     # Backtest (legacy)
     probabilityOfBacktestOverfitting,
     # BetSize

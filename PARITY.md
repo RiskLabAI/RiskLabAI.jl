@@ -171,4 +171,22 @@ backtesting, bet sizing) follow in subsequent PRs.
 Monte-Carlo helpers take an optional `rng` keyword (Julia idiom) in place of
 NumPy's implicit default generator.
 
+## Backtest — strategy risk  — PR (wired)
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Binomial SR trials | `sharpe_ratio_trials` | `Backtest.sharpe_ratio_trials` | behavioural; stochastic, optional `rng` |
+| Binomial variance | `target_sharpe_ratio_symbolic` | `Backtest.target_sharpe_ratio_symbolic` | closed form `p(1-p)(d-u)²` of `(p,u,d)` (Python returns a SymPy expr) |
+| Implied precision | `implied_precision` | `Backtest.implied_precision` | exact; `NaN` when discriminant < 0 |
+| Implied frequency | `bin_frequency` | `Backtest.bin_frequency` | exact; `Inf` for degenerate precision / zero denom |
+| Binomial Sharpe ratio | `binomial_sharpe_ratio` | `Backtest.binomial_sharpe_ratio` | exact; signed `Inf` on zero dispersion |
+| Mixture of Gaussians | `mix_gaussians` | `Backtest.mix_gaussians` | behavioural; stochastic, optional `rng` |
+| Failure probability | `failure_probability` | `Backtest.failure_probability` | exact; `0.0` if no winners/losers, `1.0` if target unachievable |
+| Strategy risk | `calculate_strategy_risk` | `Backtest.calculate_strategy_risk` | behavioural; stochastic, optional `rng` |
+
+**Deliberate divergence:** `target_sharpe_ratio_symbolic` returns the closed-form
+variance value (no SymPy); the normal CDF comes from `Distributions` (no SciPy);
+the Monte-Carlo helpers take an optional `rng` keyword in place of NumPy's
+implicit generator.
+
 _(further submodules appended as they are wired)_

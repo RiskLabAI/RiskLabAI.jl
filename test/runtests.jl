@@ -582,3 +582,51 @@ end
     @test nrow(err) == 2
     @test all(isfinite, err.meanErr)
 end
+
+@testset "Backtest — strategy risk (parity with Python)" begin
+    B = RiskLabAI.Backtest
+
+    # Closed-form binomial variance (Python returns the SymPy expression).
+    @test B.target_sharpe_ratio_symbolic(0.3, 1.0, -1.0) ≈ 0.84
+
+    # Implied precision: real root in (0, 1), and NaN when the discriminant < 0.
+    @test B.implied_precision(0.001, 0.01, 2, 1.0) ≈ 0.11111111111111126
+    @test isnan(B.implied_precision(0.02, 0.04, 260, 1.5))
+
+    # Implied bets-per-year frequency.
+    @test B.bin_frequency(0.02, 0.04, 0.7, 1.5) ≈ 0.16349480968858132
+    @test B.bin_frequency(0.02, 0.04, 0.0, 1.5) == Inf
+    @test B.bin_frequency(0.02, 0.04, 1.0, 1.5) == Inf
+
+    # Annualised binomial Sharpe ratio (signed Inf when dispersion is zero).
+    @test B.binomial_sharpe_ratio(-0.02, 0.04, 260, 0.7) ≈ 12.90174509339827
+    @test B.binomial_sharpe_ratio(-0.02, 0.04, 260, 0.0) == -Inf
+    @test B.binomial_sharpe_ratio(-0.02, 0.04, 260, 1.0) == Inf
+
+    # Failure probability (normal-CDF Z-score on observed vs required precision).
+    rets = [0.01, 0.012, 0.008, -0.001, -0.0012, -0.0008]
+    @test B.failure_probability(rets, 2, 1.0) ≈ 0.9716202768069931
+    # No losing returns -> 0.0.
+    @test B.failure_probability([0.01, 0.02, 0.03], 260, 1.0) == 0.0
+    # Target unachievable (required precision is NaN) -> 1.0.
+    @test B.failure_probability([0.04, -0.02, 0.03, -0.01], 260, 1.5) == 1.0
+
+    # Monte-Carlo helpers are stochastic — check structure with a seeded RNG.
+    trials = B.sharpe_ratio_trials(0.6, 200; rng = MersenneTwister(3))
+    @test length(trials) == 3
+    @test all(isfinite, trials)
+    mixed = B.mix_gaussians(0.05, -0.02, 0.01, 0.01, 0.6, 100; rng = MersenneTwister(4))
+    @test length(mixed) == 100
+    risk = B.calculate_strategy_risk(
+        0.05,
+        -0.02,
+        0.01,
+        0.01,
+        0.6,
+        100,
+        260,
+        1.0;
+        rng = MersenneTwister(5),
+    )
+    @test 0.0 <= risk <= 1.0
+end
