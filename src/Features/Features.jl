@@ -47,6 +47,11 @@ export
     get_bsadf_statistic,
     # feature importance (backend-independent)
     orthogonal_features,
-    calculate_weighted_tau
+    calculate_weighted_tau,
+    # feature importance (DecisionTree.jl backend)
+    feature_importance_mdi,
+    feature_importance_mda,
+    feature_importance_sfi,
+    get_test_dataset
 
 end # module Features

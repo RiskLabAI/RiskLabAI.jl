@@ -21,7 +21,9 @@ using .Features: shannon_entropy, probability_mass_function, plug_in_entropy_est
     beta_estimates, gamma_estimates, alpha_estimates, corwin_schultz_estimator,
     sigma_estimates, bekker_parkinson_volatility_estimates,
     lag_dataframe, prepare_data, compute_beta, get_expanding_window_adf,
-    get_bsadf_statistic, orthogonal_features, calculate_weighted_tau
+    get_bsadf_statistic, orthogonal_features, calculate_weighted_tau,
+    feature_importance_mdi, feature_importance_mda, feature_importance_sfi,
+    get_test_dataset
 
 include("Cluster/Cluster.jl")
 using .Cluster: covariance_to_correlation, silhouette_samples, cluster_k_means_base,
@@ -72,6 +74,10 @@ export
     # Features — structural breaks
     lag_dataframe, prepare_data, compute_beta, get_expanding_window_adf,
     get_bsadf_statistic,
+    # Features — feature importance
+    orthogonal_features, calculate_weighted_tau,
+    feature_importance_mdi, feature_importance_mda, feature_importance_sfi,
+    get_test_dataset,
     # Optimization — HRP, hedging & NCO
     inverse_variance_weights, cluster_variance, quasi_diagonal, recursive_bisection,
     distance_corr, hrp, pca_weights,

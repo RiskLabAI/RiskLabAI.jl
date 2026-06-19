@@ -393,4 +393,20 @@ auto-drop constant columns (Python `dropna`s them). `calculate_weighted_tau` is
 validated against the weighted-τ definition rather than bit-checked against scipy
 (scipy unavailable in CI).
 
+### Tree-based importances (DecisionTree.jl backend) — wired
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| MDI | `FeatureImportanceMDI` | `Features.feature_importance_mdi` | **behavioural**; per-tree normalised impurity over a bootstrap forest, 0→NaN, normalised |
+| MDA | `FeatureImportanceMDA` | `Features.feature_importance_mda` | **behavioural**; shuffled-feature neg-log-loss drop over a shuffled K-Fold |
+| SFI | `FeatureImportanceSFI` | `Features.feature_importance_sfi` | **behavioural**; CV score of a single-feature forest (`:log_loss`/`:accuracy`) |
+| Test dataset | `get_test_dataset` | `Features.get_test_dataset` | **behavioural**; native generator (no `sklearn.make_classification`) |
+
+**Deliberate divergence:** the tree backend is `DecisionTree.jl` (added
+dependency), which is not bit-identical to scikit-learn — these importances are
+**behavioural** and validated structurally (informative features rank above
+noise). Sample weights are not supported by the backend and are dropped. The
+`controller`/`factory`/`strategy` scaffolding is replaced by plain functions;
+clustered MDI/MDA follow in a small follow-up.
+
 _(further submodules appended as they are wired)_

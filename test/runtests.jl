@@ -1089,3 +1089,40 @@ end
     @test F.calculate_weighted_tau([4.0, 3.0, 2.0, 1.0], [1.0, 2.0, 3.0, 4.0]) ≈ 1.0
     @test F.calculate_weighted_tau([0.5, 0.2, 0.8, 0.1], [1.0, 2.0, 3.0, 4.0]) ≈ 0.2
 end
+
+@testset "Features — tree feature importance (DecisionTree.jl)" begin
+    F = RiskLabAI.Features
+
+    # Separable dataset: column 1 informative, column 2 pure noise.
+    rng = MersenneTwister(42)
+    n = 200
+    y = rand(rng, 0:1, n)
+    x = hcat(Float64.(y) .+ 0.3 .* randn(rng, n), randn(rng, n))
+
+    # MDI / MDA / SFI must all rank the informative feature above the noise one.
+    mdi = F.feature_importance_mdi(x, y; n_trees = 40, random_state = 1)
+    @test length(mdi.mean) == 2
+    @test mdi.mean[1] > mdi.mean[2]
+
+    mda = F.feature_importance_mda(x, y; n_splits = 5, n_trees = 40, random_state = 1)
+    @test length(mda.mean) == 2
+    @test mda.mean[1] > mda.mean[2]
+
+    sfi = F.feature_importance_sfi(x, y; n_splits = 5, n_trees = 40)
+    @test length(sfi.mean) == 2
+    @test sfi.mean[1] > sfi.mean[2]
+
+    # get_test_dataset: shapes and informative/redundant/noise column naming.
+    xd, yd, names = F.get_test_dataset(;
+        n_features = 12,
+        n_informative = 4,
+        n_redundant = 3,
+        n_samples = 60,
+        random_state = 0,
+    )
+    @test size(xd) == (60, 12)
+    @test length(yd) == 60
+    @test length(names) == 12
+    @test count(startswith("I_"), names) == 4
+    @test count(startswith("R_"), names) == 3
+end
