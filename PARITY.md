@@ -133,4 +133,24 @@ dispatch), dynamic threshold `E[T]·|E[b]|` — shared by imbalance and run bars
 Bar row layout (both languages): `[date_time, idx, open, high, low, close,
 volume, buy_volume, sell_volume, ticks, dollar, threshold]`.
 
+## Backtest.statistics  — PR (wired)
+
+First slice of the `backtest` sub-package: the backtest statistics.
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Sharpe ratio | `sharpe_ratio` | `Backtest.sharpe_ratio` | exact; population std (`numpy` `ddof=0`); `0.0` on zero dispersion |
+| Bet timing | `bet_timing` | `Backtest.bet_timing` | exact; closes/flips + final timestamp |
+| Holding period | `calculate_holding_period` | `Backtest.calculate_holding_period` | exact; average-entry-time pairing; weighted mean (`NaN` if no close) |
+| HHI | `calculate_hhi` | `Backtest.calculate_hhi` | exact; `NaN` for ≤2 obs or zero sum |
+| HHI concentration | `calculate_hhi_concentration` | `Backtest.calculate_hhi_concentration` | exact; positive / negative / monthly-count HHI |
+| Drawdowns / TuW | `compute_drawdowns_time_under_water` | `Backtest.compute_drawdowns_time_under_water` | exact; `$`/fractional drawdown; TuW in 365.25-day years |
+
+**Deliberate divergence:** series are passed as parallel `(index, values)`
+vectors (timestamps `DateTime`) rather than pandas time-indexed Series; results
+are `DataFrame`s / `NamedTuple`s. No `numba`/`TimeSeries`/`DayCounts` dependency
+(the legacy `Backtests/` files used `TimeSeries` + `DayCounts`). Remaining
+`backtest` modules (probabilistic/deflated Sharpe, strategy risk, PBO, synthetic
+backtesting, bet sizing) follow in subsequent PRs.
+
 _(further submodules appended as they are wired)_

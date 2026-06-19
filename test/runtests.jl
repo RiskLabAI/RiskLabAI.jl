@@ -435,3 +435,79 @@ end
     @test D.calculate_distance(dep) ≈ [0.0 0.5; 0.5 0.0]
     @test D.calculate_distance(dep; metric = "absolute_angular") ≈ [0.0 0.5; 0.5 0.0]
 end
+
+@testset "Backtest — statistics (parity with Python)" begin
+    B = RiskLabAI.Backtest
+
+    # sharpe_ratio uses the population std (numpy ddof=0).
+    returns = [0.01, -0.02, 0.03, 0.005, -0.01, 0.02, 0.015, -0.005]
+    @test B.sharpe_ratio(returns) ≈ 0.36291502734548026
+    @test B.sharpe_ratio(returns; risk_free_rate = 0.001) ≈ 0.29839680026183946
+    @test B.sharpe_ratio([0.5, 0.5, 0.5]) == 0.0
+
+    # bet_timing: position closes / flips, plus the final timestamp.
+    idx = DateTime.([
+        "2020-01-01",
+        "2020-01-02",
+        "2020-01-03",
+        "2020-01-04",
+        "2020-01-05",
+        "2020-01-06",
+    ])
+    positions = [0.0, 1.0, 1.0, 0.0, -1.0, 0.0]
+    @test B.bet_timing(idx, positions) == DateTime.(["2020-01-04", "2020-01-06"])
+
+    # average holding period.
+    hp = B.calculate_holding_period(idx, positions)
+    @test nrow(hp.holding_periods) == 2
+    @test hp.holding_periods.dT ≈ [2.0, 1.0]
+    @test hp.holding_periods.w ≈ [1.0, 1.0]
+    @test hp.mean_holding_period ≈ 1.5
+
+    # Herfindahl–Hirschman index (can exceed 1 for signed returns).
+    bet_returns = [0.01, -0.02, 0.03, 0.005, -0.01, 0.02, 0.015, -0.005, 0.04, -0.03]
+    @test B.calculate_hhi(bet_returns) ≈ 1.6060606060606066
+    @test B.calculate_hhi(bet_returns[bet_returns .>= 0]) ≈ 0.07083333333333337
+    @test B.calculate_hhi(bet_returns[bet_returns .< 0]) ≈ 0.11637080867850098
+    @test isnan(B.calculate_hhi([0.1, 0.2]))   # <= 2 observations
+
+    # HHI concentration (positive, negative, monthly counts [4, 4, 2]).
+    weekly = DateTime.([
+        "2020-01-05",
+        "2020-01-12",
+        "2020-01-19",
+        "2020-01-26",
+        "2020-02-02",
+        "2020-02-09",
+        "2020-02-16",
+        "2020-02-23",
+        "2020-03-01",
+        "2020-03-08",
+    ])
+    conc = B.calculate_hhi_concentration(weekly, bet_returns)
+    @test conc.positive ≈ 0.07083333333333337
+    @test conc.negative ≈ 0.11637080867850098
+    @test conc.time ≈ 0.04000000000000017
+
+    # drawdowns and time under water.
+    pidx = DateTime.([
+        "2020-01-01",
+        "2020-01-02",
+        "2020-01-03",
+        "2020-01-04",
+        "2020-01-05",
+        "2020-01-06",
+        "2020-01-07",
+        "2020-01-08",
+    ])
+    pnl = [100.0, 102.0, 101.0, 103.0, 99.0, 98.0, 105.0, 104.0]
+
+    dd = B.compute_drawdowns_time_under_water(pidx, pnl; dollars = true)
+    @test dd.start == DateTime.(["2020-01-02", "2020-01-04", "2020-01-07"])
+    @test dd.drawdown ≈ [1.0, 5.0, 1.0]
+    @test dd.time_under_water ≈ [1 / 365.25, 2 / 365.25, 1 / 365.25]
+
+    ddp = B.compute_drawdowns_time_under_water(pidx, pnl; dollars = false)
+    @test ddp.drawdown ≈ [1 - 101 / 102, 1 - 98 / 103, 1 - 104 / 105]
+    @test ddp.time_under_water ≈ [1 / 365.25, 2 / 365.25, 1 / 365.25]
+end

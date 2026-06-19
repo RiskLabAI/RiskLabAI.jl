@@ -15,6 +15,10 @@ using .Data: AbstractBars, StandardBars, TimeBars, ExpectedImbalanceBars,
     FixedImbalanceBars, ExpectedRunBars, FixedRunBars,
     Metric, Dollar, Volume, Tick, construct_bars_from_data
 
+include("Backtest/Backtest.jl")
+using .Backtest: sharpe_ratio, bet_timing, calculate_holding_period,
+    calculate_hhi, calculate_hhi_concentration, compute_drawdowns_time_under_water
+
 # --------------------------------------------------------------------------- #
 # Top-level exports.
 # --------------------------------------------------------------------------- #
@@ -25,7 +29,10 @@ export
     StandardBars, TimeBars, ExpectedImbalanceBars, FixedImbalanceBars,
     ExpectedRunBars, FixedRunBars,
     Dollar, Volume, Tick, construct_bars_from_data,
-    # Backtest
+    # Backtest.statistics
+    sharpe_ratio, bet_timing, calculate_holding_period,
+    calculate_hhi, calculate_hhi_concentration, compute_drawdowns_time_under_water,
+    # Backtest (legacy)
     probabilityOfBacktestOverfitting,
     # BetSize
     generateSignal
