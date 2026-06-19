@@ -20,13 +20,13 @@ function rolling_computations(
     mapping::Function,
     vector1::Vector,
     vector2::Vector,
-    windowSpan::Int
+    windowSpan::Int,
 )::Vector
     @assert length(vector1) == length(vector2)
     n = length(vector1)
     result = Vector{Any}(undef, n)  # Preallocate result array
 
-    for i in 1:n
+    for i = 1:n
         rightIndex, leftIndex = i, i - (windowSpan - 1)
         if leftIndex ≥ 1
             windowSlice1 = view(vector1, leftIndex:rightIndex)
@@ -53,15 +53,11 @@ Parameters:
 Returns:
 An array of computed values with rolling window.
 """
-function rolling(
-    mapping,
-    vector,
-    windowSpan
-)
-   
+function rolling(mapping, vector, windowSpan)
+
     n = length(vector)
     result = []
-    for i in 1:n
+    for i = 1:n
         rightIndex, leftIndex = i, i - (windowSpan - 1)
         value = leftIndex ≥ 1 ? mapping(vector[leftIndex:rightIndex]) : missing
         push!(result, value)

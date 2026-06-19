@@ -3,7 +3,9 @@
 # Mirrors RiskLabAI.py data/structures/abstract_run_bars.py. `using` centralized
 # in `Data`.
 
-@field_inherit AbstractRunBars{T<:Metric} AbstractRunBarsType{T} AbstractInformationDrivenBars{T} where {T<:Metric} begin
+@field_inherit AbstractRunBars{T<:Metric} AbstractRunBarsType{T} AbstractInformationDrivenBars{
+    T,
+} where {T<:Metric} begin
     cumulative_buy_theta::Float64
     cumulative_sell_theta::Float64
     expected_buy_imbalance::Float64
@@ -74,12 +76,16 @@ function construct_bars_from_data(run_bars::AbstractRunBarsType{T}; data) where 
            isnan(run_bars.expected_sell_imbalance) ||
            isnan(run_bars.expected_buy_ticks_proportion)
             run_bars.expected_buy_imbalance = ewma_expected_imbalance(
-                run_bars, run_bars.previous_tick_imbalances_buy,
-                run_bars.expected_imbalance_window; warm_up = true,
+                run_bars,
+                run_bars.previous_tick_imbalances_buy,
+                run_bars.expected_imbalance_window;
+                warm_up = true,
             )
             run_bars.expected_sell_imbalance = ewma_expected_imbalance(
-                run_bars, run_bars.previous_tick_imbalances_sell,
-                run_bars.expected_imbalance_window; warm_up = true,
+                run_bars,
+                run_bars.previous_tick_imbalances_sell,
+                run_bars.expected_imbalance_window;
+                warm_up = true,
             )
             if run_bars.cumulative_ticks > 0
                 run_bars.expected_buy_ticks_proportion =
@@ -91,20 +97,26 @@ function construct_bars_from_data(run_bars::AbstractRunBarsType{T}; data) where 
 
         if bar_construction_condition(run_bars, threshold)
             next_bar = construct_next_bar(
-                run_bars, date_time, tick_counter, price,
-                run_bars.high_price, run_bars.low_price, threshold,
+                run_bars,
+                date_time,
+                tick_counter,
+                price,
+                run_bars.high_price,
+                run_bars.low_price,
+                threshold,
             )
             push!(bars_list, next_bar)
 
             cumulative_ticks = Int(run_bars.cumulative_ticks)
             push!(run_bars.previous_bars_number_of_ticks, cumulative_ticks)
-            buy_proportion = cumulative_ticks > 0 ?
-                run_bars.buy_ticks_number / cumulative_ticks : 0.0
+            buy_proportion =
+                cumulative_ticks > 0 ? run_bars.buy_ticks_number / cumulative_ticks : 0.0
             push!(run_bars.previous_bars_buy_ticks_proportions, buy_proportion)
 
             run_bars.expected_ticks_number = expected_number_of_ticks(run_bars)
 
-            window = isnothing(run_bars.window_size_for_expected_n_ticks_estimation) ?
+            window =
+                isnothing(run_bars.window_size_for_expected_n_ticks_estimation) ?
                 run_bars.expected_imbalance_window :
                 run_bars.window_size_for_expected_n_ticks_estimation
             proportions = run_bars.previous_bars_buy_ticks_proportions
@@ -112,11 +124,13 @@ function construct_bars_from_data(run_bars::AbstractRunBarsType{T}; data) where 
                 ewma(collect(Float64, last(proportions, window)), window)[end]
 
             run_bars.expected_buy_imbalance = ewma_expected_imbalance(
-                run_bars, run_bars.previous_tick_imbalances_buy,
+                run_bars,
+                run_bars.previous_tick_imbalances_buy,
                 run_bars.expected_imbalance_window,
             )
             run_bars.expected_sell_imbalance = ewma_expected_imbalance(
-                run_bars, run_bars.previous_tick_imbalances_sell,
+                run_bars,
+                run_bars.previous_tick_imbalances_sell,
                 run_bars.expected_imbalance_window,
             )
 
@@ -133,8 +147,10 @@ function calculate_run_threshold(run_bars::AbstractRunBarsType)::Float64
     expected_buy_imbalance = run_bars.expected_buy_imbalance
     expected_sell_imbalance = run_bars.expected_sell_imbalance
 
-    if isnan(expected_ticks) || isnan(expected_buy_proportion) ||
-       isnan(expected_buy_imbalance) || isnan(expected_sell_imbalance)
+    if isnan(expected_ticks) ||
+       isnan(expected_buy_proportion) ||
+       isnan(expected_buy_imbalance) ||
+       isnan(expected_sell_imbalance)
         return Inf
     end
 

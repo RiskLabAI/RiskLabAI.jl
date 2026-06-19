@@ -3,7 +3,9 @@
 # data/structures/abstract_imbalance_bars.py. `using` centralized in `Data`
 # (dropped ProfileView/TimerOutputs/CSV/ResumableFunctions/Parameters).
 
-@field_inherit AbstractImbalanceBars{T<:Metric} AbstractImbalanceBarsType{T} AbstractInformationDrivenBars{T} where {T<:Metric} begin
+@field_inherit AbstractImbalanceBars{T<:Metric} AbstractImbalanceBarsType{T} AbstractInformationDrivenBars{
+    T,
+} where {T<:Metric} begin
     cumulative_theta::Float64
     expected_imbalance::Float64
     previous_bars_number_of_ticks::Vector{Int}
@@ -69,8 +71,9 @@ function construct_bars_from_data(
 
         expected_ticks = imbalance_bars.expected_ticks_number
         expected_imbalance = imbalance_bars.expected_imbalance
-        threshold = (isnan(expected_ticks) || isnan(expected_imbalance)) ? Inf :
-                    expected_ticks * abs(expected_imbalance)
+        threshold =
+            (isnan(expected_ticks) || isnan(expected_imbalance)) ? Inf :
+            expected_ticks * abs(expected_imbalance)
 
         if bar_construction_condition(imbalance_bars, threshold)
             next_bar = construct_next_bar(

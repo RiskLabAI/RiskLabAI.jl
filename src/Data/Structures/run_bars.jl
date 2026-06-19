@@ -2,7 +2,9 @@
 # (constant E[T]). Mirrors RiskLabAI.py data/structures/run_bars.py.
 # `using` centralized in `Data`.
 
-@field_inherit ExpectedRunBars{T<:Metric} ExpectedRunBarsType{T} AbstractRunBars{T} where {T<:Metric} begin
+@field_inherit ExpectedRunBars{T<:Metric} ExpectedRunBarsType{T} AbstractRunBars{
+    T,
+} where {T<:Metric} begin
     expected_ticks_number_lower_bound::Float64
     expected_ticks_number_upper_bound::Float64
 end
@@ -29,8 +31,9 @@ function ExpectedRunBars{T}(;
         does_analyse_thresholds = does_analyse_thresholds,
     )
 
-    lower, upper = isnothing(expected_ticks_number_bounds) ?
-        (0.0, typemax(Float64)) : expected_ticks_number_bounds
+    lower, upper =
+        isnothing(expected_ticks_number_bounds) ? (0.0, typemax(Float64)) :
+        expected_ticks_number_bounds
 
     return ExpectedRunBars{T}(values(base)..., lower, upper)
 end
@@ -47,8 +50,9 @@ function expected_number_of_ticks(bars::ExpectedRunBarsType)::Float64
     )
 end
 
-@field_inherit FixedRunBars{T<:Metric} FixedRunBarsType{T} AbstractRunBars{T} where {T<:Metric} begin
-end
+@field_inherit FixedRunBars{T<:Metric} FixedRunBarsType{T} AbstractRunBars{
+    T,
+} where {T<:Metric} begin end
 
 """
     FixedRunBars{T}(; ...) where {T<:Metric}

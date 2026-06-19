@@ -30,8 +30,8 @@ function expand_label_for_meta_labeling(
     last_label = close_index[end]
     m_first = molecule[1]
     keep = [
-        (event_start[i] in molecule) && (event_end[i] > m_first)
-        for i in eachindex(event_start)
+        (event_start[i] in molecule) && (event_end[i] > m_first) for
+        i in eachindex(event_start)
     ]
     starts = event_start[keep]
     ends = event_end[keep]
@@ -61,10 +61,10 @@ function calculate_average_uniqueness(index_matrix::AbstractMatrix{<:Real})
     n_periods, n_events = size(index_matrix)
     concurrency = vec(sum(index_matrix; dims = 2))
     result = zeros(Float64, n_events)
-    for j in 1:n_events
+    for j = 1:n_events
         total = 0.0
         duration = 0
-        for t in 1:n_periods
+        for t = 1:n_periods
             if index_matrix[t, j] > 0
                 duration += 1
                 if concurrency[t] > 0
@@ -102,8 +102,8 @@ function sample_weight_absolute_return_meta_labeling(
 
     # |log-return|; first entry NaN (no prior price), matching pandas diff().
     log_return = fill(NaN, length(price))
-    for i in 2:length(price)
-        log_return[i] = abs(log(price[i]) - log(price[i - 1]))
+    for i = 2:length(price)
+        log_return[i] = abs(log(price[i]) - log(price[i-1]))
     end
 
     # Map molecule start -> event end.
@@ -137,7 +137,7 @@ Apply a linear time decay to `weight` (assumed in chronological order): the most
 recent observation keeps weight 1, the oldest gets `clf_last_weight`
 (∈ [0, 1]). Mirrors Python's `calculate_time_decay`.
 """
-function calculate_time_decay(weight::AbstractVector{<:Real}; clf_last_weight::Real=1.0)
+function calculate_time_decay(weight::AbstractVector{<:Real}; clf_last_weight::Real = 1.0)
     (clf_last_weight < 0 || clf_last_weight > 1) &&
         throw(ArgumentError("clf_last_weight must be between 0 and 1"))
     cumulative = cumsum(weight)

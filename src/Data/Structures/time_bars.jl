@@ -13,13 +13,8 @@
     current_bar_end_timestamp::Float64   # NaN until the first tick
 end
 
-const _RESOLUTION_TO_N_SECONDS = Dict(
-    "S" => 1,
-    "MIN" => 60,
-    "H" => 3600,
-    "D" => 86400,
-    "W" => 604800,
-)
+const _RESOLUTION_TO_N_SECONDS =
+    Dict("S" => 1, "MIN" => 60, "H" => 3600, "D" => 86400, "W" => 604800)
 
 """
     TimeBars(; resolution_type::String, resolution_units::Int)
@@ -31,10 +26,12 @@ Construct time bars. `resolution_type` is one of `"S"`, `"MIN"`, `"H"`, `"D"`,
 function TimeBars(; resolution_type::String, resolution_units::Int)
     resolution_upper = uppercase(resolution_type)
     if !haskey(_RESOLUTION_TO_N_SECONDS, resolution_upper)
-        throw(ArgumentError(
-            "Invalid resolution_type $(resolution_type); use one of " *
-            "$(collect(keys(_RESOLUTION_TO_N_SECONDS)))."
-        ))
+        throw(
+            ArgumentError(
+                "Invalid resolution_type $(resolution_type); use one of " *
+                "$(collect(keys(_RESOLUTION_TO_N_SECONDS))).",
+            ),
+        )
     end
 
     threshold_in_seconds = resolution_units * _RESOLUTION_TO_N_SECONDS[resolution_upper]

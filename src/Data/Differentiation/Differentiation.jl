@@ -22,8 +22,8 @@ Python's `calculate_weights_std` (Snippet 5.2).
 function calculate_weights_std(degree::Real, size::Integer)
     weights = Vector{Float64}(undef, size)
     weights[1] = 1.0
-    for k in 1:(size - 1)
-        weights[k + 1] = -weights[k] / k * (degree - k + 1)
+    for k = 1:(size-1)
+        weights[k+1] = -weights[k] / k * (degree - k + 1)
     end
     return reverse(weights)
 end
@@ -34,7 +34,7 @@ end
 Weights for the fixed-width-window (FFD) method, generated until the magnitude
 drops below `threshold`; ordered with `w₀` at the end (Snippet 5.3).
 """
-function calculate_weights_ffd(degree::Real, threshold::Real=1e-5)
+function calculate_weights_ffd(degree::Real, threshold::Real = 1e-5)
     weights = Float64[1.0]
     k = 1
     while true
@@ -55,7 +55,9 @@ weight loss is below `threshold`) is filled with `NaN`. Mirrors Python's
 `fractional_difference_std` for a single series.
 """
 function fractional_difference_std(
-    series::AbstractVector{<:Real}, degree::Real; threshold::Real=0.01
+    series::AbstractVector{<:Real},
+    degree::Real;
+    threshold::Real = 0.01,
 )
     n = length(series)
     result = fill(NaN, n)
@@ -67,10 +69,10 @@ function fractional_difference_std(
     skip = count(<(threshold), cumulative)
 
     weights_natural = reverse(weights)  # [w0, w1, ...]
-    for k in (skip + 1):n
+    for k = (skip+1):n
         acc = 0.0
-        for m in 0:(k - 1)
-            acc += weights_natural[m + 1] * series[k - m]
+        for m = 0:(k-1)
+            acc += weights_natural[m+1] * series[k-m]
         end
         result[k] = acc
     end
@@ -85,7 +87,9 @@ the same length as `series`, with the first `width-1` entries (the warm-up)
 filled with `NaN`. Mirrors Python's `fractional_difference_fixed_single`.
 """
 function fractional_difference_fixed(
-    series::AbstractVector{<:Real}, degree::Real; threshold::Real=1e-5
+    series::AbstractVector{<:Real},
+    degree::Real;
+    threshold::Real = 1e-5,
 )
     weights = reverse(calculate_weights_ffd(degree, threshold))  # natural order
     width = length(weights)
@@ -93,10 +97,10 @@ function fractional_difference_fixed(
     result = fill(NaN, n)
     n < width && return result
 
-    for k in width:n
+    for k = width:n
         acc = 0.0
-        for m in 0:(width - 1)
-            acc += weights[m + 1] * series[k - m]
+        for m = 0:(width-1)
+            acc += weights[m+1] * series[k-m]
         end
         result[k] = acc
     end
@@ -113,15 +117,18 @@ Python's `find_optimal_ffd_simple` (Snippet 5.4); ADF values come from
 `HypothesisTests.ADFTest`, so they are implementation-defined rather than
 bit-identical to statsmodels.
 """
-function find_optimal_ffd(close_prices::AbstractVector{<:Real}; p_value_threshold::Real=0.05)
+function find_optimal_ffd(
+    close_prices::AbstractVector{<:Real};
+    p_value_threshold::Real = 0.05,
+)
     log_prices = log.(close_prices)
-    ds = range(0.0, 1.0; length=11)
+    ds = range(0.0, 1.0; length = 11)
     d_out = Float64[]
     adf_stat = Float64[]
     p_value = Float64[]
     correlation = Float64[]
     for d in ds
-        differentiated = fractional_difference_fixed(log_prices, d; threshold=0.01)
+        differentiated = fractional_difference_fixed(log_prices, d; threshold = 0.01)
         mask = .!isnan.(differentiated)
         sum(mask) < 3 && continue
         test = ADFTest(differentiated[mask], :constant, 1)
@@ -130,7 +137,7 @@ function find_optimal_ffd(close_prices::AbstractVector{<:Real}; p_value_threshol
         push!(p_value, pvalue(test))
         push!(correlation, cor(log_prices[mask], differentiated[mask]))
     end
-    return (d=d_out, adf_stat=adf_stat, p_value=p_value, correlation=correlation)
+    return (d = d_out, adf_stat = adf_stat, p_value = p_value, correlation = correlation)
 end
 
 """
@@ -144,16 +151,17 @@ series (same length as `prices`, with a `NaN` warm-up). Mirrors Python's
 """
 function fractionally_differentiated_log_price(
     prices::AbstractVector{<:Real};
-    threshold::Real=1e-5,
-    step::Real=0.01,
-    p_value_threshold::Real=0.05,
+    threshold::Real = 1e-5,
+    step::Real = 0.01,
+    p_value_threshold::Real = 0.05,
 )
     log_prices = log.(prices)
     degree = 0.0
     while true
         degree += step
         degree > 2.0 && throw(ErrorException("Failed to find stationary 'd' < 2.0"))
-        differentiated = fractional_difference_fixed(log_prices, degree; threshold=threshold)
+        differentiated =
+            fractional_difference_fixed(log_prices, degree; threshold = threshold)
         mask = .!isnan.(differentiated)
         sum(mask) < 3 && continue
         if pvalue(ADFTest(differentiated[mask], :constant, 1)) <= p_value_threshold

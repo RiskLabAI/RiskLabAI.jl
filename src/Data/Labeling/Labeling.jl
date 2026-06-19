@@ -23,11 +23,11 @@ function _ewm_std(x::AbstractVector{<:Real}, span::Integer)
     alpha = 2 / (span + 1)
     n = length(x)
     out = fill(NaN, n)
-    for t in 1:n
+    for t = 1:n
         sum_w = 0.0
         sum_w2 = 0.0
         weighted_mean = 0.0
-        for i in 1:t
+        for i = 1:t
             w = (1 - alpha)^(t - i)
             weighted_mean += w * x[i]
             sum_w += w
@@ -35,7 +35,7 @@ function _ewm_std(x::AbstractVector{<:Real}, span::Integer)
         end
         m = weighted_mean / sum_w
         ssd = 0.0
-        for i in 1:t
+        for i = 1:t
             w = (1 - alpha)^(t - i)
             ssd += w * (x[i] - m)^2
         end
@@ -53,13 +53,15 @@ cumulative up/down price move first exceeds `threshold`. Mirrors Python's
 `symmetric_cusum_filter` (Snippet 3.2).
 """
 function symmetric_cusum_filter(
-    close_index::AbstractVector, close::AbstractVector{<:Real}, threshold::Real
+    close_index::AbstractVector,
+    close::AbstractVector{<:Real},
+    threshold::Real,
 )
     events = eltype(close_index)[]
     shift_pos = 0.0
     shift_neg = 0.0
-    for i in 2:length(close)
-        delta = close[i] - close[i - 1]
+    for i = 2:length(close)
+        delta = close[i] - close[i-1]
         shift_pos = max(0.0, shift_pos + delta)
         shift_neg = min(0.0, shift_neg + delta)
         if shift_neg < -threshold
@@ -81,13 +83,15 @@ Symmetric CUSUM filter with a per-timestamp `threshold` vector (aligned to
 Python's `cusum_filter_events_dynamic_threshold`.
 """
 function cusum_filter_events_dynamic_threshold(
-    close_index::AbstractVector, close::AbstractVector{<:Real}, threshold::AbstractVector{<:Real}
+    close_index::AbstractVector,
+    close::AbstractVector{<:Real},
+    threshold::AbstractVector{<:Real},
 )
     events = eltype(close_index)[]
     shift_pos = 0.0
     shift_neg = 0.0
-    for i in 2:length(close)
-        delta = close[i] - close[i - 1]
+    for i = 2:length(close)
+        delta = close[i] - close[i-1]
         thr = threshold[i]
         shift_pos = max(0.0, shift_pos + delta)
         shift_neg = min(0.0, shift_neg + delta)
@@ -110,18 +114,20 @@ EWMA standard deviation of (roughly) daily log returns. Mirrors Python's
 index lookup and pandas' debiased EWM std (so the first value is `NaN`).
 """
 function daily_volatility_with_log_returns(
-    close_index::AbstractVector, close::AbstractVector{<:Real}; span::Integer=100
+    close_index::AbstractVector,
+    close::AbstractVector{<:Real};
+    span::Integer = 100,
 )
     n = length(close_index)
     # 0-based count of timestamps strictly before (t - 1 day), per Python searchsorted.
-    prev_count = [searchsortedfirst(close_index, close_index[i] - Day(1)) - 1 for i in 1:n]
+    prev_count = [searchsortedfirst(close_index, close_index[i] - Day(1)) - 1 for i = 1:n]
     keep = findall(>(0), prev_count)
     isempty(keep) && return (index = eltype(close_index)[], volatility = Float64[])
 
     span_len = length(keep)
-    current_pos = (n - span_len + 1):n
+    current_pos = (n-span_len+1):n
     prior_pos = prev_count[keep]   # 1-based positions of the prior price
-    returns = [log(close[current_pos[j]] / close[prior_pos[j]]) for j in 1:span_len]
+    returns = [log(close[current_pos[j]] / close[prior_pos[j]]) for j = 1:span_len]
     return (index = close_index[current_pos], volatility = _ewm_std(returns, span))
 end
 
@@ -132,7 +138,11 @@ For each event, the first timestamp at least `number_days` later. Events whose
 barrier falls past the end of the series are dropped. Mirrors Python's
 `vertical_barrier` (Snippet 3.4).
 """
-function vertical_barrier(close_index::AbstractVector, time_events::AbstractVector, number_days::Integer)
+function vertical_barrier(
+    close_index::AbstractVector,
+    time_events::AbstractVector,
+    number_days::Integer,
+)
     n = length(close_index)
     events = eltype(close_index)[]
     barriers = eltype(close_index)[]
@@ -156,11 +166,14 @@ barrier, may be `missing`), `base_width`, `side`. `ptsl = (pt_mult, sl_mult)`
 `triple_barrier` (Snippet 3.3).
 """
 function triple_barrier(
-    close_index::AbstractVector, close::AbstractVector{<:Real}, events::DataFrame, ptsl
+    close_index::AbstractVector,
+    close::AbstractVector{<:Real},
+    events::DataFrame,
+    ptsl,
 )
     position = Dict(t => i for (i, t) in enumerate(close_index))
     result = Vector{Union{Missing,eltype(close_index)}}(undef, nrow(events))
-    for r in 1:nrow(events)
+    for r = 1:nrow(events)
         start_pos = position[events.event_start[r]]
         vbar = events.end_time[r]
         vfill = ismissing(vbar) ? close_index[end] : vbar
@@ -174,9 +187,9 @@ function triple_barrier(
         path = log.(segment ./ segment[1]) .* side
         candidates = Union{Missing,eltype(close_index)}[vbar]
         below = findfirst(<(stop_loss), path)
-        below !== nothing && push!(candidates, close_index[start_pos + below - 1])
+        below !== nothing && push!(candidates, close_index[start_pos+below-1])
         above = findfirst(>(profit_taking), path)
-        above !== nothing && push!(candidates, close_index[start_pos + above - 1])
+        above !== nothing && push!(candidates, close_index[start_pos+above-1])
 
         present = collect(skipmissing(candidates))
         result[r] = isempty(present) ? missing : minimum(present)
@@ -201,8 +214,8 @@ function meta_events(
     ptsl,
     target::AbstractDict,
     return_min::Real;
-    vertical_barriers::Union{Nothing,AbstractDict}=nothing,
-    side::Union{Nothing,AbstractDict}=nothing,
+    vertical_barriers::Union{Nothing,AbstractDict} = nothing,
+    side::Union{Nothing,AbstractDict} = nothing,
 )
     starts = eltype(close_index)[]
     widths = Float64[]
@@ -226,7 +239,12 @@ function meta_events(
         ptsl_final = (ptsl[1], ptsl[2])
     end
 
-    events = DataFrame(event_start = starts, end_time = end_time, base_width = widths, side = sides)
+    events = DataFrame(
+        event_start = starts,
+        end_time = end_time,
+        base_width = widths,
+        side = sides,
+    )
     events.end_time = triple_barrier(close_index, close, events, ptsl_final)
     side === nothing && select!(events, Not(:side))
     return events
@@ -240,7 +258,11 @@ touch). With a `side` column the label is meta (1 if profitable else 0);
 otherwise it is the sign of the return. Mirrors Python's `meta_labeling`
 (Snippet 3.7).
 """
-function meta_labeling(events::DataFrame, close_index::AbstractVector, close::AbstractVector{<:Real})
+function meta_labeling(
+    events::DataFrame,
+    close_index::AbstractVector,
+    close::AbstractVector{<:Real},
+)
     price = Dict(t => p for (t, p) in zip(close_index, close))
     valid = .!ismissing.(events.end_time)
     sub = events[valid, :]

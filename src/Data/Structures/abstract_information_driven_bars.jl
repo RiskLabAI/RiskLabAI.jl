@@ -24,8 +24,7 @@ function AbstractInformationDrivenBars{T}(;
         base...,
         expected_ticks_number = initial_estimate_of_expected_n_ticks_in_bar,
         expected_imbalance_window = expected_imbalance_window,
-        window_size_for_expected_n_ticks_estimation =
-            window_size_for_expected_n_ticks_estimation,
+        window_size_for_expected_n_ticks_estimation = window_size_for_expected_n_ticks_estimation,
     )
 end
 
@@ -40,8 +39,8 @@ function ewma_expected_imbalance(
     window::Int;
     warm_up::Bool = false,
 )::Float64
-    if warm_up && (isnan(bars.expected_ticks_number) ||
-                   length(array) < bars.expected_ticks_number)
+    if warm_up &&
+       (isnan(bars.expected_ticks_number) || length(array) < bars.expected_ticks_number)
         return NaN
     end
     ewma_window = Int(min(length(array), window))
@@ -50,9 +49,21 @@ function ewma_expected_imbalance(
 end
 
 # Per-tick imbalance θ_t, dispatched on the metric (AFML p.29).
-imbalance_at_tick(::Type{Tick}, price::Float64, signed_tick::Float64, volume::Float64)::Float64 =
-    signed_tick
-imbalance_at_tick(::Type{Volume}, price::Float64, signed_tick::Float64, volume::Float64)::Float64 =
-    signed_tick * volume
-imbalance_at_tick(::Type{Dollar}, price::Float64, signed_tick::Float64, volume::Float64)::Float64 =
-    signed_tick * volume * price
+imbalance_at_tick(
+    ::Type{Tick},
+    price::Float64,
+    signed_tick::Float64,
+    volume::Float64,
+)::Float64 = signed_tick
+imbalance_at_tick(
+    ::Type{Volume},
+    price::Float64,
+    signed_tick::Float64,
+    volume::Float64,
+)::Float64 = signed_tick * volume
+imbalance_at_tick(
+    ::Type{Dollar},
+    price::Float64,
+    signed_tick::Float64,
+    volume::Float64,
+)::Float64 = signed_tick * volume * price

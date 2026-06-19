@@ -22,11 +22,11 @@ Theoretical Marcenko–Pastur density of eigenvalues for a random correlation
 matrix with observation/feature ratio `q = T/N`. Mirrors Python's
 `marcenko_pastur_pdf` (returns the eigenvalue grid and the density on it).
 """
-function marcenko_pastur_pdf(variance::Real, q::Real; num_points::Integer=1000)
+function marcenko_pastur_pdf(variance::Real, q::Real; num_points::Integer = 1000)
     lambda_min = variance * (1 - sqrt(1 / q))^2
     lambda_max = variance * (1 + sqrt(1 / q))^2
     e_min = max(lambda_min, 1e-10)
-    eigenvalues = collect(range(e_min, lambda_max; length=num_points))
+    eigenvalues = collect(range(e_min, lambda_max; length = num_points))
     pdf = similar(eigenvalues)
     for i in eachindex(eigenvalues)
         e = eigenvalues[i]
@@ -44,7 +44,7 @@ Eigendecomposition of a Hermitian matrix with eigenvalues sorted **descending**
 """
 function pca(matrix::AbstractMatrix{<:Real})
     factorization = eigen(Symmetric(Matrix(matrix)))
-    order = sortperm(factorization.values; rev=true)
+    order = sortperm(factorization.values; rev = true)
     return factorization.values[order], factorization.vectors[:, order]
 end
 
@@ -69,7 +69,8 @@ end
 Convert a correlation matrix back to covariance given per-asset std devs.
 Mirrors Python's `corr_to_cov`.
 """
-corr_to_cov(corr::AbstractMatrix{<:Real}, std::AbstractVector{<:Real}) = corr .* (std * std')
+corr_to_cov(corr::AbstractMatrix{<:Real}, std::AbstractVector{<:Real}) =
+    corr .* (std * std')
 
 """
     denoised_corr(eigenvalues, eigenvectors, num_facts) -> Matrix
@@ -79,7 +80,9 @@ Reconstruct a denoised correlation matrix, keeping the `num_facts` largest
 `eigenvalues` are sorted descending. Mirrors Python's `denoised_corr`.
 """
 function denoised_corr(
-    eigenvalues::AbstractVector{<:Real}, eigenvectors::AbstractMatrix{<:Real}, num_facts::Integer
+    eigenvalues::AbstractVector{<:Real},
+    eigenvectors::AbstractMatrix{<:Real},
+    num_facts::Integer,
 )
     n = length(eigenvalues)
     signal_values = eigenvalues[1:num_facts]
@@ -87,8 +90,8 @@ function denoised_corr(
     corr = signal_vectors * Diagonal(signal_values) * signal_vectors'
 
     if num_facts < n
-        avg_noise = mean(eigenvalues[(num_facts + 1):end])
-        noise_vectors = eigenvectors[:, (num_facts + 1):end]
+        avg_noise = mean(eigenvalues[(num_facts+1):end])
+        noise_vectors = eigenvectors[:, (num_facts+1):end]
         corr += noise_vectors * Diagonal(fill(avg_noise, n - num_facts)) * noise_vectors'
     end
 
@@ -100,7 +103,11 @@ end
 
 # Gaussian KDE density (matches scikit-learn KernelDensity, gaussian kernel):
 # density(x) = (1 / (n·h·√(2π))) Σ_i exp(-((x - xᵢ)/h)² / 2).
-function _gaussian_kde_density(observations::AbstractVector{<:Real}, query::AbstractVector{<:Real}, bandwidth::Real)
+function _gaussian_kde_density(
+    observations::AbstractVector{<:Real},
+    query::AbstractVector{<:Real},
+    bandwidth::Real,
+)
     n = length(observations)
     scale = 1.0 / (n * bandwidth * sqrt(2 * pi))
     density = similar(query, Float64)
@@ -114,19 +121,24 @@ function _gaussian_kde_density(observations::AbstractVector{<:Real}, query::Abst
     return density
 end
 
-function _mp_pdf_fit_error(variance::Real, q::Real, eigenvalues::AbstractVector{<:Real}, bandwidth::Real)
-    grid, theoretical = marcenko_pastur_pdf(variance, q; num_points=length(eigenvalues))
+function _mp_pdf_fit_error(
+    variance::Real,
+    q::Real,
+    eigenvalues::AbstractVector{<:Real},
+    bandwidth::Real,
+)
+    grid, theoretical = marcenko_pastur_pdf(variance, q; num_points = length(eigenvalues))
     empirical = _gaussian_kde_density(eigenvalues, grid, bandwidth)
     return sum((empirical .- theoretical) .^ 2)
 end
 
 # 1-D bounded minimiser (golden-section search) — replaces SciPy's `minimize`.
-function _golden_section_min(f, a::Real, b::Real; tol::Real=1e-6, max_iter::Integer=200)
+function _golden_section_min(f, a::Real, b::Real; tol::Real = 1e-6, max_iter::Integer = 200)
     invphi = (sqrt(5) - 1) / 2
     c = b - invphi * (b - a)
     d = a + invphi * (b - a)
     fc, fd = f(c), f(d)
-    for _ in 1:max_iter
+    for _ = 1:max_iter
         if b - a < tol
             break
         end
@@ -153,7 +165,9 @@ parity only).
 """
 function find_max_eval(eigenvalues::AbstractVector{<:Real}, q::Real, bandwidth::Real)
     variance = _golden_section_min(
-        v -> _mp_pdf_fit_error(v, q, eigenvalues, bandwidth), 1e-5, 1 - 1e-5
+        v -> _mp_pdf_fit_error(v, q, eigenvalues, bandwidth),
+        1e-5,
+        1 - 1e-5,
     )
     lambda_max = variance * (1 + sqrt(1 / q))^2
     return lambda_max, variance
@@ -166,7 +180,7 @@ De-noise a covariance matrix: convert to correlation, fit Marcenko–Pastur to
 locate the signal eigenvalues, rebuild the denoised correlation, and convert
 back. Mirrors Python's `denoise_cov` (KDE-fit step is behavioural parity).
 """
-function denoise_cov(cov0::AbstractMatrix{<:Real}, q::Real; bandwidth::Real=0.01)
+function denoise_cov(cov0::AbstractMatrix{<:Real}, q::Real; bandwidth::Real = 0.01)
     corr0 = cov_to_corr(cov0)
     eigenvalues, eigenvectors = pca(corr0)
     lambda_max, _ = find_max_eval(eigenvalues, q, bandwidth)
@@ -181,7 +195,7 @@ end
 Closed-form optimal portfolio weights (global-minimum-variance when `mu` is
 `nothing`). Mirrors Python's `optimal_portfolio`.
 """
-function optimal_portfolio(cov::AbstractMatrix{<:Real}; mu=nothing)
+function optimal_portfolio(cov::AbstractMatrix{<:Real}; mu = nothing)
     inv_cov = inv(cov)
     ones_vec = ones(size(cov, 1))
     target = mu === nothing ? ones_vec : vec(mu)
@@ -195,6 +209,11 @@ end
 Optimal portfolio weights computed from a denoised covariance matrix. Mirrors
 Python's `optimal_portfolio_denoised`.
 """
-function optimal_portfolio_denoised(cov::AbstractMatrix{<:Real}, q::Real; mu=nothing, bandwidth::Real=0.01)
-    return optimal_portfolio(denoise_cov(cov, q; bandwidth=bandwidth); mu=mu)
+function optimal_portfolio_denoised(
+    cov::AbstractMatrix{<:Real},
+    q::Real;
+    mu = nothing,
+    bandwidth::Real = 0.01,
+)
+    return optimal_portfolio(denoise_cov(cov, q; bandwidth = bandwidth); mu = mu)
 end

@@ -12,10 +12,7 @@ end
 Construct standard bars. `T` selects the sampling metric (`Dollar`, `Volume`,
 or `Tick`); `threshold` is the sampling threshold.
 """
-function StandardBars{T}(;
-    bar_type::String,
-    threshold::Float64,
-) where {T<:Metric}
+function StandardBars{T}(; bar_type::String, threshold::Float64) where {T<:Metric}
     base = AbstractBars(bar_type)
     return StandardBars{T}(values(base)..., threshold)
 end
@@ -55,14 +52,23 @@ function construct_bars_from_data(standard_bars::StandardBars{T}; data) where {T
 end
 
 # Sampling condition, dispatched on the metric type.
-function bar_construction_condition(standard_bars::StandardBars{Dollar}, threshold::Float64)::Bool
+function bar_construction_condition(
+    standard_bars::StandardBars{Dollar},
+    threshold::Float64,
+)::Bool
     return standard_bars.cumulative_dollar ≥ threshold
 end
 
-function bar_construction_condition(standard_bars::StandardBars{Volume}, threshold::Float64)::Bool
+function bar_construction_condition(
+    standard_bars::StandardBars{Volume},
+    threshold::Float64,
+)::Bool
     return standard_bars.cumulative_volume ≥ threshold
 end
 
-function bar_construction_condition(standard_bars::StandardBars{Tick}, threshold::Float64)::Bool
+function bar_construction_condition(
+    standard_bars::StandardBars{Tick},
+    threshold::Float64,
+)::Bool
     return standard_bars.cumulative_ticks ≥ threshold
 end

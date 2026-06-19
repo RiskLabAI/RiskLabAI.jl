@@ -44,18 +44,17 @@ jobs:
           files: lcov.info
 
   format:
-    name: JuliaFormatter (advisory until format pass lands)
+    name: JuliaFormatter
     runs-on: ubuntu-latest
-    # Non-blocking until the mechanical JuliaFormatter commit lands;
-    # then remove continue-on-error to make style CI-enforced.
-    continue-on-error: true
+    # Enforced on the reconstructed code only. Legacy src/ subdirs that are not
+    # yet ported can contain parse errors, so they are excluded until wired in.
     steps:
       - uses: actions/checkout@v4
       - uses: julia-actions/setup-julia@v2
         with:
           version: "1"
       - run: |
-          julia -e 'using Pkg; Pkg.add("JuliaFormatter")
+          julia -e 'using Pkg; Pkg.add(name="JuliaFormatter", version="2.9.0")
                     using JuliaFormatter
-                    format("src"; verbose=true) || exit(0)'
+                    format(["src/Utils", "src/Data", "test"]; verbose=true) || exit(0)'
           git diff --exit-code

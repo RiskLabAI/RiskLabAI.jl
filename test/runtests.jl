@@ -43,8 +43,12 @@ end
     #                  buy_vol, sell_vol, ticks, dollar, threshold]  (1-indexed)
     ticks = DataFrame(
         date_time = DateTime.([
-            "2020-01-01T10:00:00", "2020-01-01T10:00:01", "2020-01-01T10:00:02",
-            "2020-01-01T10:00:03", "2020-01-01T10:00:04", "2020-01-01T10:00:05",
+            "2020-01-01T10:00:00",
+            "2020-01-01T10:00:01",
+            "2020-01-01T10:00:02",
+            "2020-01-01T10:00:03",
+            "2020-01-01T10:00:04",
+            "2020-01-01T10:00:05",
             "2020-01-01T10:00:06",
         ]),
         price = [100, 101, 100, 101, 102, 103, 102],
@@ -52,7 +56,8 @@ end
     )
 
     # Tick bars, threshold 3
-    tb = RiskLabAI.Data.StandardBars{RiskLabAI.Data.Tick}(bar_type = "tick", threshold = 3.0)
+    tb =
+        RiskLabAI.Data.StandardBars{RiskLabAI.Data.Tick}(bar_type = "tick", threshold = 3.0)
     bars = RiskLabAI.Data.construct_bars_from_data(tb; data = ticks)
     @test length(bars) == 2
     @test bars[1][1] == DateTime("2020-01-01T10:00:02")
@@ -69,14 +74,20 @@ end
     @test bars[2][10] == 3.0
 
     # Volume bars, threshold 35
-    vb = RiskLabAI.Data.StandardBars{RiskLabAI.Data.Volume}(bar_type = "volume", threshold = 35.0)
+    vb = RiskLabAI.Data.StandardBars{RiskLabAI.Data.Volume}(
+        bar_type = "volume",
+        threshold = 35.0,
+    )
     vbars = RiskLabAI.Data.construct_bars_from_data(vb; data = ticks)
     @test length(vbars) == 2
     @test vbars[1][7] == 35.0
     @test vbars[2][7] == 35.0
 
     # Dollar bars, threshold 3500
-    db = RiskLabAI.Data.StandardBars{RiskLabAI.Data.Dollar}(bar_type = "dollar", threshold = 3500.0)
+    db = RiskLabAI.Data.StandardBars{RiskLabAI.Data.Dollar}(
+        bar_type = "dollar",
+        threshold = 3500.0,
+    )
     dbars = RiskLabAI.Data.construct_bars_from_data(db; data = ticks)
     @test length(dbars) == 2
     @test dbars[1][11] == 3505.0
@@ -87,9 +98,12 @@ end
     # Same fixture as the Python test_time_bars.py (1-second bars).
     ticks = DataFrame(
         date_time = DateTime.([
-            "2020-01-01T10:00:00.100", "2020-01-01T10:00:00.500",
-            "2020-01-01T10:00:01.200", "2020-01-01T10:00:01.800",
-            "2020-01-01T10:00:02.100", "2020-01-01T10:00:02.500",
+            "2020-01-01T10:00:00.100",
+            "2020-01-01T10:00:00.500",
+            "2020-01-01T10:00:01.200",
+            "2020-01-01T10:00:01.800",
+            "2020-01-01T10:00:02.100",
+            "2020-01-01T10:00:02.500",
         ]),
         price = [100, 101, 100, 101, 102, 103],
         volume = [10, 5, 20, 10, 10, 10],
@@ -118,8 +132,12 @@ end
     # Prices 100..103..100 -> tick imbalances [0,1,1,1,-1,-1,-1].
     ticks = DataFrame(
         date_time = DateTime.([
-            "2020-01-01T10:00:00", "2020-01-01T10:00:01", "2020-01-01T10:00:02",
-            "2020-01-01T10:00:03", "2020-01-01T10:00:04", "2020-01-01T10:00:05",
+            "2020-01-01T10:00:00",
+            "2020-01-01T10:00:01",
+            "2020-01-01T10:00:02",
+            "2020-01-01T10:00:03",
+            "2020-01-01T10:00:04",
+            "2020-01-01T10:00:05",
             "2020-01-01T10:00:06",
         ]),
         price = [100, 101, 102, 103, 102, 101, 100],
@@ -156,8 +174,12 @@ end
     # the first (and only) bar forms at the last tick with all 7 ticks.
     ticks = DataFrame(
         date_time = DateTime.([
-            "2020-01-01T10:00:00", "2020-01-01T10:00:01", "2020-01-01T10:00:02",
-            "2020-01-01T10:00:03", "2020-01-01T10:00:04", "2020-01-01T10:00:05",
+            "2020-01-01T10:00:00",
+            "2020-01-01T10:00:01",
+            "2020-01-01T10:00:02",
+            "2020-01-01T10:00:03",
+            "2020-01-01T10:00:04",
+            "2020-01-01T10:00:05",
             "2020-01-01T10:00:06",
         ]),
         price = [100, 101, 102, 103, 102, 101, 100],
@@ -192,7 +214,7 @@ end
 
     # Weights (reversed, w0 last): exact match to Python calculate_weights_*.
     @test D.calculate_weights_std(0.5, 6) ≈
-        [-0.02734375, -0.0390625, -0.0625, -0.125, -0.5, 1.0]
+          [-0.02734375, -0.0390625, -0.0625, -0.125, -0.5, 1.0]
     @test D.calculate_weights_ffd(0.4, 0.1) ≈ [-0.12, -0.4, 1.0]
 
     # Fixed-width FFD: width 3 -> first 2 entries NaN, then 8 values.
@@ -205,8 +227,17 @@ end
     fds = D.fractional_difference_std(x, 0.5; threshold = 0.01)
     @test length(fds) == 10
     @test isnan(fds[1])
-    @test fds[2:end] ≈ [51.5, 37.55, 32.9625, 27.1, 26.66328125,
-        23.205078125, 23.2110351562, 20.6416259766, 20.8013458252]
+    @test fds[2:end] ≈ [
+        51.5,
+        37.55,
+        32.9625,
+        27.1,
+        26.66328125,
+        23.205078125,
+        23.2110351562,
+        20.6416259766,
+        20.8013458252,
+    ]
 
     # ADF-based finders (behavioural: ADF impl differs from statsmodels).
     prices = 100.0 .+ 10.0 .* sin.(0.1 .* (1:200))
@@ -242,14 +273,18 @@ end
 
     # Absolute-return sample weights (normalised to N=3; NaN first return skipped).
     w = D.sample_weight_absolute_return_meta_labeling(
-        event_start, event_end, close_index, price, molecule
+        event_start,
+        event_end,
+        close_index,
+        price,
+        molecule,
     )
     @test w ≈ [0.6362107498, 1.2538702552, 1.1099189949]
     @test sum(w) ≈ 3.0
 
     # Linear time decay (weights assumed chronological).
     @test D.calculate_time_decay([1.0, 1.0, 1.0]; clf_last_weight = 0.5) ≈
-        [0.6666666667, 0.8333333333, 1.0]
+          [0.6666666667, 0.8333333333, 1.0]
     @test D.calculate_time_decay([1.0, 1.0, 1.0]; clf_last_weight = 1.0) ≈ [1.0, 1.0, 1.0]
 end
 
@@ -297,15 +332,32 @@ end
     D = RiskLabAI.Data
     dates = DateTime(2020, 1, 1) .+ Day.(0:19)
     close = [
-        100.0, 102, 101, 103, 105, 104, 106, 103, 101, 99,
-        100, 102, 104, 103, 105, 107, 106, 108, 110, 109,
+        100.0,
+        102,
+        101,
+        103,
+        105,
+        104,
+        106,
+        103,
+        101,
+        99,
+        100,
+        102,
+        104,
+        103,
+        105,
+        107,
+        106,
+        108,
+        110,
+        109,
     ]
 
     # Symmetric CUSUM events.
     events = D.symmetric_cusum_filter(dates, close, 3.0)
-    @test events == DateTime.([
-        "2020-01-05", "2020-01-09", "2020-01-13", "2020-01-16", "2020-01-19",
-    ])
+    @test events ==
+          DateTime.(["2020-01-05", "2020-01-09", "2020-01-13", "2020-01-16", "2020-01-19"])
 
     # Daily volatility (pandas debiased EWM std; first value NaN).
     vol = D.daily_volatility_with_log_returns(dates, close; span = 5)
@@ -323,12 +375,20 @@ end
     # Triple-barrier meta-events.
     target = Dict(vol.index[i] => vol.volatility[i] for i in eachindex(vol.index))
     vbdict = Dict(vb.event[i] => vb.barrier[i] for i in eachindex(vb.event))
-    ev = D.meta_events(dates, close, events, (1.0, 1.0), target, 0.0; vertical_barriers = vbdict)
+    ev = D.meta_events(
+        dates,
+        close,
+        events,
+        (1.0, 1.0),
+        target,
+        0.0;
+        vertical_barriers = vbdict,
+    )
     @test ev.event_start == events
     @test ev.base_width ≈
-        [0.018224119, 0.0322455982, 0.034249469, 0.0235399705, 0.0182630643]
+          [0.018224119, 0.0322455982, 0.034249469, 0.0235399705, 0.0182630643]
     @test ev.end_time[1:4] ==
-        DateTime.(["2020-01-08", "2020-01-12", "2020-01-16", "2020-01-19"])
+          DateTime.(["2020-01-08", "2020-01-12", "2020-01-16", "2020-01-19"])
     @test ismissing(ev.end_time[5])
 
     # Meta-labeling (event 5 dropped: no barrier touch).
@@ -337,8 +397,8 @@ end
     @test ml.label == [-1.0, 1.0, 1.0, 1.0]
 
     # t-value of an OLS fit (matches scipy linregress slope/stderr).
-    @test D.calculate_t_value_linear_regression([100.0, 102, 101, 103, 105]) ≈
-        3.6666666667 atol = 1e-9
+    @test D.calculate_t_value_linear_regression([100.0, 102, 101, 103, 105]) ≈ 3.6666666667 atol =
+        1e-9
 
     # Trend scanning (behavioural shape check).
     ts = D.find_trend_using_trend_scanning([dates[1]], dates, close, (3, 6))
