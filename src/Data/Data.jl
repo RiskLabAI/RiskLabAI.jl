@@ -38,6 +38,9 @@ include("Labeling/Labeling.jl")
 # Trend-scanning labels (AFML Ch. 4).
 include("Labeling/FinancialLabels.jl")
 
+# Information-theoretic distance metrics (AFML Ch. 3).
+include("Distance/DistanceMetric.jl")
+
 export
     # metric taxonomy
     Metric, Dollar, Volume, Tick,
@@ -62,6 +65,11 @@ export
     daily_volatility_with_log_returns, vertical_barrier, triple_barrier,
     meta_events, meta_labeling,
     # trend scanning
-    calculate_t_value_linear_regression, find_trend_using_trend_scanning
+    calculate_t_value_linear_regression, find_trend_using_trend_scanning,
+    # distance metrics
+    calculate_variation_of_information, calculate_number_of_bins,
+    calculate_variation_of_information_extended, calculate_mutual_information,
+    calculate_distance, calculate_kullback_leibler_divergence,
+    calculate_cross_entropy
 
 end # module Data

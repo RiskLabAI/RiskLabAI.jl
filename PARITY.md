@@ -108,8 +108,24 @@ time-indexed Series); `target`/`vertical_barriers`/`side` are passed as
 `event → value` dicts. No GLM/TimeSeries dependency (the legacy files used
 `GLM` + `TimeSeries`); the t-value uses closed-form OLS.
 
-Next submodule: `Data` (distance), then `Backtest`, `Features`, `Optimization`,
-`HPC`.
+## Data.Distance  — PR 11 (wired)
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Variation of information | `calculate_variation_of_information` / `_extended` | `Data.calculate_variation_of_information` / `_extended` | exact parity; histogram + MI/entropy replicated |
+| Optimal bins | `calculate_number_of_bins` | `Data.calculate_number_of_bins` | closed form; exact |
+| Mutual information | `calculate_mutual_information` | `Data.calculate_mutual_information` | exact parity (optional normalisation) |
+| Angular distance | `calculate_distance` | `Data.calculate_distance` | `"angular"` / `"absolute_angular"`; exact |
+| KL divergence / cross-entropy | `calculate_kullback_leibler_divergence` / `calculate_cross_entropy` | `Data.calculate_kullback_leibler_divergence` / `Data.calculate_cross_entropy` | exact parity |
+
+**Deliberate divergence:** the 2-D histogram binning replicates
+`numpy.histogram2d` and the MI/entropy formulas replicate scikit-learn's
+`mutual_info_score` + SciPy's `entropy` (natural log) — so no `StatsBase`/sklearn
+dependency is needed.
+
+**The `Data` sub-package is now fully mirrored in Julia** — Structures (bars),
+Differentiation, Weights, Denoise, Labeling, and Distance, each with
+Python-parity tests. Next: `Backtest`, `Features`, `Optimization`, `HPC`.
 
 Information-driven base: `ewma_expected_imbalance`, `imbalance_at_tick` (metric
 dispatch), dynamic threshold `E[T]·|E[b]|` — shared by imbalance and run bars.

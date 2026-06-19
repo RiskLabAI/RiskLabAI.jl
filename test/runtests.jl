@@ -346,3 +346,32 @@ end
     @test ts.end_time[1] == DateTime("2020-01-06")
     @test ts.trend[1] in (-1.0, 0.0, 1.0)
 end
+
+@testset "Data.Distance — information-theoretic metrics (parity with Python)" begin
+    D = RiskLabAI.Data
+    x = [1.0, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    y = [2.0, 1, 4, 3, 6, 5, 8, 7, 10, 9]
+
+    # Optimal bin counts (univariate / bivariate).
+    @test D.calculate_number_of_bins(10) == 3
+    @test D.calculate_number_of_bins(100; correlation = 0.5) == 5
+
+    # Variation of information (fixed bins).
+    @test D.calculate_variation_of_information(x, y, 3) ≈ 0.763817002
+    @test D.calculate_variation_of_information(x, y, 3; norm = true) ≈ 0.5193177863
+
+    # Mutual information (optimal bins).
+    @test D.calculate_mutual_information(x, y) ≈ 1.6094379124
+    @test D.calculate_mutual_information(x, y; norm = true) ≈ 1.0
+
+    # KL divergence and cross-entropy.
+    p = [0.2, 0.3, 0.5]
+    q = [0.1, 0.4, 0.5]
+    @test D.calculate_kullback_leibler_divergence(p, q) ≈ 0.0523248144
+    @test D.calculate_cross_entropy(p, q) ≈ 1.0819778284
+
+    # Angular distance matrices.
+    dep = [1.0 0.5; 0.5 1.0]
+    @test D.calculate_distance(dep) ≈ [0.0 0.5; 0.5 0.0]
+    @test D.calculate_distance(dep; metric = "absolute_angular") ≈ [0.0 0.5; 0.5 0.0]
+end

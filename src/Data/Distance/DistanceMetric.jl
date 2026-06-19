@@ -1,182 +1,186 @@
-using StatsBase, LinearAlgebra, Statistics
-
 """
-    mutualInformationScore(histogramXY::Array{Int, 2})::Float64
+Information-theoretic distance metrics — native Julia port mirroring the Python
+`RiskLabAI.data.distance.distance_metric` API (López de Prado, AFML Ch. 3):
+variation of information, mutual information, optimal binning, angular distance,
+KL divergence and cross-entropy.
 
-Calculates mutual information score between two datasets.
+The 2-D histogram binning replicates `numpy.histogram2d` (equal-width bins, the
+last bin closed on the right) and the mutual-information / entropy formulas
+replicate scikit-learn's `mutual_info_score` and SciPy's `entropy` (natural
+log), so the metrics match the Python implementation exactly.
 
-# Arguments
-- `histogramXY::Array{Int, 2}`: 2D histogram matrix of the two datasets.
-
-# Returns
-- `Float64`: Mutual information score.
+Reference: De Prado, M. (2018/2020), Advances in Financial Machine Learning, Ch. 3.
 """
-function mutualInformationScore(histogramXY::Array{Int, 2})
-    score = 0.0
-    histogramX = vec(sum(histogramXY, dims=2))
-    histogramY = vec(sum(histogramXY, dims=1))
-    total = sum(histogramXY)
 
-    for i in 1:size(histogramXY)[1]
-        for j in 1:size(histogramXY)[2]
-            if histogramXY[i, j] != 0
-                score += (histogramXY[i, j] / total) *
-                         log(total * histogramXY[i, j] / (histogramX[i] * histogramY[j]))
-            end
+using Statistics: cor
+
+# numpy.histogram2d with an integer bin count (equal-width; last bin closed).
+function _histogram2d(x::AbstractVector{<:Real}, y::AbstractVector{<:Real}, bins::Integer)
+    counts = zeros(Float64, bins, bins)
+    bin_index(v, lo, hi) = lo == hi ? 1 : (v == hi ? bins : clamp(floor(Int, (v - lo) / (hi - lo) * bins) + 1, 1, bins))
+    xlo, xhi = minimum(x), maximum(x)
+    ylo, yhi = minimum(y), maximum(y)
+    for k in eachindex(x)
+        counts[bin_index(x[k], xlo, xhi), bin_index(y[k], ylo, yhi)] += 1.0
+    end
+    return counts
+end
+
+# SciPy entropy (natural log) of a count vector.
+function _entropy(counts::AbstractVector{<:Real})
+    total = sum(counts)
+    total == 0 && return 0.0
+    h = 0.0
+    for c in counts
+        if c > 0
+            p = c / total
+            h -= p * log(p)
         end
     end
-    
-    return score
+    return h
+end
+
+# scikit-learn mutual_info_score from a contingency (histogram) matrix, in nats.
+function _mutual_info(hist::AbstractMatrix{<:Real})
+    total = sum(hist)
+    total == 0 && return 0.0
+    row = vec(sum(hist; dims=2))
+    col = vec(sum(hist; dims=1))
+    mi = 0.0
+    for i in axes(hist, 1), j in axes(hist, 2)
+        nij = hist[i, j]
+        if nij > 0
+            mi += (nij / total) * log(nij * total / (row[i] * col[j]))
+        end
+    end
+    return mi
 end
 
 """
-    variationOfInformation(x::Array{Float64}, y::Array{Float64}, numberOfBins::Int; norm::Bool=false)::Float64
+    calculate_variation_of_information(x, y, bins; norm=false) -> Float64
 
-Calculates Variation of Information between two datasets.
-
-# Arguments
-- `x::Array{Float64}`: First dataset.
-- `y::Array{Float64}`: Second dataset.
-- `numberOfBins::Int`: Number of bins for discretization.
-- `norm::Bool=false`: Normalize the result.
-
-# Returns
-- `Float64`: Variation of Information.
+Variation of information `VI = H(X) + H(Y) - 2·I(X, Y)` from a `bins`×`bins`
+histogram; optionally normalised by the joint entropy. Mirrors Python's
+`calculate_variation_of_information`.
 """
-function variationOfInformation(x::Array{Float64}, y::Array{Float64}, numberOfBins::Int; norm::Bool=false)
-    rangeX = range(minimum(x), maximum(x), length=numberOfBins)
-    rangeY = range(minimum(y), maximum(y), length=numberOfBins)
-    histogramXY = fit(Histogram, (x, y), (rangeX, rangeY)).weights
-    mutualInformation = mutualInformationScore(histogramXY)
-    marginalX = entropy(normalize(fit(Histogram, x, rangeX).weights, 1))
-    marginalY = entropy(normalize(fit(Histogram, y, rangeY).weights, 1))
-    variationXY = marginalX + marginalY - 2 * mutualInformation
-    
+function calculate_variation_of_information(
+    x::AbstractVector{<:Real}, y::AbstractVector{<:Real}, bins::Integer; norm::Bool=false
+)
+    hist = _histogram2d(x, y, bins)
+    mutual_information = _mutual_info(hist)
+    marginal_x = _entropy(vec(sum(hist; dims=2)))
+    marginal_y = _entropy(vec(sum(hist; dims=1)))
+    variation = marginal_x + marginal_y - 2 * mutual_information
     if norm
-        jointXY = marginalX + marginalY - mutualInformation
-        variationXY /= jointXY
+        joint = marginal_x + marginal_y - mutual_information
+        return joint == 0 ? 0.0 : variation / joint
     end
-    
-    return variationXY
+    return variation
 end
 
 """
-    numberOfBins(numberObservations::Int, correlation::Union{Nothing, Float64}=nothing)::Int
+    calculate_number_of_bins(num_observations; correlation=nothing) -> Int
 
-Calculates the number of bins for histogram based on the number of observations and correlation.
-
-# Arguments
-- `numberObservations::Int`: Number of observations.
-- `correlation::Union{Nothing, Float64}=nothing`: Correlation between two datasets.
-
-# Returns
-- `Int`: Number of bins.
+Optimal number of histogram bins (univariate when `correlation` is `nothing`,
+otherwise bivariate). Mirrors Python's `calculate_number_of_bins`.
 """
-function numberOfBins(numberObservations::Int, correlation::Union{Nothing, Float64}=nothing)
-    if isnothing(correlation)
-        z = (8 + 324 * numberObservations + 12 * sqrt(36 * numberObservations + 729 * numberObservations^2))^(1/3)
-        bins = round(z / 6 + 2 / (3 * z) + 1 / 3)
-    else
-        bins = round(2^-0.5 * sqrt(1 + sqrt(1 + 24 * numberObservations / (1 - correlation^2))))
+function calculate_number_of_bins(num_observations::Integer; correlation=nothing)
+    if correlation === nothing
+        z = (8 + 324 * num_observations +
+             12 * sqrt(36 * num_observations + 729 * num_observations^2))^(1 / 3)
+        return round(Int, z / 6 + 2 / (3z) + 1 / 3)
     end
-
-    return Int(bins)
+    if isapprox(correlation, 1.0) || isapprox(correlation, -1.0)
+        correlation = sign(correlation) * (1 - 1e-10)
+    end
+    (1 - correlation^2) == 0 && return calculate_number_of_bins(num_observations)
+    return round(Int, 2^-0.5 * sqrt(1 + sqrt(1 + 24 * num_observations / (1 - correlation^2))))
 end
 
 """
-    variationOfInformationExtended(x::Array{Float64}, y::Array{Float64}; norm::Bool=false)::Float64
+    calculate_variation_of_information_extended(x, y; norm=false) -> Float64
 
-Calculates Variation of Information between two datasets while calculating the number of bins.
-
-# Arguments
-- `x::Array{Float64}`: First dataset.
-- `y::Array{Float64}`: Second dataset.
-- `norm::Bool=false`: Normalize the result.
-
-# Returns
-- `Float64`: Variation of Information.
+Variation of information using the optimal bivariate bin count. Mirrors Python's
+`calculate_variation_of_information_extended`.
 """
-function variationOfInformationExtended(x::Array{Float64}, y::Array{Float64}; norm::Bool=false)
-    numberOfBins = numberOfBins(size(x)[1], cor(x, y))
-    return variationOfInformation(x, y, numberOfBins; norm=norm)
+function calculate_variation_of_information_extended(
+    x::AbstractVector{<:Real}, y::AbstractVector{<:Real}; norm::Bool=false
+)
+    bins = calculate_number_of_bins(length(x); correlation=cor(x, y))
+    return calculate_variation_of_information(x, y, bins; norm=norm)
 end
 
 """
-    mutualInformation(x::Array{Float64}, y::Array{Float64}; norm::Bool=false)::Float64
+    calculate_mutual_information(x, y; norm=false) -> Float64
 
-Calculates Mutual Information between two datasets while calculating the number of bins.
-
-# Arguments
-- `x::Array{Float64}`: First dataset.
-- `y::Array{Float64}`: Second dataset.
-- `norm::Bool=false`: Normalize the result.
-
-# Returns
-- `Float64`: Mutual Information.
+Mutual information using the optimal bivariate bin count; optionally normalised
+by `min(H(X), H(Y))`. Mirrors Python's `calculate_mutual_information`.
 """
-function mutualInformation(x::Array{Float64}, y::Array{Float64}; norm::Bool=false)
-    numberOfBins = numberOfBins(size(x)[1], cor(x, y))
-    mutualInformation = mutualInformationScore(fit(Histogram, (x, y), (range(minimum(x), maximum(x), length=numberOfBins), range(minimum(y), maximum(y), length=numberOfBins))).weights)
-    
+function calculate_mutual_information(
+    x::AbstractVector{<:Real}, y::AbstractVector{<:Real}; norm::Bool=false
+)
+    bins = calculate_number_of_bins(length(x); correlation=cor(x, y))
+    hist = _histogram2d(x, y, bins)
+    mutual_information = _mutual_info(hist)
     if norm
-        marginalX = entropy(normalize(fit(Histogram, x, range(minimum(x), maximum(x), length=numberOfBins)).weights, 1))
-        marginalY = entropy(normalize(fit(Histogram, y, range(minimum(y), maximum(y), length=numberOfBins)).weights, 1))
-        mutualInformation /= min(marginalX, marginalY)
+        min_entropy = min(_entropy(vec(sum(hist; dims=2))), _entropy(vec(sum(hist; dims=1))))
+        return min_entropy == 0 ? 0.0 : mutual_information / min_entropy
     end
-    
-    return mutualInformation
+    return mutual_information
 end
 
 """
-    distance(dependence::Matrix, metric::String="angular")::Float64
+    calculate_distance(dependence; metric="angular") -> Matrix
 
-Calculates the distance from a dependence matrix using the specified metric.
-
-# Arguments
-- `dependence::Matrix`: Dependence matrix.
-- `metric::String="angular"`: Metric to use ("angular" or "absolute_angular").
-
-# Returns
-- `Float64`: Distance value.
+Angular (`"angular"`) or absolute-angular (`"absolute_angular"`) distance matrix
+from a dependence (correlation) matrix. Mirrors Python's `calculate_distance`.
 """
-function distance(dependence::Matrix, metric::String="angular")
+function calculate_distance(dependence::AbstractMatrix{<:Real}; metric::AbstractString="angular")
+    dep = clamp.(dependence, -1.0, 1.0)
     if metric == "angular"
-        distanceFunction = q -> sqrt((1 - q).round(5) / 2.)
+        return sqrt.(round.(1 .- dep; digits=6) ./ 2)
     elseif metric == "absolute_angular"
-        distanceFunction = q -> sqrt((1 - abs(q)).round(5) / 2.)
+        return sqrt.(round.(1 .- abs.(dep); digits=6) ./ 2)
+    else
+        throw(ArgumentError("Unknown metric: $metric"))
     end
-    
-    return distanceFunction(dependence)
 end
 
 """
-    kullbackLeibler(p::Array{Float64}, q::Array{Float64})::Float64
+    calculate_kullback_leibler_divergence(p, q) -> Float64
 
-Calculates Kullback-Leibler divergence between two discrete probability distributions defined on the same probability space.
-
-# Arguments
-- `p::Array{Float64}`: First distribution.
-- `q::Array{Float64}`: Second distribution.
-
-# Returns
-- `Float64`: Kullback-Leibler divergence.
+Kullback–Leibler divergence `D(P‖Q) = Σ pᵢ log(pᵢ/qᵢ)` (natural log; `p`, `q`
+are normalised to sum to 1). Mirrors Python's
+`calculate_kullback_leibler_divergence`.
 """
-function kullbackLeibler(p::Array{Float64}, q::Array{Float64})
-    return -sum(p .* log.(q ./ p))
+function calculate_kullback_leibler_divergence(p::AbstractVector{<:Real}, q::AbstractVector{<:Real})
+    pn = p ./ sum(p)
+    qn = q ./ sum(q)
+    any((pn .> 0) .& (qn .== 0)) && return Inf
+    divergence = 0.0
+    for i in eachindex(pn)
+        if pn[i] > 0 && qn[i] > 0
+            divergence -= pn[i] * log(qn[i] / pn[i])
+        end
+    end
+    return divergence
 end
 
 """
-    crossEntropy(p::Array{Float64}, q::Array{Float64})::Float64
+    calculate_cross_entropy(p, q) -> Float64
 
-Calculates cross-entropy between two discrete probability distributions defined on the same probability space.
-
-# Arguments
-- `p::Array{Float64}`: First distribution.
-- `q::Array{Float64}`: Second distribution.
-
-# Returns
-- `Float64`: Cross-entropy.
+Cross-entropy `H(P, Q) = -Σ pᵢ log(qᵢ)` (natural log; `p`, `q` normalised).
+Mirrors Python's `calculate_cross_entropy`.
 """
-function crossEntropy(p::Array{Float64}, q::Array{Float64})
-    return -sum(p .* log.(q))
+function calculate_cross_entropy(p::AbstractVector{<:Real}, q::AbstractVector{<:Real})
+    pn = p ./ sum(p)
+    qn = q ./ sum(q)
+    any((pn .> 0) .& (qn .== 0)) && return Inf
+    entropy = 0.0
+    for i in eachindex(pn)
+        if pn[i] > 0 && qn[i] > 0
+            entropy -= pn[i] * log(qn[i])
+        end
+    end
+    return entropy
 end
