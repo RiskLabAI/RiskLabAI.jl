@@ -23,6 +23,10 @@ using .Features: shannon_entropy, probability_mass_function, plug_in_entropy_est
     lag_dataframe, prepare_data, compute_beta, get_expanding_window_adf,
     get_bsadf_statistic
 
+include("Optimization/Optimization.jl")
+using .Optimization: inverse_variance_weights, cluster_variance, quasi_diagonal,
+    recursive_bisection, distance_corr, pca_weights
+
 include("Backtest/Backtest.jl")
 using .Backtest: sharpe_ratio, bet_timing, calculate_holding_period,
     calculate_hhi, calculate_hhi_concentration, compute_drawdowns_time_under_water,
@@ -57,6 +61,9 @@ export
     # Features — structural breaks
     lag_dataframe, prepare_data, compute_beta, get_expanding_window_adf,
     get_bsadf_statistic,
+    # Optimization — HRP & hedging
+    inverse_variance_weights, cluster_variance, quasi_diagonal, recursive_bisection,
+    distance_corr, pca_weights,
     # Backtest.statistics
     sharpe_ratio, bet_timing, calculate_holding_period,
     calculate_hhi, calculate_hhi_concentration, compute_drawdowns_time_under_water,

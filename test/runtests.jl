@@ -822,3 +822,35 @@ end
     @test adf.statistics ≈
           [0.16894098733, 0.437811843619, 1.415912133027, 0.543280756955, 1.007102910535]
 end
+
+@testset "Optimization — HRP & hedging (parity with Python)" begin
+    O = RiskLabAI.Optimization
+    cov = [0.04 0.006 0.0 0.0; 0.006 0.09 0.0 0.0; 0.0 0.0 0.16 0.012; 0.0 0.0 0.012 0.25]
+
+    # Inverse-variance weights.
+    @test O.inverse_variance_weights(cov) ≈
+          [0.53924505692, 0.239664469742, 0.13481126423, 0.086279209107]
+
+    # Cluster variance (inverse-variance weighted).
+    @test O.cluster_variance(cov, [1, 2]) ≈ 0.03024852071
+    @test O.cluster_variance(cov, [3, 4]) ≈ 0.103271861987
+
+    # Quasi-diagonal ordering from a SciPy-format linkage matrix (-> 1-based).
+    link = [0.0 1 0.5 2; 2 3 0.6 2; 4 5 0.9 4]
+    @test O.quasi_diagonal(link) == [1, 2, 3, 4]
+
+    # Recursive-bisection HRP weights.
+    @test O.recursive_bisection(cov, [1, 2, 3, 4]) ≈
+          [0.535468091151, 0.237985818289, 0.138137860097, 0.088408230462]
+
+    # Correlation distance.
+    @test O.distance_corr([1.0 0.5; 0.5 1.0]) ≈ [0.0 0.5; 0.5 0.0]
+
+    # PCA hedging: sign-free invariant wᵀ C w = risk_target² · Σρ.
+    w_min = O.pca_weights(cov)
+    @test length(w_min) == 4
+    @test w_min' * cov * w_min ≈ 1.0
+    rd = [0.1, 0.2, 0.3, 0.4]
+    w_custom = O.pca_weights(cov; risk_distribution = rd, risk_target = 2.0)
+    @test w_custom' * cov * w_custom ≈ 2.0^2 * sum(rd)
+end
