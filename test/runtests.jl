@@ -706,15 +706,8 @@ end
     @test avg_missing ≈ [1.0]
 
     # End-to-end signal generation (no meta-label side).
-    gtp, gsig = B.generate_signal(
-        starts,
-        ends,
-        nothing,
-        [0.6, 0.55, 0.7],
-        [1.0, -1.0, 1.0],
-        2,
-        0.1,
-    )
+    gtp, gsig =
+        B.generate_signal(starts, ends, nothing, [0.6, 0.55, 0.7], [1.0, -1.0, 1.0], 2, 0.1)
     @test gtp == [1.0, 2.0, 3.0, 4.0, 5.0]
     @test gsig ≈ [0.2, 0.0, 0.1, 0.3, 0.0]
 end

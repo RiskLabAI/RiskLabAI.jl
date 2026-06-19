@@ -82,8 +82,7 @@ function calculate_holding_period(
         difference = current - previous
         if difference * previous >= 0          # increase / flat
             if current != 0
-                time_entry =
-                    (time_entry * previous + time_diff[i] * difference) / current
+                time_entry = (time_entry * previous + time_diff[i] * difference) / current
             end
         else                                   # decrease / flip
             if current * previous < 0          # flip

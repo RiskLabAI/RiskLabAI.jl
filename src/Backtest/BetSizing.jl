@@ -35,7 +35,12 @@ Concurrent average bet size at each `price_dates[i]`, averaging `bet_sizes[j]`
 over bets active at that time (`start_dates[j] ≤ price_dates[i] ≤ end_dates[j]`).
 Mirrors Python's `average_bet_sizes`.
 """
-function average_bet_sizes(price_dates, start_dates, end_dates, bet_sizes::AbstractVector{<:Real})
+function average_bet_sizes(
+    price_dates,
+    start_dates,
+    end_dates,
+    bet_sizes::AbstractVector{<:Real},
+)
     out = zeros(Float64, length(price_dates))
     for i in eachindex(price_dates)
         total = 0.0
@@ -77,7 +82,12 @@ when `start ≤ t` and `t < end` (an `end` of `missing` never closes). Uses
 prefix sums + binary search (`O((n+m) log n)`). Mirrors Python's
 `mp_avg_active_signals`.
 """
-function mp_avg_active_signals(start_times, end_times, signal_values::AbstractVector{<:Real}, molecule)
+function mp_avg_active_signals(
+    start_times,
+    end_times,
+    signal_values::AbstractVector{<:Real},
+    molecule,
+)
     n = length(start_times)
     m = length(molecule)
     (n == 0 || m == 0) && return zeros(Float64, m)
@@ -200,7 +210,7 @@ function limit_price(
     target_position_size == current_position && return float(f)
     sgn = sign(target_position_size - current_position)
     limit = 0.0
-    for i = abs(current_position + sgn):(abs(target_position_size + sgn)-1)
+    for i = abs(current_position+sgn):(abs(target_position_size+sgn)-1)
         limit += inverse_price(f, w, i / maximum_position_size)
     end
     limit /= abs(target_position_size - current_position)

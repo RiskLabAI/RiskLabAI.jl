@@ -56,5 +56,5 @@ jobs:
       - run: |
           julia -e 'using Pkg; Pkg.add(name="JuliaFormatter", version="2.9.0")
                     using JuliaFormatter
-                    format(["src/Utils", "src/Data", "test"]; verbose=true) || exit(0)'
+                    format(["src/Utils", "src/Data", "src/Backtest", "test"]; verbose=true) || exit(0)'
           git diff --exit-code

@@ -24,7 +24,11 @@ Simulate `n_run` binomial bets (`+1` with probability `p`, else `-1`) and return
 the mean, population std, and Sharpe ratio (`0.0` when the std is zero).
 Stochastic. Mirrors Python's `sharpe_ratio_trials`.
 """
-function sharpe_ratio_trials(p::Real, n_run::Integer; rng::AbstractRNG = Random.default_rng())
+function sharpe_ratio_trials(
+    p::Real,
+    n_run::Integer;
+    rng::AbstractRNG = Random.default_rng(),
+)
     outcomes = [rand(rng) < p ? 1.0 : -1.0 for _ = 1:n_run]
     mean_outcome = mean(outcomes)
     std_outcome = std(outcomes; corrected = false)

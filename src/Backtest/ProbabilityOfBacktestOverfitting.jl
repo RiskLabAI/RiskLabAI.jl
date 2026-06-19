@@ -28,9 +28,11 @@ function performance_evaluation(
     metric,
     risk_free_return::Real,
 )
-    evaluate_train = [metric(view(train_partition, :, i), risk_free_return) for i = 1:n_strategies]
+    evaluate_train =
+        [metric(view(train_partition, :, i), risk_free_return) for i = 1:n_strategies]
     best_strategy_idx = argmax(evaluate_train)
-    evaluate_test = [metric(view(test_partition, :, i), risk_free_return) for i = 1:n_strategies]
+    evaluate_test =
+        [metric(view(test_partition, :, i), risk_free_return) for i = 1:n_strategies]
     # 1-based ordinal ranks (argsort∘argsort); equals Python's rank + 1.
     ranks = sortperm(sortperm(evaluate_test))
     rank_of_best = ranks[best_strategy_idx]
@@ -78,8 +80,13 @@ function probability_of_backtest_overfitting(
         test_indices = [i for i in indices if !(i in train_indices)]
         train = reduce(vcat, (performances[ranges[i], :] for i in train_indices))
         test = reduce(vcat, (performances[ranges[i], :] for i in test_indices))
-        is_overfit, logit_value =
-            performance_evaluation(train, test, n_strategies, chosen_metric, risk_free_return)
+        is_overfit, logit_value = performance_evaluation(
+            train,
+            test,
+            n_strategies,
+            chosen_metric,
+            risk_free_return,
+        )
         push!(overfits, is_overfit)
         push!(logit_values, logit_value)
     end

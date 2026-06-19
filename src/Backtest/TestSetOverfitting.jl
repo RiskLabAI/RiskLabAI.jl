@@ -81,8 +81,10 @@ function mean_std_error(
     mean_sharpe_ratio::Real = 0.0,
     rng::AbstractRNG = Random.default_rng(),
 )
-    expected =
-        Dict(n => expected_max_sharpe_ratio(n, mean_sharpe_ratio, std_sharpe_ratio) for n in n_trials)
+    expected = Dict(
+        n => expected_max_sharpe_ratio(n, mean_sharpe_ratio, std_sharpe_ratio) for
+        n in n_trials
+    )
     errors = Dict(n => Float64[] for n in n_trials)
     for _ = 1:Int(n_sims1)
         simulated = generate_max_sharpe_ratios(
