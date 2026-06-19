@@ -1066,3 +1066,26 @@ end
     @test size(all_prices) == (20, 3)
     @test size(all_regimes) == (20, 3)
 end
+
+@testset "Features — feature importance (orthogonal & weighted-τ)" begin
+    F = RiskLabAI.Features
+    x = [1.0 2.0 3.0; 2.0 1.0 0.0; 3.0 3.0 1.0; 0.0 2.0 2.0; 1.0 0.0 4.0; 2.0 2.0 2.0]
+
+    # orthogonal_features: eigenvalues + cumulative variance exact; columns orthogonal.
+    orth, eigenvalues, _, cumulative = F.orthogonal_features(x)
+    @test eigenvalues ≈ [9.4191800225, 3.2941004976, 2.2867194799]
+    @test cumulative ≈ [0.6279453348, 0.8475520347, 1.0]
+    @test size(orth) == (6, 3)
+    gram = orth' * orth
+    @test maximum(abs.(gram - Diagonal(diag(gram)))) < 1e-8   # uncorrelated components
+
+    # variance_threshold trims the retained component count.
+    orth2, eig2, _, _ = F.orthogonal_features(x; variance_threshold = 0.80)
+    @test length(eig2) == 2
+    @test size(orth2) == (6, 2)
+
+    # weighted Kendall-τ (wrapper compares importances to 1/ranks, flipping signs).
+    @test F.calculate_weighted_tau([1.0, 2.0, 3.0, 4.0], [1.0, 2.0, 3.0, 4.0]) ≈ -1.0
+    @test F.calculate_weighted_tau([4.0, 3.0, 2.0, 1.0], [1.0, 2.0, 3.0, 4.0]) ≈ 1.0
+    @test F.calculate_weighted_tau([0.5, 0.2, 0.8, 0.1], [1.0, 2.0, 3.0, 4.0]) ≈ 0.2
+end

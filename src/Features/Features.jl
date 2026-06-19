@@ -20,6 +20,10 @@ include("MicrostructuralFeatures.jl")
 # Structural-break tests: ADF design + (Backward) Supremum ADF (AFML Ch. 17).
 include("StructuralBreaks.jl")
 
+# Feature importance — backend-independent pieces (PCA orthogonalisation, weighted-τ).
+# Classifier-driven importances (MDI/MDA/SFI) follow with the DecisionTree.jl backend.
+include("FeatureImportance.jl")
+
 export
     # entropy features
     shannon_entropy,
@@ -40,6 +44,9 @@ export
     prepare_data,
     compute_beta,
     get_expanding_window_adf,
-    get_bsadf_statistic
+    get_bsadf_statistic,
+    # feature importance (backend-independent)
+    orthogonal_features,
+    calculate_weighted_tau
 
 end # module Features

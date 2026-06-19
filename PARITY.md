@@ -377,4 +377,20 @@ Julia. `simulates_cov_mu`'s `shrink=true` (Ledoit–Wolf) is deferred to the
 covariance-estimation backend; the default exact `shrink=false` is wired. Price
 generators return a plain price vector (Python: a business-day-indexed Series).
 
+## Features.feature_importance — orthogonal & weighted-τ  — PR (wired)
+
+Backend-independent pieces of the `features.feature_importance` sub-package. The
+classifier-driven importances (MDI/MDA/SFI and clustered variants) follow with
+the `DecisionTree.jl` backend.
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| PCA orthogonalisation | `orthogonal_features` | `Features.orthogonal_features` | **exact** eigenvalues / cumulative variance / retained count (eigenvectors sign-free); returns transformed features + spectrum |
+| Weighted Kendall-τ | `calculate_weighted_tau` | `Features.calculate_weighted_tau` | Vigna additive-hyperbolic weighted-τ (the estimator `scipy.stats.weightedtau` computes); validated against its definition (±1 extremes + a hand-computed case) |
+
+**Deliberate divergence:** DataFrames → `Matrix`; `orthogonal_features` does not
+auto-drop constant columns (Python `dropna`s them). `calculate_weighted_tau` is
+validated against the weighted-τ definition rather than bit-checked against scipy
+(scipy unavailable in CI).
+
 _(further submodules appended as they are wired)_
