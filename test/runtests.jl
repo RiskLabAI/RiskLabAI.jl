@@ -912,3 +912,32 @@ end
     @test rbc ≈ rbc'
     @test all(abs.(diag(rbc) .- 1.0) .< 1e-9)
 end
+
+@testset "Optimization — hrp() & NCO (parity with Python)" begin
+    O = RiskLabAI.Optimization
+    cov = [1.0 0.8 0.0 0.0; 0.8 1.0 0.0 0.0; 0.0 0.0 1.0 0.5; 0.0 0.0 0.5 1.0]
+
+    # Markowitz GMV weights (exact).
+    gmv = O.get_optimal_portfolio_weights(cov)
+    @test gmv ≈ [0.227272727273, 0.227272727273, 0.272727272727, 0.272727272727]
+    @test sum(gmv) ≈ 1.0
+
+    # Markowitz MVO weights (exact); highest-return asset is overweighted.
+    mu = [0.1, 0.2, 0.05, 0.1]
+    mvo = O.get_optimal_portfolio_weights(cov; mu = mu)
+    @test mvo ≈ [-0.625, 1.25, 0.0, 0.375]
+    @test sum(mvo) ≈ 1.0
+    @test mvo[2] > mvo[1]
+
+    # NCO weights: valid allocation summing to one (behavioural; stochastic k-means).
+    nco = O.get_optimal_portfolio_weights_nco(cov; number_clusters = 2)
+    @test length(nco) == 4
+    @test sum(nco) ≈ 1.0
+
+    # HRP weights: long-only allocation in original asset order (behavioural order).
+    corr = RiskLabAI.Cluster.covariance_to_correlation(cov)
+    w_hrp = O.hrp(cov, corr)
+    @test length(w_hrp) == 4
+    @test sum(w_hrp) ≈ 1.0
+    @test all(w_hrp .> 0)
+end

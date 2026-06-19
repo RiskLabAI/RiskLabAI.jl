@@ -23,14 +23,16 @@ using .Features: shannon_entropy, probability_mass_function, plug_in_entropy_est
     lag_dataframe, prepare_data, compute_beta, get_expanding_window_adf,
     get_bsadf_statistic
 
-include("Optimization/Optimization.jl")
-using .Optimization: inverse_variance_weights, cluster_variance, quasi_diagonal,
-    recursive_bisection, distance_corr, pca_weights
-
 include("Cluster/Cluster.jl")
 using .Cluster: covariance_to_correlation, silhouette_samples, cluster_k_means_base,
     cluster_k_means_top, make_new_outputs, random_covariance_sub,
     random_block_covariance, random_block_correlation
+
+# Optimization depends on Cluster (nco uses the k-means backend), so it loads after.
+include("Optimization/Optimization.jl")
+using .Optimization: inverse_variance_weights, cluster_variance, quasi_diagonal,
+    recursive_bisection, distance_corr, hrp, pca_weights,
+    get_optimal_portfolio_weights, get_optimal_portfolio_weights_nco
 
 include("Backtest/Backtest.jl")
 using .Backtest: sharpe_ratio, bet_timing, calculate_holding_period,
@@ -66,9 +68,10 @@ export
     # Features — structural breaks
     lag_dataframe, prepare_data, compute_beta, get_expanding_window_adf,
     get_bsadf_statistic,
-    # Optimization — HRP & hedging
+    # Optimization — HRP, hedging & NCO
     inverse_variance_weights, cluster_variance, quasi_diagonal, recursive_bisection,
-    distance_corr, pca_weights,
+    distance_corr, hrp, pca_weights,
+    get_optimal_portfolio_weights, get_optimal_portfolio_weights_nco,
     # Cluster — ONC & silhouette
     covariance_to_correlation, silhouette_samples, cluster_k_means_base,
     cluster_k_means_top, make_new_outputs, random_covariance_sub,

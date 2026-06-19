@@ -296,12 +296,17 @@ First slice of the `optimization` sub-package: the pure-numeric pieces.
 | PCA hedging weights | `pca_weights` | `Optimization.pca_weights` | sign-free invariant `wᵀCw = risk_target²·Σρ` (eigenvectors are sign-ambiguous) |
 
 **Deliberate divergence / deferred:** asset labels become 1-based integer
-indices; matrices replace DataFrames. The top-level `hrp(cov, corr)` wrapper is
-**deferred** — it calls SciPy single-linkage clustering whose dendrogram leaf
-order is not bit-identical across implementations; it lands with the `cluster`
-(k-means / linkage) port. Nested Clustered Optimisation (`nco`) and sklearn
-`hyper_parameter_tuning` follow with the cluster port and the ML-backend
-decision, respectively.
+indices; matrices replace DataFrames. The top-level `hrp(cov, corr)` wrapper and
+Nested Clustered Optimisation (`nco`) are now **wired** (see below); sklearn
+`hyper_parameter_tuning` awaits the ML-backend decision.
+
+### hrp() & NCO — wired (follow-up to the cluster port)
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| HRP wrapper | `hrp` | `Optimization.hrp` | **behavioural**; single-linkage via `Clustering.hclust` (leaf order not bit-identical to SciPy), weights long-only and sum to one. Returns original-order weights |
+| Markowitz GMV/MVO | `get_optimal_portfolio_weights` | `Optimization.get_optimal_portfolio_weights` | **exact** `w = C⁻¹μ / (1ᵀC⁻¹μ)`; `mu=nothing` → GMV |
+| Nested Clustered Optimisation | `get_optimal_portfolio_weights_nco` | `Optimization.get_optimal_portfolio_weights_nco` | **behavioural**; clusters via `Cluster.cluster_k_means_base`, intra/inter optimisation recombined; weights sum to one |
 
 ## Cluster — ONC & silhouette  — PR (wired)
 

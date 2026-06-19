@@ -6,15 +6,18 @@ weights, cluster variance, quasi-diagonalisation, and recursive bisection.
 Representation note (deliberate divergence): pandas DataFrames become `Matrix`es
 and asset labels become 1-based integer indices. These deterministic building
 blocks match the Python implementation exactly (verified in `test/runtests.jl`).
-The top-level `hrp(cov, corr)` wrapper — which calls SciPy's single-linkage
-clustering, whose dendrogram leaf order is not bit-identical across
-implementations — is deferred to the clustering port; `quasi_diagonal` here
-accepts a SciPy-format linkage matrix so the rest of the pipeline is exact.
+The top-level `hrp(cov, corr)` wrapper uses single-linkage hierarchical
+clustering (`Clustering.hclust`); the resulting leaf order is a **behavioural**
+match to SciPy's (dendrogram leaf order is not bit-identical across
+implementations), so `hrp` weights are validated structurally (sum to one,
+positive). The deterministic building blocks below match Python exactly.
+`quasi_diagonal` accepts a SciPy-format linkage matrix.
 
 Reference: De Prado, M. (2018), Advances in Financial Machine Learning, Ch. 16.
 """
 
 using LinearAlgebra: diag
+using Clustering: hclust
 
 """
     inverse_variance_weights(covariance_matrix) -> Vector{Float64}
@@ -113,3 +116,24 @@ Correlation-based distance `√((1 - ρ)/2)`. Mirrors Python's `distance_corr`.
 """
 distance_corr(correlation_matrix::AbstractMatrix{<:Real}) =
     ((1 .- correlation_matrix) ./ 2.0) .^ 0.5
+
+"""
+    hrp(covariance, correlation) -> Vector{Float64}
+
+Hierarchical Risk Parity portfolio weights (in original asset order): correlation
+distance → single-linkage clustering → quasi-diagonal leaf order → recursive
+bisection. Mirrors Python's `hrp`. Behavioural: the single-linkage leaf order
+(`Clustering.hclust`) is not bit-identical to SciPy's, but the weights remain a
+valid long-only allocation (positive, summing to one).
+"""
+function hrp(
+    covariance::AbstractMatrix{<:Real},
+    correlation::AbstractMatrix{<:Real},
+)
+    distance = distance_corr(correlation)
+    order = hclust(distance; linkage = :single).order
+    bisection = recursive_bisection(covariance, order)
+    weights = zeros(Float64, length(order))
+    weights[order] = bisection
+    return weights
+end

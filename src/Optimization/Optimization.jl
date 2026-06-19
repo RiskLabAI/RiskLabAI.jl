@@ -4,19 +4,21 @@
 Portfolio-optimization submodule, mirroring the Python `RiskLabAI.optimization`
 sub-package.
 
-This PR wires the pure-numeric pieces: **Hierarchical Risk Parity** building
-blocks (inverse-variance weights, cluster variance, quasi-diagonalisation,
-recursive bisection) and **PCA hedging** weights. The Nested Clustered
-Optimisation (`nco`) wrapper — which needs a k-means/clustering backend — and the
-sklearn-based hyper-parameter tuning are wired in subsequent PRs.
+Wires **Hierarchical Risk Parity** (building blocks + the `hrp` wrapper), **PCA
+hedging** weights, and **Nested Clustered Optimisation** (`nco`, built on the
+`Cluster` k-means backend). The sklearn-based hyper-parameter tuning awaits the
+ML-backend decision.
 """
 module Optimization
 
-# Hierarchical Risk Parity building blocks (AFML Ch. 16).
+# Hierarchical Risk Parity building blocks + hrp() wrapper (AFML Ch. 16).
 include("HierarchicalRiskParity.jl")
 
 # PCA-based hedging weights (AFML Ch. 36).
 include("Hedging.jl")
+
+# Nested Clustered Optimisation, built on the Cluster k-means backend (AFML Ch. 16).
+include("NestedClusteredOptimization.jl")
 
 export
     # hierarchical risk parity
@@ -25,7 +27,11 @@ export
     quasi_diagonal,
     recursive_bisection,
     distance_corr,
+    hrp,
     # hedging
-    pca_weights
+    pca_weights,
+    # nested clustered optimisation
+    get_optimal_portfolio_weights,
+    get_optimal_portfolio_weights_nco
 
 end # module Optimization
