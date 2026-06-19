@@ -24,6 +24,9 @@ include("Structures/imbalance_bars.jl")
 include("Structures/abstract_run_bars.jl")
 include("Structures/run_bars.jl")
 
+# Fractional differentiation (AFML Ch. 5).
+include("Differentiation/Differentiation.jl")
+
 export
     # metric taxonomy
     Metric, Dollar, Volume, Tick,
@@ -32,6 +35,10 @@ export
     ExpectedImbalanceBars, FixedImbalanceBars,
     ExpectedRunBars, FixedRunBars,
     # construction API
-    construct_bars_from_data, bar_construction_condition
+    construct_bars_from_data, bar_construction_condition,
+    # differentiation
+    calculate_weights_std, calculate_weights_ffd,
+    fractional_difference_std, fractional_difference_fixed,
+    find_optimal_ffd, fractionally_differentiated_log_price
 
 end # module Data

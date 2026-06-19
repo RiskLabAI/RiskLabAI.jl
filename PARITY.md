@@ -39,9 +39,26 @@ the correct `Utils/ewma.jl`.
 | Run bars | `ExpectedRunBars`, `FixedRunBars` | `RiskLabAI.Data.{Expected,Fixed}RunBars{T}` | **wired (PR 5)**; bar-count/tick parity asserted vs `test_run_bars.py` (Fixed→1 bar of 7 ticks). Threshold `E[T]·max(P_buy·E[b_buy], (1-P_buy)·E[b_sell])`; same bug fixes as imbalance |
 
 **`Data.Structures` is now complete** — standard, time, imbalance, and run bars
-are all wired with Python-parity tests. Next submodules: `Data` (labeling,
-differentiation, denoise, weights), then `Backtest`, `Features`, `Optimization`,
-`HPC`.
+are all wired with Python-parity tests.
+
+## Data.Differentiation  — PR 6 (wired)
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Expanding-window weights | `calculate_weights_std` | `Data.calculate_weights_std` | exact parity (reversed, `w₀` last) |
+| FFD weights | `calculate_weights_ffd` | `Data.calculate_weights_ffd` | exact parity |
+| Standard frac-diff | `fractional_difference_std` | `Data.fractional_difference_std` | exact parity; `NaN` warm-up before `skip` |
+| Fixed-width frac-diff | `fractional_difference_fixed` / `_single` | `Data.fractional_difference_fixed` | exact parity; `NaN` warm-up before `width` |
+| Optimal `d` (ADF scan) | `find_optimal_ffd_simple` | `Data.find_optimal_ffd` | ADF via `HypothesisTests.ADFTest`; **behavioural** parity only (ADF impl ≠ statsmodels). Returns columnar `NamedTuple` |
+| Stationary log-price | `fractionally_differentiated_log_price` | `Data.fractionally_differentiated_log_price` | same ADF caveat |
+
+**Deliberate divergence:** the Julia frac-diff functions operate on a single
+`AbstractVector` (callers `map` over columns) rather than on a `DataFrame`; and
+Python's `plot_weights` (matplotlib) is omitted (no plotting dependency).
+`HypothesisTests` added to `[deps]` for the ADF-based finders.
+
+Next submodules: `Data` (weights, denoise, labeling, distance), then `Backtest`,
+`Features`, `Optimization`, `HPC`.
 
 Information-driven base: `ewma_expected_imbalance`, `imbalance_at_tick` (metric
 dispatch), dynamic threshold `E[T]·|E[b]|` — shared by imbalance and run bars.

@@ -1,252 +1,163 @@
-using DataFrames, Dates, Statistics, HypothesisTests, Plots
+"""
+Fractional differentiation of time series — native Julia port mirroring the
+Python `RiskLabAI.data.differentiation` API (López de Prado, AFML Ch. 5).
+
+The Python package operates on `DataFrame`s (one column per series); the Julia
+port operates on a single `AbstractVector` (the idiomatic unit), and callers map
+over columns for the multi-series case. Function names mirror Python exactly.
+
+Reference: De Prado, M. (2018), Advances in Financial Machine Learning, Ch. 5.
+"""
+
+using Statistics: cor
+using HypothesisTests: ADFTest, pvalue
 
 """
-    ohlcv(tickDataGrouped::GroupedDataFrame)
+    calculate_weights_std(degree, size) -> Vector{Float64}
 
-Combine grouped tick data to create a new dataframe with Open, High, Low, Close, Volume (OHLCV) information.
-
-# Arguments
-- `tickDataGrouped::GroupedDataFrame`: Grouped dataframe containing tick data.
-
-# Returns
-- `ohlcvDataframe::DataFrame`: Combined dataframe with OHLCV information.
-
-# Mathematical formulae
-- Open price: First price within each group.
-- High price: Maximum price within each group.
-- Low price: Minimum price within each group.
-- Close price: Last price within each group.
-- Volume: Sum of size within each group.
-- Value of trades: Sum(price * size) / Sum(size).
-- Mean price log return: Log(priceMean) - Log(circshift(priceMean, 1)).
+Weights for standard (expanding-window) fractional differentiation, ordered for
+a dot product with the most recent observation last (`w₀` at the end), matching
+Python's `calculate_weights_std` (Snippet 5.2).
 """
-function ohlcv(tickDataGrouped::GroupedDataFrame)
-    ohlcvDataframe = combine(
-        tickDataGrouped,
-        :price => first => :open,
-        :price => maximum => :high,
-        :price => minimum => :low,
-        :price => last => :close,
-        :size => sum => :volume,
-        AsTable([:price, :size]) => x -> sum(x.price .* x.size) / sum(x.size) => :valueOfTrades,
-        :price => mean => :priceMean,
-        :price => length => :tickCount
-    )
-    ohlcvDataframe.priceMeanLogReturn = log.(ohlcvDataframe.priceMean) - log.(circshift(ohlcvDataframe.priceMean, 1))
-    ohlcvDataframe.priceMeanLogReturn[1] = NaN
-    return ohlcvDataframe
-end
-
-"""
-    timeBar(tickData::DataFrame, frequency::Int=5)
-
-Generates a time bar dataframe with specified frequency.
-
-# Arguments
-- `tickData::DataFrame`: Input dataframe containing tick data.
-- `frequency::Int=5`: Frequency for time bars (default = 5).
-
-# Returns
-- `ohlcvDataframe::DataFrame`: Time bar dataframe with OHLCV information.
-"""
-function timeBar(tickData::DataFrame, frequency::Int=5)
-    datesCopy = copy(tickData.dates)
-    tickData.dates = floor.(datesCopy, Dates.Minute(frequency))
-    tickDataGrouped = groupby(tickData, :dates)
-    ohlcvDataframe = ohlcv(tickDataGrouped)
-    tickData.dates = datesCopy
-    return ohlcvDataframe
-end
-
-"""
-    weighting(degree::Float64, size::Int)
-
-Generates the sequence of weights used to compute each value of the fractionally differentiated series.
-
-# Arguments
-- `degree::Float64`: Degree of differentiation.
-- `size::Int`: Size of the weights sequence.
-
-# Returns
-- `ω::Vector{Float64}`: Sequence of weights.
-"""
-function weighting(degree::Float64, size::Int)
-    ω = [1.0]
-    for k in 2:size
-        thisω = -ω[end] / (k - 1) * (degree - k + 2)
-        push!(ω, thisω)
+function calculate_weights_std(degree::Real, size::Integer)
+    weights = Vector{Float64}(undef, size)
+    weights[1] = 1.0
+    for k in 1:(size - 1)
+        weights[k + 1] = -weights[k] / k * (degree - k + 1)
     end
-    return reverse(ω)
+    return reverse(weights)
 end
 
 """
-    plotWeights(degreeRange::Tuple{Float64, Float64}, numberDegrees::Int, numberWeights::Int)
+    calculate_weights_ffd(degree, threshold=1e-5) -> Vector{Float64}
 
-Plots the weights used for fractionally differentiated series.
-
-# Arguments
-- `degreeRange::Tuple{Float64, Float64}`: Range of degree values.
-- `numberDegrees::Int`: Number of degree values to consider.
-- `numberWeights::Int`: Number of weights to plot.
+Weights for the fixed-width-window (FFD) method, generated until the magnitude
+drops below `threshold`; ordered with `w₀` at the end (Snippet 5.3).
 """
-function plotWeights(degreeRange::Tuple{Float64, Float64}, numberDegrees::Int, numberWeights::Int)
-    ω = DataFrame(index = collect(numberWeights - 1:-1:0))
-    for degree in range(degreeRange[1], degreeRange[2], length = numberDegrees)
-        degree = round(degree; digits = 2)
-        thisω = weighting(degree, numberWeights)
-        thisω = DataFrame(index = collect(numberWeights - 1:-1:0), ω = thisω)
-        ω = outerjoin(ω, thisω, on = :index, makeunique = true)
-    end
-    rename!(ω, names(ω)[2:end] .=> string.(range(degreeRange[1], degreeRange[2], length = numberDegrees)))
-    plot(ω[:, 1], Matrix(ω[:, 2:end]), label = reshape(names(ω)[2:end], (1, numberDegrees)), background = :transparent)
-end
-
-using Statistics
-
-"""
-    weightingFfd(degree::Float64, threshold::Float64)
-
-Calculates the weights for the fixed-width window method of fractionally differentiation.
-
-# Arguments
-- `degree::Float64`: Degree of differentiation.
-- `threshold::Float64`: Threshold for drop in weights.
-
-# Returns
-- `Vector{Float64}`: Sequence of weights.
-
-# Mathematical Formula
-The weights for the fixed-width window method are given by the formula:
-
-.. math::
-    ω_{i} = -ω_{i-1} / k * (degree - k + 1)
-
-where `ω_{i}` is the weight at index `i`, `k` is the index, and `degree` is the differentiation degree.
-"""
-function weightingFfd(degree::Float64, threshold::Float64)
-    ω = Float64[1.0]
+function calculate_weights_ffd(degree::Real, threshold::Real=1e-5)
+    weights = Float64[1.0]
     k = 1
-    while abs(ω[end]) >= threshold
-        thisω = -ω[end] / k * (degree - k + 1)
-        push!(ω, thisω)
+    while true
+        next = -weights[end] / k * (degree - k + 1)
+        abs(next) < threshold && break
+        push!(weights, next)
         k += 1
     end
-    return reverse(ω)[2:end]
+    return reverse(weights)
 end
 
 """
-    fractionalDifferentiation(series::DataFrame, degree::Float64, threshold::Float64 = 0.01)
+    fractional_difference_std(series, degree; threshold=0.01) -> Vector{Float64}
 
-Performs standard fractional differentiation on the given series.
-
-# Arguments
-- `series::DataFrame`: Input time series data.
-- `degree::Float64`: Degree of differentiation.
-- `threshold::Float64`: Threshold for drop in weights. Defaults to 0.01.
-
-# Returns
-- `DataFrame`: Fractionally differentiated series.
+Standard (expanding-window) fractionally differentiated series. Returns a vector
+the same length as `series`; the warm-up region (where the cumulative relative
+weight loss is below `threshold`) is filled with `NaN`. Mirrors Python's
+`fractional_difference_std` for a single series.
 """
-function fractionalDifferentiation(series::DataFrame, degree::Float64, threshold::Float64 = 0.01)
-    weights = weightingFfd(degree, size(series, 1))
-    weightsNormalized = cumsum(abs.(weights))
-    weightsNormalized ./= weightsNormalized[end]
-    drop = length(filter(x -> x > threshold, weightsNormalized))
-    dataframe = DataFrame(index = filter(!ismissing, series.dates)[drop + 1:end])
-    
-    for name in names(series)[2:end]
-        seriesFiltered = filter(!ismissing, series[:, [:dates, name]])
-        thisRange = drop + 1:size(seriesFiltered, 1)
-        dataframeFiltered = DataFrame(index = seriesFiltered.dates[thisRange], value = zeros(length(thisRange)))
-        data = []
-        
-        for i in thisRange
-            date = seriesFiltered.dates[i]
-            price = series[series.dates .== date, name][1]
-            
-            if !isfinite(price)
-                continue
-            end
-            
-            try
-                append!(data, dot(weights[end-i+1:end], 
-                        filter(row -> row[:dates] in Date(seriesFiltered.dates[1]):Day(1):date, seriesFiltered)[!, name]))
-            catch
-                continue
-            end
+function fractional_difference_std(
+    series::AbstractVector{<:Real}, degree::Real; threshold::Real=0.01
+)
+    n = length(series)
+    result = fill(NaN, n)
+    n == 0 && return result
+
+    weights = calculate_weights_std(degree, n)
+    cumulative = cumsum(abs.(weights))
+    cumulative ./= cumulative[end]
+    skip = count(<(threshold), cumulative)
+
+    weights_natural = reverse(weights)  # [w0, w1, ...]
+    for k in (skip + 1):n
+        acc = 0.0
+        for m in 0:(k - 1)
+            acc += weights_natural[m + 1] * series[k - m]
         end
-        
-        dataframeFiltered.value .= data
-        dataframe = innerjoin(dataframe, dataframeFiltered, on = :index)
+        result[k] = acc
     end
-    
-    return dataframe
+    return result
 end
 
 """
-    fractionalDifferentiationFixed(series::DataFrame, degree::Float64, threshold::Float64 = 1e-5)
+    fractional_difference_fixed(series, degree; threshold=1e-5) -> Vector{Float64}
 
-Applies the fixed-width window method of fractional differentiation to the given series.
-
-# Arguments
-- `series::DataFrame`: Input time series data.
-- `degree::Float64`: Degree of differentiation.
-- `threshold::Float64`: Threshold for drop in weights. Defaults to 1e-5.
-
-# Returns
-- `DataFrame`: Fractionally differentiated series.
+Fixed-width-window (FFD) fractionally differentiated series. Returns a vector
+the same length as `series`, with the first `width-1` entries (the warm-up)
+filled with `NaN`. Mirrors Python's `fractional_difference_fixed_single`.
 """
-function fractionalDifferentiationFixed(series::DataFrame, degree::Float64, threshold::Float64 = 1e-5)
-    weights = weightingFfd(degree, threshold)
-    width = length(weights) - 1
-    dataframe = DataFrame(index = series.dates[width + 1:end])
-    
-    for name in names(series)[2:end]
-        seriesFiltered = filter(!ismissing, series[:, [:dates, name]])
-        thisRange = width + 1:size(seriesFiltered, 1)
-        dataframeFiltered = DataFrame(index = seriesFiltered.dates[thisRange], value = Float64[])
-        data = []
-        
-        for i in thisRange
-            day1 = seriesFiltered.dates[i - width]
-            day2 = seriesFiltered.dates[i]
-            
-            if !isfinite(series[series.dates .== day2, name][1])
-                continue
-            end
-            
-            append!(data, dot(weights, 
-                    filter(row -> row[:dates] in Date(day1):Day(1):day2, seriesFiltered)[!, name]))
+function fractional_difference_fixed(
+    series::AbstractVector{<:Real}, degree::Real; threshold::Real=1e-5
+)
+    weights = reverse(calculate_weights_ffd(degree, threshold))  # natural order
+    width = length(weights)
+    n = length(series)
+    result = fill(NaN, n)
+    n < width && return result
+
+    for k in width:n
+        acc = 0.0
+        for m in 0:(width - 1)
+            acc += weights[m + 1] * series[k - m]
         end
-        
-        dataframeFiltered.value .= data
-        dataframe = innerjoin(dataframe, dataframeFiltered, on = :index)
+        result[k] = acc
     end
-    
-    return dataframe
+    return result
 end
 
 """
-    minimumDegreeFFD(input::DataFrame)
+    find_optimal_ffd(close_prices; p_value_threshold=0.05) -> NamedTuple
 
-Finds the minimum degree value that passes the ADF test for fractionally differentiated series.
-
-# Arguments
-- `input::DataFrame`: Input time series data.
-
-# Returns
-- `DataFrame`: Results dataframe with ADF statistics.
+For `d` in 11 equal steps over [0, 1], FFD-differentiate `log(close_prices)`
+(threshold 0.01), run the ADF test on the result, and report the statistics.
+Returns columnar vectors (`d`, `adf_stat`, `p_value`, `correlation`). Mirrors
+Python's `find_optimal_ffd_simple` (Snippet 5.4); ADF values come from
+`HypothesisTests.ADFTest`, so they are implementation-defined rather than
+bit-identical to statsmodels.
 """
-function minimumDegreeFfd(input::DataFrame)
-    out = DataFrame(d = Float64[], adfStat = Float64[], pVal = Float64[], lags = Int[], nObs = Int[], nintyfiveperconf = Float64[], corr = Float64[])
-    
-    for d in range(0.0, 1.0, length = 11)
-        dataframe = DataFrame(dates = Date.(input[:, 1]), priceLog = log.(input[:, :close]))
-        differentiated = fractionalDifferentiationFixed(dataframe, d, .01)
-        corr = cor(filter(row -> row[:dates] in differentiated[:, 1], dataframe)[:, :priceLog], differentiated[:, 2])
-        differentiated = ADFTest(Float64.(differentiated[:, 2]), :constant, 1)
-        push!(out, [d, differentiated.stat, pvalue(differentiated), differentiated.lag, differentiated.n, differentiated.cv[2], corr])
+function find_optimal_ffd(close_prices::AbstractVector{<:Real}; p_value_threshold::Real=0.05)
+    log_prices = log.(close_prices)
+    ds = range(0.0, 1.0; length=11)
+    d_out = Float64[]
+    adf_stat = Float64[]
+    p_value = Float64[]
+    correlation = Float64[]
+    for d in ds
+        differentiated = fractional_difference_fixed(log_prices, d; threshold=0.01)
+        mask = .!isnan.(differentiated)
+        sum(mask) < 3 && continue
+        test = ADFTest(differentiated[mask], :constant, 1)
+        push!(d_out, d)
+        push!(adf_stat, test.stat)
+        push!(p_value, pvalue(test))
+        push!(correlation, cor(log_prices[mask], differentiated[mask]))
     end
-    
-    return out
+    return (d=d_out, adf_stat=adf_stat, p_value=p_value, correlation=correlation)
+end
+
+"""
+    fractionally_differentiated_log_price(prices; threshold=1e-5, step=0.01,
+                                          p_value_threshold=0.05) -> Vector{Float64}
+
+Increase `d` by `step` until the ADF test on the FFD-differentiated log-price
+series rejects the unit-root null at `p_value_threshold`, then return that
+series (same length as `prices`, with a `NaN` warm-up). Mirrors Python's
+`fractionally_differentiated_log_price`.
+"""
+function fractionally_differentiated_log_price(
+    prices::AbstractVector{<:Real};
+    threshold::Real=1e-5,
+    step::Real=0.01,
+    p_value_threshold::Real=0.05,
+)
+    log_prices = log.(prices)
+    degree = 0.0
+    while true
+        degree += step
+        degree > 2.0 && throw(ErrorException("Failed to find stationary 'd' < 2.0"))
+        differentiated = fractional_difference_fixed(log_prices, degree; threshold=threshold)
+        mask = .!isnan.(differentiated)
+        sum(mask) < 3 && continue
+        if pvalue(ADFTest(differentiated[mask], :constant, 1)) <= p_value_threshold
+            return differentiated
+        end
+    end
 end

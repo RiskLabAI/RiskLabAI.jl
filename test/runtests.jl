@@ -184,3 +184,37 @@ end
     @test length(ebars) == 1
     @test ebars[1][10] == 7.0
 end
+
+@testset "Data.Differentiation — fractional differentiation (parity with Python)" begin
+    D = RiskLabAI.Data
+    x = [100.0, 101.5, 100.8, 102.3, 101.1, 103.0, 102.5, 104.1, 103.7, 105.0]
+
+    # Weights (reversed, w0 last): exact match to Python calculate_weights_*.
+    @test D.calculate_weights_std(0.5, 6) ≈
+        [-0.02734375, -0.0390625, -0.0625, -0.125, -0.5, 1.0]
+    @test D.calculate_weights_ffd(0.4, 0.1) ≈ [-0.12, -0.4, 1.0]
+
+    # Fixed-width FFD: width 3 -> first 2 entries NaN, then 8 values.
+    ffd = D.fractional_difference_fixed(x, 0.4; threshold = 0.1)
+    @test length(ffd) == 10
+    @test all(isnan, ffd[1:2])
+    @test ffd[3:end] ≈ [48.2, 49.8, 48.084, 50.284, 49.168, 50.74, 49.76, 51.028]
+
+    # Standard (expanding-window): skip 1 -> first entry NaN, then 9 values.
+    fds = D.fractional_difference_std(x, 0.5; threshold = 0.01)
+    @test length(fds) == 10
+    @test isnan(fds[1])
+    @test fds[2:end] ≈ [51.5, 37.55, 32.9625, 27.1, 26.66328125,
+        23.205078125, 23.2110351562, 20.6416259766, 20.8013458252]
+
+    # ADF-based finders (behavioural: ADF impl differs from statsmodels).
+    prices = 100.0 .+ 10.0 .* sin.(0.1 .* (1:200))
+    res = D.find_optimal_ffd(prices)
+    @test length(res.d) == 11
+    @test all(0.0 .<= res.d .<= 1.0)
+    @test length(res.p_value) == length(res.d)
+
+    fd = D.fractionally_differentiated_log_price(prices)
+    @test length(fd) == 200
+    @test any(!isnan, fd)
+end
