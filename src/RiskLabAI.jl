@@ -27,6 +27,11 @@ include("Optimization/Optimization.jl")
 using .Optimization: inverse_variance_weights, cluster_variance, quasi_diagonal,
     recursive_bisection, distance_corr, pca_weights
 
+include("Cluster/Cluster.jl")
+using .Cluster: covariance_to_correlation, silhouette_samples, cluster_k_means_base,
+    cluster_k_means_top, make_new_outputs, random_covariance_sub,
+    random_block_covariance, random_block_correlation
+
 include("Backtest/Backtest.jl")
 using .Backtest: sharpe_ratio, bet_timing, calculate_holding_period,
     calculate_hhi, calculate_hhi_concentration, compute_drawdowns_time_under_water,
@@ -64,6 +69,10 @@ export
     # Optimization — HRP & hedging
     inverse_variance_weights, cluster_variance, quasi_diagonal, recursive_bisection,
     distance_corr, pca_weights,
+    # Cluster — ONC & silhouette
+    covariance_to_correlation, silhouette_samples, cluster_k_means_base,
+    cluster_k_means_top, make_new_outputs, random_covariance_sub,
+    random_block_covariance, random_block_correlation,
     # Backtest.statistics
     sharpe_ratio, bet_timing, calculate_holding_period,
     calculate_hhi, calculate_hhi_concentration, compute_drawdowns_time_under_water,

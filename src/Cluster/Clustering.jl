@@ -1,288 +1,308 @@
-using Distributions
-using Statistics
-using DataFrames
-using GLM
-using LinearAlgebra
-using PlotlyJS
+"""
+Clustering — native Julia port mirroring the Python `RiskLabAI.cluster.clustering`
+API (López de Prado, AFML Ch. 4): the Optimized Nested Clustering (ONC)
+algorithm and its k-means base step, plus random block-correlation generators.
+
+Parity note: k-means is **stochastic** and not bit-identical across
+implementations (`Clustering.jl` here vs scikit-learn in Python), so
+`cluster_k_means_base`/`cluster_k_means_top` and the random generators are
+**behavioural** ports — the tests check structural properties (valid partitions,
+shapes), not exact values. `silhouette_samples` is deterministic and matches the
+canonical (scikit-learn) definition exactly. `covariance_to_correlation`
+delegates to `Data.cov_to_corr` (the single source of truth).
+
+Representation note (deliberate divergence): correlation/covariance are `Matrix`es
+and items are 1-based integer indices (Python uses pandas labels).
+
+Reference: De Prado, M. (2020), Machine Learning for Asset Managers, Ch. 4.
+"""
+
+using Statistics: mean, std, cov
+using Random: AbstractRNG, MersenneTwister, default_rng, shuffle, randn, seed!
+using Clustering: kmeans, assignments
+using ..Data: cov_to_corr
+
+_rng(random_state) =
+    random_state === nothing ? default_rng() :
+    random_state isa AbstractRNG ? random_state : MersenneTwister(random_state)
 
 """
-Function to calculate returns.
+    covariance_to_correlation(covariance) -> Matrix
 
-This function calculates the percentage change in prices.
-
-Args:
-    prices::DataFrame: DataFrame containing price data for various assets.
-
-Returns:
-    DataFrame: DataFrame containing calculated returns for each asset.
+Correlation matrix from a covariance matrix; delegates to `Data.cov_to_corr`
+(Snippet 2.3). Mirrors Python's `covariance_to_correlation`.
 """
-function percentChange(
-    prices::DataFrame
-)::DataFrame
+covariance_to_correlation(covariance::AbstractMatrix{<:Real}) = cov_to_corr(covariance)
 
-    returns = DataFrame() # Empty DataFrame for returns
-    for sym in names(prices)[2:end]
-        data = prices[!, Symbol(sym)] # Prices of each asset
-        ret = Array{Float64}(undef, length(data)) # Returns of each asset
-        ret[1] = NaN
-        for i in 2:length(data)
-            ret[i] = (data[i] / data[i - 1]) - 1 # Calculate returns of each asset
+"""
+    silhouette_samples(distance, labels) -> Vector{Float64}
+
+Per-sample silhouette scores from a **precomputed** distance matrix and cluster
+`labels`: `s(i) = (b(i) - a(i)) / max(a(i), b(i))`, with `a` the mean
+intra-cluster distance and `b` the mean nearest-other-cluster distance
+(`s(i) = 0` for singleton clusters). Matches scikit-learn's `silhouette_samples`
+(metric `"precomputed"`) exactly.
+"""
+function silhouette_samples(
+    distance::AbstractMatrix{<:Real},
+    labels::AbstractVector{<:Integer},
+)
+    n = length(labels)
+    unique_labels = unique(labels)
+    scores = zeros(Float64, n)
+    for i = 1:n
+        same = findall(==(labels[i]), labels)
+        n_same = length(same)
+        if n_same <= 1
+            scores[i] = 0.0
+            continue
         end
-        returns[!, Symbol(sym)] = ret # Append returns to DataFrame
+        a = sum(distance[i, j] for j in same) / (n_same - 1)   # self distance is 0
+        b = Inf
+        for c in unique_labels
+            c == labels[i] && continue
+            members = findall(==(c), labels)
+            isempty(members) && continue
+            b = min(b, sum(distance[i, j] for j in members) / length(members))
+        end
+        denominator = max(a, b)
+        scores[i] = denominator > 0 ? (b - a) / denominator : 0.0
     end
-    return returns
+    return scores
 end
 
+_correlation_distance(correlation) =
+    sqrt.((1 .- map(x -> isnan(x) ? 0.0 : x, correlation)) ./ 2.0)
+
 """
-Function to perform clustering.
+    cluster_k_means_base(correlation; max_clusters=10, iterations=10, random_state=nothing)
+        -> (correlation_sorted, clusters, silhouette)
 
-This function implements the clustering methodology from De Prado's book "Advances in Financial Machine Learning" (Snippet 4.1, Page 56).
-
-Args:
-    correlation::DataFrame: Correlation matrix.
-    numberClusters::Int: Number of clusters.
-    iterations::Int: Number of iterations.
-
-Returns:
-    Tuple{DataFrame, Dict, DataFrame}: Resulting correlation matrix, clusters, and silhouette scores.
+K-means base step: over `2:max_clusters` clusters and `iterations` initialisations,
+keep the clustering with the highest silhouette t-statistic (mean/std, population
+std). Returns the cluster-sorted correlation matrix, a `Dict(label => item
+indices)`, and the per-item silhouette vector (original order). Behavioural
+(k-means is stochastic). Mirrors Python's `cluster_k_means_base`.
 """
-function clusterKMeansBase(
-    correlation::DataFrame; 
-    numberClusters::Int = 10, 
-    iterations::Int = 10
-)::Tuple{DataFrame, Dict, DataFrame}
+function cluster_k_means_base(
+    correlation::AbstractMatrix{<:Real};
+    max_clusters::Integer = 10,
+    iterations::Integer = 10,
+    random_state = nothing,
+)
+    distance = _correlation_distance(correlation)
+    random_state !== nothing && seed!(random_state)
 
-    distance = sqrt.((1 .- correlation) / 2) # Distance matrix
-    silh, kmeansOut = [NaN], [NaN] # Initial values for silhouette and kmeans
-    for init ∈ 1:iterations
-        for i ∈ 2:numberClusters
-            kmeans_ = kmeans(distance, i) # Cluster distances with maximum cluster size i
-            silh_ = silhouette_samples(distance, assignments(kmeans_)) # Silhouette score of clustering
-            statistic = (mean(silh_) / std(silh_), mean(silh) / std(silh)) # Calculate t-statistic
-            if isnan(statistic[2]) || statistic[1] > statistic[2]
-                silh, kmeansOut = silh_, kmeans_ # Replace with better clustering
+    best_labels = nothing
+    best_silhouette = nothing
+    best_score = -Inf
+    for _ = 1:iterations
+        for n_clusters = 2:max_clusters
+            labels = assignments(kmeans(Matrix(distance), n_clusters))
+            silhouette = silhouette_samples(distance, labels)
+            stat_mean = mean(silhouette)
+            stat_std = std(silhouette; corrected = false)
+            score = stat_std == 0 ? sign(stat_mean) * Inf : stat_mean / stat_std
+            if best_labels === nothing || score > best_score
+                best_score = score
+                best_labels = labels
+                best_silhouette = silhouette
             end
         end
     end
-    indexSorted = sortperm(assignments(kmeansOut)) # Sort arguments based on clustering
-    correlationSorted = correlation[indexSorted, indexSorted] # New correlation matrix based on clustering
-    # Dictionary of clusters
-    clusters = Dict("$i" => filter(p -> assignments(kmeansOut)[p] == i, indexSorted) for i in unique(assignments(kmeansOut)))
-    silh = DataFrame(silh = silh) # DataFrame of silhouette scores
-    return correlationSorted, clusters, silh, indexSorted
+
+    index_sorted = sortperm(best_labels)
+    correlation_sorted = correlation[index_sorted, index_sorted]
+    clusters = Dict(c => findall(==(c), best_labels) for c in unique(best_labels))
+    return (correlation_sorted, clusters, best_silhouette)
 end
 
 """
-Function to make new clustering.
+    make_new_outputs(correlation, clusters_1, clusters_2)
+        -> (correlation_new, clusters_new, silhouette_new)
 
-This function combines two sets of clusters into a new set of clusters.
-
-Args:
-    correlation::DataFrame: Original correlation matrix.
-    clusters::Dict: First set of clusters.
-    clusters2::Dict: Second set of clusters.
-
-Returns:
-    Tuple{DataFrame, Dict, DataFrame}: Resulting correlation matrix, combined clusters, and silhouette scores.
+Merge two disjoint cluster dictionaries (values are item indices into
+`correlation`), reorder the correlation matrix accordingly, and recompute
+silhouette scores. Mirrors Python's `make_new_outputs`.
 """
-function makeNewOutputs(
-    correlation::DataFrame,
-    clusters::Dict,
-    clusters2::Dict,
-)::Tuple{DataFrame, Dict, DataFrame}
-
-    assets = names(correlation) # Names of the columns in the correlation matrix
-    # Merge two sets of clusters
-    clustersNew = Dict()
-    for i in keys(clusters)
-        clustersNew[length(keys(clustersNew)) + 1] = clusters[i] 
-    end
-    for i in keys(clusters2)
-        clustersNew[length(keys(clustersNew)) + 1] = clusters2[i]
-    end
-    indexNew = [j for i in keys(clustersNew) for j in clustersNew[i]] # Sorted index of assets
-    correlationNew = correlation[indexin(indexNew, assets), indexin(indexNew, assets)] # New correlation matrix
-    distance = sqrt.((1 .- Matrix(correlation)) / 2) # Distance matrix
-    labelsKmeans = zeros(size(distance)[2]) # Initial labels
-    for i in keys(clustersNew)
-        index = indexin(clustersNew[i], assets) 
-        labelsKmeans[index] .= i # Labels for clusters
-    end
-    silhNew = DataFrame(index = assets, silh = silhouette_samples(distance, labelsKmeans)) # Silhouette series
-    return correlationNew, clustersNew, silhNew
-end
-
-"""
-Function to perform clustering (ONC).
-
-This function refines clustering results using the ONC methodology.
-
-Args:
-    correlation::DataFrame: Correlation matrix.
-    numberClusters::Int: Number of clusters.
-    iterations::Int: Number of iterations.
-
-Returns:
-    Tuple{DataFrame, Dict, DataFrame}: Resulting correlation matrix, clusters, and silhouette scores.
-"""
-function clusterKMeansTop(
-    correlation::DataFrame; 
-    numberClusters::Int = nothing, 
-    iterations::Int = 10
-)::Tuple{DataFrame, Dict, DataFrame}
-    if isnothing(numberClusters)
-        numberClusters = size(correlation)[2] - 1 # Set number of clusters
-    end
-    assets = names(correlation) # Names of columns
-    # Clustering
-    correlationSorted, clusters, silh, indexSorted = clusterKMeansBase(Matrix(correlation), numberClusters = min(numberClusters, size(correlation)[2] - 1), iterations = 10)
-    correlationSorted = DataFrame(correlationSorted, :auto) # DataFrame of sorted correlation matrix
-    rename!(correlationSorted, Symbol.(names(correlationSorted)) .=> assets[indexSorted]) # Rename columns of sorted correlation matrix
-    clusters = Dict("$i" => assets[clusters[i]] for i in keys(clusters)) # Dictionary of clusters
-    # Calculate t-statistic for each cluster
-    clusterTstats = Dict("$i" => mean(silh[indexin(clusters[i], assets), :silh]) / std(silh[indexin(clusters[i], assets), :silh]) for i in keys(clusters))
-    tStatMean = sum(values(clusterTstats)) / length(clusterTstats) # Mean of t-statistics
-    redoClusters = [i for i in keys(clusterTstats) if clusterTstats[i] < tStatMean] # Select clusters with t-statistics lower than mean
-    if length(redoClusters) <= 1
-        return correlationSorted, clusters, silh
-    else
-        keysRedo = [j for i in redoClusters for j in clusters[i]] # Select keys of redo clusters
-        correlationTemp = correlation[indexin(keysRedo, assets), indexin(keysRedo, assets)] # Slice correlation for redo clusters
-        assets_ = names(correlationTemp) # Names of DataFrame
-        tStatMean = mean([clusterTstats[i] for i in redoClusters]) # Mean of t-stats for redo clusters
-        # Call clusterKMeansTop again
-        correlationSorted2, clusters2, silh2 = clusterKMeansTop(correlationTemp, numberClusters = min(numberClusters, size(correlationTemp)[2] - 1), iterations = iterations)
-        # Make new outputs if necessary
-        correlationNew, clustersNew, silhNew = makeNewOutputs(correlation, Dict("$i" => clusters[i] for i in keys(clusters) if i ∉ redoClusters), clusters2)
-        # Mean of t-stats for new output
-        newTstatMean = mean([mean(silhNew[indexin(clustersNew[i], silhNew.index), :silh]) /
-                             std(silhNew[indexin(clustersNew[i], silhNew.index), :silh]) 
-                             for i in keys(clustersNew)])
-        if newTstatMean <= tStatMean
-            return correlationSorted, clusters, silh
-        else
-            return correlationNew, clustersNew, silhNew
+function make_new_outputs(
+    correlation::AbstractMatrix{<:Real},
+    clusters_1::AbstractDict,
+    clusters_2::AbstractDict,
+)
+    n = size(correlation, 2)
+    clusters_new = Dict{Int,Vector{Int}}()
+    next_key = 0
+    for d in (clusters_1, clusters_2)
+        for key in sort(collect(keys(d)))
+            clusters_new[next_key] = collect(d[key])
+            next_key += 1
         end
     end
-end
 
-"""
-Function to compute a sub covariance matrix.
+    index_new = reduce(vcat, (clusters_new[k] for k in sort(collect(keys(clusters_new)))))
+    correlation_new = correlation[index_new, index_new]
 
-This function generates a sub covariance matrix.
-
-Args:
-    numberObservations::Int: Number of observations.
-    numberColumns::Int: Number of columns.
-    σ::Float64: Standard deviation.
-    domain: Range for random data.
-
-Returns:
-    Matrix{Float64}: Sub covariance matrix.
-"""
-function randomCovarianceSub(
-    numberObservations::Int, 
-    numberColumns::Int,
-    σ::Float64,
-    domain
-)::Matrix{Float64}
-    # Sub covariance matrix
-    if numberColumns == 1
-        return ones(1, 1)
+    distance = _correlation_distance(correlation)
+    labels = zeros(Int, n)
+    for (key, items) in clusters_new
+        labels[items] .= key
     end
-    data = rand(domain, Distributions.Normal(), numberObservations) # Generate data
-    data = repeat(data, 1, numberColumns) # Repeat data
-    data += rand(domain, Distributions.Normal(0, σ), size(data)) # Add noise
-    covariance = cov(data) # Covariance of data
-    return covariance
+    silhouette_new = silhouette_samples(distance, labels)
+    return (correlation_new, clusters_new, silhouette_new)
 end
 
-"""
-Function to compute a random block covariance matrix.
-
-This function generates a random block covariance matrix.
-
-Args:
-    numberColumns::Int: Number of columns.
-    numberBlocks::Int: Number of blocks.
-    blockSizeMin::Int: Minimum block size.
-    σ::Float64: Standard deviation.
-    domain: Range for random data.
-
-Returns:
-    AbstractMatrix: Random block covariance matrix.
-"""
-function randomBlockCovariance(
-    numberColumns::Int,
-    numberBlocks::Int;
-    blockSizeMin::Int = 1,
-    σ::Float64 = 1.0,
-    domain = nothing
-)::AbstractMatrix
-    # Generate a block random covariance matrix
-    parts = sort(StatsBase.sample(domain, 1:numberColumns - (blockSizeMin - 1) * numberBlocks - 1, numberBlocks - 1, replace = false))
-    append!(parts, numberColumns - (blockSizeMin - 1) * numberBlocks)
-    parts = append!([parts[1]], diff(parts)) .- 1 .+ blockSizeMin
-    covariance = nothing
-    for column in parts
-        thisCovariance = randomCovarianceSub(Int(max(column * (column + 1) / 2.0, 100)), column, σ, domain) # Sub covariance
-        if isnothing(covariance)
-            covariance = copy(thisCovariance) # Copy covariance
-        else
-            covariance = BlockDiagonal([covariance, thisCovariance])  # Block diagonal covariance matrix
-        end
+# cluster silhouette t-statistic (pandas .std() -> sample std, ddof = 1)
+function _cluster_t_stats(silhouette, clusters)
+    t_stats = Dict{Int,Float64}()
+    for (i, items) in clusters
+        s = std(silhouette[items]; corrected = true)
+        s > 0 && (t_stats[i] = mean(silhouette[items]) / s)
     end
-    return covariance
+    return t_stats
 end
 
 """
-Function to compute a random block correlation matrix.
+    cluster_k_means_top(correlation; max_clusters=nothing, iterations=10, random_state=nothing)
+        -> (correlation_sorted, clusters, silhouette)
 
-This function generates a random block correlation matrix.
-
-Args:
-    numberColumns::Int: Number of columns.
-    numberBlocks::Int: Number of blocks.
-    randomState: Random seed.
-    blockSizeMin::Int: Minimum block size.
-
-Returns:
-    DataFrame: Random block correlation matrix.
+Optimized Nested Clustering (ONC): run the base k-means, then recursively
+re-cluster the clusters whose silhouette t-statistic is below average, keeping
+the re-clustering only if it improves the mean t-statistic. Behavioural (built on
+stochastic k-means). Mirrors Python's `cluster_k_means_top`.
 """
-function randomBlockCorrelation(
-    numberColumns::Int,
-    numberBlocks::Int,
-    randomState::Int = nothing,
-    blockSizeMin::Int = 1
-)::DataFrame
-    # Set seed
-    domain = MersenneTwister(randomState)
-    # Generate two random block diagonal covariance matrices
-    covariance1 = randomBlockCovariance(numberColumns, numberBlocks, blockSizeMin = blockSizeMin, σ = 0.5, domain = domain)
-    covariance2 = randomBlockCovariance(numberColumns, 1, blockSizeMin = blockSizeMin, σ = 1.0, domain = domain) # Add noise
-    covariance1 += covariance2 # Add two covariance matrices
-    correlation = covToCorr(covariance1) # Correlation matrix
-    correlation = DataFrame(correlation, :auto) # DataFrame of correlation matrix
-    return correlation
+function cluster_k_means_top(
+    correlation::AbstractMatrix{<:Real};
+    max_clusters = nothing,
+    iterations::Integer = 10,
+    random_state = nothing,
+)
+    n = size(correlation, 2)
+    mc = max_clusters === nothing ? n - 1 : min(max_clusters, n - 1)
+    if mc < 2
+        return (correlation, Dict(0 => collect(1:n)), Float64[])
+    end
+
+    correlation_sorted, clusters, silhouette = cluster_k_means_base(
+        correlation;
+        max_clusters = mc,
+        iterations = iterations,
+        random_state = random_state,
+    )
+
+    cluster_t_stats = _cluster_t_stats(silhouette, clusters)
+    isempty(cluster_t_stats) && return (correlation_sorted, clusters, silhouette)
+    t_stat_mean = mean(values(cluster_t_stats))
+    redo = [i for (i, t) in cluster_t_stats if t < t_stat_mean]
+    length(redo) <= 1 && return (correlation_sorted, clusters, silhouette)
+
+    keys_redo = reduce(vcat, (clusters[i] for i in redo))
+    correlation_temp = correlation[keys_redo, keys_redo]
+    t_stat_mean_redo = mean(cluster_t_stats[i] for i in redo)
+    n_good = length(clusters) - length(redo)
+    remained = mc - n_good
+
+    _, clusters_2_local, _ = cluster_k_means_top(
+        correlation_temp;
+        max_clusters = min(remained, size(correlation_temp, 2) - 1),
+        iterations = iterations,
+        random_state = random_state,
+    )
+    clusters_2 = Dict(k => keys_redo[v] for (k, v) in clusters_2_local)
+    clusters_1 = Dict(i => clusters[i] for i in keys(clusters) if !(i in redo))
+
+    correlation_new, clusters_new, silhouette_new =
+        make_new_outputs(correlation, clusters_1, clusters_2)
+    new_t_stats = collect(values(_cluster_t_stats(silhouette_new, clusters_new)))
+    isempty(new_t_stats) && return (correlation_sorted, clusters, silhouette)
+
+    if mean(new_t_stats) <= t_stat_mean_redo
+        return (correlation_sorted, clusters, silhouette)
+    end
+    return (correlation_new, clusters_new, silhouette_new)
 end
 
 """
-Function to derive the correlation matrix from a covariance matrix.
+    random_covariance_sub(n_observations, n_columns, sigma; random_state=nothing) -> Matrix
 
-This function calculates the correlation matrix from a given covariance matrix.
-
-Args:
-    covariance::Matrix: Covariance matrix.
-
-Returns:
-    Matrix{Float64}: Correlation matrix.
+Random covariance of one block: a shared factor plus idiosyncratic noise.
+Stochastic. Mirrors Python's `random_covariance_sub`.
 """
-function covToCorr(
-    covariance::Matrix
-)::Matrix::Float64
-    std = sqrt.((diag(covariance))) # Standard deviations
-    correlation = covariance ./ (std .* std') # Create correlation matrix
-    correlation[correlation .< -1] .= -1 # Handle numerical errors
-    correlation[correlation .> 1] .= 1  # Handle numerical errors
-    return correlation
+function random_covariance_sub(
+    n_observations::Integer,
+    n_columns::Integer,
+    sigma::Real;
+    random_state = nothing,
+)
+    n_columns == 1 && return ones(1, 1)
+    rng = _rng(random_state)
+    data = repeat(randn(rng, n_observations, 1), 1, n_columns)
+    data = data .+ sigma .* randn(rng, n_observations, n_columns)
+    return cov(data)
+end
+
+"""
+    random_block_covariance(n_columns, n_blocks; block_size_min=1, sigma=1.0, random_state=nothing) -> Matrix
+
+Random block-diagonal covariance matrix. Stochastic. Mirrors Python's
+`random_block_covariance`.
+"""
+function random_block_covariance(
+    n_columns::Integer,
+    n_blocks::Integer;
+    block_size_min::Integer = 1,
+    sigma::Real = 1.0,
+    random_state = nothing,
+)
+    rng = _rng(random_state)
+    limit = n_columns - (block_size_min - 1) * n_blocks
+    chosen = sort(shuffle(rng, collect(1:(limit-1)))[1:(n_blocks-1)])
+    parts = vcat(chosen, limit)
+    parts = vcat(parts[1], diff(parts)) .- 1 .+ block_size_min
+
+    blocks = Matrix{Float64}[]
+    for col_size in parts
+        n_obs = Int(max(col_size * (col_size + 1) / 2.0, 100))
+        push!(blocks, random_covariance_sub(n_obs, col_size, sigma; random_state = rng))
+    end
+
+    total = sum(size(b, 1) for b in blocks)
+    out = zeros(Float64, total, total)
+    offset = 0
+    for b in blocks
+        s = size(b, 1)
+        out[(offset+1):(offset+s), (offset+1):(offset+s)] = b
+        offset += s
+    end
+    return out
+end
+
+"""
+    random_block_correlation(n_columns, n_blocks; random_state=nothing, block_size_min=1) -> Matrix
+
+Random block-diagonal correlation matrix with an added market component.
+Stochastic. Mirrors Python's `random_block_correlation`.
+"""
+function random_block_correlation(
+    n_columns::Integer,
+    n_blocks::Integer;
+    random_state = nothing,
+    block_size_min::Integer = 1,
+)
+    rng = _rng(random_state)
+    covariance_1 = random_block_covariance(
+        n_columns,
+        n_blocks;
+        block_size_min = block_size_min,
+        sigma = 0.5,
+        random_state = rng,
+    )
+    covariance_2 = random_block_covariance(
+        n_columns,
+        1;
+        block_size_min = n_columns,
+        sigma = 1.0,
+        random_state = rng,
+    )
+    return covariance_to_correlation(covariance_1 .+ covariance_2)
 end

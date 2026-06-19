@@ -303,4 +303,30 @@ order is not bit-identical across implementations; it lands with the `cluster`
 `hyper_parameter_tuning` follow with the cluster port and the ML-backend
 decision, respectively.
 
+## Cluster — ONC & silhouette  — PR (wired)
+
+Port of the `cluster.clustering` sub-package: Optimized Nested Clustering and its
+supporting pieces, built on `Clustering.jl` (new dependency) for k-means.
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Covariance → correlation | `covariance_to_correlation` | `Cluster.covariance_to_correlation` | exact; delegates to `Data.cov_to_corr` |
+| Silhouette scores | `silhouette_samples` (sklearn) | `Cluster.silhouette_samples` | **exact**; native, matches sklearn `metric="precomputed"` (verified to 1e-9); singleton cluster → 0 |
+| K-means base step | `cluster_k_means_base` | `Cluster.cluster_k_means_base` | **behavioural**; `Clustering.kmeans` vs sklearn KMeans. Best clustering by silhouette t-stat (population std). `random_state` reseeds the global RNG |
+| ONC | `cluster_k_means_top` | `Cluster.cluster_k_means_top` | **behavioural**; recursion re-clusters below-average-t-stat clusters (cluster t-stat uses sample std, ddof 1) |
+| Merge outputs | `make_new_outputs` | `Cluster.make_new_outputs` | recombines two cluster dicts and recomputes silhouette |
+| Random sub-covariance | `random_covariance_sub` | `Cluster.random_covariance_sub` | **behavioural** (stochastic) |
+| Random block covariance | `random_block_covariance` | `Cluster.random_block_covariance` | **behavioural**; SciPy `block_diag` → native block assembly |
+| Random block correlation | `random_block_correlation` | `Cluster.random_block_correlation` | **behavioural** |
+
+**Deliberate divergence:** pandas labels become 1-based integer item indices and
+correlation/covariance are `Matrix`es; clusters are `Dict(label => Vector{Int})`.
+K-means is stochastic and not bit-identical across backends, so those pieces are
+**behavioural** ports — tests assert structural properties (valid partition over
+all items, shapes, symmetry, unit diagonal) rather than exact values.
+`silhouette_samples` is the deterministic anchor and is parity-tested exactly.
+
+With the cluster port landed, the deferred `hrp()` top-level wrapper and Nested
+Clustered Optimisation (`nco`) can follow.
+
 _(further submodules appended as they are wired)_

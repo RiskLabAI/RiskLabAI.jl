@@ -854,3 +854,61 @@ end
     w_custom = O.pca_weights(cov; risk_distribution = rd, risk_target = 2.0)
     @test w_custom' * cov * w_custom ≈ 2.0^2 * sum(rd)
 end
+
+@testset "Cluster — ONC, silhouette & generators" begin
+    C = RiskLabAI.Cluster
+
+    # silhouette_samples matches scikit-learn exactly (precomputed distance).
+    x = [0.0, 0.1, 0.2, 1.0, 1.1, 1.3]
+    dist = [abs(x[i] - x[j]) for i = 1:6, j = 1:6]
+    sil_two = C.silhouette_samples(dist, [1, 1, 1, 2, 2, 2])
+    expected_two = [
+        0.867647058824,
+        0.903225806452,
+        0.839285714286,
+        0.777777777778,
+        0.85,
+        0.791666666667,
+    ]
+    @test sil_two ≈ expected_two atol = 1e-9
+
+    # A singleton cluster yields silhouette 0 for that point.
+    sil_one = C.silhouette_samples(dist, [1, 1, 1, 1, 1, 2])
+    expected_one = [
+        0.538461538462,
+        0.5625,
+        0.545454545455,
+        -0.571428571429,
+        -0.741935483871,
+        0.0,
+    ]
+    @test sil_one ≈ expected_one atol = 1e-9
+    @test sil_one[6] == 0.0
+
+    # covariance_to_correlation delegates to Data.cov_to_corr.
+    cov2 = [4.0 1.0; 1.0 9.0]
+    @test C.covariance_to_correlation(cov2) ≈ [1.0 1/6; 1/6 1.0]
+
+    # Two clearly separated blocks built programmatically (formatter-safe).
+    corr = fill(0.05, 6, 6)
+    corr[1:3, 1:3] .= 0.9
+    corr[4:6, 4:6] .= 0.85
+    corr[diagind(corr)] .= 1.0
+
+    # k-means base returns a valid partition over all items.
+    _, clusters, sil = C.cluster_k_means_base(corr; max_clusters = 5, random_state = 1)
+    @test sort(reduce(vcat, collect(values(clusters)))) == collect(1:6)
+    @test length(sil) == 6
+    @test all(!isempty(v) for v in values(clusters))
+
+    # ONC top-level also yields a valid partition over all items.
+    _, clusters_top, sil_top = C.cluster_k_means_top(corr; random_state = 1)
+    @test sort(reduce(vcat, collect(values(clusters_top)))) == collect(1:6)
+    @test length(sil_top) == 6
+
+    # Random block correlation: square, symmetric, unit diagonal.
+    rbc = C.random_block_correlation(8, 2; random_state = 7)
+    @test size(rbc) == (8, 8)
+    @test rbc ≈ rbc'
+    @test all(abs.(diag(rbc) .- 1.0) .< 1e-9)
+end
