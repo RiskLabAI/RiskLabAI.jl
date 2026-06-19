@@ -334,4 +334,24 @@ all items, shapes, symmetry, unit diagonal) rather than exact values.
 With the cluster port landed, the deferred `hrp()` top-level wrapper and Nested
 Clustered Optimisation (`nco`) can follow.
 
+## Validation — cross-validators  — PR (wired)
+
+Port of the `backtest.validation` sub-package: the train/test index-generating
+logic. Estimator-driven `backtest_predictions` is deferred to the
+cross-validation-scoring slice (needs the ML backend).
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Standard K-Fold | `KFold` | `Validation.KFoldCV` | contiguous folds, optional shuffle; `cv_split(cv, n)` |
+| Purged K-Fold + embargo | `PurgedKFold` | `Validation.PurgedKFoldCV` | **exact** purge + embargo index logic (verified vs pandas reference); `cv_split(cv)` |
+| Combinatorial Purged CV | `CombinatorialPurged` | `Validation.CombinatorialPurgedCV` | **exact**; `C(n,k)` splits, `backtest_paths` assembles the `k·C/n` paths |
+| Walk-Forward | `WalkForward` | `Validation.WalkForwardCV` | **exact**; growing train window, `gap` / `max_train_size` |
+| Number of splits | `get_n_splits` | `Validation.get_n_splits` | exact |
+
+**Deliberate divergence:** Python nests this under `backtest.validation`; Julia
+exposes the top-level `RiskLabAI.Validation`. The sklearn-style `CrossValidator`
+ABC + factory + controller scaffolding is replaced by plain structs + dispatch.
+`times` (a pandas Series start→end) becomes parallel `event_starts`/`event_ends`
+vectors; all indices are 1-based.
+
 _(further submodules appended as they are wired)_

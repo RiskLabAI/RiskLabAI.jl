@@ -49,6 +49,10 @@ using .Backtest: sharpe_ratio, bet_timing, calculate_holding_period,
     avg_active_signals, discrete_signal, generate_signal, bet_size_sigmoid,
     target_position, inverse_price, limit_price, compute_sigmoid_width
 
+include("Validation/Validation.jl")
+using .Validation: KFoldCV, PurgedKFoldCV, CombinatorialPurgedCV, WalkForwardCV,
+    cv_split, backtest_paths, get_n_splits
+
 # --------------------------------------------------------------------------- #
 # Top-level exports.
 # --------------------------------------------------------------------------- #
@@ -94,6 +98,9 @@ export
     probability_bet_size, average_bet_sizes, strategy_bet_sizing, mp_avg_active_signals,
     avg_active_signals, discrete_signal, generate_signal, bet_size_sigmoid,
     target_position, inverse_price, limit_price, compute_sigmoid_width,
+    # Validation — cross-validators
+    KFoldCV, PurgedKFoldCV, CombinatorialPurgedCV, WalkForwardCV,
+    cv_split, backtest_paths, get_n_splits,
     # Backtest (legacy)
     probabilityOfBacktestOverfitting,
     # BetSize

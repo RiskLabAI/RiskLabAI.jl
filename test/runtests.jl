@@ -941,3 +941,39 @@ end
     @test sum(w_hrp) ≈ 1.0
     @test all(w_hrp .> 0)
 end
+
+@testset "Validation — cross-validators (parity with Python)" begin
+    V = RiskLabAI.Validation
+    # 10 observations; each label's info range spans two steps ahead.
+    starts = collect(0:9)
+    ends = starts .+ 2
+
+    # Standard K-Fold (no shuffle): contiguous test folds, complementary train.
+    kfold = V.cv_split(V.KFoldCV(5), 10)
+    @test kfold[1] == ([3, 4, 5, 6, 7, 8, 9, 10], [1, 2])
+    @test kfold[3] == ([1, 2, 3, 4, 7, 8, 9, 10], [5, 6])
+    @test length(kfold) == 5
+
+    # Purged K-Fold with embargo = 0.1 (matches pandas reference exactly).
+    purged = V.cv_split(V.PurgedKFoldCV(5, starts, ends; embargo = 0.1))
+    @test purged[1] == ([6, 7, 8, 9, 10], [1, 2])
+    @test purged[2] == ([8, 9, 10], [3, 4])
+    @test purged[3] == ([1, 2, 10], [5, 6])
+    @test purged[5] == ([1, 2, 3, 4, 5, 6], [9, 10])
+
+    # CPCV: C(6,2) = 15 splits; first split purged against the combination.
+    cpcv = V.CombinatorialPurgedCV(6, 2, starts, ends)
+    @test V.get_n_splits(cpcv) == 15
+    splits = V.cv_split(cpcv)
+    @test length(splits) == 15
+    @test splits[1] == ([7, 8, 9, 10], [1, 2, 3, 4])
+    # Number of backtest paths = n_test_groups · C / n_splits = 2·15/6 = 5.
+    @test length(V.backtest_paths(cpcv)) == 5
+
+    # Walk-Forward with gap = 1: growing train window, walking test fold.
+    walk = V.cv_split(V.WalkForwardCV(5; gap = 1), 10)
+    @test walk[1] == (Int[], [1, 2])
+    @test walk[2] == ([1], [3, 4])
+    @test walk[3] == ([1, 2, 3], [5, 6])
+    @test walk[5] == ([1, 2, 3, 4, 5, 6, 7], [9, 10])
+end
