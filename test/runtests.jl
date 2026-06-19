@@ -1126,3 +1126,49 @@ end
     @test count(startswith("I_"), names) == 4
     @test count(startswith("R_"), names) == 3
 end
+
+@testset "Ensemble & CV scoring (DecisionTree.jl)" begin
+    E = RiskLabAI.Ensemble
+    V = RiskLabAI.Validation
+
+    # Theoretical bagging accuracy: exact (binomial survival function).
+    @test E.bagging_classifier_accuracy(11, 0.6) ≈ 0.75349813248
+    @test E.bagging_classifier_accuracy(101, 0.55) ≈ 0.843755399638
+    @test E.bagging_classifier_accuracy(3, 0.7) ≈ 0.784
+    @test E.bagging_classifier_accuracy(7, 0.51) ≈ 0.5218662521
+    @test_throws ArgumentError E.bagging_classifier_accuracy(10, 0.6)
+
+    # Separable dataset for the behavioural pieces.
+    rng = MersenneTwister(7)
+    n = 200
+    y = rand(rng, 0:1, n)
+    x = hcat(3.0 .* y .+ randn(rng, n), randn(rng, n))
+    train = 1:150
+    test = 151:200
+
+    schemes = E.bagging_evaluate_schemes(
+        x[train, :], y[train], x[test, :], y[test];
+        n_estimators = 40, max_samples = 60, random_state = 1,
+    )
+    @test Set(keys(schemes)) == Set(["uniform", "c_i", "variance"])
+    @test all(0.0 <= v <= 1.0 for v in values(schemes))
+    @test schemes["uniform"] > 0.6   # informative signal is learnable
+
+    trees, classes = E.fit_bagging(
+        x[train, :], y[train]; n_estimators = 40, max_samples = 60, random_state = 1,
+    )
+    values_boot, mean_boot, std_boot =
+        E.calculate_bootstrap_accuracy(trees, classes, x[test, :], y[test]; n_bootstraps = 50)
+    @test length(values_boot) == 50
+    @test 0.0 <= mean_boot <= 1.0
+
+    # cross_val_score over a purged K-Fold and a plain K-Fold.
+    scores = V.cross_val_score(V.KFoldCV(5), x, y; n_trees = 30, random_state = 1)
+    @test length(scores) == 5
+    @test sum(scores) / length(scores) > 0.7
+
+    starts = collect(1:n)
+    purged = V.PurgedKFoldCV(5, starts, starts; embargo = 0.0)
+    pscores = V.cross_val_score(purged, x, y; n_trees = 30, random_state = 1)
+    @test length(pscores) == 5
+end

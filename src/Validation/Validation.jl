@@ -18,6 +18,9 @@ module Validation
 
 include("CrossValidators.jl")
 
+# Estimator-driven scoring over the cross-validators (DecisionTree.jl backend).
+include("CrossValScore.jl")
+
 export
     KFoldCV,
     PurgedKFoldCV,
@@ -25,6 +28,7 @@ export
     WalkForwardCV,
     cv_split,
     get_n_splits,
-    backtest_paths
+    backtest_paths,
+    cross_val_score
 
 end # module Validation

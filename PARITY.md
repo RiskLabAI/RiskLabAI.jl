@@ -409,4 +409,23 @@ noise). Sample weights are not supported by the backend and are dropped. The
 `controller`/`factory`/`strategy` scaffolding is replaced by plain functions;
 clustered MDI/MDA follow in a small follow-up.
 
+## Ensemble & cross-validation scoring  — PR (wired)
+
+Port of the `ensemble` sub-package plus the estimator-driven scoring half of
+`backtest.validation`.
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Theoretical bagging accuracy | `bagging_classifier_accuracy` | `Ensemble.bagging_classifier_accuracy` | **exact** (binomial survival function) |
+| Weighted-bagging evaluation | `BaggingClassifierAccuracy` | `Ensemble.fit_bagging` + `bagging_evaluate_schemes` | **behavioural**; uniform / cᵢ / 1−cᵢ² weighting on the DecisionTree.jl backend |
+| Bootstrap accuracy | `calculate_bootstrap_accuracy` | `Ensemble.calculate_bootstrap_accuracy` | **behavioural** |
+| Cross-validation score | `…validation.backtest_predictions` (scoring) | `Validation.cross_val_score` | **behavioural**; per-fold RF score (`:accuracy`/`:neg_log_loss`) over any cross-validator |
+
+**Deliberate divergence:** the sklearn `BaggingClassifierAccuracy` class becomes a
+functional API; `class_weight="balanced"` and the Matplotlib plotting helper are
+dropped. `cross_val_score` is the practical Julia equivalent of sklearn's
+`cross_val_score` over the purged/combinatorial validators; the full path-level
+`backtest_predictions` (per-CPCV-path OOS prediction assembly) remains a possible
+elaboration.
+
 _(further submodules appended as they are wired)_
