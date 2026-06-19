@@ -89,8 +89,27 @@ a golden-section search instead of scikit-learn/SciPy, so `find_max_eval` /
 preserved), not bit-for-bit. No new dependencies were added (the legacy file's
 `KernelDensity`/`Optim`/`MultivariateStats`/`BlockArrays` usage is dropped).
 
-Next submodules: `Data` (labeling, distance), then `Backtest`, `Features`,
-`Optimization`, `HPC`.
+## Data.Labeling  — PR 10 (wired)
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Symmetric CUSUM | `symmetric_cusum_filter` / `cusum_filter_events_dynamic_threshold` | `Data.symmetric_cusum_filter` / `Data.cusum_filter_events_dynamic_threshold` | exact parity |
+| Daily volatility | `daily_volatility_with_log_returns` | `Data.daily_volatility_with_log_returns` | exact parity incl. pandas' debiased EWM std (first value `NaN`) |
+| Vertical barrier | `vertical_barrier` | `Data.vertical_barrier` | exact parity; returns `(event, barrier)` |
+| Triple barrier | `triple_barrier` | `Data.triple_barrier` | exact first-touch parity (vertical/PT/SL) |
+| Meta-events | `meta_events` | `Data.meta_events` | exact parity; serial (Python's multiprocessing is an impl detail) |
+| Meta-labeling | `meta_labeling` | `Data.meta_labeling` | exact parity (return + label) |
+| OLS t-value | `calculate_t_value_linear_regression` | `Data.calculate_t_value_linear_regression` | closed-form OLS; matches scipy `linregress` |
+| Trend scanning | `find_trend_using_trend_scanning` | `Data.find_trend_using_trend_scanning` | exact parity |
+
+**Deliberate divergence:** the price series is passed as parallel
+`(close_index, close)` vectors and event tables as `DataFrame`s (vs pandas
+time-indexed Series); `target`/`vertical_barriers`/`side` are passed as
+`event → value` dicts. No GLM/TimeSeries dependency (the legacy files used
+`GLM` + `TimeSeries`); the t-value uses closed-form OLS.
+
+Next submodule: `Data` (distance), then `Backtest`, `Features`, `Optimization`,
+`HPC`.
 
 Information-driven base: `ewma_expected_imbalance`, `imbalance_at_tick` (metric
 dispatch), dynamic threshold `E[T]·|E[b]|` — shared by imbalance and run bars.

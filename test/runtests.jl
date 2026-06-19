@@ -292,3 +292,57 @@ end
     @test diag(denoised) ≈ diag(cov)            # variances preserved
     @test all(isfinite, denoised)
 end
+
+@testset "Data.Labeling — CUSUM / barriers / meta-labeling (parity with Python)" begin
+    D = RiskLabAI.Data
+    dates = DateTime(2020, 1, 1) .+ Day.(0:19)
+    close = [
+        100.0, 102, 101, 103, 105, 104, 106, 103, 101, 99,
+        100, 102, 104, 103, 105, 107, 106, 108, 110, 109,
+    ]
+
+    # Symmetric CUSUM events.
+    events = D.symmetric_cusum_filter(dates, close, 3.0)
+    @test events == DateTime.([
+        "2020-01-05", "2020-01-09", "2020-01-13", "2020-01-16", "2020-01-19",
+    ])
+
+    # Daily volatility (pandas debiased EWM std; first value NaN).
+    vol = D.daily_volatility_with_log_returns(dates, close; span = 5)
+    @test length(vol.index) == 18
+    @test vol.index[1] == DateTime("2020-01-03")
+    @test isnan(vol.volatility[1])
+    @test vol.volatility[2] ≈ 0.000137289 atol = 1e-9
+    @test vol.volatility[3] ≈ 0.018224119 atol = 1e-9
+
+    # Vertical barriers (events past the series end are dropped).
+    vb = D.vertical_barrier(dates, events, 3)
+    @test vb.event == DateTime.(["2020-01-05", "2020-01-09", "2020-01-13", "2020-01-16"])
+    @test vb.barrier == DateTime.(["2020-01-08", "2020-01-12", "2020-01-16", "2020-01-19"])
+
+    # Triple-barrier meta-events.
+    target = Dict(vol.index[i] => vol.volatility[i] for i in eachindex(vol.index))
+    vbdict = Dict(vb.event[i] => vb.barrier[i] for i in eachindex(vb.event))
+    ev = D.meta_events(dates, close, events, (1.0, 1.0), target, 0.0; vertical_barriers = vbdict)
+    @test ev.event_start == events
+    @test ev.base_width ≈
+        [0.018224119, 0.0322455982, 0.034249469, 0.0235399705, 0.0182630643]
+    @test ev.end_time[1:4] ==
+        DateTime.(["2020-01-08", "2020-01-12", "2020-01-16", "2020-01-19"])
+    @test ismissing(ev.end_time[5])
+
+    # Meta-labeling (event 5 dropped: no barrier touch).
+    ml = D.meta_labeling(ev, dates, close)
+    @test ml.ret ≈ [-0.0192313619, 0.0098522964, 0.0284379353, 0.0276515313]
+    @test ml.label == [-1.0, 1.0, 1.0, 1.0]
+
+    # t-value of an OLS fit (matches scipy linregress slope/stderr).
+    @test D.calculate_t_value_linear_regression([100.0, 102, 101, 103, 105]) ≈
+        3.6666666667 atol = 1e-9
+
+    # Trend scanning (behavioural shape check).
+    ts = D.find_trend_using_trend_scanning([dates[1]], dates, close, (3, 6))
+    @test nrow(ts) == 1
+    @test ts.end_time[1] == DateTime("2020-01-06")
+    @test ts.trend[1] in (-1.0, 0.0, 1.0)
+end

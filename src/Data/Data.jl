@@ -33,6 +33,11 @@ include("Weights/SampleWeight.jl")
 # Covariance denoising via Random Matrix Theory (AFML Ch. 2).
 include("Denoise/Denoising.jl")
 
+# Labeling: CUSUM filters, volatility, triple barrier, meta-labeling (AFML Ch. 3).
+include("Labeling/Labeling.jl")
+# Trend-scanning labels (AFML Ch. 4).
+include("Labeling/FinancialLabels.jl")
+
 export
     # metric taxonomy
     Metric, Dollar, Volume, Tick,
@@ -51,6 +56,12 @@ export
     sample_weight_absolute_return_meta_labeling, calculate_time_decay,
     # denoising
     marcenko_pastur_pdf, pca, cov_to_corr, corr_to_cov, denoised_corr,
-    find_max_eval, denoise_cov, optimal_portfolio, optimal_portfolio_denoised
+    find_max_eval, denoise_cov, optimal_portfolio, optimal_portfolio_denoised,
+    # labeling
+    symmetric_cusum_filter, cusum_filter_events_dynamic_threshold,
+    daily_volatility_with_log_returns, vertical_barrier, triple_barrier,
+    meta_events, meta_labeling,
+    # trend scanning
+    calculate_t_value_linear_regression, find_trend_using_trend_scanning
 
 end # module Data
