@@ -282,4 +282,25 @@ driven `feature_importance` remains deferred pending a Julia ML-backend decision
 Julia 1.10 + 1 on Ubuntu and Windows), to avoid the slow macOS PR queue while
 keeping full cross-platform coverage on merge.
 
+## Optimization — HRP & hedging  — PR (wired)
+
+First slice of the `optimization` sub-package: the pure-numeric pieces.
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Inverse-variance weights | `inverse_variance_weights` | `Optimization.inverse_variance_weights` | exact |
+| Cluster variance | `cluster_variance` | `Optimization.cluster_variance` | exact; IVW-weighted `wᵀCw` |
+| Quasi-diagonal order | `quasi_diagonal` | `Optimization.quasi_diagonal` | exact; SciPy-format linkage in, 1-based items out |
+| Recursive bisection | `recursive_bisection` | `Optimization.recursive_bisection` | exact HRP weights given the sorted order |
+| Correlation distance | `distance_corr` | `Optimization.distance_corr` | exact `√((1-ρ)/2)` |
+| PCA hedging weights | `pca_weights` | `Optimization.pca_weights` | sign-free invariant `wᵀCw = risk_target²·Σρ` (eigenvectors are sign-ambiguous) |
+
+**Deliberate divergence / deferred:** asset labels become 1-based integer
+indices; matrices replace DataFrames. The top-level `hrp(cov, corr)` wrapper is
+**deferred** — it calls SciPy single-linkage clustering whose dendrogram leaf
+order is not bit-identical across implementations; it lands with the `cluster`
+(k-means / linkage) port. Nested Clustered Optimisation (`nco`) and sklearn
+`hyper_parameter_tuning` follow with the cluster port and the ML-backend
+decision, respectively.
+
 _(further submodules appended as they are wired)_
