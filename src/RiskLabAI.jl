@@ -17,7 +17,11 @@ using .Data: AbstractBars, StandardBars, TimeBars, ExpectedImbalanceBars,
 
 include("Backtest/Backtest.jl")
 using .Backtest: sharpe_ratio, bet_timing, calculate_holding_period,
-    calculate_hhi, calculate_hhi_concentration, compute_drawdowns_time_under_water
+    calculate_hhi, calculate_hhi_concentration, compute_drawdowns_time_under_water,
+    probabilistic_sharpe_ratio, benchmark_sharpe_ratio,
+    expected_max_sharpe_ratio, generate_max_sharpe_ratios, mean_std_error,
+    estimated_sharpe_ratio_z_statistics, strategy_type1_error_probability,
+    theta_for_type2_error, strategy_type2_error_probability
 
 # --------------------------------------------------------------------------- #
 # Top-level exports.
@@ -32,6 +36,11 @@ export
     # Backtest.statistics
     sharpe_ratio, bet_timing, calculate_holding_period,
     calculate_hhi, calculate_hhi_concentration, compute_drawdowns_time_under_water,
+    # Backtest — probabilistic Sharpe ratio & test-set overfitting
+    probabilistic_sharpe_ratio, benchmark_sharpe_ratio,
+    expected_max_sharpe_ratio, generate_max_sharpe_ratios, mean_std_error,
+    estimated_sharpe_ratio_z_statistics, strategy_type1_error_probability,
+    theta_for_type2_error, strategy_type2_error_probability,
     # Backtest (legacy)
     probabilityOfBacktestOverfitting,
     # BetSize

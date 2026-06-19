@@ -2,6 +2,7 @@ using Test
 using Dates
 using DataFrames
 using LinearAlgebra
+using Random
 using RiskLabAI
 
 @testset "RiskLabAI smoke tests" begin
@@ -510,4 +511,74 @@ end
     ddp = B.compute_drawdowns_time_under_water(pidx, pnl; dollars = false)
     @test ddp.drawdown ≈ [1 - 101 / 102, 1 - 98 / 103, 1 - 104 / 105]
     @test ddp.time_under_water ≈ [1 / 365.25, 2 / 365.25, 1 / 365.25]
+end
+
+@testset "Backtest — PSR & test-set overfitting (parity with Python)" begin
+    B = RiskLabAI.Backtest
+
+    # Probabilistic Sharpe ratio (Φ of the Z-statistic).
+    psr_sat = B.probabilistic_sharpe_ratio(
+        2.5,
+        1.0,
+        252;
+        skewness_of_returns = -0.5,
+        kurtosis_of_returns = 4.0,
+    )
+    @test psr_sat ≈ 1.0
+    @test B.probabilistic_sharpe_ratio(1.5, 1.0, 100) ≈ 0.9996784793766524
+    psr_z = B.probabilistic_sharpe_ratio(1.5, 1.0, 100; return_test_statistic = true)
+    @test psr_z ≈ 3.4127787539671264
+    # Non-positive denominator: PSR -> 0, Z -> -Inf.
+    @test B.probabilistic_sharpe_ratio(3.0, 1.0, 100; skewness_of_returns = 2.0) == 0.0
+    psr_inf = B.probabilistic_sharpe_ratio(
+        3.0,
+        1.0,
+        100;
+        skewness_of_returns = 2.0,
+        return_test_statistic = true,
+    )
+    @test psr_inf == -Inf
+
+    # Benchmark (expected-max) Sharpe ratio.
+    @test B.benchmark_sharpe_ratio([0.5, 1.2, -0.3, 0.8, 1.5, 0.9]) ≈ 0.7418275166314174
+    @test B.benchmark_sharpe_ratio([0.7]) == 0.7
+    @test B.benchmark_sharpe_ratio(Float64[]) == 0.0
+
+    # Expected maximum Sharpe ratio (truncated Euler constant).
+    @test B.expected_max_sharpe_ratio(10, 0.0, 1.0) ≈ 1.5745983013449716
+    @test B.expected_max_sharpe_ratio(50, 0.5, 1.2) ≈ 3.231563712103708
+    @test B.expected_max_sharpe_ratio(1, 0.33, 1.0) == 0.33
+    @test B.expected_max_sharpe_ratio(0, 0.33, 1.0) == 0.0
+
+    # Sharpe-ratio Z-statistic.
+    @test B.estimated_sharpe_ratio_z_statistics(1.5, 100) ≈ 10.238336261901377
+    z_skew = B.estimated_sharpe_ratio_z_statistics(
+        1.2,
+        52;
+        true_sharpe_ratio = 0.5,
+        skew = -0.3,
+        kurt = 4,
+    )
+    @test z_skew ≈ 3.200281749891488
+    @test isnan(B.estimated_sharpe_ratio_z_statistics(3.0, 100; skew = 2.0))
+
+    # Multiple-testing type-1 / type-2 errors.
+    @test B.strategy_type1_error_probability(1.96) ≈ 0.024997895148220373
+    alpha_k = B.strategy_type1_error_probability(1.96; k = 10)
+    @test alpha_k ≈ 0.22365361940347483
+    theta = B.theta_for_type2_error(1.2, 52, 1.0; skew = -0.3, kurt = 4)
+    @test theta ≈ 4.571831071273555
+    @test isnan(B.theta_for_type2_error(3.0, 100, 1.0; skew = 2.0))
+    @test B.strategy_type2_error_probability(alpha_k, 10, theta) ≈ 0.004502937106211302
+
+    # Monte-Carlo helpers are stochastic — check structure with a seeded RNG.
+    sims = B.generate_max_sharpe_ratios(20, [5, 10], 1.0, 0.0; rng = MersenneTwister(1))
+    @test names(sims) == ["max_SR", "n_trials"]
+    @test nrow(sims) == 40
+    @test all(isfinite, sims.max_SR)
+
+    err = B.mean_std_error(20, 3, [5, 10]; rng = MersenneTwister(2))
+    @test names(err) == ["n_trials", "meanErr", "stdErr"]
+    @test nrow(err) == 2
+    @test all(isfinite, err.meanErr)
 end

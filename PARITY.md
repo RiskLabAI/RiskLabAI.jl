@@ -153,4 +153,22 @@ are `DataFrame`s / `NamedTuple`s. No `numba`/`TimeSeries`/`DayCounts` dependency
 `backtest` modules (probabilistic/deflated Sharpe, strategy risk, PBO, synthetic
 backtesting, bet sizing) follow in subsequent PRs.
 
+## Backtest — PSR & test-set overfitting  — PR (wired)
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Probabilistic Sharpe ratio | `probabilistic_sharpe_ratio` | `Backtest.probabilistic_sharpe_ratio` | exact; `Φ(Z)` or `Z`; denom ≤ 0 → `0.0`/`-Inf` |
+| Benchmark (E[max]) SR | `benchmark_sharpe_ratio` | `Backtest.benchmark_sharpe_ratio` | exact; full-precision `eulergamma`; population std |
+| Expected max SR | `expected_max_sharpe_ratio` | `Backtest.expected_max_sharpe_ratio` | exact; truncated Euler constant `0.5772156649` (as in Python) |
+| SR Z-statistic | `estimated_sharpe_ratio_z_statistics` | `Backtest.estimated_sharpe_ratio_z_statistics` | exact; `NaN` on non-positive denominator |
+| Type-1 error | `strategy_type1_error_probability` | `Backtest.strategy_type1_error_probability` | exact; family-wise `1-(1-Φ(-z))^k` |
+| θ for type-2 | `theta_for_type2_error` | `Backtest.theta_for_type2_error` | exact; `NaN` on non-positive denominator |
+| Type-2 error | `strategy_type2_error_probability` | `Backtest.strategy_type2_error_probability` | exact |
+| Max-SR Monte Carlo | `generate_max_sharpe_ratios` / `mean_std_error` | `Backtest.generate_max_sharpe_ratios` / `mean_std_error` | behavioural; stochastic, optional `rng` keyword for reproducibility |
+
+**Deliberate divergence:** the normal CDF / quantile come from `Distributions`
+(matching SciPy's `norm.cdf` / `norm.ppf`); no SciPy/`numba` dependency. The
+Monte-Carlo helpers take an optional `rng` keyword (Julia idiom) in place of
+NumPy's implicit default generator.
+
 _(further submodules appended as they are wired)_
