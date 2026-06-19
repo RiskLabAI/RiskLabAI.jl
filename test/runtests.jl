@@ -669,3 +669,52 @@ end
     @test length(results) == 4
     @test all(t -> length(t) == 5, results)
 end
+
+@testset "Backtest — bet sizing (parity with Python)" begin
+    B = RiskLabAI.Backtest
+
+    # Probability bet size: side · (2·Φ(p) - 1).
+    pbs = B.probability_bet_size([0.55, 0.6, 0.45], [1.0, -1.0, 1.0])
+    @test pbs ≈ [0.417680626423, -0.4514937645, 0.347289559424]
+
+    # Concurrent average bet size over numeric dates.
+    abs_out = B.average_bet_sizes([0, 1, 2, 3, 4], [0.0, 2.0], [2.0, 4.0], [0.5, -0.3])
+    @test abs_out ≈ [0.5, 0.5, 0.1, -0.3, -0.3]
+
+    # Discretisation (round to step, cap at ±1).
+    @test B.discrete_signal([0.26, 0.94, -1.4, 0.05], 0.1) ≈ [0.3, 0.9, -1.0, 0.0]
+
+    # Sigmoid position-sizing family.
+    @test B.bet_size_sigmoid(2.0, 1.0) ≈ 0.5773502691896258
+    @test B.target_position(2.0, 105.0, 100.0, 10) == 9
+    @test B.inverse_price(100.0, 2.0, 0.5) ≈ 99.18350341907228
+    @test B.inverse_price(100.0, 2.0, 1.0) == 100.0
+    @test B.limit_price(5, 2, 100.0, 2.0, 10) ≈ 99.37384680974242
+    @test B.compute_sigmoid_width(5.0, 0.5) ≈ 75.0
+    @test B.compute_sigmoid_width(5.0, 0.0) == Inf
+
+    # Concurrent active-signal averaging.
+    starts = [1.0, 2.0, 3.0]
+    ends = [3.0, 4.0, 5.0]
+    tp, avg = B.avg_active_signals(starts, ends, [1.0, -0.5, 0.8])
+    @test tp == [1.0, 2.0, 3.0, 4.0, 5.0]
+    @test avg ≈ [1.0, 0.25, 0.15, 0.8, 0.0]
+
+    # A missing end never closes its signal.
+    avg_missing =
+        B.mp_avg_active_signals(starts, [missing, 4.0, 5.0], [1.0, -0.5, 0.8], [5.0])
+    @test avg_missing ≈ [1.0]
+
+    # End-to-end signal generation (no meta-label side).
+    gtp, gsig = B.generate_signal(
+        starts,
+        ends,
+        nothing,
+        [0.6, 0.55, 0.7],
+        [1.0, -1.0, 1.0],
+        2,
+        0.1,
+    )
+    @test gtp == [1.0, 2.0, 3.0, 4.0, 5.0]
+    @test gsig ≈ [0.2, 0.0, 0.1, 0.3, 0.0]
+end

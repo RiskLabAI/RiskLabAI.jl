@@ -30,6 +30,9 @@ include("StrategyRisk.jl")
 include("ProbabilityOfBacktestOverfitting.jl")
 include("BacktestSyntheticData.jl")
 
+# Bet sizing: probability/meta-label sizing, signal averaging, sigmoid sizing (AFML Ch. 10).
+include("BetSizing.jl")
+
 export
     # backtest statistics
     sharpe_ratio,
@@ -61,6 +64,19 @@ export
     # probability of backtest overfitting & synthetic backtesting
     performance_evaluation,
     probability_of_backtest_overfitting,
-    synthetic_back_testing
+    synthetic_back_testing,
+    # bet sizing
+    probability_bet_size,
+    average_bet_sizes,
+    strategy_bet_sizing,
+    mp_avg_active_signals,
+    avg_active_signals,
+    discrete_signal,
+    generate_signal,
+    bet_size_sigmoid,
+    target_position,
+    inverse_price,
+    limit_price,
+    compute_sigmoid_width
 
 end # module Backtest

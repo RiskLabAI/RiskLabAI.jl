@@ -25,7 +25,10 @@ using .Backtest: sharpe_ratio, bet_timing, calculate_holding_period,
     sharpe_ratio_trials, target_sharpe_ratio_symbolic, implied_precision,
     bin_frequency, binomial_sharpe_ratio, mix_gaussians, failure_probability,
     calculate_strategy_risk,
-    performance_evaluation, probability_of_backtest_overfitting, synthetic_back_testing
+    performance_evaluation, probability_of_backtest_overfitting, synthetic_back_testing,
+    probability_bet_size, average_bet_sizes, strategy_bet_sizing, mp_avg_active_signals,
+    avg_active_signals, discrete_signal, generate_signal, bet_size_sigmoid,
+    target_position, inverse_price, limit_price, compute_sigmoid_width
 
 # --------------------------------------------------------------------------- #
 # Top-level exports.
@@ -51,6 +54,10 @@ export
     calculate_strategy_risk,
     # Backtest — PBO & synthetic backtesting
     performance_evaluation, probability_of_backtest_overfitting, synthetic_back_testing,
+    # Backtest — bet sizing
+    probability_bet_size, average_bet_sizes, strategy_bet_sizing, mp_avg_active_signals,
+    avg_active_signals, discrete_signal, generate_signal, bet_size_sigmoid,
+    target_position, inverse_price, limit_price, compute_sigmoid_width,
     # Backtest (legacy)
     probabilityOfBacktestOverfitting,
     # BetSize

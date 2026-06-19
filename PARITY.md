@@ -203,4 +203,32 @@ serially (Python's `joblib` parallelism is an implementation detail). The
 synthetic OU noise uses Julia's `randn`/`rng` rather than Python's `random.gauss`,
 so that helper is reproducible but not bit-identical across languages.
 
+## Backtest — bet sizing  — PR (wired)
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Probability bet size | `probability_bet_size` | `Backtest.probability_bet_size` | exact; `side·(2Φ(p)-1)` |
+| Concurrent average | `average_bet_sizes` | `Backtest.average_bet_sizes` | exact |
+| Strategy bet sizing | `strategy_bet_sizing` | `Backtest.strategy_bet_sizing` | exact; aligned parallel-vector inputs |
+| Active-signal averaging | `avg_active_signals` / `mp_avg_active_signals` | `Backtest.avg_active_signals` / `mp_avg_active_signals` | exact; prefix-sum + binary search; `missing` end never closes |
+| Discretise signal | `discrete_signal` | `Backtest.discrete_signal` | exact; round-half-to-even, cap ±1 |
+| Generate signal | `generate_signal` | `Backtest.generate_signal` | exact; OvR t-value → side·size → average → discretise |
+| Sigmoid bet size | `bet_size_sigmoid` | `Backtest.bet_size_sigmoid` | exact |
+| Target position | `target_position` | `Backtest.target_position` | exact; truncates toward zero |
+| Inverse price | `inverse_price` | `Backtest.inverse_price` | exact |
+| Limit price | `limit_price` | `Backtest.limit_price` | exact |
+| Sigmoid width | `compute_sigmoid_width` | `Backtest.compute_sigmoid_width` | exact; `Inf` when `m ∈ {0, ±1}` |
+
+**Deliberate divergence:** the Julia API uses the 2.0.0 snake_case canon directly
+with **no deprecated camelCase aliases**. Series/DataFrame inputs become parallel
+sorted vectors; the active-signal helpers return `(time_points, values)` and run
+serially (Python's `mp_pandas_obj` parallelism is an implementation detail).
+
+**The `backtest` core is now mirrored in Julia** — statistics, probabilistic /
+expected-max Sharpe, test-set overfitting, strategy risk, probability of backtest
+overfitting, synthetic backtesting, and bet sizing, each with Python-parity
+tests. (The `backtest.validation` cross-validation subpackage and the
+`backtest_overfitting_simulation` benchmark harness were scoped out of this
+effort.)
+
 _(further submodules appended as they are wired)_
