@@ -785,3 +785,40 @@ end
         0.470915692879,
     ]
 end
+
+@testset "Features — structural breaks (parity with Python)" begin
+    F = RiskLabAI.Features
+
+    # lag_dataframe: columns are lags 0..2 with NaN warm-up.
+    lagged = F.lag_dataframe([10.0, 11, 12, 13], 2)
+    @test size(lagged) == (4, 3)
+    @test lagged[:, 1] == [10.0, 11.0, 12.0, 13.0]
+    @test all(isnan, lagged[1:1, 2])
+    @test lagged[2:4, 2] == [10.0, 11.0, 12.0]
+    @test all(isnan, lagged[1:2, 3])
+    @test lagged[3:4, 3] == [10.0, 11.0]
+
+    # prepare_data ADF design (constant="ct", lags=2): exact diff/shift alignment.
+    periodic = [1.0, 1.1, 1.05, 1.2, 1.15, 1.3, 1.25, 1.4, 1.35, 1.5, 1.45, 1.6]
+    y, x, index = F.prepare_data(periodic, "ct", 2)
+    @test index == [4, 5, 6, 7, 8, 9, 10, 11, 12]
+    @test y ≈ [0.15, -0.05, 0.15, -0.05, 0.15, -0.05, 0.15, -0.05, 0.15]
+    @test size(x) == (9, 5)                                  # level, Δl1, Δl2, const, trend
+    @test x[:, 1] ≈ [1.05, 1.2, 1.15, 1.3, 1.25, 1.4, 1.35, 1.5, 1.45]   # lagged level
+    @test x[:, 4] == ones(9)                                  # constant
+    @test x[:, 5] == [4.0, 5, 6, 7, 8, 9, 10, 11, 12]         # trend
+
+    # OLS β and the ADF t-statistic on a well-conditioned (constant="c") design.
+    noisy = [1.0, 1.03, 1.01, 1.06, 1.1, 1.08, 1.15, 1.13, 1.2, 1.26, 1.24, 1.33]
+    yc, xc, _ = F.prepare_data(noisy, "c", 1)
+    beta_mean, beta_variance = F.compute_beta(yc, xc)
+    @test beta_mean ≈ [0.14542507467, -0.831800466234, -0.113785422889]
+    @test beta_mean[1] / sqrt(beta_variance[1, 1]) ≈ 1.007102910535
+
+    # Backward Supremum ADF and the expanding-window ADF path.
+    bsadf = F.get_bsadf_statistic(noisy, 6, "c", 1)
+    @test bsadf.bsadf ≈ 1.007102910535
+    adf = F.get_expanding_window_adf(noisy, 6, "c", 1)
+    @test adf.statistics ≈
+          [0.16894098733, 0.437811843619, 1.415912133027, 0.543280756955, 1.007102910535]
+end

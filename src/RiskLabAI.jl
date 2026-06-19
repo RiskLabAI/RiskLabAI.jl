@@ -19,7 +19,9 @@ include("Features/Features.jl")
 using .Features: shannon_entropy, probability_mass_function, plug_in_entropy_estimator,
     lempel_ziv_entropy, longest_match_length, kontoyiannis_entropy,
     beta_estimates, gamma_estimates, alpha_estimates, corwin_schultz_estimator,
-    sigma_estimates, bekker_parkinson_volatility_estimates
+    sigma_estimates, bekker_parkinson_volatility_estimates,
+    lag_dataframe, prepare_data, compute_beta, get_expanding_window_adf,
+    get_bsadf_statistic
 
 include("Backtest/Backtest.jl")
 using .Backtest: sharpe_ratio, bet_timing, calculate_holding_period,
@@ -52,6 +54,9 @@ export
     # Features — microstructural
     beta_estimates, gamma_estimates, alpha_estimates, corwin_schultz_estimator,
     sigma_estimates, bekker_parkinson_volatility_estimates,
+    # Features — structural breaks
+    lag_dataframe, prepare_data, compute_beta, get_expanding_window_adf,
+    get_bsadf_statistic,
     # Backtest.statistics
     sharpe_ratio, bet_timing, calculate_holding_period,
     calculate_hhi, calculate_hhi_concentration, compute_drawdowns_time_under_water,

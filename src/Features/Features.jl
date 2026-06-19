@@ -17,6 +17,9 @@ include("EntropyFeatures.jl")
 # Microstructural features: Corwin–Schultz spread, Bekker–Parkinson vol (AFML Ch. 19).
 include("MicrostructuralFeatures.jl")
 
+# Structural-break tests: ADF design + (Backward) Supremum ADF (AFML Ch. 17).
+include("StructuralBreaks.jl")
+
 export
     # entropy features
     shannon_entropy,
@@ -31,6 +34,12 @@ export
     alpha_estimates,
     corwin_schultz_estimator,
     sigma_estimates,
-    bekker_parkinson_volatility_estimates
+    bekker_parkinson_volatility_estimates,
+    # structural breaks
+    lag_dataframe,
+    prepare_data,
+    compute_beta,
+    get_expanding_window_adf,
+    get_bsadf_statistic
 
 end # module Features

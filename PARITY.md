@@ -263,4 +263,23 @@ deferred pending a Julia ML-backend decision.
 helper reproduces `rolling(window=w)` exactly (NaN for the first `w-1` points and
 for any window containing a NaN), so the warm-up NaN pattern matches Python.
 
+## Features — structural breaks  — PR (wired)
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Lagged frame | `lag_dataframe` | `Features.lag_dataframe` | exact; lag columns with NaN warm-up |
+| ADF design | `prepare_data` | `Features.prepare_data` | exact diff/shift/dropna alignment; returns `(y, x, index)` |
+| OLS β | `compute_beta` | `Features.compute_beta` | exact; NaN-filled on singular design |
+| Expanding-window ADF | `get_expanding_window_adf` | `Features.get_expanding_window_adf` | exact t-statistic path |
+| Backward Supremum ADF | `get_bsadf_statistic` | `Features.get_bsadf_statistic` | exact supremum-ADF (bubble origination) |
+
+**Deliberate divergence:** pandas Series/DataFrames become `Vector`/`Matrix`; OLS
+uses `LinearAlgebra` (LAPACK). With this slice the three numeric `features`
+areas (entropy, microstructural, structural breaks) are mirrored; classifier-
+driven `feature_importance` remains deferred pending a Julia ML-backend decision.
+
+**CI:** the macOS test legs now run only on pushes to `main`/tags (PRs run
+Julia 1.10 + 1 on Ubuntu and Windows), to avoid the slow macOS PR queue while
+keeping full cross-platform coverage on merge.
+
 _(further submodules appended as they are wired)_

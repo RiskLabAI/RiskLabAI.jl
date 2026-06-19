@@ -20,10 +20,9 @@ jobs:
         version:
           - "1.10"   # supported floor (LTS)
           - "1"      # latest stable
-        os:
-          - ubuntu-latest
-          - macOS-latest
-          - windows-latest
+        # macOS runners queue slowly on PRs; keep Linux + Windows on every PR
+        # (full correctness coverage) and add macOS only on pushes to main/tags.
+        os: ${{ (github.event_name == 'pull_request' && fromJSON('["ubuntu-latest","windows-latest"]')) || fromJSON('["ubuntu-latest","macOS-latest","windows-latest"]') }}
     steps:
       - uses: actions/checkout@v4
       - uses: julia-actions/setup-julia@v2
