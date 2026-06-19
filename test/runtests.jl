@@ -630,3 +630,42 @@ end
     )
     @test 0.0 <= risk <= 1.0
 end
+
+@testset "Backtest — PBO & synthetic backtesting (parity with Python)" begin
+    B = RiskLabAI.Backtest
+
+    # Deterministic fixture: rows = observations, cols = strategies.
+    perf = [sin(0.7t + 1.3i) for t = 1:12, i = 1:4]
+    metric = (r, rf) -> B.sharpe_ratio(r; risk_free_rate = rf)
+
+    pe = B.performance_evaluation(perf[1:6, :], perf[7:12, :], 4, metric, 0.0)
+    @test pe[1] == true
+    @test pe[2] ≈ -0.4054651081081643
+
+    pbo, logits = B.probability_of_backtest_overfitting(perf; n_partitions = 4)
+    @test pbo ≈ 1.0
+    @test logits ≈ [
+        -0.4054651081081643,
+        -0.4054651081081643,
+        -1.3862943611198906,
+        -1.3862943611198906,
+        -0.4054651081081643,
+        -0.4054651081081643,
+    ]
+    @test_throws ArgumentError B.probability_of_backtest_overfitting(perf; n_partitions = 3)
+
+    # Synthetic backtesting is stochastic — check structure with tiny, seeded params.
+    results = B.synthetic_back_testing(
+        0.0,
+        5.0,
+        1.0;
+        n_iteration = 50,
+        maximum_holding_period = 20,
+        profit_taking_range = [1.0, 2.0],
+        stop_loss_range = [1.0, 2.0],
+        seed = 0,
+        rng = MersenneTwister(7),
+    )
+    @test length(results) == 4
+    @test all(t -> length(t) == 5, results)
+end

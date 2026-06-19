@@ -189,4 +189,18 @@ variance value (no SymPy); the normal CDF comes from `Distributions` (no SciPy);
 the Monte-Carlo helpers take an optional `rng` keyword in place of NumPy's
 implicit generator.
 
+## Backtest — PBO & synthetic backtesting  — PR (wired)
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| CSCV performance eval | `performance_evaluation` | `Backtest.performance_evaluation` | exact; 1-based ordinal ranks (`argsort∘argsort`), logit of relative rank |
+| Probability of backtest overfitting | `probability_of_backtest_overfitting` | `Backtest.probability_of_backtest_overfitting` | exact; `C(S,S/2)` splits, `numpy.array_split` row partitioning, default population-std Sharpe |
+| Synthetic backtesting | `synthetic_back_testing` | `Backtest.synthetic_back_testing` | behavioural; OU paths + PT/SL grid; stochastic, optional `rng` |
+
+**Deliberate divergence:** combinatorial splits use `Combinatorics.combinations`
+(same lexicographic order as Python's `itertools.combinations`) and the CSCV runs
+serially (Python's `joblib` parallelism is an implementation detail). The
+synthetic OU noise uses Julia's `randn`/`rng` rather than Python's `random.gauss`,
+so that helper is reproducible but not bit-identical across languages.
+
 _(further submodules appended as they are wired)_

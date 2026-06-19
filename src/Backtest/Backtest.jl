@@ -14,6 +14,7 @@ module Backtest
 using Dates, DataFrames, Random
 using Statistics: mean, std
 using Distributions: Normal, cdf, quantile
+using Combinatorics: combinations
 
 # Backtest statistics (AFML Ch. 14).
 include("BacktestStatistics.jl")
@@ -24,6 +25,10 @@ include("TestSetOverfitting.jl")
 
 # Strategy risk: binomial betting, implied precision, failure probability (AFML Ch. 15).
 include("StrategyRisk.jl")
+
+# Probability of backtest overfitting (CSCV) and synthetic backtesting (AFML Ch. 11-13).
+include("ProbabilityOfBacktestOverfitting.jl")
+include("BacktestSyntheticData.jl")
 
 export
     # backtest statistics
@@ -52,6 +57,10 @@ export
     binomial_sharpe_ratio,
     mix_gaussians,
     failure_probability,
-    calculate_strategy_risk
+    calculate_strategy_risk,
+    # probability of backtest overfitting & synthetic backtesting
+    performance_evaluation,
+    probability_of_backtest_overfitting,
+    synthetic_back_testing
 
 end # module Backtest
