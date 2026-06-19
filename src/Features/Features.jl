@@ -14,6 +14,9 @@ module Features
 # Entropy estimators (AFML Ch. 18).
 include("EntropyFeatures.jl")
 
+# Microstructural features: Corwin–Schultz spread, Bekker–Parkinson vol (AFML Ch. 19).
+include("MicrostructuralFeatures.jl")
+
 export
     # entropy features
     shannon_entropy,
@@ -21,6 +24,13 @@ export
     plug_in_entropy_estimator,
     lempel_ziv_entropy,
     longest_match_length,
-    kontoyiannis_entropy
+    kontoyiannis_entropy,
+    # microstructural features
+    beta_estimates,
+    gamma_estimates,
+    alpha_estimates,
+    corwin_schultz_estimator,
+    sigma_estimates,
+    bekker_parkinson_volatility_estimates
 
 end # module Features

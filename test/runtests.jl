@@ -733,3 +733,55 @@ end
     @test F.kontoyiannis_entropy(m) ≈ 0.9847738922739608
     @test F.kontoyiannis_entropy(m; window = 5) ≈ 0.8868475362417008
 end
+
+@testset "Features — microstructural (parity with Python)" begin
+    F = RiskLabAI.Features
+    high = [10.0, 11, 12, 11, 13, 12, 14, 13, 15, 14]
+    low = [9.0, 9.5, 11, 10, 12, 11, 13, 12, 14, 13]
+
+    # Corwin–Schultz β: NaN for the first 3 (rolling-2 then rolling-3 warm-up).
+    beta = F.beta_estimates(high, low, 3)
+    @test all(isnan, beta[1:3])
+    @test beta[4:end] ≈ [
+        0.026103995125,
+        0.020403144632,
+        0.015374563434,
+        0.014177217155,
+        0.012979870876,
+        0.012042883073,
+        0.01110589527,
+    ]
+
+    # γ: NaN only for the first point (rolling-2).
+    gamma = F.gamma_estimates(high, low)
+    @test isnan(gamma[1])
+    @test gamma[2:end] ≈ [
+        0.040268728017,
+        0.054575898693,
+        0.033241150072,
+        0.06883500727,
+        0.027907067203,
+        0.058159137648,
+        0.023762432091,
+        0.049793044493,
+        0.020477851451,
+    ]
+
+    # α and spread are floored at 0 for this fixture.
+    spread = F.corwin_schultz_estimator(high, low, 3)
+    @test all(isnan, spread[1:3])
+    @test spread[4:end] == zeros(7)
+
+    # Bekker–Parkinson volatility.
+    bp = F.bekker_parkinson_volatility_estimates(high, low, 3)
+    @test all(isnan, bp[1:3])
+    @test bp[4:end] ≈ [
+        0.665889352092,
+        0.741771939318,
+        0.552081947665,
+        0.652306085438,
+        0.508261603535,
+        0.602526273704,
+        0.470915692879,
+    ]
+end

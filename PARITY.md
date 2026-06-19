@@ -248,4 +248,19 @@ First slice of the `features` sub-package: entropy estimators.
 structural breaks) are being mirrored; classifier-driven feature importance is
 deferred pending a Julia ML-backend decision.
 
+## Features — microstructural  — PR (wired)
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Corwin–Schultz β | `beta_estimates` | `Features.beta_estimates` | exact incl. rolling-2-then-window NaN warm-up |
+| Corwin–Schultz γ | `gamma_estimates` | `Features.gamma_estimates` | exact; 2-day high-max / low-min |
+| Corwin–Schultz α | `alpha_estimates` | `Features.alpha_estimates` | exact; floored at 0 |
+| Corwin–Schultz spread | `corwin_schultz_estimator` | `Features.corwin_schultz_estimator` | exact; `2(eᵅ-1)/(1+eᵅ)` |
+| Bekker–Parkinson σ | `sigma_estimates` | `Features.sigma_estimates` | exact |
+| Bekker–Parkinson volatility | `bekker_parkinson_volatility_estimates` | `Features.bekker_parkinson_volatility_estimates` | exact |
+
+**Deliberate divergence:** pandas Series become `Vector`s; a small `_rolling`
+helper reproduces `rolling(window=w)` exactly (NaN for the first `w-1` points and
+for any window containing a NaN), so the warm-up NaN pattern matches Python.
+
 _(further submodules appended as they are wired)_
