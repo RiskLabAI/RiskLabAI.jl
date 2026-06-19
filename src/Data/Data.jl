@@ -41,6 +41,9 @@ include("Labeling/FinancialLabels.jl")
 # Information-theoretic distance metrics (AFML Ch. 3).
 include("Distance/DistanceMetric.jl")
 
+# Synthetic data generators (MLAM Ch. 2; Heston–Merton regime simulator).
+include("SyntheticData/SyntheticData.jl")
+
 export
     # metric taxonomy
     Metric,
@@ -98,6 +101,17 @@ export
     calculate_mutual_information,
     calculate_distance,
     calculate_kullback_leibler_divergence,
-    calculate_cross_entropy
+    calculate_cross_entropy,
+    # synthetic data
+    form_block_matrix,
+    random_cov,
+    form_true_matrix,
+    simulates_cov_mu,
+    drift_volatility_burst,
+    compute_log_returns,
+    align_params_length,
+    heston_merton_log_returns,
+    generate_prices_from_regimes,
+    parallel_generate_prices
 
 end # module Data

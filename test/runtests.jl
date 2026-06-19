@@ -977,3 +977,92 @@ end
     @test walk[3] == ([1, 2, 3], [5, 6])
     @test walk[5] == ([1, 2, 3, 4, 5, 6, 7], [9, 10])
 end
+
+@testset "Data.SyntheticData (parity with Python)" begin
+    S = RiskLabAI.Data
+
+    # form_block_matrix: exact block-diagonal correlation.
+    fbm = S.form_block_matrix(2, 2, 0.5)
+    @test fbm == [1.0 0.5 0.0 0.0; 0.5 1.0 0.0 0.0; 0.0 0.0 1.0 0.5; 0.0 0.0 0.5 1.0]
+
+    # drift_volatility_burst: exact drift/vol profiles (midpoint clamp + NaN fill).
+    drifts, vols = S.drift_volatility_burst(5, 1.0, 2.0, 0.5, 1.0, 0.5, 0.5)
+    @test drifts ≈ [1.414213562373, 2.0, 0.0, 4.0, 2.828427124746]
+    @test vols ≈ [0.707106781187, 1.0, 1.0, 2.0, 1.414213562373]
+
+    # compute_log_returns: exact Heston–Merton step given fixed increments.
+    lr = S.compute_log_returns(
+        3,
+        [0.1, 0.1, 0.2],
+        [1.0, 1.0, 1.0],
+        [0.04, 0.04, 0.05],
+        [0.2, 0.2, 0.2],
+        [0.5, -0.3, 0.1],
+        [0.2, 0.1, -0.2],
+        [0.0, 0.3, 0.0],
+        [0.0, 1.0, 0.0],
+        0.01,
+        0.1,
+        [0.5, 0.5, 0.5],
+        [0.0, 0.0, 0.0],
+        [0.1, 0.1, 0.1],
+        [false, false, true],
+    )
+    @test lr ≈ [0.010775, 0.294711297037, 0.003961067977]
+
+    # align_params_length: scalars broadcast, short vectors padded with last value.
+    aligned, max_len = S.align_params_length(
+        Dict("mu" => 0.1, "kappa" => [1.0, 2.0], "theta" => 0.04),
+    )
+    @test max_len == 2
+    @test aligned["mu"] == [0.1, 0.1]
+    @test aligned["kappa"] == [1.0, 2.0]
+    @test aligned["theta"] == [0.04, 0.04]
+
+    # Stochastic generators: structural checks (shape, symmetry, positivity).
+    rc = S.random_cov(5, 3; rng = MersenneTwister(1))
+    @test size(rc) == (5, 5)
+    @test rc ≈ rc'
+
+    mu0, cov0 = S.form_true_matrix(2, 3, 0.5; rng = MersenneTwister(2))
+    @test length(mu0) == 6
+    @test size(cov0) == (6, 6)
+
+    mu1, cov1 = S.simulates_cov_mu(mu0, cov0, 500; rng = MersenneTwister(3))
+    @test length(mu1) == 6
+    @test size(cov1) == (6, 6)
+
+    regimes = Dict(
+        "calm" => Dict(
+            "mu" => 0.05,
+            "kappa" => 1.0,
+            "theta" => 0.04,
+            "xi" => 0.2,
+            "rho" => -0.5,
+            "lam" => 0.1,
+            "m" => 0.0,
+            "v" => 0.1,
+        ),
+        "turbulent" => Dict(
+            "mu" => -0.1,
+            "kappa" => 2.0,
+            "theta" => 0.1,
+            "xi" => 0.5,
+            "rho" => -0.7,
+            "lam" => 1.0,
+            "m" => -0.02,
+            "v" => 0.2,
+        ),
+    )
+    transition = [0.9 0.1; 0.2 0.8]
+    prices, regime_path =
+        S.generate_prices_from_regimes(regimes, transition, 1.0, 50; random_state = 1)
+    @test length(prices) == 50
+    @test all(prices .> 0)
+    @test length(regime_path) == 50
+
+    all_prices, all_regimes =
+        S.parallel_generate_prices(3, regimes, transition, 1.0, 20; random_state = 1)
+    @test size(all_prices) == (20, 3)
+    @test size(all_regimes) == (20, 3)
+end

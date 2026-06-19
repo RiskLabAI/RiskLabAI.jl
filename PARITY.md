@@ -354,4 +354,27 @@ ABC + factory + controller scaffolding is replaced by plain structs + dispatch.
 `times` (a pandas Series start→end) becomes parallel `event_starts`/`event_ends`
 vectors; all indices are 1-based.
 
+## Data.SyntheticData  — PR (wired)
+
+Port of the `data.synthetic_data` sub-package: covariance generators and the
+Heston–Merton regime-switching price simulator.
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Block correlation | `form_block_matrix` | `Data.form_block_matrix` | **exact** |
+| Drift-burst profile | `drift_volatility_burst` | `Data.drift_volatility_burst` | **exact** (midpoint clamp + NaN fill) |
+| Heston–Merton step | `compute_log_returns` | `Data.compute_log_returns` | **exact** (numba → plain loop) |
+| Parameter alignment | `align_params_length` | `Data.align_params_length` | **exact** |
+| Random covariance | `random_cov` | `Data.random_cov` | **behavioural** (stochastic) |
+| True mean/cov | `form_true_matrix` | `Data.form_true_matrix` | **behavioural** |
+| Sample mean/cov | `simulates_cov_mu` | `Data.simulates_cov_mu` | `shrink=false` exact (`np.cov`); `shrink=true` Ledoit–Wolf deferred |
+| Heston–Merton returns | `heston_merton_log_returns` | `Data.heston_merton_log_returns` | **behavioural** |
+| Regime price path | `generate_prices_from_regimes` | `Data.generate_prices_from_regimes` | **behavioural**; native Markov simulate (replaces quantecon) |
+| Many paths | `parallel_generate_prices` | `Data.parallel_generate_prices` | **behavioural**; serial (no joblib) |
+
+**Deliberate divergence:** numba / joblib / quantecon are replaced by native
+Julia. `simulates_cov_mu`'s `shrink=true` (Ledoit–Wolf) is deferred to the
+covariance-estimation backend; the default exact `shrink=false` is wired. Price
+generators return a plain price vector (Python: a business-day-indexed Series).
+
 _(further submodules appended as they are wired)_
