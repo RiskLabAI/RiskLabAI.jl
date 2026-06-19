@@ -1,6 +1,7 @@
 using Test
 using Dates
 using DataFrames
+using LinearAlgebra
 using RiskLabAI
 
 @testset "RiskLabAI smoke tests" begin
@@ -250,4 +251,44 @@ end
     @test D.calculate_time_decay([1.0, 1.0, 1.0]; clf_last_weight = 0.5) ≈
         [0.6666666667, 0.8333333333, 1.0]
     @test D.calculate_time_decay([1.0, 1.0, 1.0]; clf_last_weight = 1.0) ≈ [1.0, 1.0, 1.0]
+end
+
+@testset "Data.Denoise — RMT denoising (parity with Python)" begin
+    D = RiskLabAI.Data
+    cov = [4.0 2.0 0.6; 2.0 3.0 0.5; 0.6 0.5 1.0]
+
+    # cov <-> corr round trip (exact parity).
+    corr = D.cov_to_corr(cov)
+    @test corr ≈ [
+        1.0 0.5773502692 0.3
+        0.5773502692 1.0 0.2886751346
+        0.3 0.2886751346 1.0
+    ]
+    @test D.corr_to_cov(corr, sqrt.([4.0, 3.0, 1.0])) ≈ cov
+
+    # PCA eigenvalues, descending (exact parity).
+    evals, evecs = D.pca(corr)
+    @test evals ≈ [1.7952446957, 0.7822555891, 0.4224997152]
+
+    # Denoised correlation keeping the top factor (sign-invariant reconstruction).
+    @test D.denoised_corr(evals, evecs, 1) ≈ [
+        1.0 0.437303437 0.362034825
+        0.437303437 1.0 0.3607926887
+        0.362034825 0.3607926887 1.0
+    ]
+
+    # Marcenko–Pastur PDF on a small grid (exact parity).
+    grid, pdf = D.marcenko_pastur_pdf(0.5, 10; num_points = 5)
+    @test grid ≈ [0.233772234, 0.391886117, 0.55, 0.708113883, 0.866227766]
+    @test pdf ≈ [0.0, 2.2244409457, 1.8301531674, 1.2310555486, 0.0]
+
+    # GMV portfolio weights (exact parity).
+    @test D.optimal_portfolio(cov) ≈ [0.0320924262, 0.1463414634, 0.8215661104]
+
+    # denoise_cov is behavioural (KDE fit differs from sklearn): valid output.
+    denoised = D.denoise_cov(cov, 10.0)
+    @test size(denoised) == (3, 3)
+    @test denoised ≈ denoised'                  # symmetric
+    @test diag(denoised) ≈ diag(cov)            # variances preserved
+    @test all(isfinite, denoised)
 end

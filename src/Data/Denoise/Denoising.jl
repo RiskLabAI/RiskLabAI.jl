@@ -1,361 +1,200 @@
-using DataFrames, LinearAlgebra, Statistics, Distributions, KernelDensity, BlockArrays, Optim, MultivariateStats
+"""
+Covariance-matrix denoising via Random Matrix Theory — native Julia port
+mirroring the Python `RiskLabAI.data.denoise.denoising` API (López de Prado,
+AFML Ch. 2): Marcenko–Pastur PDF, eigenvalue denoising, and cov↔corr helpers.
+
+The closed-form pieces (`marcenko_pastur_pdf`, `pca`, `cov_to_corr`,
+`corr_to_cov`, `denoised_corr`, `optimal_portfolio`) match Python to numerical
+precision. The Marcenko–Pastur *fit* (`find_max_eval` / `denoise_cov`) uses a
+Gaussian KDE and a 1-D minimiser; these are implementation-defined (Python uses
+scikit-learn's KDE + SciPy's optimiser), so they are validated behaviourally.
+
+Reference: De Prado, M. (2018), Advances in Financial Machine Learning, Ch. 2.
+"""
+
+using LinearAlgebra
+using Statistics: mean
 
 """
-    marcenkoPasturPdf(var::Float64, ratio::Float64, points::Int)
+    marcenko_pastur_pdf(variance, q; num_points=1000) -> (eigenvalues, pdf)
 
-Implements the Marcenko–Pastur PDF in Julia.
-
-- `var`: Scalar variable for which the PDF is calculated.
-- `ratio`: Ratio of the sample size to the number of variables.
-- `points`: Number of points at which the PDF is evaluated.
-
-Returns a DataFrame with the eigenvalues and their corresponding PDF values.
-
-.. math::
-    λ_{min} = var * (1 - √(1 / ratio))^2
-    λ_{max} = var * (1 + √(1 / ratio))^2
-    diffλ = ((λ_{max} .- eigenValues) .* (eigenValues .- λ_{min}))
-    pdf = ratio ./ (2 * π * var * eigenValues) .* diffλ
+Theoretical Marcenko–Pastur density of eigenvalues for a random correlation
+matrix with observation/feature ratio `q = T/N`. Mirrors Python's
+`marcenko_pastur_pdf` (returns the eigenvalue grid and the density on it).
 """
-function marcenkoPasturPdf(
-    var::Float64,
-    ratio::Float64,
-    points::Int
-)::DataFrame
-    λmin = var * (1 - sqrt(1 / ratio))^2
-    λmax = var * (1 + sqrt(1 / ratio))^2
-    eigenValues = range(λmin, stop=λmax, length=points)
-    diffλ = ((λmax .- eigenValues) .* (eigenValues .- λmin))
-    diffλ[diffλ .< -1E-3] .= 0.
-    pdf = ratio ./ (2 * π * var * eigenValues) .* diffλ
-    return DataFrame(index=eigenValues, values=pdf)
-end
-
-"""
-    principalComponentAnalysis(matrix::AbstractMatrix{<:Real})
-
-Compute the principal components of a Hermitian matrix.
-
-**Formulae**:
-Given a matrix :math:`A`, the principal components are computed as:
-
-.. math::
-
-    A = U \Sigma V^*
-
-Where :math:`U` is the left singular vectors (eigenvectors), :math:`\Sigma` is a diagonal matrix of eigenvalues.
-
-# Arguments
-- `matrix::AbstractMatrix{<:Real}`: The input Hermitian matrix.
-
-# Returns
-- `::Diagonal{<:Real}`: Diagonal matrix of sorted eigenvalues.
-- `::AbstractMatrix{<:Real}`: Matrix of sorted eigenvectors.
-"""
-function principalComponentAnalysis(
-    matrix::AbstractMatrix{<:Real}
-)::Tuple{Diagonal{<:Real}, AbstractMatrix{<:Real}}
-    eigenValues, eigenVectors = eigen(matrix)
-    indices = sortperm(eigenValues, rev=true)
-    eigenValues = eigenValues[indices]
-    eigenVectors = eigenVectors[:, indices]
-    return Diagonal(eigenValues), eigenVectors
-end
-
-"""
-    fitKernelDensity(
-        observations::AbstractVector{<:Real};
-        bandwidth::Float64=0.25,
-        kernel::Distributions=Normal,
-        valuesForEvaluating::Union{AbstractVector{<:Real}, Nothing}=nothing
-    )
-
-Fit a kernel density estimator to the provided observations.
-
-# Arguments
-- `observations::AbstractVector{<:Real}`: Observations to estimate density from.
-- `bandwidth::Float64=0.25`: Bandwidth for the kernel density estimation.
-- `kernel::Distributions=Normal`: Kernel distribution to use.
-- `valuesForEvaluating::Union{AbstractVector{<:Real}, Nothing}=nothing`: Values where the density will be evaluated.
-
-# Returns
-- `::DataFrame`: A DataFrame with columns 'index' (evaluation points) and 'values' (density values).
-"""
-function fitKernelDensity(
-    observations::AbstractVector{<:Real};
-    bandwidth::Float64=0.25,
-    kernel::Distributions=Normal(),
-    valuesForEvaluating::Union{AbstractVector{<:Real}, Nothing}=nothing
-)::DataFrame
-    densityEstimate = kde(observations, kernel=kernel, bandwidth=bandwidth)
-    if isnothing(valuesForEvaluating)
-        valuesForEvaluating = reverse(unique(observations))
+function marcenko_pastur_pdf(variance::Real, q::Real; num_points::Integer=1000)
+    lambda_min = variance * (1 - sqrt(1 / q))^2
+    lambda_max = variance * (1 + sqrt(1 / q))^2
+    e_min = max(lambda_min, 1e-10)
+    eigenvalues = collect(range(e_min, lambda_max; length=num_points))
+    pdf = similar(eigenvalues)
+    for i in eachindex(eigenvalues)
+        e = eigenvalues[i]
+        radicand = (lambda_max - e) * (e - lambda_min)
+        pdf[i] = radicand < 0 ? 0.0 : q / (2 * pi * variance * e) * sqrt(radicand)
     end
-    densityValues = KernelDensity.pdf(densityEstimate, valuesForEvaluating)
-    return DataFrame(index=valuesForEvaluating, values=densityValues)
+    return eigenvalues, pdf
 end
 
 """
-    generateCovarianceWithSignal(
-        numberColumns::Int,
-        numberFactors::Int
-    )
+    pca(matrix) -> (eigenvalues, eigenvectors)
 
-Generate a random covariance matrix and add a signal to it.
-
-# Arguments
-- `numberColumns::Int`: Number of columns for the generated matrix.
-- `numberFactors::Int`: Number of factors for the generated matrix.
-
-# Returns
-- `::AbstractMatrix{<:Real}`: A covariance matrix with added signal.
+Eigendecomposition of a Hermitian matrix with eigenvalues sorted **descending**
+(and eigenvectors reordered to match). Mirrors Python's `pca`.
 """
-function generateCovarianceWithSignal(
-    numberColumns::Int,
-    numberFactors::Int
-)::AbstractMatrix{<:Real}
-    dataMatrix = rand(Normal(), numberColumns, numberFactors)
-    covarianceMatrix = dataMatrix * dataMatrix'
-    covarianceMatrix += Diagonal(rand(Uniform(), numberColumns))
-    return covarianceMatrix
+function pca(matrix::AbstractMatrix{<:Real})
+    factorization = eigen(Symmetric(Matrix(matrix)))
+    order = sortperm(factorization.values; rev=true)
+    return factorization.values[order], factorization.vectors[:, order]
 end
 
 """
-    covarianceToCorrelation(cov::Matrix{Float64})::Matrix{Float64}
+    cov_to_corr(cov) -> Matrix
 
-Derive the correlation matrix from a covariance matrix.
-
-# Arguments
-- `cov::Matrix{Float64}`: A covariance matrix.
-
-# Returns
-- `::Matrix{Float64}`: A correlation matrix.
-
-# Mathematical Formula
-The correlation matrix is derived from a covariance matrix using the formula:
-
-.. math::
-
-    \text{corr}_{i,j} = \frac{\text{cov}_{i,j}}{\sqrt{\text{var}_i \cdot \text{var}_j}}
-
-where:
-- :math:`\text{corr}_{i,j}` is the correlation between asset i and asset j.
-- :math:`\text{cov}_{i,j}` is the covariance between asset i and asset j.
-- :math:`\text{var}_i` is the variance of asset i.
-- :math:`\text{var}_j` is the variance of asset j.
+Convert a covariance matrix to a correlation matrix (clamped to [-1, 1], unit
+diagonal). Mirrors Python's `cov_to_corr`.
 """
-function covarianceToCorrelation(cov::Matrix{Float64})::Matrix{Float64}
-    stdDev = sqrt.(diag(cov))
-    corrMatrix = cov ./ (stdDev * stdDev')
-    corrMatrix[corrMatrix .< -1] .= -1
-    corrMatrix[corrMatrix .> 1] .= 1
-    return corrMatrix
+function cov_to_corr(cov::AbstractMatrix{<:Real})
+    std = sqrt.(diag(cov))
+    std[std .== 0] .= 1.0
+    corr = cov ./ (std * std')
+    corr = clamp.(corr, -1.0, 1.0)
+    corr[diagind(corr)] .= 1.0
+    return corr
 end
 
 """
-    fitMarcenkoPasturToCovarianceMatrix(var::Float64, eigenValues::Vector{Float64},
-                                         ratio::Float64, bandwidth::Float64, points::Int = 1000)::Float64
+    corr_to_cov(corr, std) -> Matrix
 
-Fit the Marcenko–Pastur PDF to a random covariance matrix that contains signal.
-The objective of the fit is to find the value of σ² that minimizes the sum of the squared differences between the analytical PDF and the KDE of the eigenvalues.
-
-# Arguments
-- `var::Float64`: The variance of the residuals.
-- `eigenValues::Vector{Float64}`: The eigenvalues of the covariance matrix.
-- `ratio::Float64`: The aspect ratio (T/N) of the covariance matrix.
-- `bandwidth::Float64`: The bandwidth of the KDE.
-- `points::Int`: The number of points to evaluate the PDF. Default is 1000.
-
-# Returns
-- `::Float64`: The sum of the squared differences between the analytical PDF and the KDE of the eigenvalues.
+Convert a correlation matrix back to covariance given per-asset std devs.
+Mirrors Python's `corr_to_cov`.
 """
-function fitMarcenkoPasturToCovarianceMatrix(
-        var::Float64,
-        eigenValues::Vector{Float64},
-        ratio::Float64,
-        bandwidth::Float64,
-        points::Int = 1000)::Float64
-    
-    pdf0 = pdfMarcenkoPastur(var, ratio, points)
-    pdf1 = kde(eigenValues, bandwidth = bandwidth, kernel = Distributions.Normal, points = pdf0.index)
-    sse = sum((pdf1.values .- pdf0.values).^2)
-    return sse
-end
+corr_to_cov(corr::AbstractMatrix{<:Real}, std::AbstractVector{<:Real}) = corr .* (std * std')
 
 """
-    findMaxEigenvalues(
-        eigenValues::Vector{Float64},
-        ratio::Float64,
-        bandWidth::Float64
-    )::Tuple{Float64, Float64}
+    denoised_corr(eigenvalues, eigenvectors, num_facts) -> Matrix
 
-Find the maximum random eigenvalues by fitting Marcenko's distribution.
-
-# Arguments
-- `eigenValues::Vector{Float64}`: The eigenvalues of the covariance matrix.
-- `ratio::Float64`: The aspect ratio (T/N) of the covariance matrix.
-- `bandWidth::Float64`: The bandwidth of the KDE.
-
-# Returns
-- `::Tuple{Float64, Float64}`: A tuple containing the maximum eigenvalue and the estimated variance.
+Reconstruct a denoised correlation matrix, keeping the `num_facts` largest
+(signal) eigenvalues and replacing the rest with their average (noise). Assumes
+`eigenvalues` are sorted descending. Mirrors Python's `denoised_corr`.
 """
-function findMaxEigenvalues(
-        eigenValues::Vector{Float64},
-        ratio::Float64,
-        bandWidth::Float64
-    )::Tuple{Float64, Float64}
+function denoised_corr(
+    eigenvalues::AbstractVector{<:Real}, eigenvectors::AbstractMatrix{<:Real}, num_facts::Integer
+)
+    n = length(eigenvalues)
+    signal_values = eigenvalues[1:num_facts]
+    signal_vectors = eigenvectors[:, 1:num_facts]
+    corr = signal_vectors * Diagonal(signal_values) * signal_vectors'
 
-    out = optimize(var -> errorPDFs(var, eigenValues, ratio, bandWidth), 1E-5, 1-1E-5)
-    if Optim.converged(out)
-        variance = Optim.minimizer(out)
-    else
-        variance = 1.0
+    if num_facts < n
+        avg_noise = mean(eigenvalues[(num_facts + 1):end])
+        noise_vectors = eigenvectors[:, (num_facts + 1):end]
+        corr += noise_vectors * Diagonal(fill(avg_noise, n - num_facts)) * noise_vectors'
     end
-    λmax = variance * (1 + sqrt(1 / ratio))^2
-    return λmax, variance
+
+    inv_sqrt = 1.0 ./ sqrt.(diag(corr))
+    corr = Diagonal(inv_sqrt) * corr * Diagonal(inv_sqrt)
+    corr[diagind(corr)] .= 1.0
+    return corr
 end
 
-"""
-    constantResidualEigenvalueMethod(
-        eigenValues::Matrix{Float64},
-        eigenVectors::Matrix{Float64},
-        numberFactors::Int
-    )::Matrix{Float64}
-
-Constant Residual Eigenvalue Method.
-
-# Arguments
-- `eigenValues::Matrix{Float64}`: The eigenvalues of the covariance matrix.
-- `eigenVectors::Matrix{Float64}`: The eigenvectors of the covariance matrix.
-- `numberFactors::Int`: The number of factors to retain.
-
-# Returns
-- `::Matrix{Float64}`: The denoised correlation matrix.
-"""
-function constantResidualEigenvalueMethod(
-        eigenValues::Matrix{Float64},
-        eigenVectors::Matrix{Float64},
-        numberFactors::Int
-    )::Matrix{Float64}
-
-    λ = copy(diagm(eigenValues))
-    λ[numberFactors:end] .= sum(λ[numberFactors:end]) / (length(λ) - numberFactors)
-    λDiag = Diagonal(λ)
-    covariance = eigenVectors * λDiag * transpose(eigenVectors)
-    correlation = covarianceToCorrelation(covariance)
-    return correlation
+# Gaussian KDE density (matches scikit-learn KernelDensity, gaussian kernel):
+# density(x) = (1 / (n·h·√(2π))) Σ_i exp(-((x - xᵢ)/h)² / 2).
+function _gaussian_kde_density(observations::AbstractVector{<:Real}, query::AbstractVector{<:Real}, bandwidth::Real)
+    n = length(observations)
+    scale = 1.0 / (n * bandwidth * sqrt(2 * pi))
+    density = similar(query, Float64)
+    for (k, x) in enumerate(query)
+        acc = 0.0
+        for xi in observations
+            acc += exp(-0.5 * ((x - xi) / bandwidth)^2)
+        end
+        density[k] = acc * scale
+    end
+    return density
 end
 
-"""
-    denoisedCorrelationShrinkage(
-        eigenValues::Matrix{Float64},
-        eigenVectors::Matrix{Float64},
-        numberFactors::Int,
-        α::Float64 = 0
-    )::Matrix{Float64}
-
-Denoising by Targeted Shrinkage.
-
-# Arguments
-- `eigenValues::Matrix{Float64}`: The eigenvalues of the covariance matrix.
-- `eigenVectors::Matrix{Float64}`: The eigenvectors of the covariance matrix.
-- `numberFactors::Int`: The number of factors to retain.
-- `α::Float64`: The shrinkage intensity parameter, defaults to 0.
-
-# Returns
-- `::Matrix{Float64}`: The denoised correlation matrix.
-"""
-function denoisedCorrelationShrinkage(
-        eigenValues::Matrix{Float64},
-        eigenVectors::Matrix{Float64},
-        numberFactors::Int,
-        α::Float64 = 0.0
-    )::Matrix{Float64}
-
-    eigenValuesL = eigenValues[1:numberFactors, 1:numberFactors]
-    eigenVectorsL = eigenVectors[:, 1:numberFactors]
-    eigenValuesR = eigenValues[numberFactors:end, numberFactors:end]
-    eigenVectorsR = eigenVectors[:, numberFactors:end]
-    corr0 = eigenVectorsL * eigenValuesL * transpose(eigenVectorsL)
-    corr1 = eigenVectorsR * eigenValuesR * transpose(eigenVectorsR)
-    corr2 = corr0 + α * corr1 + (1 - α) * diagm(diag(corr1))
-    return corr2
+function _mp_pdf_fit_error(variance::Real, q::Real, eigenvalues::AbstractVector{<:Real}, bandwidth::Real)
+    grid, theoretical = marcenko_pastur_pdf(variance, q; num_points=length(eigenvalues))
+    empirical = _gaussian_kde_density(eigenvalues, grid, bandwidth)
+    return sum((empirical .- theoretical) .^ 2)
 end
 
-"""
-    formBlockMatrix(numberBlocks::Int, sizeBlock::Int, corrBlock::Float64)::Matrix{Float64}
-
-Generates a block-diagonal covariance matrix.
-
-# Arguments
-- `numberBlocks::Int`: Number of blocks.
-- `sizeBlock::Int`: Size of each block.
-- `corrBlock::Float64`: Correlation within each block.
-
-# Returns
-- `Matrix{Float64}`: Block-diagonal matrix.
-
-# Reference
-De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons. Snippet 2.7, Page 33
-"""
-function formBlockMatrix(numberBlocks::Int, sizeBlock::Int, corrBlock::Float64)::Matrix{Float64}
-    block = ones(sizeBlock, sizeBlock) * corrBlock
-    block[diagind(block)] .= 1.0
-    corr = BlockArray{Float64}(undef_blocks, repeat([sizeBlock], numberBlocks), repeat([sizeBlock], numberBlocks))
-    for i in 1:numberBlocks
-        for j in 1:numberBlocks
-            if i == j
-                setblock!(corr, block, i, j)
-            else
-                setblock!(corr, zeros(sizeBlock, sizeBlock), i, j)
-            end
+# 1-D bounded minimiser (golden-section search) — replaces SciPy's `minimize`.
+function _golden_section_min(f, a::Real, b::Real; tol::Real=1e-6, max_iter::Integer=200)
+    invphi = (sqrt(5) - 1) / 2
+    c = b - invphi * (b - a)
+    d = a + invphi * (b - a)
+    fc, fd = f(c), f(d)
+    for _ in 1:max_iter
+        if b - a < tol
+            break
+        end
+        if fc < fd
+            b, d, fd = d, c, fc
+            c = b - invphi * (b - a)
+            fc = f(c)
+        else
+            a, c, fc = c, d, fd
+            d = a + invphi * (b - a)
+            fd = f(d)
         end
     end
-    return Matrix(corr)
+    return (a + b) / 2
 end
 
 """
-    generateTrueMatrix(numberBlocks::Int, sizeBlock::Int, corrBlock::Float64)::Tuple{Vector{Float64}, Matrix{Float64}}
+    find_max_eval(eigenvalues, q, bandwidth) -> (lambda_max, variance)
 
-Generates the true matrix with shuffled columns, mean vector, and covariance matrix.
-
-# Arguments
-- `numberBlocks::Int`: Number of blocks.
-- `sizeBlock::Int`: Size of each block.
-- `corrBlock::Float64`: Correlation within each block.
-
-# Returns
-- `Tuple{Vector{Float64}, Matrix{Float64}}`: Mean vector and covariance matrix.
-
-# Reference
-De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons. Snippet 2.7, Page 33
+Fit the Marcenko–Pastur distribution to the observed eigenvalues to find the
+noise cutoff `lambda_max` and the implied variance. Mirrors Python's
+`find_max_eval`; the KDE + minimiser are implementation-defined (behavioural
+parity only).
 """
-function generateTrueMatrix(numberBlocks::Int, sizeBlock::Int, corrBlock::Float64)::Tuple{Vector{Float64}, Matrix{Float64}}
-    corr = formBlockMatrix(numberBlocks, sizeBlock, corrBlock)
-    columns = shuffle(collect(1:numberBlocks * sizeBlock))
-    corr = corr[columns, columns]
-    std0 = rand(Uniform(0.05, 0.2), size(corr)[1])
-    cov0 = correlationToCovariance(corr, std0)
-    mu0 = rand.(Normal.(std0, std0), 1)
-    return mu0, cov0
+function find_max_eval(eigenvalues::AbstractVector{<:Real}, q::Real, bandwidth::Real)
+    variance = _golden_section_min(
+        v -> _mp_pdf_fit_error(v, q, eigenvalues, bandwidth), 1e-5, 1 - 1e-5
+    )
+    lambda_max = variance * (1 + sqrt(1 / q))^2
+    return lambda_max, variance
 end
 
 """
-    correlationToCovariance(corr::Matrix{Float64}, std::Vector{Float64})::Matrix{Float64}
+    denoise_cov(cov0, q; bandwidth=0.01) -> Matrix
 
-Converts a correlation matrix to a covariance matrix.
-
-# Arguments
-- `corr::Matrix{Float64}`: Correlation matrix.
-- `std::Vector{Float64}`: Standard deviations.
-
-# Returns
-- `Matrix{Float64}`: Covariance matrix.
-
-# Reference
-De Prado, M. (2020) Advances in financial machine learning. John Wiley & Sons. Snippet 2.7, Page 33
+De-noise a covariance matrix: convert to correlation, fit Marcenko–Pastur to
+locate the signal eigenvalues, rebuild the denoised correlation, and convert
+back. Mirrors Python's `denoise_cov` (KDE-fit step is behavioural parity).
 """
-function correlationToCovariance(corr::Matrix{Float64}, std::Vector{Float64})::Matrix{Float64}
-    cov = corr .* (std .* std')
-    return cov
+function denoise_cov(cov0::AbstractMatrix{<:Real}, q::Real; bandwidth::Real=0.01)
+    corr0 = cov_to_corr(cov0)
+    eigenvalues, eigenvectors = pca(corr0)
+    lambda_max, _ = find_max_eval(eigenvalues, q, bandwidth)
+    num_facts = count(>(lambda_max), eigenvalues)
+    corr1 = denoised_corr(eigenvalues, eigenvectors, num_facts)
+    return corr_to_cov(corr1, sqrt.(diag(cov0)))
+end
+
+"""
+    optimal_portfolio(cov; mu=nothing) -> Vector
+
+Closed-form optimal portfolio weights (global-minimum-variance when `mu` is
+`nothing`). Mirrors Python's `optimal_portfolio`.
+"""
+function optimal_portfolio(cov::AbstractMatrix{<:Real}; mu=nothing)
+    inv_cov = inv(cov)
+    ones_vec = ones(size(cov, 1))
+    target = mu === nothing ? ones_vec : vec(mu)
+    weights = inv_cov * target
+    return weights ./ dot(ones_vec, weights)
+end
+
+"""
+    optimal_portfolio_denoised(cov, q; mu=nothing, bandwidth=0.01) -> Vector
+
+Optimal portfolio weights computed from a denoised covariance matrix. Mirrors
+Python's `optimal_portfolio_denoised`.
+"""
+function optimal_portfolio_denoised(cov::AbstractMatrix{<:Real}, q::Real; mu=nothing, bandwidth::Real=0.01)
+    return optimal_portfolio(denoise_cov(cov, q; bandwidth=bandwidth); mu=mu)
 end

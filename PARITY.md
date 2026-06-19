@@ -72,8 +72,25 @@ index) as parallel sorted vectors. `calculate_time_decay` assumes the weights
 are already in chronological order (Python sorts by index). All four reference
 outputs are asserted against the Python implementation.
 
-Next submodules: `Data` (denoise, labeling, distance), then `Backtest`,
-`Features`, `Optimization`, `HPC`.
+## Data.Denoise  — PR 9 (wired)
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Marcenko–Pastur PDF | `marcenko_pastur_pdf` | `Data.marcenko_pastur_pdf` | closed form; exact parity (returns `(grid, pdf)`) |
+| PCA (desc) | `pca` | `Data.pca` | eigenvalues exact; eigenvectors up to sign |
+| cov ↔ corr | `cov_to_corr` / `corr_to_cov` | `Data.cov_to_corr` / `Data.corr_to_cov` | exact parity |
+| Denoised correlation | `denoised_corr` | `Data.denoised_corr` | exact parity (sign-invariant reconstruction) |
+| Optimal portfolio | `optimal_portfolio` | `Data.optimal_portfolio` | GMV / mean-variance; exact parity |
+| MP fit / denoise cov | `find_max_eval`, `denoise_cov`, `optimal_portfolio_denoised` | `Data.{find_max_eval,denoise_cov,optimal_portfolio_denoised}` | **behavioural** parity: Gaussian KDE + golden-section minimiser replace scikit-learn KDE + SciPy `minimize` |
+
+**Deliberate divergence:** the KDE-fit step uses a hand-written Gaussian KDE and
+a golden-section search instead of scikit-learn/SciPy, so `find_max_eval` /
+`denoise_cov` are validated behaviourally (symmetric output, variances
+preserved), not bit-for-bit. No new dependencies were added (the legacy file's
+`KernelDensity`/`Optim`/`MultivariateStats`/`BlockArrays` usage is dropped).
+
+Next submodules: `Data` (labeling, distance), then `Backtest`, `Features`,
+`Optimization`, `HPC`.
 
 Information-driven base: `ewma_expected_imbalance`, `imbalance_at_tick` (metric
 dispatch), dynamic threshold `E[T]·|E[b]|` — shared by imbalance and run bars.

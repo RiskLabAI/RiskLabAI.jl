@@ -30,6 +30,9 @@ include("Differentiation/Differentiation.jl")
 # Sample weighting: uniqueness, return attribution, time decay (AFML Ch. 4).
 include("Weights/SampleWeight.jl")
 
+# Covariance denoising via Random Matrix Theory (AFML Ch. 2).
+include("Denoise/Denoising.jl")
+
 export
     # metric taxonomy
     Metric, Dollar, Volume, Tick,
@@ -45,6 +48,9 @@ export
     find_optimal_ffd, fractionally_differentiated_log_price,
     # sample weights
     expand_label_for_meta_labeling, calculate_average_uniqueness,
-    sample_weight_absolute_return_meta_labeling, calculate_time_decay
+    sample_weight_absolute_return_meta_labeling, calculate_time_decay,
+    # denoising
+    marcenko_pastur_pdf, pca, cov_to_corr, corr_to_cov, denoised_corr,
+    find_max_eval, denoise_cov, optimal_portfolio, optimal_portfolio_denoised
 
 end # module Data
