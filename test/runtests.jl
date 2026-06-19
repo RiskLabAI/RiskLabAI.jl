@@ -218,3 +218,36 @@ end
     @test length(fd) == 200
     @test any(!isnan, fd)
 end
+
+@testset "Data.Weights — sample weighting (parity with Python)" begin
+    D = RiskLabAI.Data
+    close_index = collect(1:10)
+    event_start = [1, 3, 6]
+    event_end = [4, 7, 9]
+    molecule = [1, 3, 6]
+    price = [100.0, 101, 103, 102, 104, 103, 105, 106, 104, 107]
+
+    # Concurrency over the affected span.
+    exp = D.expand_label_for_meta_labeling(close_index, event_start, event_end, molecule)
+    @test exp.index == collect(1:9)
+    @test exp.concurrency ≈ [1.0, 1, 2, 2, 1, 2, 2, 1, 1]
+
+    # Average uniqueness from the indicator matrix (events 1-4, 3-7, 6-9).
+    index_matrix = zeros(10, 3)
+    index_matrix[1:4, 1] .= 1
+    index_matrix[3:7, 2] .= 1
+    index_matrix[6:9, 3] .= 1
+    @test D.calculate_average_uniqueness(index_matrix) ≈ [0.75, 0.6, 0.75]
+
+    # Absolute-return sample weights (normalised to N=3; NaN first return skipped).
+    w = D.sample_weight_absolute_return_meta_labeling(
+        event_start, event_end, close_index, price, molecule
+    )
+    @test w ≈ [0.6362107498, 1.2538702552, 1.1099189949]
+    @test sum(w) ≈ 3.0
+
+    # Linear time decay (weights assumed chronological).
+    @test D.calculate_time_decay([1.0, 1.0, 1.0]; clf_last_weight = 0.5) ≈
+        [0.6666666667, 0.8333333333, 1.0]
+    @test D.calculate_time_decay([1.0, 1.0, 1.0]; clf_last_weight = 1.0) ≈ [1.0, 1.0, 1.0]
+end

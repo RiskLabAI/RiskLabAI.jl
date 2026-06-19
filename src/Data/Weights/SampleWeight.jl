@@ -1,366 +1,154 @@
-using DataFrames
-using StatsBase
+"""
+Sample-weighting techniques — native Julia port mirroring the Python
+`RiskLabAI.data.weights.sample_weights` API (López de Prado, AFML Ch. 4):
+label concurrency, average uniqueness, absolute-return sample weights, and
+time decay.
+
+Representation note (deliberate divergence): the Python API uses pandas Series
+whose *index* carries event start times. The Julia port passes event starts and
+ends as parallel vectors (`event_start`, `event_end`) and the bar/price index as
+a sorted vector. The numerics match the Python implementation exactly (verified
+against reference values in `test/runtests.jl`).
+
+Reference: De Prado, M. (2018), Advances in Financial Machine Learning, Ch. 4.
+"""
 
 """
-    concurrencyEvents(closeIndex::DataFrame, timestamp::DataFrame, molecule::Vector) -> DataFrame
+    expand_label_for_meta_labeling(close_index, event_start, event_end, molecule)
+        -> (index, concurrency)
 
-Calculate the concurrency events.
-
-# Arguments
-
-- `closeIndex::DataFrame`: DataFrame that has events.
-- `timestamp::DataFrame`: DataFrame that has return and label of each period.
-- `molecule::Vector`: Index that function must apply on.
-
-# Returns
-
-- `DataFrame`: Result of the specified function.
+Count concurrent events at each timestamp over the affected span. Mirrors
+Python's `expand_label_for_meta_labeling`. `event_start[i] → event_end[i]` define
+event `i`; `molecule` is the subset of start times to process.
 """
-function concurrencyEvents(
-    closeIndex::DataFrame,
-    timestamp::DataFrame,
-    molecule::Vector
-)::DataFrame
+function expand_label_for_meta_labeling(
+    close_index::AbstractVector,
+    event_start::AbstractVector,
+    event_end::AbstractVector,
+    molecule::AbstractVector,
+)
+    last_label = close_index[end]
+    m_first = molecule[1]
+    keep = [
+        (event_start[i] in molecule) && (event_end[i] > m_first)
+        for i in eachindex(event_start)
+    ]
+    starts = event_start[keep]
+    ends = event_end[keep]
+    isempty(starts) && return (index = empty(close_index), concurrency = Float64[])
 
-    eventsFiltered = filter(row -> row[:date] in molecule, timestamp)
-    startTime = eventsFiltered.date[1]
-    endTime = maximum(eventsFiltered.timestamp)
-    concurrencyIndex = closeIndex[(closeIndex .>= startTime) .& (closeIndex .<= endTime)]
-    concurrency = DataFrame(date=concurrencyIndex, concurrency=zeros(size(concurrencyIndex, 1)))
-    for (i, idx) in enumerate(eventsFiltered.date)
-        startIndex = concurrency.date .>= idx
-        endIndex = concurrency.date .<= eventsFiltered.timestamp[i]
-        selectedIndex = startIndex .& endIndex
-        concurrency.concurrency[selectedIndex] .+= 1
+    first_start = starts[1]
+    max_end = maximum(ends)
+    span = [t for t in close_index if t >= first_start && t <= max_end]
+    concurrency = zeros(Float64, length(span))
+    for (s, e) in zip(starts, ends)
+        capped = min(e, span[end])
+        concurrency[(span .>= s) .& (span .<= capped)] .+= 1.0
     end
-    return concurrency
+
+    keepmask = (span .>= m_first) .& (span .<= max_end)
+    return (index = span[keepmask], concurrency = concurrency[keepmask])
 end
 
 """
-    sampleWeight(timestamp::DataFrame, concurrencyEvents::DataFrame, molecule::Vector) -> DataFrame
+    calculate_average_uniqueness(index_matrix) -> Vector{Float64}
 
-Compute the sample weight with triple barrier for meta-labeling.
-
-# Arguments
-
-- `timestamp::DataFrame`: DataFrame of events start and end for labeling.
-- `concurrencyEvents::DataFrame`: DataFrame of concurrent events for each event.
-- `molecule::Vector`: Index that function must apply on.
-
-# Returns
-
-- `DataFrame`: Result of the specified function.
+Average uniqueness of each event (column) given a T×N indicator matrix:
+`mean_t( I[t,j] / c_t )` over the event's active periods, where
+`c_t = Σ_j I[t,j]`. Mirrors Python's `calculate_average_uniqueness`.
 """
-function sampleWeight(
-    timestamp::DataFrame,
-    concurrencyEvents::DataFrame,
-    molecule::Vector
-)::DataFrame
-
-    eventsFiltered = filter(row -> row[:date] in molecule, timestamp)
-    weight = DataFrame(date=molecule, weight=zeros(length(molecule)))
-    for i in 1:size(weight, 1)
-        startTime, endTime = eventsFiltered.date[i], eventsFiltered.timestamp[i]
-        concurrencyEventsForSpecificTime = concurrencyEvents[(concurrencyEvents.date .>= startTime) .& (concurrencyEvents.date .<= endTime), "concurrency"]
-        weight[i, "weight"] = mean(1.0 ./ concurrencyEventsForSpecificTime)
-    end
-    return weight
-end
-
-"""
-    indexMatrix(barIndex::Vector, timestamp::DataFrame) -> Matrix{Float64}
-
-Create an index matrix that shows whether an index is in a time horizon or not for meta-labeling.
-
-# Arguments
-
-- `barIndex::Vector`: Index of all data.
-- `timestamp::DataFrame`: Times of events containing starting and ending time.
-
-# Returns
-
-- `Matrix{Float64}`: Index matrix.
-"""
-function indexMatrix(
-    barIndex::Vector,
-    timestamp::DataFrame
-)::Matrix{Float64}
-
-    indexMatrix = zeros((size(barIndex, 1), size(timestamp, 1)))
-    for (j, (t0, t1)) in enumerate(timestamp)
-        indicator = [(i <= t1 && i >= t0) ? 1 : 0 for i in barIndex]
-        indexMatrix[:, j] = indicator
-    end
-    return indexMatrix
-end
-
-"""
-    averageUniqueness(indexMatrix::Matrix{Float64}) -> Vector{Float64}
-
-Compute the average uniqueness for meta-labeling.
-
-# Arguments
-
-- `indexMatrix::Matrix{Float64}`: Matrix that indicates events.
-
-# Returns
-
-- `Vector{Float64}`: Average uniqueness for each event.
-"""
-function averageUniqueness(indexMatrix::Matrix{Float64})::Vector{Float64}
-
-    concurrency = sum(indexMatrix, dims=2)
-    uniqueness = copy(indexMatrix)
-    for i in 1:size(indexMatrix, 1)
-        if concurrency[i] > 0
-            uniqueness[i, :] = uniqueness[i, :] / concurrency[i]
+function calculate_average_uniqueness(index_matrix::AbstractMatrix{<:Real})
+    n_periods, n_events = size(index_matrix)
+    concurrency = vec(sum(index_matrix; dims = 2))
+    result = zeros(Float64, n_events)
+    for j in 1:n_events
+        total = 0.0
+        duration = 0
+        for t in 1:n_periods
+            if index_matrix[t, j] > 0
+                duration += 1
+                if concurrency[t] > 0
+                    total += index_matrix[t, j] / concurrency[t]
+                end
+            end
         end
+        result[j] = duration > 0 ? total / duration : 0.0
     end
-    averageUniqueness_ = [sum(uniqueness[:, i]) / sum(indexMatrix[:, i]) for i in 1:size(indexMatrix, 2)]
-    return averageUniqueness_
-end
-
-
-"""
-    calculateConcurrency(events::DataFrame, molecule::Vector{Date})::DataFrame
-
-Calculates concurrency events.
-
-Computes concurrency events for the given time range specified by the molecule index.
-
-# Arguments
-- `events::DataFrame`: DataFrame that has return and label of each period.
-- `molecule::Vector{Date}`: Index that function must apply on.
-
-# Returns
-- `DataFrame`: Result of the specified function.
-
-# Related Mathematical Formulae
-- Concurrency of an event is the number of overlapping events at a specific time.
-"""
-function calculateConcurrency(
-        events::DataFrame,
-        molecule::Vector{Date}
-    )::DataFrame
-    eventsFiltered = filter(row -> row[:date] in molecule, events)
-    startTime = eventsFiltered.date[1]
-    endTime = maximum(eventsFiltered.timestamp)
-    concurrencyIndex = filter(row -> row[:date] >= startTime && row[:date] <= endTime, events)
-    concurrency = DataFrame(date=concurrencyIndex.date, concurrency=zeros(size(concurrencyIndex)[1]))
-    for (i, idx) in enumerate(eventsFiltered.date)
-        startIndex = concurrency.date .>= idx
-        endIndex = concurrency.date .<= eventsFiltered.timestamp[i]
-        selectedIndex = startIndex .& endIndex
-        concurrency.concurrency[selectedIndex] .+= 1
-    end
-    return concurrency
+    return result
 end
 
 """
-    calculateSampleWeight(
-        timestamp::DataFrame,
-        concurrencyEvents::DataFrame,
-        molecule::Vector{Date}
-    )::DataFrame
+    sample_weight_absolute_return_meta_labeling(event_start, event_end,
+        price_index, price, molecule) -> Vector{Float64}
 
-Computes sample weight with triple barrier.
-
-Computes the sample weight with triple barrier for meta-labeling.
-
-# Arguments
-- `timestamp::DataFrame`: DataFrame of events start and end for labeling.
-- `concurrencyEvents::DataFrame`: DataFrame of concurrent events for each event.
-- `molecule::Vector{Date}`: Index that function must apply on.
-
-# Returns
-- `DataFrame`: Result of the specified function.
+Sample weights from absolute log-return attribution: `w_i = Σ |r_t| / c_t` over
+the event's span, then normalised to sum to the number of events. Mirrors
+Python's `sample_weight_absolute_return_meta_labeling` (NaN returns are skipped,
+as pandas `.sum()` does).
 """
-function calculateSampleWeight(
-        timestamp::DataFrame,
-        concurrencyEvents::DataFrame,
-        molecule::Vector{Date}
-    )::DataFrame
-    eventsFiltered = filter(row -> row[:date] in molecule, timestamp)
-    weight = DataFrame(date=molecule, weight=zeros(length(molecule)))
-    for i in 1:size(weight)[1]
-        startTime, endTime = eventsFiltered.date[i], eventsFiltered.timestamp[i]
-        concurrencyEventsForSpecificTime = concurrencyEvents[(concurrencyEvents.date .>= startTime) .& (concurrencyEvents.date .<= endTime), :concurrency]
-        weight[i, :weight] = mean(1 ./ concurrencyEventsForSpecificTime)
+function sample_weight_absolute_return_meta_labeling(
+    event_start::AbstractVector,
+    event_end::AbstractVector,
+    price_index::AbstractVector,
+    price::AbstractVector,
+    molecule::AbstractVector,
+)
+    expanded = expand_label_for_meta_labeling(price_index, event_start, event_end, molecule)
+    concurrency = zeros(Float64, length(price_index))
+    pos = Dict(t => i for (i, t) in enumerate(price_index))
+    for (t, c) in zip(expanded.index, expanded.concurrency)
+        concurrency[pos[t]] = c
     end
-    return weight
-end
 
-"""
-    createIndexMatrix(
-        barIndex::Vector{Date},
-        timestamp::DataFrame
-    )::Matrix
-
-Creates index matrix.
-
-Creates an index matrix that shows whether an index is in a time horizon or not for meta-labeling.
-
-# Arguments
-- `barIndex::Vector{Date}`: Index of all data.
-- `timestamp::DataFrame`: Times of events containing starting and ending time.
-
-# Returns
-- `Matrix`: Index matrix.
-"""
-function createIndexMatrix(
-        barIndex::Vector{Date},
-        timestamp::DataFrame
-    )::Matrix
-    indexMatrix = zeros(Int, (length(barIndex), size(timestamp)[1]))
-    for (j, (t0, t1)) in enumerate(timestamp)
-        indicator = [(i <= t1 && i >= t0) ? 1 : 0 for i in barIndex]
-        indexMatrix[!, j] = indicator
+    # |log-return|; first entry NaN (no prior price), matching pandas diff().
+    log_return = fill(NaN, length(price))
+    for i in 2:length(price)
+        log_return[i] = abs(log(price[i]) - log(price[i - 1]))
     end
-    return indexMatrix
-end
 
-"""
-    computeAverageUniqueness(
-        indexMatrix::Matrix
-    )::Vector
-
-Computes average uniqueness.
-
-Computes the average uniqueness for meta-labeling.
-
-# Arguments
-- `indexMatrix::Matrix`: Matrix that indicates events.
-
-# Returns
-- `Vector`: Average uniqueness for each event.
-"""
-function computeAverageUniqueness(
-        indexMatrix::Matrix
-    )::Vector
-    concurrency = sum(indexMatrix, dims=2)
-    uniqueness = copy(indexMatrix)
-    for i in 1:size(indexMatrix)[1]
-        if concurrency[i] > 0
-            uniqueness[i, :] = uniqueness[i, :] / concurrency[i]
+    # Map molecule start -> event end.
+    end_of = Dict(event_start[i] => event_end[i] for i in eachindex(event_start))
+    weight = zeros(Float64, length(molecule))
+    for (k, t_in) in enumerate(molecule)
+        t_out = end_of[t_in]
+        if !haskey(pos, t_out)
+            j = searchsortedlast(price_index, t_out)
+            t_out = price_index[max(j, 1)]
         end
-    end
-    averageUniqueness = zeros(size(indexMatrix)[2])
-    for i in 1:size(indexMatrix)[2]
-        averageUniqueness[i] = sum(uniqueness[:, i]) / sum(indexMatrix[:, i])
-    end
-    return averageUniqueness
-end
-
-"""
-    performSequentialBootstrap(
-        indexMatrix::Matrix,
-        sampleLength::Int
-    )::Vector
-
-Performs sequential bootstrap.
-
-Performs sequential bootstrap for meta-labeling.
-
-# Arguments
-- `indexMatrix::Matrix`: Matrix that indicates events.
-- `sampleLength::Int`: Number of samples.
-
-# Returns
-- `Vector`: Sequence of indices for sequential bootstrap.
-"""
-function performSequentialBootstrap(
-        indexMatrix::Matrix,
-        sampleLength::Int
-    )::Vector
-    if isnan(sampleLength)
-        sampleLength = size(indexMatrix)[2]
-    end
-    ϕ = []
-    while length(ϕ) < sampleLength
-        averageUniqueness = zeros(size(indexMatrix)[2])
-        for i in 1:size(indexMatrix)[2]
-            tempIndexMatrix = indexMatrix[:, vcat(ϕ, i)]
-            averageUniqueness[i] = computeAverageUniqueness(tempIndexMatrix)[end]
+        mask = (price_index .>= t_in) .& (price_index .<= t_out)
+        acc = 0.0
+        for i in findall(mask)
+            if concurrency[i] > 0 && !isnan(log_return[i])
+                acc += log_return[i] / concurrency[i]
+            end
         end
-        probability = averageUniqueness / sum(averageUniqueness)
-        append!(ϕ, sample(1:size(indexMatrix)[2], Weights(probability)))
+        weight[k] = abs(acc)
     end
-    return ϕ
+
+    total = sum(weight)
+    total == 0 && return ones(Float64, length(molecule))
+    return weight .* (length(weight) / total)
 end
 
 """
-    calculateSampleWeightWithReturns(
-        timestamp::DataFrame,
-        concurrencyEvents::DataFrame,
-        returns::DataFrame,
-        molecule::Vector{Date}
-    )::DataFrame
+    calculate_time_decay(weight; clf_last_weight=1.0) -> Vector{Float64}
 
-Computes sample weight with returns.
-
-Computes the sample weight with returns for meta-labeling.
-
-# Arguments
-- `timestamp::DataFrame`: DataFrame for events.
-- `concurrencyEvents::DataFrame`: DataFrame that contains the number of concurrent events for each event.
-- `returns::DataFrame`: Data frame that contains returns.
-- `molecule::Vector{Date}`: Molecule.
-
-# Returns
-- `DataFrame`: Result of the specified function.
+Apply a linear time decay to `weight` (assumed in chronological order): the most
+recent observation keeps weight 1, the oldest gets `clf_last_weight`
+(∈ [0, 1]). Mirrors Python's `calculate_time_decay`.
 """
-function calculateSampleWeightWithReturns(
-        timestamp::DataFrame,
-        concurrencyEvents::DataFrame,
-        returns::DataFrame,
-        molecule::Vector{Date}
-    )::DataFrame
-    eventsFiltered = filter(row -> row[:date] in molecule, timestamp)
-    weight = DataFrame(date=molecule, weight=zeros(length(molecule)))
-    priceReturn = copy(returns)
-    priceReturn.returns = log.(returns.returns .+ 1)
-    for i in 1:size(weight)[1]
-        startTime, endTime = eventsFiltered.date[i], eventsFiltered.timestamp[i]
-        concurrencyEventsForSpecificTime = concurrencyEvents[(concurrencyEvents.date .>= startTime) .& (concurrencyEvents.date .<= endTime), :concurrency]
-        returnForSpecificTime = priceReturn[(priceReturn.date .>= startTime) .& (priceReturn.date .<= endTime), :returns]
-        weight.weight[i] = sum(returnForSpecificTime ./ concurrencyEventsForSpecificTime)
-    end
-    weight.weight = abs.(weight.weight)
-    return weight
-end
-
-"""
-    calculateTimeDecay(
-        weight::DataFrame,
-        clfLastW::Float64=1.0
-    )::DataFrame
-
-Computes time decay.
-
-Computes the time decay for meta-labeling.
-
-# Arguments
-- `weight::DataFrame`: Weight that is computed for each event.
-- `clfLastW::Float64=1.0`: Weight of the oldest observation.
-
-# Returns
-- `DataFrame`: Time decay result.
-"""
-function calculateTimeDecay(
-        weight::DataFrame,
-        clfLastW::Float64=1.0
-    )::DataFrame
-    timeDecay = sort(weight, [:date])
-    timeDecay[!, :timeDecay] = cumsum(timeDecay[!, :weight])
-    slope = 0.0
-    if clfLastW >= 0
-        slope = (1 - clfLastW) / timeDecay.timeDecay[end]
+function calculate_time_decay(weight::AbstractVector{<:Real}; clf_last_weight::Real=1.0)
+    (clf_last_weight < 0 || clf_last_weight > 1) &&
+        throw(ArgumentError("clf_last_weight must be between 0 and 1"))
+    cumulative = cumsum(weight)
+    if clf_last_weight == 1.0 || isempty(cumulative) || cumulative[end] == 0
+        slope = 0.0
+        const_term = 1.0
     else
-        slope = 1.0 / ((clfLastW + 1) * timeDecay.timeDecay[end])
+        slope = (1.0 - clf_last_weight) / cumulative[end]
+        const_term = 1.0 - slope * cumulative[end]
     end
-    constant = 1.0 - slope * timeDecay.timeDecay[end]
-    timeDecay.timeDecay = slope .* timeDecay.timeDecay .+ constant
-    timeDecay.timeDecay[timeDecay.timeDecay .< 0] .= 0
-    timeDecay = select!(timeDecay, Not(:weight))
-    return timeDecay
+    decayed = const_term .+ slope .* cumulative
+    decayed[decayed .< 0] .= 0.0
+    return decayed
 end

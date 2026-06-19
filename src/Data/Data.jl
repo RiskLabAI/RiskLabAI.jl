@@ -27,6 +27,9 @@ include("Structures/run_bars.jl")
 # Fractional differentiation (AFML Ch. 5).
 include("Differentiation/Differentiation.jl")
 
+# Sample weighting: uniqueness, return attribution, time decay (AFML Ch. 4).
+include("Weights/SampleWeight.jl")
+
 export
     # metric taxonomy
     Metric, Dollar, Volume, Tick,
@@ -39,6 +42,9 @@ export
     # differentiation
     calculate_weights_std, calculate_weights_ffd,
     fractional_difference_std, fractional_difference_fixed,
-    find_optimal_ffd, fractionally_differentiated_log_price
+    find_optimal_ffd, fractionally_differentiated_log_price,
+    # sample weights
+    expand_label_for_meta_labeling, calculate_average_uniqueness,
+    sample_weight_absolute_return_meta_labeling, calculate_time_decay
 
 end # module Data

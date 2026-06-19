@@ -57,7 +57,22 @@ are all wired with Python-parity tests.
 Python's `plot_weights` (matplotlib) is omitted (no plotting dependency).
 `HypothesisTests` added to `[deps]` for the ADF-based finders.
 
-Next submodules: `Data` (weights, denoise, labeling, distance), then `Backtest`,
+## Data.Weights  — PR 7 (wired)
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Label concurrency | `expand_label_for_meta_labeling` | `Data.expand_label_for_meta_labeling` | events as `(event_start, event_end)` vectors; returns `(index, concurrency)` |
+| Average uniqueness | `calculate_average_uniqueness` | `Data.calculate_average_uniqueness` | T×N indicator matrix → per-event uniqueness; exact parity |
+| Return-attribution weights | `sample_weight_absolute_return_meta_labeling` | `Data.sample_weight_absolute_return_meta_labeling` | `Σ|r_t|/c_t`, normalised to N; NaN first-return skipped (matches pandas `.sum`) |
+| Time decay | `calculate_time_decay` | `Data.calculate_time_decay` | linear decay; oldest→`clf_last_weight ∈ [0,1]`; exact parity |
+
+**Deliberate divergence:** Python carries event start times in the pandas
+Series *index*; the Julia port passes `event_start`/`event_end` (and the price
+index) as parallel sorted vectors. `calculate_time_decay` assumes the weights
+are already in chronological order (Python sorts by index). All four reference
+outputs are asserted against the Python implementation.
+
+Next submodules: `Data` (denoise, labeling, distance), then `Backtest`,
 `Features`, `Optimization`, `HPC`.
 
 Information-driven base: `ewma_expected_imbalance`, `imbalance_at_tick` (metric
