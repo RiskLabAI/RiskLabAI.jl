@@ -711,3 +711,25 @@ end
     @test gtp == [1.0, 2.0, 3.0, 4.0, 5.0]
     @test gsig ≈ [0.2, 0.0, 0.1, 0.3, 0.0]
 end
+
+@testset "Features — entropy (parity with Python)" begin
+    F = RiskLabAI.Features
+    m = "11100010011110100"
+
+    @test F.shannon_entropy(m) ≈ 0.9975025463691152
+    @test F.shannon_entropy("1111") == 0.0
+    @test F.shannon_entropy("") == 0.0
+
+    @test F.lempel_ziv_entropy(m) ≈ 0.47058823529411764
+
+    @test F.probability_mass_function(m, 2) ==
+          Dict("11" => 0.3125, "10" => 0.25, "00" => 0.25, "01" => 0.1875)
+
+    @test F.plug_in_entropy_estimator(m, 1) ≈ 0.9975025463691152
+    @test F.plug_in_entropy_estimator(m, 2) ≈ 0.9886085007312413
+
+    @test F.longest_match_length(m, 5, 5) == (2, "0")
+    # Kontoyiannis H_k is the *averaged* Σ log2(nᵢ)/Lᵢ (de Prado's formula).
+    @test F.kontoyiannis_entropy(m) ≈ 0.9847738922739608
+    @test F.kontoyiannis_entropy(m; window = 5) ≈ 0.8868475362417008
+end

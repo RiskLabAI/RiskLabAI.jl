@@ -231,4 +231,21 @@ tests. (The `backtest.validation` cross-validation subpackage and the
 `backtest_overfitting_simulation` benchmark harness were scoped out of this
 effort.)
 
+## Features — entropy  — PR (wired)
+
+First slice of the `features` sub-package: entropy estimators.
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Shannon entropy | `shannon_entropy` | `Features.shannon_entropy` | exact; bits (`log2`) |
+| Probability mass function | `probability_mass_function` | `Features.probability_mass_function` | exact; n-gram PMF as a `Dict` |
+| Plug-in entropy | `plug_in_entropy_estimator` | `Features.plug_in_entropy_estimator` | exact; PMF entropy / word length |
+| Lempel–Ziv entropy | `lempel_ziv_entropy` | `Features.lempel_ziv_entropy` | exact; distinct-substring count / length |
+| Longest match | `longest_match_length` | `Features.longest_match_length` | exact; `(length+1, substring)` |
+| Kontoyiannis entropy | `kontoyiannis_entropy` | `Features.kontoyiannis_entropy` | exact; **averaged** `Σ log2(nᵢ)/Lᵢ` (de Prado's formula / current source) |
+
+**Note:** the first three numeric `features` areas (entropy, microstructural,
+structural breaks) are being mirrored; classifier-driven feature importance is
+deferred pending a Julia ML-backend decision.
+
 _(further submodules appended as they are wired)_

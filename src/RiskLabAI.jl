@@ -15,6 +15,10 @@ using .Data: AbstractBars, StandardBars, TimeBars, ExpectedImbalanceBars,
     FixedImbalanceBars, ExpectedRunBars, FixedRunBars,
     Metric, Dollar, Volume, Tick, construct_bars_from_data
 
+include("Features/Features.jl")
+using .Features: shannon_entropy, probability_mass_function, plug_in_entropy_estimator,
+    lempel_ziv_entropy, longest_match_length, kontoyiannis_entropy
+
 include("Backtest/Backtest.jl")
 using .Backtest: sharpe_ratio, bet_timing, calculate_holding_period,
     calculate_hhi, calculate_hhi_concentration, compute_drawdowns_time_under_water,
@@ -40,6 +44,9 @@ export
     StandardBars, TimeBars, ExpectedImbalanceBars, FixedImbalanceBars,
     ExpectedRunBars, FixedRunBars,
     Dollar, Volume, Tick, construct_bars_from_data,
+    # Features — entropy
+    shannon_entropy, probability_mass_function, plug_in_entropy_estimator,
+    lempel_ziv_entropy, longest_match_length, kontoyiannis_entropy,
     # Backtest.statistics
     sharpe_ratio, bet_timing, calculate_holding_period,
     calculate_hhi, calculate_hhi_concentration, compute_drawdowns_time_under_water,
