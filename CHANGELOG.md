@@ -5,6 +5,16 @@ All notable changes to `RiskLabAI.jl` are documented here. The format is based o
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) (pre-1.0: minor
 versions may include breaking changes).
 
+## [0.5.1] — 2026-06-19
+
+### Fixed
+
+- `Optimization.hrp` now symmetrises the correlation-distance matrix before
+  single-linkage clustering, so it accepts correlation matrices with the tiny
+  floating-point asymmetry that real sample covariances always have (previously
+  `Clustering.hclust` threw `ArgumentError: Distance matrix should be symmetric`).
+  Added a regression test covering an asymmetric correlation input.
+
 ## [0.5.0] — 2026-06-19
 
 First substantive release. The package was reconstructed from the ground up to
@@ -67,5 +77,6 @@ machine-learning pieces are validated structurally. The parity ledger lives in
 
 - Initial package skeleton.
 
+[0.5.1]: https://github.com/RiskLabAI/RiskLabAI.jl/releases/tag/v0.5.1
 [0.5.0]: https://github.com/RiskLabAI/RiskLabAI.jl/releases/tag/v0.5.0
 [0.0.1]: https://github.com/RiskLabAI/RiskLabAI.jl/releases/tag/v0.0.1

@@ -940,6 +940,18 @@ end
     @test length(w_hrp) == 4
     @test sum(w_hrp) ≈ 1.0
     @test all(w_hrp .> 0)
+
+    # Regression: hrp() must accept a correlation with floating-point asymmetry
+    # (real sample covariances are not bit-exactly symmetric → hclust would throw
+    # "Distance matrix should be symmetric" without the symmetrisation guard).
+    g = randn(MersenneTwister(7), 6, 6)
+    psd = g * g'
+    sym_corr = RiskLabAI.Cluster.covariance_to_correlation(psd)
+    asym_corr = copy(sym_corr)
+    asym_corr[1, 2] += 1e-12                       # break exact symmetry, as FP does
+    w_sample = O.hrp(psd, asym_corr)
+    @test length(w_sample) == 6
+    @test sum(w_sample) ≈ 1.0
 end
 
 @testset "Validation — cross-validators (parity with Python)" begin

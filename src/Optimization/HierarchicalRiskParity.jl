@@ -131,6 +131,7 @@ function hrp(
     correlation::AbstractMatrix{<:Real},
 )
     distance = distance_corr(correlation)
+    distance = (distance .+ distance') ./ 2          # enforce exact symmetry for hclust
     order = hclust(distance; linkage = :single).order
     bisection = recursive_bisection(covariance, order)
     weights = zeros(Float64, length(order))
