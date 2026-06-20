@@ -1,6 +1,6 @@
 name = "RiskLabAI"
 uuid = "a72881da-fdaa-49c1-8962-99caf4ccfee8"
-version = "0.6.0"
+version = "0.6.1"
 authors = ["RiskLab AI <research@risklab.ai>"]
 
 [deps]
@@ -23,11 +23,15 @@ Zygote = "e88e6eb3-aa80-5325-afca-941959d7151f"
 Clustering = "0.15"
 Combinatorics = "1"
 DataFrames = "1"
+Dates = "1"
 DecisionTree = "0.12"
 Distributions = "0.25"
 HypothesisTests = "0.11"
+LinearAlgebra = "1"
 Lux = "1.31.4"
 Optimisers = "0.4.7"
+Random = "1"
+Statistics = "1"
 TimeSeries = "0.20 - 0.24"
 Zygote = "0.7.11"
 julia = "1.10"

@@ -5,6 +5,14 @@ All notable changes to `RiskLabAI.jl` are documented here. The format is based o
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) (pre-1.0: minor
 versions may include breaking changes).
 
+## [0.6.1] — 2026-06-20
+
+### Changed
+
+- Added `[compat]` entries for the standard-library dependencies (`Dates`,
+  `LinearAlgebra`, `Random`, `Statistics`) so the package passes Julia General
+  registry auto-merge. No source or API changes.
+
 ## [0.6.0] — 2026-06-20
 
 Milestone release: `RiskLabAI.jl` is parity-complete with `RiskLabAI.py`, and the
