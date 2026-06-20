@@ -5,6 +5,18 @@ All notable changes to `RiskLabAI.jl` are documented here. The format is based o
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) (pre-1.0: minor
 versions may include breaking changes).
 
+## [0.6.0] — 2026-06-20
+
+Milestone release: `RiskLabAI.jl` is parity-complete with `RiskLabAI.py`, and the
+companion [`Notebooks.jl`](https://github.com/RiskLabAI/Notebooks.jl) now ships a
+complete set of seven flagship tutorials (portfolio construction, financial data
+structures, fractional differentiation, triple-barrier labeling, cross-validation
+& PBO, feature importance, and the Deep-BSDE PDE solver), each runnable
+top-to-bottom against this package.
+
+No changes to the package's public API or behaviour since 0.5.1; the minor bump
+marks the completed parity + tutorial milestone.
+
 ## [0.5.1] — 2026-06-19
 
 ### Fixed
