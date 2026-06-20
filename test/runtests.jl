@@ -1172,3 +1172,25 @@ end
     pscores = V.cross_val_score(purged, x, y; n_trees = 30, random_state = 1)
     @test length(pscores) == 5
 end
+
+@testset "Hyper-parameter tuning (DecisionTree.jl)" begin
+    V = RiskLabAI.Validation
+    rng = MersenneTwister(11)
+    n = 200
+    y = rand(rng, 0:1, n)
+    x = hcat(3.0 .* y .+ randn(rng, n), randn(rng, n))
+
+    grid = Dict(:n_trees => [10, 30], :max_depth => [2, 4])
+
+    # Grid search: every combination scored; best is recovered and a model refit.
+    gs = V.grid_search_cv(V.KFoldCV(4), x, y, grid; random_state = 1)
+    @test length(gs.results) == 4
+    @test haskey(gs.best_params, :n_trees)
+    @test gs.best_score > 0.7
+    @test gs.best_score == maximum(score for (_, score) in gs.results)
+
+    # Randomised search: n_iter configurations; best score reported.
+    rs = V.random_search_cv(V.KFoldCV(4), x, y, grid; n_iter = 3, random_state = 1)
+    @test length(rs.results) == 3
+    @test rs.best_score > 0.7
+end

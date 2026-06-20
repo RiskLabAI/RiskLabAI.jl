@@ -428,4 +428,20 @@ dropped. `cross_val_score` is the practical Julia equivalent of sklearn's
 `backtest_predictions` (per-CPCV-path OOS prediction assembly) remains a possible
 elaboration.
 
+## Hyper-parameter tuning  — PR (wired)
+
+Port of `optimization.hyper_parameter_tuning`: grid / randomised search over a
+random-forest hyper-parameter grid, scored by a purged (or any) cross-validator.
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Grid search | `clf_hyper_fit` (`rnd_search_iter==0`) | `Validation.grid_search_cv` | **behavioural**; exhaustive grid, `cross_val_score`-scored, returns best params + refit forest |
+| Randomised search | `clf_hyper_fit` (`rnd_search_iter>0`) | `Validation.random_search_cv` | **behavioural**; `n_iter` sampled configurations |
+
+**Deliberate divergence:** scikit-learn `GridSearchCV`/`RandomizedSearchCV`,
+`Pipeline`/`SampleWeightedPipeline`/`MyPipeline` and the `f1` scorer are replaced
+by a functional API over the `DecisionTree.jl` random forest; the tunable grid is
+`{:n_trees, :n_subfeatures, :max_depth}` and scoring is `:accuracy` /
+`:neg_log_loss`.
+
 _(further submodules appended as they are wired)_

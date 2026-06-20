@@ -21,6 +21,9 @@ include("CrossValidators.jl")
 # Estimator-driven scoring over the cross-validators (DecisionTree.jl backend).
 include("CrossValScore.jl")
 
+# Grid / randomised hyper-parameter search over the cross-validators.
+include("HyperParameterTuning.jl")
+
 export
     KFoldCV,
     PurgedKFoldCV,
@@ -29,6 +32,8 @@ export
     cv_split,
     get_n_splits,
     backtest_paths,
-    cross_val_score
+    cross_val_score,
+    grid_search_cv,
+    random_search_cv
 
 end # module Validation
