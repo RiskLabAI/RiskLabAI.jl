@@ -444,4 +444,25 @@ by a functional API over the `DecisionTree.jl` random forest; the tunable grid i
 `{:n_trees, :n_subfeatures, :max_depth}` and scoring is `:accuracy` /
 `:neg_log_loss`.
 
+## Pde — equations (Deep BSDE)  — PR (wired)
+
+Port of `pde.equation`: the forward-SDE sampler and BSDE generator functions for
+four financial PDEs (Han, Jentzen & E, 2018). The neural Deep-BSDE solver follows
+with a deep-learning backend (Lux.jl).
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Equation base | `Equation` | `Pde.Equation` (abstract) | dispatch over the four concrete types |
+| HJB-LQ | `HJBLQ` | `Pde.HJBLQ` | **exact** generators (`pde_driver`/`pde_hamiltonian`/`pde_terminal`) |
+| Black–Scholes–Barenblatt | `BlackScholesBarenblatt` | `Pde.BlackScholesBarenblatt` | **exact** |
+| Default-risk pricing | `PricingDefaultRisk` | `Pde.PricingDefaultRisk` | **exact** (piecewise-linear hazard) |
+| Different-rate pricing | `PricingDiffRate` | `Pde.PricingDiffRate` | **exact** |
+| Forward-SDE sample | `Equation.sample` | `Pde.pde_sample` | **behavioural** (Euler–Maruyama; stochastic) |
+
+**Deliberate divergence:** torch tensors → `Matrix`es (`batch × dim`); the method
+names are `pde_driver` (`r_u`), `pde_hamiltonian` (`h_z`), `pde_terminal`,
+`pde_sigma`. The neural solver (`FBSDESolver`/`DeepBSDE` + the PyTorch
+set-transformer architectures) is deferred to the Lux.jl slice; the transformer
+variants are research scaffolding.
+
 _(further submodules appended as they are wired)_

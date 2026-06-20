@@ -1194,3 +1194,35 @@ end
     @test length(rs.results) == 3
     @test rs.best_score > 0.7
 end
+
+@testset "Pde — equations (parity with Python)" begin
+    P = RiskLabAI.Pde
+    x = [100.0 110.0; 90.0 120.0; 100.0 100.0]
+    y = reshape([1.0, 2.0, 0.5], 3, 1)
+    z = [0.1 0.2; 0.3 -0.1; 0.0 0.5]
+
+    hjb = P.HJBLQ(2, 1.0, 4)
+    @test vec(P.pde_driver(hjb, 0.0, x, y, z)) == zeros(3)
+    @test vec(P.pde_hamiltonian(hjb, 0.0, x, y, z)) ≈ [0.025, 0.05, 0.125]
+    @test vec(P.pde_terminal(hjb, 1.0, x)) ≈ [9.3102309548, 9.3281678511, 9.2103903707]
+
+    bsb = P.BlackScholesBarenblatt(2, 1.0, 4)
+    @test vec(P.pde_driver(bsb, 0.0, x, y, z)) ≈ [0.05, 0.05, 0.05]
+    @test vec(P.pde_hamiltonian(bsb, 0.0, x, y, z)) ≈ [-0.0375, -0.025, -0.0625]
+    @test vec(P.pde_terminal(bsb, 1.0, x)) ≈ [22100.0, 22500.0, 20000.0]
+
+    dr = P.PricingDefaultRisk(2, 1.0, 4)
+    @test vec(P.pde_driver(dr, 0.0, x, y, z)) ≈ [0.0866666667, 0.0866666667, 0.0866666667]
+    @test vec(P.pde_terminal(dr, 1.0, x)) ≈ [100.0, 90.0, 100.0]
+
+    dfr = P.PricingDiffRate(2, 1.0, 4)
+    @test vec(P.pde_driver(dfr, 0.0, x, y, z)) ≈ [0.06, 0.04, 0.06]
+    @test vec(P.pde_hamiltonian(dfr, 0.0, x, y, z)) ≈ [0.0, 0.02, 0.0]
+    @test vec(P.pde_terminal(dfr, 1.0, x)) ≈ [0.0, 0.0, 0.0]
+
+    # Forward-SDE sampling: shapes and the initial condition.
+    dw, xs = P.pde_sample(bsb, 16; rng = MersenneTwister(1))
+    @test size(dw) == (16, 2, 4)
+    @test size(xs) == (16, 2, 5)
+    @test xs[:, :, 1] == repeat([1.0 0.5], 16, 1)
+end

@@ -60,6 +60,10 @@ include("Ensemble/Ensemble.jl")
 using .Ensemble: bagging_classifier_accuracy, fit_bagging, bagging_evaluate_schemes,
     calculate_bootstrap_accuracy
 
+include("Pde/Pde.jl")
+using .Pde: Equation, HJBLQ, BlackScholesBarenblatt, PricingDefaultRisk, PricingDiffRate,
+    pde_sample, pde_driver, pde_hamiltonian, pde_terminal, pde_sigma
+
 # --------------------------------------------------------------------------- #
 # Top-level exports.
 # --------------------------------------------------------------------------- #
@@ -116,6 +120,9 @@ export
     # Ensemble — bagging accuracy
     bagging_classifier_accuracy, fit_bagging, bagging_evaluate_schemes,
     calculate_bootstrap_accuracy,
+    # Pde — equations (Deep BSDE)
+    HJBLQ, BlackScholesBarenblatt, PricingDefaultRisk, PricingDiffRate,
+    pde_sample, pde_driver, pde_hamiltonian, pde_terminal, pde_sigma,
     # Backtest (legacy)
     probabilityOfBacktestOverfitting,
     # BetSize
