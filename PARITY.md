@@ -461,8 +461,18 @@ with a deep-learning backend (Lux.jl).
 
 **Deliberate divergence:** torch tensors → `Matrix`es (`batch × dim`); the method
 names are `pde_driver` (`r_u`), `pde_hamiltonian` (`h_z`), `pde_terminal`,
-`pde_sigma`. The neural solver (`FBSDESolver`/`DeepBSDE` + the PyTorch
-set-transformer architectures) is deferred to the Lux.jl slice; the transformer
-variants are research scaffolding.
+`pde_sigma`.
+
+### Deep-BSDE solver (Lux.jl backend) — wired
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| Deep-BSDE solver | `FBSDESolver(..., "DeepBSDE")` | `Pde.solve_deep_bsde` | **behavioural**; per-time-step MLP (`Lux.jl`), trainable `Y_0`/`Z_0`, terminal-MSE loss, Adam (`Optimisers.jl`) + `Zygote.jl` gradients; validated structurally (loss is finite and decreases) |
+
+**Deliberate divergence:** PyTorch → Lux.jl + Zygote + Optimisers (added
+dependencies). The bias-free MLP matches the Python `DeepBSDE` subnetwork (the
+commented-out batch-norm is omitted). The set-transformer architectures
+(`ISAB`/`MAB`/`SAB`/`PMA`/`DeepTimeSetTransformer`) and the `Monte-Carlo`/`DTNN`/
+`FBSNN` solver variants are research scaffolding and are not ported.
 
 _(further submodules appended as they are wired)_

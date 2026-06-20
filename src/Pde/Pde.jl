@@ -12,6 +12,9 @@ module Pde
 
 include("Equations.jl")
 
+# Neural Deep-BSDE solver (Lux.jl backend).
+include("DeepBSDESolver.jl")
+
 export
     Equation,
     HJBLQ,
@@ -22,6 +25,7 @@ export
     pde_driver,
     pde_hamiltonian,
     pde_terminal,
-    pde_sigma
+    pde_sigma,
+    solve_deep_bsde
 
 end # module Pde

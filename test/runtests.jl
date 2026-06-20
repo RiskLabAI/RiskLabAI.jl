@@ -1226,3 +1226,21 @@ end
     @test size(xs) == (16, 2, 5)
     @test xs[:, :, 1] == repeat([1.0 0.5], 16, 1)
 end
+
+@testset "Pde — Deep BSDE solver (Lux)" begin
+    P = RiskLabAI.Pde
+    eq = P.HJBLQ(1, 0.5, 4)
+    losses, inits = P.solve_deep_bsde(
+        eq;
+        hidden_sizes = [8],
+        iterations = 12,
+        batch_size = 64,
+        init_y = 3.0,
+        learning_rate = 0.02,
+        rng = MersenneTwister(1),
+    )
+    @test length(losses) == 12
+    @test all(isfinite, losses)
+    @test all(isfinite, inits)
+    @test minimum(losses) <= losses[1]   # training improves on the initial loss
+end
