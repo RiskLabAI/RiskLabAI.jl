@@ -55,6 +55,8 @@ export
     get_gsadf_statistic,
     get_bubble_episodes,
     simulate_psy_critical_values,
+    volatility_robust_sadf,
+    pelt_change_points,
     # feature importance (backend-independent)
     orthogonal_features,
     calculate_weighted_tau,

@@ -7,6 +7,28 @@ versions may include breaking changes).
 
 ## [Unreleased]
 
+### Added — Stage-1 mop-up: NERCOME, volatility-robust SADF, PELT (wave 29)
+
+Closes the last Stage-1 Julia-parity gap (the three admits that were implemented in
+`RiskLabAI.py` but not yet in Julia). Each docstring carries its preferred-when /
+avoid-when regime tag verbatim from the admitting verdict, plus a citation and an
+appraisal back-link; parity `@testset`s are in `test/runtests.jl`.
+
+- **Data**
+  - `nercome_denoised_covariance` — NERCOME nonparametric eigenvalue-regularized
+    covariance (Lam 2016), `Data/Denoise/Denoising.jl`. Admitted in Appraisal 24;
+    prefer it over MP clipping on no-gap / non-stationary spectra. Behavioural parity
+    (seeded sample-splitting); validated structurally and on the covariance-accuracy /
+    min-variance mechanism.
+- **Features**
+  - `volatility_robust_sadf` — volatility-robust SADF/GSADF via wild-bootstrap
+    critical values (Harvey et al. 2016), `Features/StructuralBreaks.jl`. Admitted in
+    Appraisal 26. Observed sup-ADF statistics are exact; bootstrap p-values
+    behavioural (Julia RNG).
+  - `pelt_change_points` — PELT exact multiple change-point detection (Killick et al.
+    2012), `Features/StructuralBreaks.jl`. Admitted in Appraisal 26. Clean-room port
+    of the BSD-2 `ruptures` `Pelt`/`CostNormal`, reproducing its indices exactly.
+
 ### Added — Stage-1 parity port (the admitted library-extension methods)
 
 Ports the admitted Stage-1 methods from `RiskLabAI.py` back to parity in Julia.
@@ -67,8 +89,8 @@ and a citation + admitting-appraisal back-link.
   optional analogues not bundled in the Julia port; both functions fall back to the
   always-available path (R/S Hurst, random sampling), matching the Python
   optional-dependency-absent behaviour. See `PARITY.md` for the full divergence list.
-- Deferred to a follow-up wave: NERCOME, volatility-robust SADF, and PELT (their
-  Python reference lands in a later wave).
+- The Stage-1 follow-ups NERCOME, volatility-robust SADF and PELT are now ported (see
+  the wave-29 entry at the top of this section); the Stage-1 Julia-parity gap is closed.
 
 ## [0.6.1] — 2026-06-20
 

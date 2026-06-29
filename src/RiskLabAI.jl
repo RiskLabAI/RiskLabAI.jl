@@ -25,6 +25,7 @@ using .Features: shannon_entropy, probability_mass_function, plug_in_entropy_est
     lag_dataframe, prepare_data, compute_beta, get_expanding_window_adf,
     get_bsadf_statistic, psy_minimum_window, get_sadf_sequence, get_bsadf_sequence,
     get_gsadf_statistic, get_bubble_episodes, simulate_psy_critical_values,
+    volatility_robust_sadf, pelt_change_points,
     orthogonal_features, calculate_weighted_tau,
     feature_importance_mdi, feature_importance_mda, feature_importance_sfi,
     get_test_dataset, mdi_plus_importance, conditional_predictive_impact
@@ -99,6 +100,7 @@ export
     lag_dataframe, prepare_data, compute_beta, get_expanding_window_adf,
     get_bsadf_statistic, psy_minimum_window, get_sadf_sequence, get_bsadf_sequence,
     get_gsadf_statistic, get_bubble_episodes, simulate_psy_critical_values,
+    volatility_robust_sadf, pelt_change_points,
     # Features — feature importance
     orthogonal_features, calculate_weighted_tau,
     feature_importance_mdi, feature_importance_mda, feature_importance_sfi,

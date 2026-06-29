@@ -506,7 +506,24 @@ dependency-absent behaviour: AFD's wavelet Hurst (`pywt`) → R/S estimate alone
 leakage-aware HPO's Optuna sampler (`optuna`) → random sampling. The OU optimizer
 uses a coarse-to-fine grid search in place of SciPy L-BFGS-B. CSCV-path order is the
 lexicographic `Combinatorics.combinations` order (matches `itertools.combinations`).
-The Stage-1 follow-ups NERCOME, volatility-robust SADF and PELT are deferred to a
-later wave.
+
+## Stage-1 library-extension mop-up — parity port (wave 29)
+
+The three remaining Stage-1 admits, closing the Stage-1 Julia-parity gap. Each
+docstring carries the verdict regime tag verbatim + citation + admitting-appraisal
+back-link.
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| NERCOME sample-split denoiser | `data.denoise.nercome.nercome_denoised_covariance` | `Data.nercome_denoised_covariance` | **behavioural** (seeded sample-splitting; Julia RNG ≠ NumPy PCG64). Validated structurally (symmetric, PD, reproducible under a seed) and on the admitted mechanism (Appraisal 24): lower relative-Frobenius covariance error than MP clipping on a no-gap / non-stationary spectrum, and lower min-variance OOS variance |
+| Volatility-robust SADF | `features.structural_breaks.volatility_robust_sadf` | `Features.volatility_robust_sadf` | observed `sadf` / `gsadf` sup-ADF statistics **exact** (~1e-6, deterministic, share the `_psy_sadf_bsadf_sequences` kernel); wild-bootstrap p-values **behavioural** (Rademacher signs from Julia RNG). Reproduces the Appraisal-26 size result (plain GSADF empirical size ~0.48 vs vol-robust ~0.05 under a 4x variance break) |
+| PELT change-points | `features.structural_breaks.pelt_change_points` (via BSD-2 `ruptures`) | `Features.pelt_change_points` | **exact** change-point indices — clean-room port of `ruptures.Pelt` + `CostNormal` (same candidate grid, admissible-set pruning and Gaussian segment cost), so the two agree on a shared series (mean-shift, pure-variance, and multi-break fixtures) |
+
+**Deliberate divergences (this wave):** NERCOME and the vol-robust wild bootstrap are
+seeded-stochastic — reproducible under a given Julia `rng` but not bit-identical to
+the NumPy PCG64 reference, as the existing path-level modules already document. PELT
+is deterministic and reproduces `ruptures` exactly; the GPL-3 `exuber` reference was
+not used (the Python side uses the permissive BSD-2 `ruptures`, and the Julia side is
+a clean-room reimplementation of the published Killick et al. 2012 algorithm).
 
 _(further submodules appended as they are wired)_

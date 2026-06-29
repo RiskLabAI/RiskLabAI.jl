@@ -3,6 +3,7 @@ using Dates
 using DataFrames
 using LinearAlgebra
 using Random
+using Statistics: mean, cov
 using RiskLabAI
 
 @testset "RiskLabAI smoke tests" begin
@@ -350,6 +351,52 @@ end
     @test denoised ≈ denoised'                  # symmetric
     @test diag(denoised) ≈ diag(cov)            # variances preserved
     @test all(isfinite, denoised)
+end
+
+@testset "Data.Denoise — NERCOME sample-split denoiser (Lam 2016)" begin
+    # NERCOME is a seeded, sample-splitting estimator: the split permutations use
+    # Julia's RNG, not NumPy's PCG64, so (like the other path-level modules) the
+    # estimate is reproducible under a given seed but not bit-identical to Python.
+    # We assert the documented properties and the admitted mechanism (Appraisal 24:
+    # lower covariance error than MP clipping on a no-gap / non-stationary spectrum).
+    D = RiskLabAI.Data
+
+    # Structural properties: shape, symmetry, positive-definiteness, reproducibility.
+    returns = randn(MersenneTwister(7), 30, 6)
+    est_a = D.nercome_denoised_covariance(returns; random_state = 11)
+    est_b = D.nercome_denoised_covariance(returns; random_state = 11)
+    @test size(est_a) == (6, 6)
+    @test est_a ≈ est_a'                          # symmetric
+    @test isposdef(est_a)                         # positive-definite
+    @test est_a == est_b                          # reproducible under a fixed seed
+    @test_throws ArgumentError D.nercome_denoised_covariance(randn(3, 4))  # needs >= 4 obs
+
+    # Mechanism (verbatim regime, Appraisal 24): on a slowly-decaying spectrum with
+    # no clean gap and T ~ p, NERCOME recovers the covariance more accurately than MP
+    # eigenvalue clipping (and than the raw sample covariance). Fully deterministic
+    # under the fixed RNG seeds below.
+    relative_frobenius(estimate, truth) = norm(estimate - truth) / norm(truth)
+    rng = MersenneTwister(123)
+    p, t = 12, 30
+    eigenvalues = [1.4^(-(i - 1)) for i = 1:p]    # no bulk / no clean gap
+    q_orthogonal = Matrix(qr(randn(rng, p, p)).Q)
+    sigma = q_orthogonal * Diagonal(eigenvalues) * q_orthogonal'
+    sigma = (sigma + sigma') / 2
+    chol = cholesky(sigma).L
+    nercome_error = Float64[]
+    clipping_error = Float64[]
+    raw_error = Float64[]
+    for rep = 1:20
+        sample = Matrix((chol * randn(rng, p, t))')   # t x p returns, true cov sigma
+        sample_cov = cov(sample)
+        nercome = D.nercome_denoised_covariance(sample; n_splits = 60, random_state = rep)
+        clipping = D.denoise_cov(sample_cov, t / p)
+        push!(nercome_error, relative_frobenius(nercome, sigma))
+        push!(clipping_error, relative_frobenius(clipping, sigma))
+        push!(raw_error, relative_frobenius(sample_cov, sigma))
+    end
+    @test mean(nercome_error) < mean(clipping_error)   # the admitted edge
+    @test mean(nercome_error) < mean(raw_error)         # regularizes the raw sample
 end
 
 @testset "Data.Labeling — CUSUM / barriers / meta-labeling (parity with Python)" begin
@@ -1115,6 +1162,63 @@ end
     @test isfinite(cv.gsadf_global_cv)
     @test isfinite(cv.sadf_global_cv)
     @test length(cv.bsadf_sequence_cv) == 28
+end
+
+@testset "Features — volatility-robust SADF (parity with Python)" begin
+    F = RiskLabAI.Features
+    fixture(name) = parse.(Float64, readlines(joinpath(@__DIR__, "fixtures", name)))
+
+    # Deterministic explosive-then-collapse log-price path (saved at full Float64
+    # precision so Julia and Python compute on the identical input). The observed
+    # SADF / GSADF sup-ADF statistics are deterministic -> tight parity; the
+    # wild-bootstrap p-values use Julia's RNG -> behavioural (size/power) checks.
+    y = fixture("vrsadf_y.txt")
+    res = F.volatility_robust_sadf(y; n_bootstrap = 199, random_state = 0)
+
+    @test res.sadf ≈ 5.528067986814794 atol = 1e-6      # Python reference
+    @test res.gsadf ≈ 8.034555882362156 atol = 1e-6     # Python reference
+    @test 0.0 < res.sadf_pvalue <= 1.0
+    @test 0.0 < res.gsadf_pvalue <= 1.0
+    # On this explosive series the test rejects (small p-value).
+    @test res.reject_gsadf
+    @test res.reject_sadf
+
+    # Power/size contrast: a pure random walk (no bubble) is NOT rejected, and its
+    # p-values strictly exceed the explosive series' -> the test discriminates.
+    walk = cumsum(randn(MersenneTwister(42), 150))
+    res_walk = F.volatility_robust_sadf(walk; n_bootstrap = 199, random_state = 1)
+    @test !res_walk.reject_sadf
+    @test !res_walk.reject_gsadf
+    @test res_walk.gsadf_pvalue > res.gsadf_pvalue
+
+    # Default min_length follows psy_minimum_window; short series error out.
+    @test_throws ArgumentError F.volatility_robust_sadf(collect(1.0:5.0))
+end
+
+@testset "Features — PELT change-points (parity with ruptures)" begin
+    F = RiskLabAI.Features
+    fixture(name) = parse.(Float64, readlines(joinpath(@__DIR__, "fixtures", name)))
+
+    # PELT is deterministic, so it reproduces the Python `ruptures` reference indices
+    # exactly (0-based, matching the Python convention). Fixtures are the identical
+    # arrays the Python reference was run on, saved at full Float64 precision.
+    x1 = fixture("pelt_x1.txt")        # n=240, mean shift at 120
+    x2 = fixture("pelt_x2.txt")        # n=200, pure VARIANCE shift at 100 (CUSUM-blind)
+    x3 = fixture("pelt_x3.txt")        # n=320, three change-points (mean+variance)
+
+    @test F.pelt_change_points(x1) == [120]
+    @test F.pelt_change_points(x2) == [100]
+    @test F.pelt_change_points(x3; penalty_multiplier = 2.0, min_size = 15, jump = 5) ==
+          [80, 160, 240]
+
+    # Fully explicit deterministic step (no RNG): single change-point at 30.
+    step = vcat(zeros(30), fill(10.0, 30))
+    @test F.pelt_change_points(step; penalty_multiplier = 1.0, min_size = 10, jump = 5) == [30]
+
+    # Edge cases: too-short series -> empty; flat series -> no change-points.
+    @test F.pelt_change_points(randn(MersenneTwister(0), 15)) == Int[]
+    @test F.pelt_change_points(fill(2.0, 100)) == Int[]
+    @test_throws ArgumentError F.pelt_change_points(randn(MersenneTwister(0), 100); model = "rbf")
 end
 
 @testset "Optimization — HRP & hedging (parity with Python)" begin

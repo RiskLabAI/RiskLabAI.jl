@@ -15,8 +15,8 @@ Reference: De Prado, M. (2018), Advances in Financial Machine Learning, Ch. 17.
 """
 
 using LinearAlgebra: inv, SingularException
-using Statistics: quantile
-using Random: AbstractRNG, default_rng, randn
+using Statistics: quantile, mean
+using Random: AbstractRNG, default_rng, randn, MersenneTwister
 
 """
     lag_dataframe(data, lags) -> Matrix{Float64}
@@ -434,4 +434,249 @@ function simulate_psy_critical_values(
         sadf_sequence_cv = sadf_seq_cv,
         bsadf_sequence_cv = bsadf_seq_cv,
     )
+end
+
+# --------------------------------------------------------------------------- #
+# Volatility-robust SADF / GSADF via wild-bootstrap critical values
+# (Harvey–Leybourne–Sollis–Taylor 2016).
+#
+# The admitted SADF / GSADF bubble detector uses a sup-ADF statistic whose null
+# distribution assumes homoskedastic errors; under non-stationary volatility it
+# over-rejects and flags spurious bubbles (the mild oversizing noted in Appraisal
+# 05). The volatility-robust variant computes the SAME sup-ADF statistics but
+# calibrates the critical values by a wild bootstrap (Rademacher sign-flip of the
+# first-difference residuals), which preserves the series' own volatility pattern
+# while destroying any explosive autocorrelation, restoring correct size under
+# non-stationary volatility. Clean-room from Harvey et al. (2016), reusing the
+# validated `_psy_sadf_bsadf_sequences` kernel. Admitted in Appraisal 26
+# (`library_extension/appraisals/26_verdict.md`).
+#
+# Stochastic-step divergence (documented): the Rademacher signs are drawn from
+# Julia's `rng` rather than NumPy's PCG64 stream, so the observed `sadf`/`gsadf`
+# statistics are bit-for-bit parity (deterministic), while the bootstrap p-values
+# are reproducible under a given `rng` but not bit-identical to the Python
+# reference — exactly as `simulate_psy_critical_values` documents.
+# --------------------------------------------------------------------------- #
+
+# Observed SADF / GSADF sup-ADF statistics on a single log-price path (the maxima
+# of the forward-expanding and backward-sup sequences). Mirrors Python's
+# `_sup_adf_statistics`.
+function _sup_adf_statistics(log_price::AbstractVector{<:Real}, min_length::Integer)
+    sadf_seq, bsadf_seq = _psy_sadf_bsadf_sequences(Float64.(log_price), min_length)
+    sf = filter(isfinite, sadf_seq)
+    bf = filter(isfinite, bsadf_seq)
+    sadf = isempty(sf) ? NaN : maximum(sf)
+    gsadf = isempty(bf) ? NaN : maximum(bf)
+    return (sadf, gsadf)
+end
+
+"""
+    volatility_robust_sadf(log_price; min_length=nothing, n_bootstrap=99, random_state=nothing)
+
+Volatility-robust SADF / GSADF wild-bootstrap test for an explosive (bubble)
+episode (Harvey–Leybourne–Sollis–Taylor 2016). Computes the observed SADF and
+GSADF sup-ADF statistics, then calibrates their p-values by a wild bootstrap:
+each bootstrap path multiplies the demeaned first-difference residuals by an
+independent Rademacher (±1) sign and re-cumulates, preserving the series'
+(possibly non-stationary) volatility while removing any explosive
+autocorrelation; the sup-ADF statistics are recomputed on each path to form the
+null distribution. The p-value is the share of bootstrap statistics at least as
+large as the observed one (with the standard +1/(B+1) correction).
+
+Returns a `NamedTuple` with `sadf`, `gsadf` (observed statistics, deterministic),
+`sadf_pvalue`, `gsadf_pvalue` (wild-bootstrap) and `reject_sadf` / `reject_gsadf`
+(at the 5% level).
+
+Preferred-when / avoid-when (regime tag, verbatim from `appraisals/26_verdict.md`):
+prefer it over plain SADF/GSADF when the series' volatility may be non-stationary:
+it holds nominal size where plain SADF over-rejects ~9×, at a modest power cost,
+and converges to plain SADF under constant volatility. Pairs with the admitted
+GSADF/BSADF.
+
+`random_state` seeds Julia's RNG (see the divergence note above; the Python
+reference uses NumPy's PCG64). Mirrors Python's `volatility_robust_sadf`.
+
+Reference: Harvey, D. I., Leybourne, S. J., Sollis, R. & Taylor, A. M. R. (2016).
+Tests for explosive financial bubbles in the presence of non-stationary
+volatility. Journal of Empirical Finance, 38, 548–574.
+"""
+function volatility_robust_sadf(
+    log_price::AbstractVector{<:Real};
+    min_length::Union{Integer,Nothing} = nothing,
+    n_bootstrap::Integer = 99,
+    random_state::Union{Integer,Nothing} = nothing,
+)
+    y = Float64.(log_price)
+    length(y) >= 8 || throw(ArgumentError("log_price must be a 1-D series of length >= 8"))
+    nmin = min_length === nothing ? psy_minimum_window(length(y)) : Int(min_length)
+    sadf_obs, gsadf_obs = _sup_adf_statistics(y, nmin)
+
+    residual = diff(y)
+    residual = residual .- mean(residual)
+    y0 = y[1]
+    rng::AbstractRNG = random_state === nothing ? default_rng() : MersenneTwister(random_state)
+    ge_sadf = 0
+    ge_gsadf = 0
+    path = similar(y)
+    for _ = 1:n_bootstrap
+        signs = rand(rng, (-1.0, 1.0), length(residual))     # Rademacher ±1
+        path[1] = y0
+        path[2:end] = y0 .+ cumsum(signs .* residual)
+        sadf_b, gsadf_b = _sup_adf_statistics(path, nmin)
+        (isfinite(sadf_b) && isfinite(sadf_obs) && sadf_b >= sadf_obs) && (ge_sadf += 1)
+        (isfinite(gsadf_b) && isfinite(gsadf_obs) && gsadf_b >= gsadf_obs) && (ge_gsadf += 1)
+    end
+    p_sadf = (1 + ge_sadf) / (n_bootstrap + 1)
+    p_gsadf = (1 + ge_gsadf) / (n_bootstrap + 1)
+    return (
+        sadf = sadf_obs,
+        gsadf = gsadf_obs,
+        sadf_pvalue = p_sadf,
+        gsadf_pvalue = p_gsadf,
+        reject_sadf = p_sadf < 0.05,
+        reject_gsadf = p_gsadf < 0.05,
+    )
+end
+
+# --------------------------------------------------------------------------- #
+# PELT exact multiple change-point detection (Killick, Fearnhead & Eckley 2012).
+#
+# de Prado's CUSUM (Chu–Stinchcombe–White) structural-break test targets a single
+# mean shift and is, by construction, blind to a pure variance change. PELT (Pruned
+# Exact Linear Time) finds the exact set of multiple change-points that minimizes a
+# segment cost plus a per-change penalty, so with a Gaussian (mean-and-variance)
+# cost it detects and dates multiple and variance change-points that CUSUM misses,
+# without over-segmenting when penalized appropriately. Clean-room from Killick et
+# al. (2012); the segment cost and the candidate grid replicate the BSD-2 `ruptures`
+# reference (`CostNormal` + `Pelt`) used by the Python implementation, so the two
+# return the same change-point indices on a shared series (parity asserted in
+# `test/runtests.jl`). Admitted in Appraisal 26
+# (`library_extension/appraisals/26_verdict.md`).
+# --------------------------------------------------------------------------- #
+
+# Gaussian (mean+variance) segment cost, mirroring `ruptures.CostNormal` for a 1-D
+# signal: cost([a,b)) = (b-a)·log(var + 1e-6) with the population variance (ddof=0)
+# and the same 1e-6 ridge `ruptures` adds for truly constant segments. `model="l2"`
+# uses the sum-of-squared-errors cost (b-a)·var. `cum1`/`cum2` are leading-zero
+# prefix sums of `y` and `y.^2`, so each segment cost is O(1).
+function _pelt_segment_cost(model::AbstractString, cum1, cum2, a::Integer, b::Integer)
+    nseg = b - a
+    s1 = cum1[b+1] - cum1[a+1]
+    s2 = cum2[b+1] - cum2[a+1]
+    mu = s1 / nseg
+    variance = max(s2 / nseg - mu * mu, 0.0)               # population variance, guarded
+    if model == "normal"
+        return nseg * log(variance + 1e-6)
+    elseif model == "l2"
+        return nseg * variance
+    else
+        throw(ArgumentError("pelt_change_points supports model=\"normal\" or \"l2\" (got \"$model\")"))
+    end
+end
+
+# Faithful port of `ruptures.Pelt._seg`: the same candidate grid (`ind`), the same
+# admissible-point bookkeeping, the first-minimum tie-break, and the same pruning
+# (including `ruptures`' zip-length pairing of the admissible list with the
+# non-skipped subproblems). Returns the ascending segment end points (including `n`).
+function _pelt_predict(
+    model::AbstractString,
+    cum1,
+    cum2,
+    n::Integer,
+    penalty::Real,
+    min_size::Integer,
+    jump::Integer,
+)
+    best_cost = Dict{Int,Float64}(0 => 0.0)
+    backptr = Dict{Int,Int}()
+    admissible = Int[]
+
+    ind = Int[]
+    k = 0
+    while k < n
+        k >= min_size && push!(ind, k)
+        k += jump
+    end
+    push!(ind, n)
+
+    sub_costs = Float64[]
+    sub_t = Int[]
+    for bkp in ind
+        new_adm_pt = fld(bkp - min_size, jump) * jump      # floor((bkp-min_size)/jump)·jump
+        push!(admissible, new_adm_pt)
+
+        empty!(sub_costs)
+        empty!(sub_t)
+        for t in admissible
+            haskey(best_cost, t) || continue
+            push!(sub_costs, best_cost[t] + _pelt_segment_cost(model, cum1, cum2, t, bkp) + penalty)
+            push!(sub_t, t)
+        end
+
+        best_idx = 1
+        @inbounds for j = 2:length(sub_costs)
+            sub_costs[j] < sub_costs[best_idx] && (best_idx = j)
+        end
+        best_cost[bkp] = sub_costs[best_idx]
+        backptr[bkp] = sub_t[best_idx]
+
+        threshold = best_cost[bkp] + penalty
+        keep = Int[]
+        @inbounds for j = 1:length(sub_costs)                # zip(admissible, subproblems)
+            sub_costs[j] <= threshold && push!(keep, admissible[j])
+        end
+        admissible = keep
+    end
+
+    bkps = Int[]
+    cur = n
+    while cur != 0
+        push!(bkps, cur)
+        cur = backptr[cur]
+    end
+    return sort!(bkps)
+end
+
+"""
+    pelt_change_points(series; model="normal", penalty_multiplier=3.0, min_size=10, jump=5)
+
+Detect and date change-points with PELT (exact multiple change-point detection,
+Killick–Fearnhead–Eckley 2012). Fits a PELT model with a BIC-style penalty
+`penalty_multiplier · log(T)` and returns the interior change indices (the segment
+boundaries, excluding the series endpoints; 0-based to match the Python/`ruptures`
+convention). With `model="normal"` the Gaussian cost captures both mean and
+variance changes, so PELT recovers multiple and variance change-points that CUSUM
+misses, without over-segmenting under an adequate penalty (`model="l2"` is mean
+only).
+
+Preferred-when / avoid-when (regime tag, verbatim from `appraisals/26_verdict.md`):
+prefer it over CUSUM for detecting and dating multiple and/or variance
+change-points (which CUSUM misses), without over-segmenting; CUSUM remains
+adequate for a single mean shift.
+
+Mirrors Python's `pelt_change_points` (which delegates to the BSD-2 `ruptures`
+package); this is a clean-room Julia port of the same algorithm and `CostNormal`
+cost, so the two agree on the returned indices for a shared series.
+
+Reference: Killick, R., Fearnhead, P. & Eckley, I. A. (2012). Optimal detection of
+changepoints with a linear computational cost. Journal of the American Statistical
+Association, 107(500), 1590–1598.
+"""
+function pelt_change_points(
+    series::AbstractVector{<:Real};
+    model::AbstractString = "normal",
+    penalty_multiplier::Real = 3.0,
+    min_size::Integer = 10,
+    jump::Integer = 5,
+)
+    x = Float64.(series)
+    n = length(x)
+    n < 2 * min_size && return Int[]                        # matches the Python wrapper guard
+    cost_min = model == "normal" ? 2 : 1                    # ruptures: max(min_size, cost.min_size)
+    eff_min = max(Int(min_size), cost_min)
+    cum1 = [0.0; cumsum(x)]
+    cum2 = [0.0; cumsum(x .^ 2)]
+    penalty = float(penalty_multiplier) * log(n)
+    bkps = _pelt_predict(model, cum1, cum2, n, penalty, eff_min, Int(jump))
+    return [b for b in bkps if 0 < b < n]
 end
