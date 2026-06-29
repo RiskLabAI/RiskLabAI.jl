@@ -475,4 +475,38 @@ commented-out batch-norm is omitted). The set-transformer architectures
 (`ISAB`/`MAB`/`SAB`/`PMA`/`DeepTimeSetTransformer`) and the `Monte-Carlo`/`DTNN`/
 `FBSNN` solver variants are research scaffolding and are not ported.
 
+## Stage-1 library-extension methods — parity port (wave 27)
+
+The admitted Stage-1 methods from `RiskLabAI.py` (the `CONTRIBUTIONS_LEDGER.md`
+rows), ported to parity. Deterministic estimators reproduce the Python reference
+values within the recorded tolerance; stochastic / ADF-dependent pieces are
+behavioural (validated structurally). Each docstring carries the ledger regime tag
+verbatim + citation + admitting-appraisal back-link.
+
+| Concept | Python | Julia | Notes |
+|---|---|---|---|
+| EDGE spread estimator | `microstructural_features.edge.edge_estimator` | `Features.edge_estimator` | **exact** (parity to full precision on a 12-bar OHLC fixture); NaN on degenerate/short input |
+| GSADF / BSADF | `structural_breaks.get_gsadf_statistic` / `get_bsadf_sequence` / `get_sadf_sequence` / `get_bubble_episodes` / `psy_minimum_window` | `Features.get_gsadf_statistic` / `get_bsadf_sequence` / `get_sadf_sequence` / `get_bubble_episodes` / `psy_minimum_window` | **exact** sup-ADF sequences (~5e-10), date-stamping in 1-based positions; `simulate_psy_critical_values` behavioural (random-walk null, Julia RNG) |
+| Bias-corrected entropy | `entropy_features.bias_corrected.{miller_madow,grassberger,nsb}_entropy` | `Features.{miller_madow,grassberger,nsb}_entropy` | **exact** (~1e-13; NSB quadrature via SpecialFunctions digamma/loggamma + bisection inversion) |
+| MDI+ + CPI | `feature_importance.debiased_importance.{mdi_plus_importance,conditional_predictive_impact}` | `Features.{mdi_plus_importance,conditional_predictive_impact}` | **behavioural** (DecisionTree.jl backend, Julia-RNG knockoffs); informative features rank above noise, CPI assigns the smaller p-value |
+| Holm + BHY Sharpe haircuts | `multiple_testing.{haircut_sharpe_ratios,holm_adjusted_p_values,benjamini_hochberg_yekutieli_adjusted_p_values,sharpe_ratio_p_values}` | `Backtest.*` (new `MultipleTesting.jl`) | **exact** (tie-handling gives equal adjusted values) |
+| LPLZ HAC Sharpe inference | `sharpe_inference.{lplz_sharpe_inference,sharpe_ratio_influence_function,newey_west_long_run_variance,newey_west_automatic_lag}` | `Backtest.*` (`ProbabilisticSharpeRatio.jl`) | **exact** |
+| CED + LW Sharpe-diff test | `robust_statistics.{conditional_expected_drawdown,sharpe_difference_test}` | `Backtest.*` (`BacktestStatistics.jl`) | CED + naive test + LW delta/se/stat **exact**; LW bootstrap p-value behavioural (Julia RNG) |
+| Closed-form OU trading rules | `ou_trading_rules.{optimal_ou_trading_rule,ou_rule_metrics,hit_upper_probability,mean_exit_time,fit_ornstein_uhlenbeck,...}` | `Backtest.*` (new `OUTradingRules.jl`) | closed-form metrics + OU fit **exact** (erfi from SpecialFunctions); optimizer is a grid search (replaces SciPy L-BFGS-B), matches the maximized objective on the flat ridge |
+| Path-level Bagged CPCV | `validation.path_bagged_cpcv.{bagged_probability_of_backtest_overfitting,moving_block_bootstrap_indices}` | `Validation.*` (new `PathBaggedCPCV.jl`) | **behavioural** (moving-block bootstrap, Julia RNG; builds on the parity-exact CSCV PBO) |
+| Path-level Adaptive CPCV | `validation.path_adaptive_cpcv.{adaptive_probability_of_backtest_overfitting,estimate_volatility_regimes}` | `Validation.*` (new `PathAdaptiveCPCV.jl`) | **exact** (fully deterministic; regimes, weighted PBO and selected config match) |
+| Leakage-aware HPO | `validation.leakage_aware_hpo.{leakage_aware_hpo,deflated_sharpe_gate}` | `Validation.*` (`HyperParameterTuning.jl`) | `deflated_sharpe_gate` **exact**; `leakage_aware_hpo` purged-CV random search (Optuna TPE/CMA-ES is an optional analogue, not bundled) |
+| KSG MI + distance correlation | `distance.codependence.{ksg_mutual_information,distance_correlation}` | `Data.{ksg_mutual_information,distance_correlation}` | distance correlation **exact**; KSG **exact** via the jitter-invariant integer neighbour counts (brute-force O(N²) kNN, Chebyshev) |
+| Adaptive Fractional Differencing | `differentiation.adaptive_differentiation.{adaptive_fractional_difference,rescaled_range_hurst,adaptive_differencing_order}` | `Data.*` (`Differentiation.jl`) | R/S Hurst + `d_hat` **exact**; order/threshold/p-value **behavioural** (ADF impl ≠ statsmodels). Wavelet Hurst (`pywt`) is an optional component → `NaN` (R/S-only blend, Python's pywt-absent path) |
+
+**Deliberate divergences (this wave):** `SpecialFunctions` added as a direct
+dependency (digamma/loggamma/erfi/erfc). Two optional Python dependencies are not
+bundled and fall back to the always-available path, matching the
+dependency-absent behaviour: AFD's wavelet Hurst (`pywt`) → R/S estimate alone, and
+leakage-aware HPO's Optuna sampler (`optuna`) → random sampling. The OU optimizer
+uses a coarse-to-fine grid search in place of SciPy L-BFGS-B. CSCV-path order is the
+lexicographic `Combinatorics.combinations` order (matches `itertools.combinations`).
+The Stage-1 follow-ups NERCOME, volatility-robust SADF and PELT are deferred to a
+later wave.
+
 _(further submodules appended as they are wired)_

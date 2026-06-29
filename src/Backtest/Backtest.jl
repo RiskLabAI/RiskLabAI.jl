@@ -33,6 +33,12 @@ include("BacktestSyntheticData.jl")
 # Bet sizing: probability/meta-label sizing, signal averaging, sigmoid sizing (AFML Ch. 10).
 include("BetSizing.jl")
 
+# Multiple-testing Sharpe haircuts: Holm (FWER) + BHY (FDR) (Harvey–Liu 2015).
+include("MultipleTesting.jl")
+
+# Closed-form optimal Ornstein–Uhlenbeck trading rules (Lipton–López de Prado 2020).
+include("OUTradingRules.jl")
+
 export
     # backtest statistics
     sharpe_ratio,
@@ -41,9 +47,16 @@ export
     calculate_hhi,
     calculate_hhi_concentration,
     compute_drawdowns_time_under_water,
+    conditional_expected_drawdown,
+    sharpe_difference_test,
     # probabilistic Sharpe ratio
     probabilistic_sharpe_ratio,
     benchmark_sharpe_ratio,
+    # LPLZ HAC Sharpe inference
+    sharpe_ratio_influence_function,
+    newey_west_long_run_variance,
+    newey_west_automatic_lag,
+    lplz_sharpe_inference,
     # test-set overfitting
     expected_max_sharpe_ratio,
     generate_max_sharpe_ratios,
@@ -77,6 +90,19 @@ export
     target_position,
     inverse_price,
     limit_price,
-    compute_sigmoid_width
+    compute_sigmoid_width,
+    # multiple-testing Sharpe haircuts
+    sharpe_ratio_p_values,
+    holm_adjusted_p_values,
+    benjamini_hochberg_yekutieli_adjusted_p_values,
+    haircut_sharpe_ratios,
+    # closed-form OU trading rules
+    theta_from_half_life,
+    stationary_std,
+    hit_upper_probability,
+    mean_exit_time,
+    ou_rule_metrics,
+    optimal_ou_trading_rule,
+    fit_ornstein_uhlenbeck
 
 end # module Backtest

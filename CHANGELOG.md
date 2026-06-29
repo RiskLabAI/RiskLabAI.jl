@@ -5,6 +5,71 @@ All notable changes to `RiskLabAI.jl` are documented here. The format is based o
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) (pre-1.0: minor
 versions may include breaking changes).
 
+## [Unreleased]
+
+### Added — Stage-1 parity port (the admitted library-extension methods)
+
+Ports the admitted Stage-1 methods from `RiskLabAI.py` back to parity in Julia.
+Each deterministic estimator reproduces the Python reference values within a
+recorded tolerance (parity `@testset`s in `test/runtests.jl`); stochastic /
+ADF-dependent pieces are validated structurally. Every method's docstring carries
+its preferred-when / avoid-when regime tag verbatim from `CONTRIBUTIONS_LEDGER.md`
+and a citation + admitting-appraisal back-link.
+
+- **Features**
+  - `edge_estimator` — EDGE bid-ask spread estimator (Ardia–Guidotti–Kroencke
+    2024), `Features/MicrostructuralFeatures.jl`.
+  - `get_gsadf_statistic`, `get_bsadf_sequence`, `get_sadf_sequence`,
+    `get_bubble_episodes`, `psy_minimum_window`, `simulate_psy_critical_values` —
+    GSADF/BSADF multiple-bubble detection (Phillips–Shi–Yu 2015),
+    `Features/StructuralBreaks.jl`.
+  - `miller_madow_entropy`, `grassberger_entropy`, `nsb_entropy` — bias-corrected
+    Shannon entropy, `Features/EntropyFeatures.jl`.
+  - `mdi_plus_importance`, `conditional_predictive_impact` — MDI+ (Agarwal et al.
+    2023) and CPI (Watson–Wright 2021), `Features/FeatureImportance.jl`
+    (behavioural, DecisionTree.jl backend).
+- **Backtest**
+  - `haircut_sharpe_ratios` + Holm/BHY adjusters — multiple-testing Sharpe
+    haircuts (Harvey–Liu 2015), new `Backtest/MultipleTesting.jl`.
+  - `lplz_sharpe_inference` + Newey–West HAC helpers — LPLZ Sharpe inference under
+    non-normal, autocorrelated returns (López de Prado–Lipton–Zoonekynd 2025),
+    `Backtest/ProbabilisticSharpeRatio.jl`.
+  - `conditional_expected_drawdown`, `sharpe_difference_test` — CED
+    (Goldberg–Mahmoud 2017) and the Ledoit–Wolf (2008) bootstrap Sharpe-difference
+    test, `Backtest/BacktestStatistics.jl`.
+  - `optimal_ou_trading_rule` + closed-form OU helpers — closed-form OU trading
+    rules (Lipton–López de Prado 2020), new `Backtest/OUTradingRules.jl`.
+- **Validation**
+  - `bagged_probability_of_backtest_overfitting` — path-level Bagged CPCV
+    (Arian–Norouzi–Seco 2024), new `Validation/PathBaggedCPCV.jl`.
+  - `adaptive_probability_of_backtest_overfitting`, `estimate_volatility_regimes`
+    — path-level Adaptive CPCV (Arian–Norouzi–Seco 2024), new
+    `Validation/PathAdaptiveCPCV.jl`.
+  - `leakage_aware_hpo`, `deflated_sharpe_gate` — leakage-aware HPO methodology
+    (Akiba 2019 + de Prado purged CV / DSR gating), `Validation/HyperParameterTuning.jl`.
+- **Data**
+  - `ksg_mutual_information`, `distance_correlation` — KSG kNN mutual information
+    (Kraskov et al. 2004) and distance correlation (Székely–Rizzo–Bakirov 2007),
+    `Data/Distance/DistanceMetric.jl`.
+  - `adaptive_fractional_difference` + Hurst helpers — Adaptive Fractional
+    Differencing (IEEE Access 2025, clean-room approximation),
+    `Data/Differentiation/Differentiation.jl`.
+
+### Dependencies
+
+- Added `SpecialFunctions` (digamma/loggamma/erfi/erfc for the entropy, KSG, OU and
+  robust-statistics ports). Already present transitively; now a direct dependency.
+
+### Notes
+
+- The wavelet-variance Hurst component of AFD (Python's optional `pywt`) and the
+  Optuna TPE/CMA-ES sampler of leakage-aware HPO (Python's optional `optuna`) are
+  optional analogues not bundled in the Julia port; both functions fall back to the
+  always-available path (R/S Hurst, random sampling), matching the Python
+  optional-dependency-absent behaviour. See `PARITY.md` for the full divergence list.
+- Deferred to a follow-up wave: NERCOME, volatility-robust SADF, and PELT (their
+  Python reference lands in a later wave).
+
 ## [0.6.1] — 2026-06-20
 
 ### Changed

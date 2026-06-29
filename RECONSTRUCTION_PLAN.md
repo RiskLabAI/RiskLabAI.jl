@@ -29,7 +29,7 @@ bugs catalogued in `AUDIT.md §3.2`.
 `RiskLabAI.jl` becomes a loadable, tested library that covers what its source
 tree already contains, mirrors the Python package's public API where sensible,
 and has no load-time Python coupling. Parity with `RiskLabAI.py` is a
-first-class goal (`CLAUDE.md`).
+first-class goal.
 
 ## 3. Work, in order
 

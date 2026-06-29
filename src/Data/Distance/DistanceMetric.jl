@@ -207,3 +207,124 @@ function calculate_cross_entropy(p::AbstractVector{<:Real}, q::AbstractVector{<:
     end
     return entropy
 end
+
+# --------------------------------------------------------------------------- #
+# Nonparametric codependence kernels: KSG kNN mutual information (Kraskov–
+# Stögbauer–Grassberger 2004) and distance correlation (Székely–Rizzo–Bakirov
+# 2007). Binning-free alternatives to the histogram MI above: KSG uses adaptive
+# kNN distances (Chebyshev norm), distance correlation is a tuning-free nonlinear
+# dependence index in [0, 1]. Clean-room from the published math; numeric parity
+# asserted in `test/runtests.jl` (distance correlation exactly; KSG via the
+# jitter-invariant integer neighbour counts). Admitted in Appraisal 11
+# (`library_extension/appraisals/11_verdict.md`).
+# --------------------------------------------------------------------------- #
+
+using SpecialFunctions: digamma
+using Statistics: mean, std
+using Random: MersenneTwister, randn
+
+# Break exact ties with negligible data-scaled noise (numpy population std).
+function _jitter(values, rng)
+    v = float.(vec(values))
+    scale = std(v; corrected = false)
+    scale == 0.0 && (scale = 1.0)
+    return v .+ randn(rng, length(v)) .* scale .* 1e-10
+end
+
+"""
+    ksg_mutual_information(x, y; k=4, random_state=0) -> Float64
+
+Kraskov–Stögbauer–Grassberger mutual information (algorithm 1), in nats, using the
+Chebyshev (max) norm in the joint space:
+`Î(X;Y) = ψ(k) + ψ(N) - ⟨ψ(nₓ+1) + ψ(n_y+1)⟩`. Binning-free, so far less biased
+than histogram MI on short / nonlinear / heavy-tailed samples; it can return a
+slightly negative value for (near-)independent data (a characterized property, not
+an error).
+
+Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+prefer KSG over binned MI/VI on short, noisy, or nonlinear/heavy-tailed samples
+(e.g. nonlinear-monotone n=1000 RMSE 0.039 vs binned 0.164); it is essentially
+unbiased on linear dependence and converges to binned on large-sample near-linear
+data (no free lunch there). Use raw KSG (the surrogate de-bias adds nothing).
+
+Brute-force O(N²) kNN (no kd-tree dependency). Mirrors Python's
+`ksg_mutual_information`. Reference: Kraskov, Stögbauer & Grassberger (2004),
+Physical Review E 69(6).
+"""
+function ksg_mutual_information(
+    x::AbstractVector{<:Real},
+    y::AbstractVector{<:Real};
+    k::Integer = 4,
+    random_state::Union{Integer,Nothing} = 0,
+)
+    rng = MersenneTwister(random_state === nothing ? 0 : random_state)
+    xj = _jitter(x, rng)
+    yj = _jitter(y, rng)
+    n = length(xj)
+    n < 2 && return 0.0
+    k = min(k, n - 1)
+
+    eps = Vector{Float64}(undef, n)
+    dists = Vector{Float64}(undef, n)
+    for i = 1:n
+        @inbounds for j = 1:n
+            dists[j] = max(abs(xj[i] - xj[j]), abs(yj[i] - yj[j]))
+        end
+        partialsort!(dists, k + 1)            # k+1-th smallest = k-th non-self neighbour
+        eps[i] = dists[k+1]
+    end
+
+    total = 0.0
+    for i = 1:n
+        radius = eps[i] * (1.0 - 1e-10)
+        nx = 0
+        ny = 0
+        @inbounds for j = 1:n
+            abs(xj[i] - xj[j]) <= radius && (nx += 1)
+            abs(yj[i] - yj[j]) <= radius && (ny += 1)
+        end
+        nx = max(nx - 1, 0)                    # exclude self
+        ny = max(ny - 1, 0)
+        total += digamma(nx + 1) + digamma(ny + 1)
+    end
+    return digamma(k) + digamma(n) - total / n
+end
+
+function _double_center(distance_matrix::AbstractMatrix{<:Real})
+    row = sum(distance_matrix; dims = 2) ./ size(distance_matrix, 2)
+    col = sum(distance_matrix; dims = 1) ./ size(distance_matrix, 1)
+    return distance_matrix .- row .- col .+ (sum(distance_matrix) / length(distance_matrix))
+end
+
+"""
+    distance_correlation(x, y) -> Float64
+
+Distance correlation (Székely–Rizzo–Bakirov 2007), a dependence index in [0, 1],
+from the double-centred pairwise-distance matrices `A`, `B`:
+`dCor = √(mean(A·B) / √(mean(A·A)·mean(B·B)))`. Zero only at population
+independence; detects nonlinear dependence with no estimation parameter.
+
+Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+prefer distance correlation as a parameter-free nonlinear screen / for maximally
+stable clustering (best real-data ONC stability). It is a dependence index, not a
+metric on partitions like the variation of information (keep VI/KSG for the metric
+role).
+
+Mirrors Python's `distance_correlation`. Reference: Székely, Rizzo & Bakirov
+(2007), Annals of Statistics 35(6).
+"""
+function distance_correlation(x::AbstractVector{<:Real}, y::AbstractVector{<:Real})
+    xv = float.(vec(x))
+    yv = float.(vec(y))
+    n = length(xv)
+    a = [abs(xv[i] - xv[j]) for i = 1:n, j = 1:n]
+    b = [abs(yv[i] - yv[j]) for i = 1:n, j = 1:n]
+    centered_a = _double_center(a)
+    centered_b = _double_center(b)
+    dcov2 = mean(centered_a .* centered_b)
+    dvar_x = mean(centered_a .* centered_a)
+    dvar_y = mean(centered_b .* centered_b)
+    denom = sqrt(dvar_x * dvar_y)
+    denom <= 0 && return 0.0
+    return sqrt(max(dcov2, 0.0) / denom)
+end

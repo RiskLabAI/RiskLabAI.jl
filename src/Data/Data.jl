@@ -68,6 +68,10 @@ export
     fractional_difference_fixed,
     find_optimal_ffd,
     fractionally_differentiated_log_price,
+    rescaled_range_hurst,
+    wavelet_variance_hurst,
+    adaptive_differencing_order,
+    adaptive_fractional_difference,
     # sample weights
     expand_label_for_meta_labeling,
     calculate_average_uniqueness,
@@ -83,6 +87,7 @@ export
     denoise_cov,
     optimal_portfolio,
     optimal_portfolio_denoised,
+    nercome_denoised_covariance,
     # labeling
     symmetric_cusum_filter,
     cusum_filter_events_dynamic_threshold,
@@ -102,6 +107,8 @@ export
     calculate_distance,
     calculate_kullback_leibler_divergence,
     calculate_cross_entropy,
+    ksg_mutual_information,
+    distance_correlation,
     # synthetic data
     form_block_matrix,
     random_cov,

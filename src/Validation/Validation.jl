@@ -24,6 +24,11 @@ include("CrossValScore.jl")
 # Grid / randomised hyper-parameter search over the cross-validators.
 include("HyperParameterTuning.jl")
 
+# Path-level Bagged / Adaptive CPCV PBO (Arian–Norouzi–Seco 2024). Loaded after the
+# Backtest submodule (these call its CSCV PBO primitives via `..Backtest`).
+include("PathBaggedCPCV.jl")
+include("PathAdaptiveCPCV.jl")
+
 export
     KFoldCV,
     PurgedKFoldCV,
@@ -34,6 +39,13 @@ export
     backtest_paths,
     cross_val_score,
     grid_search_cv,
-    random_search_cv
+    random_search_cv,
+    leakage_aware_hpo,
+    deflated_sharpe_gate,
+    # path-level Bagged / Adaptive CPCV
+    moving_block_bootstrap_indices,
+    bagged_probability_of_backtest_overfitting,
+    estimate_volatility_regimes,
+    adaptive_probability_of_backtest_overfitting
 
 end # module Validation

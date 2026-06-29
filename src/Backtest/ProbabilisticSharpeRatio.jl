@@ -62,3 +62,129 @@ function benchmark_sharpe_ratio(sharpe_ratio_estimates::AbstractVector{<:Real})
     term2 = γ * quantile(Normal(), 1 - 1 / (n * ℯ))
     return standard_deviation * (term1 + term2)
 end
+
+# --------------------------------------------------------------------------- #
+# LPLZ HAC Sharpe inference (López de Prado–Lipton–Zoonekynd 2025).
+#
+# The sampling variance of the Sharpe estimator depends on the higher moments AND
+# the serial correlation of returns. The PSR corrects the higher moments but
+# assumes serial independence, so under autocorrelation its interval is too narrow
+# and its test over-rejects. LPLZ takes the Newey–West (HAC) long-run variance of
+# the Sharpe influence function, correcting for both at once; it converges to the
+# PSR denominator (1 − S·SR̂ + (K−1)/4·SR̂²) under i.i.d. returns. Clean-room from
+# the influence-function / HAC math; numeric parity asserted in `test/runtests.jl`.
+# Admitted in Appraisal 08 (`library_extension/appraisals/08_verdict.md`).
+# --------------------------------------------------------------------------- #
+
+using Distributions: ccdf
+
+# Per-period Sharpe ratio with the sample (ddof=1) standard deviation.
+_sharpe_sample(r::AbstractVector{<:Real}) =
+    (sd = std(r; corrected = true); sd > 0 ? mean(r) / sd : 0.0)
+
+"""
+    sharpe_ratio_influence_function(returns) -> Vector{Float64}
+
+The Sharpe-ratio influence function `IFₜ = zₜ - ½·SR(zₜ² - 1)` with
+`zₜ = (rₜ - μ)/σ` (mean ≈ 0). Mirrors Python's `sharpe_ratio_influence_function`.
+"""
+function sharpe_ratio_influence_function(returns::AbstractVector{<:Real})
+    r = float.(returns)
+    mu = mean(r)
+    sigma = std(r; corrected = true)
+    sigma == 0 && return zeros(length(r))
+    z = (r .- mu) ./ sigma
+    sr = mu / sigma
+    return z .- 0.5 .* sr .* (z .^ 2 .- 1.0)
+end
+
+"""
+    newey_west_long_run_variance(series, lag) -> Float64
+
+Newey–West (Bartlett-kernel) long-run variance
+`Ω̂ = γ₀ + 2 Σₖ₌₁ᴸ (1 - k/(L+1)) γₖ`, with `γₖ` the lag-`k` autocovariance; `lag=0`
+gives the sample variance. Floored at `1e-12`. Mirrors Python's
+`newey_west_long_run_variance`.
+"""
+function newey_west_long_run_variance(series::AbstractVector{<:Real}, lag::Integer)
+    x = float.(series)
+    x = x .- mean(x)
+    t = length(x)
+    t == 0 && return 1e-12
+    total = (x' * x) / t
+    for k = 1:lag
+        weight = 1.0 - k / (lag + 1.0)
+        total += 2.0 * weight * (x[(k+1):end]' * x[1:(end-k)]) / t
+    end
+    return max(total, 1e-12)
+end
+
+"""
+    newey_west_automatic_lag(number_of_returns) -> Int
+
+Newey–West automatic bandwidth `⌊4(T/100)^(2/9)⌋` (at least 1). Mirrors Python's
+`newey_west_automatic_lag`.
+"""
+newey_west_automatic_lag(number_of_returns::Integer) =
+    max(Int(floor(4.0 * (number_of_returns / 100.0)^(2.0 / 9.0))), 1)
+
+"""
+    lplz_sharpe_inference(returns; confidence_level=0.95, lag=nothing,
+                          null_sharpe_ratio=0.0)
+
+López de Prado–Lipton–Zoonekynd (2025) Sharpe-ratio inference (HAC of the
+influence function). Returns a `NamedTuple` `(sharpe_ratio, standard_error,
+confidence_interval, test_statistic, p_value, significant, lag)`. The standard
+error is `√(Ω̂/T)` with `Ω̂` the Newey–West long-run variance of the Sharpe
+influence function.
+
+Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+prefer LPLZ for Sharpe-ratio inference when returns show material serial
+correlation and/or non-normality (estimable from the sample): it restores
+near-nominal CI coverage and test size where the PSR under-covers and over-rejects
+(PSR size ≈ 0.20 vs nominal 0.05 under AR(1)). It converges to the PSR on
+near-normal iid returns with no over-coverage; the honest cost is wider intervals.
+Lo (2002) is the autocorrelation-only intermediate, dominated by LPLZ under
+non-normality.
+
+Mirrors Python's `lplz_sharpe_inference`. Reference: López de Prado, Lipton &
+Zoonekynd (2025); Newey & West (1987); Lo (2002).
+"""
+function lplz_sharpe_inference(
+    returns::AbstractVector{<:Real};
+    confidence_level::Real = 0.95,
+    lag::Union{Integer,Nothing} = nothing,
+    null_sharpe_ratio::Real = 0.0,
+)
+    r = float.(returns)
+    t = length(r)
+    sr = _sharpe_sample(r)
+    if t < 3 || std(r; corrected = true) == 0
+        return (
+            sharpe_ratio = sr,
+            standard_error = NaN,
+            confidence_interval = (NaN, NaN),
+            test_statistic = NaN,
+            p_value = NaN,
+            significant = false,
+            lag = 0,
+        )
+    end
+    L = lag === nothing ? newey_west_automatic_lag(t) : lag
+    lrv = newey_west_long_run_variance(sharpe_ratio_influence_function(r), L)
+    standard_error = sqrt(lrv / t)
+    z = quantile(Normal(), 0.5 + confidence_level / 2.0)
+    ci = (sr - z * standard_error, sr + z * standard_error)
+    test_statistic =
+        standard_error > 0 ? (sr - null_sharpe_ratio) / standard_error : NaN
+    p_value = 2.0 * ccdf(Normal(), abs(test_statistic))
+    return (
+        sharpe_ratio = sr,
+        standard_error = standard_error,
+        confidence_interval = ci,
+        test_statistic = test_statistic,
+        p_value = p_value,
+        significant = p_value < (1.0 - confidence_level),
+        lag = L,
+    )
+end

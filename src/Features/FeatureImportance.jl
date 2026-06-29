@@ -330,3 +330,194 @@ function get_test_dataset(;
     )
     return x, y, names
 end
+
+# --------------------------------------------------------------------------- #
+# Debiased & conditional importance: MDI+ (Agarwal et al. 2023, simplified
+# faithful variant) and the Conditional Predictive Impact (CPI; Watson–Wright
+# 2021). Behavioural ports on the DecisionTree.jl backend (not bit-identical to
+# scikit-learn): MDI+ recasts each tree's MDI as a ridge GLM on the tree's
+# decision-stump basis and scores a feature by its out-of-bag partial variance;
+# CPI measures the model-loss increase when a feature is replaced by a
+# conditionally-resampled Gaussian knockoff, with a paired significance test.
+# Admitted in Appraisal 10 (`library_extension/appraisals/10_verdict.md`).
+# --------------------------------------------------------------------------- #
+
+using Random: randn
+using LinearAlgebra: I
+using Distributions: TDist, ccdf
+using DecisionTree: Leaf, Node
+
+# Population (ddof=0) variance / std, matching numpy `.var()` / `.std()`.
+_var_pop(v) = (m = sum(v) / length(v); sum((vi - m)^2 for vi in v) / length(v))
+_std_pop(v) = sqrt(_var_pop(v))
+
+# Ridge (L2) regression with intercept (centred), matching sklearn `Ridge`.
+function _ridge_coefficients(X::AbstractMatrix, y::AbstractVector; alpha::Real = 1.0)
+    xbar = vec(sum(X; dims = 1) ./ size(X, 1))
+    ybar = sum(y) / length(y)
+    Xc = X .- xbar'
+    yc = y .- ybar
+    beta = (Xc' * Xc + alpha * I) \ (Xc' * yc)
+    return beta, xbar, ybar
+end
+_ridge_predict(beta, xbar, ybar, X) = ybar .+ (X .- xbar') * beta
+
+# Collect (feature, threshold) of every internal split of a DecisionTree.jl tree.
+function _collect_tree_splits(tree)
+    node = hasproperty(tree, :node) ? tree.node : tree
+    feats = Int[]
+    thresholds = Float64[]
+    _walk_splits!(node, feats, thresholds)
+    return feats, thresholds
+end
+function _walk_splits!(node, feats, thresholds)
+    node isa Leaf && return
+    push!(feats, node.featid)
+    push!(thresholds, node.featval)
+    _walk_splits!(node.left, feats, thresholds)
+    _walk_splits!(node.right, feats, thresholds)
+end
+
+# Per-sample log loss (sklearn `log_loss` without averaging).
+function _per_sample_log_loss(y_true::AbstractVector, proba::AbstractMatrix, classes::AbstractVector)
+    epsilon = 1e-15
+    column_of = Dict(c => i for (i, c) in enumerate(classes))
+    return [-log(clamp(proba[n, column_of[y_true[n]]], epsilon, 1 - epsilon)) for n in eachindex(y_true)]
+end
+
+"""
+    mdi_plus_importance(x, y; random_state=0, n_trees=60, n_subfeatures=-1, max_depth=6)
+        -> Vector{Float64}
+
+MDI+ feature importance (Agarwal et al. 2023, simplified faithful variant): for
+each bootstrap tree it builds a centred decision-stump basis (one indicator
+`1{x_f ≤ threshold}` per internal node, grouped by splitting feature), fits a ridge
+GLM of the label on that basis using the unique in-bag rows, and scores each
+feature by the out-of-bag partial variance of its block; the per-tree scores are
+averaged. The tree representation + regularised GLM + out-of-sample partial
+contribution remove the in-sample / cardinality inflation of plain MDI.
+
+Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+prefer MDI+ over MDI when features are noisy, high-cardinality, or mixed-type — it
+rejects noise/cardinality inflation (noise-rejection 0.94 vs MDI 0.50) and recovers
+true relevance better; it converges to MDI when features are orthogonal and
+high-SNR.
+
+Behavioural port (DecisionTree.jl backend, not bit-identical to scikit-learn);
+validated structurally in `test/runtests.jl`. Mirrors Python's
+`mdi_plus_importance`.
+"""
+function mdi_plus_importance(
+    x::AbstractMatrix{<:Real},
+    y::AbstractVector;
+    random_state::Integer = 0,
+    n_trees::Integer = 60,
+    n_subfeatures::Integer = -1,
+    max_depth::Integer = 6,
+)
+    n, p = size(x)
+    xv = float.(x)
+    yv = float.(y)
+    subfeatures = n_subfeatures < 0 ? _default_subfeatures(p) : n_subfeatures
+    rng = MersenneTwister(random_state)
+
+    accumulated = zeros(p)
+    used = 0
+    for _ = 1:n_trees
+        boot = rand(rng, 1:n, n)                          # bootstrap with replacement
+        tree = build_tree(y[boot], xv[boot, :], subfeatures, max_depth, 1, 2, 0.0; rng = rng)
+        feats, thresholds = _collect_tree_splits(tree)
+        isempty(feats) && continue
+        in_bag = unique(boot)
+        out_of_bag = setdiff(1:n, in_bag)
+        length(out_of_bag) < 5 && continue
+        # Decision-stump basis over all rows, centred over all rows.
+        basis = [xv[r, feats[c]] <= thresholds[c] ? 1.0 : 0.0 for r = 1:n, c = 1:length(feats)]
+        basis = basis .- sum(basis; dims = 1) ./ n
+        beta, _, _ = _ridge_coefficients(basis[in_bag, :], yv[in_bag])
+        for f in unique(feats)
+            mask = feats .== f
+            partial = basis[out_of_bag, mask] * beta[mask]
+            accumulated[f] += _var_pop(partial)
+        end
+        used += 1
+    end
+    return accumulated ./ max(used, 1)
+end
+
+"""
+    conditional_predictive_impact(x, y; random_state=0, n_splits=4, n_trees=80,
+        n_subfeatures=-1, max_depth=6) -> (; importance, p_value)
+
+Conditional Predictive Impact (CPI; Watson–Wright 2021): for each cross-validation
+fold a forest is fit on the training rows; on the test rows each feature is replaced
+by a conditional Gaussian knockoff (the feature regressed on the others by ridge
+plus resampled residual noise), and the per-sample increase in log loss is recorded.
+Pooled across folds, the mean increase is the importance and a one-sided paired
+t-test gives a p-value, so the method tests whether a feature matters — the
+calibrated test MDA lacks.
+
+Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+prefer CPI when a statistically valid test of whether a feature matters is needed
+(MDA has none) — nominal size, good power.
+
+Behavioural port (DecisionTree.jl backend + Julia RNG knockoffs, not bit-identical
+to scikit-learn); validated structurally in `test/runtests.jl`. Mirrors Python's
+`conditional_predictive_impact`.
+"""
+function conditional_predictive_impact(
+    x::AbstractMatrix{<:Real},
+    y::AbstractVector;
+    random_state::Integer = 0,
+    n_splits::Integer = 4,
+    n_trees::Integer = 80,
+    n_subfeatures::Integer = -1,
+    max_depth::Integer = 6,
+)
+    n, p = size(x)
+    xv = float.(x)
+    classes = sort(unique(y))
+    subfeatures = n_subfeatures < 0 ? _default_subfeatures(p) : n_subfeatures
+    folds = _kfold(n, n_splits; shuffle = true, rng = MersenneTwister(random_state))
+
+    differences = [Float64[] for _ = 1:p]
+    for (i, (train, test)) in enumerate(folds)
+        forest = build_forest(
+            y[train], xv[train, :], subfeatures, n_trees, 0.7, max_depth, 1, 2, 0.0;
+            rng = random_state + i,
+        )
+        loss_true =
+            _per_sample_log_loss(y[test], apply_forest_proba(forest, xv[test, :], classes), classes)
+        rng = MersenneTwister(random_state + 100 + i)
+        for j = 1:p
+            others = [k for k = 1:p if k != j]
+            beta, xbar, ybar = _ridge_coefficients(xv[train, others], xv[train, j])
+            residual = xv[train, j] .- _ridge_predict(beta, xbar, ybar, xv[train, others])
+            sigma = _std_pop(residual) + 1e-9
+            knockoff =
+                _ridge_predict(beta, xbar, ybar, xv[test, others]) .+
+                sigma .* randn(rng, length(test))
+            x_knockoff = copy(xv[test, :])
+            x_knockoff[:, j] = knockoff
+            loss_knockoff =
+                _per_sample_log_loss(y[test], apply_forest_proba(forest, x_knockoff, classes), classes)
+            append!(differences[j], loss_knockoff .- loss_true)
+        end
+    end
+
+    importance = zeros(p)
+    p_value = zeros(p)
+    for j = 1:p
+        d = differences[j]
+        importance[j] = sum(d) / length(d)
+        s = std(d)                                          # sample std (ddof = 1)
+        if s < 1e-12
+            p_value[j] = 1.0
+        else
+            t_stat = importance[j] / (s / sqrt(length(d)))
+            p_two = 2.0 * ccdf(TDist(length(d) - 1), abs(t_stat))
+            p_value[j] = t_stat > 0 ? p_two / 2.0 : 1.0 - p_two / 2.0
+        end
+    end
+    return (importance = importance, p_value = p_value)
+end

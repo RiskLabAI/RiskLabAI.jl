@@ -117,3 +117,113 @@ function random_search_cv(
     model = _forest_from_params(x, y, best_params; random_state = random_state)
     return (best_params = best_params, best_score = best_score, model = model, results = results)
 end
+
+# --------------------------------------------------------------------------- #
+# Leakage-aware HPO methodology (Akiba 2019 Optuna + de Prado purged CV / DSR).
+# Admitted in Appraisal 20 as methodology/infrastructure, NOT a performance claim:
+# principled search reaches the optimum in fewer trials and purged CV removes the
+# leakage a naive k-fold inflates, but tuning yields NO out-of-sample edge after
+# deflation, so the selected model must be gated by the Deflated Sharpe at the HPO
+# trial count. `deflated_sharpe_gate` is the decisive control (deterministic, parity-
+# matched in `test/runtests.jl`).
+#
+# Deliberate divergence: the Optuna TPE/CMA-ES sampler is an OPTIONAL analogue not
+# bundled in the Julia port (no de-facto Optuna). `leakage_aware_hpo` wires random
+# sampling through the repo's `PurgedKFoldCV` (the leakage-controlled per-trial
+# score) — the admitted methodology — and the DSR gate; a Bayesian/evolutionary
+# sampler can be substituted where available. Appraisal 20
+# (`library_extension/appraisals/20_verdict.md`).
+# --------------------------------------------------------------------------- #
+
+using Statistics: std
+using ..Backtest: probabilistic_sharpe_ratio, expected_max_sharpe_ratio
+
+"""
+    leakage_aware_hpo(x, y, param_grid; event_starts, event_ends, n_trials=50,
+        n_splits=5, embargo=0.0, scoring=:accuracy, random_state=0)
+
+Leakage-aware hyper-parameter search: every sampled configuration is scored under
+`PurgedKFoldCV` (leakage-controlled, not a leaky shuffled k-fold). Returns a
+`NamedTuple` `(best_params, best_score, n_trials, trial_scores, mean_trial_score,
+std_trial_score)`.
+
+Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+use leakage-aware HPO (Optuna wired through PurgedKFold/CPCV, selection gated by
+PBO/DSR at the HPO trial count) as the correct, efficient, leakage-safe tuning
+methodology — preferred over grid/random for search efficiency and over naive-CV
+tuning for leakage-safety. It does not improve out-of-sample performance after
+deflation (tuning does not create edge — a documented finding); admitted as
+methodology/infrastructure, not a performance claim. Always gate the selected model
+with `deflated_sharpe_gate` at `n_trials`; never trust `best_score` directly.
+
+Deliberate divergence: the Optuna TPE/CMA-ES sampler is an optional analogue (not
+bundled); this uses random sampling through `PurgedKFoldCV`. Mirrors the
+methodology of Python's `leakage_aware_hpo`.
+"""
+function leakage_aware_hpo(
+    x::AbstractMatrix{<:Real},
+    y::AbstractVector,
+    param_grid::AbstractDict;
+    event_starts::AbstractVector,
+    event_ends::AbstractVector,
+    n_trials::Integer = 50,
+    n_splits::Integer = 5,
+    embargo::Real = 0.0,
+    scoring::Symbol = :accuracy,
+    random_state::Integer = 0,
+)
+    cv = PurgedKFoldCV(n_splits, event_starts, event_ends; embargo = embargo)
+    rs = random_search_cv(
+        cv, x, y, param_grid;
+        n_iter = n_trials, scoring = scoring, random_state = random_state,
+    )
+    scores = [s for (_, s) in rs.results if isfinite(s)]
+    return (
+        best_params = rs.best_params,
+        best_score = rs.best_score,
+        n_trials = n_trials,
+        trial_scores = scores,
+        mean_trial_score = isempty(scores) ? NaN : mean(scores),
+        std_trial_score = length(scores) < 2 ? NaN : std(scores; corrected = false),
+    )
+end
+
+"""
+    deflated_sharpe_gate(out_of_sample_returns, n_trials, trial_sharpe_std; threshold=0.5)
+
+Gate a selected model's out-of-sample Sharpe by the Deflated Sharpe at the HPO trial
+count: the benchmark is the expected maximum Sharpe over `n_trials` trials (with
+cross-trial Sharpe dispersion `trial_sharpe_std`), and the Deflated Sharpe is the
+probability the realized OOS Sharpe exceeds it. A selection passes only if the
+Deflated Sharpe exceeds `threshold`. Returns a `NamedTuple` `(observed_sharpe,
+benchmark_sharpe, n_trials, deflated_sharpe, passes)`. This is the decisive control:
+in the appraisal the principled-HPO gain did not pass it. Mirrors Python's
+`deflated_sharpe_gate`.
+"""
+function deflated_sharpe_gate(
+    out_of_sample_returns::AbstractVector{<:Real},
+    n_trials::Integer,
+    trial_sharpe_std::Real;
+    threshold::Real = 0.5,
+)
+    r = float.(out_of_sample_returns)
+    n = length(r)
+    m = mean(r)
+    m2 = sum((r .- m) .^ 2) / n
+    sd = sqrt(m2)                                    # population std (numpy ddof=0)
+    observed = sd > 0 ? m / sd : 0.0
+    benchmark = expected_max_sharpe_ratio(n_trials, 0.0, trial_sharpe_std)
+    skewness = n > 2 ? (sum((r .- m) .^ 3) / n) / m2^1.5 : 0.0
+    kurtosis = n > 3 ? (sum((r .- m) .^ 4) / n) / m2^2 : 3.0
+    deflated = probabilistic_sharpe_ratio(
+        observed, benchmark, n;
+        skewness_of_returns = skewness, kurtosis_of_returns = kurtosis,
+    )
+    return (
+        observed_sharpe = observed,
+        benchmark_sharpe = benchmark,
+        n_trials = n_trials,
+        deflated_sharpe = deflated,
+        passes = deflated > threshold,
+    )
+end

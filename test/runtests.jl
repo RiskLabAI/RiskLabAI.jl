@@ -252,6 +252,29 @@ end
     @test any(!isnan, fd)
 end
 
+@testset "Data.Differentiation — Adaptive Fractional Differencing (parity with Python)" begin
+    D = RiskLabAI.Data
+    n = 512
+    incr = [0.5 * sin(0.05t) + 0.3 * cos(0.013t) + 0.2 * sin(0.2t) for t = 0:(n-1)]
+    price = 100.0 .+ cumsum(incr)
+
+    # Deterministic anchors (R/S Hurst blend) — exact parity with Python's R/S path.
+    @test D.rescaled_range_hurst(incr) ≈ 0.945557656342456 atol = 1e-9
+    @test D.adaptive_differencing_order(incr) ≈ 0.44555765634245603 atol = 1e-9
+    # Wavelet component is an optional dependency (not wired) -> NaN, R/S-only blend.
+    @test isnan(D.wavelet_variance_hurst(incr))
+
+    res = D.adaptive_fractional_difference(price)
+    @test res.d_hat ≈ 0.4458675284494259 atol = 1e-8
+    # Order/threshold/p-value are behavioural (ADF impl differs from statsmodels):
+    # structural checks.
+    @test 0.0 <= res.order <= 1.2
+    @test res.threshold in (1e-3, 1e-4, 1e-5)
+    @test res.adf_pvalue < 0.05
+    @test isfinite(res.memory_retained)
+    @test count(!isnan, res.series) > 400
+end
+
 @testset "Data.Weights — sample weighting (parity with Python)" begin
     D = RiskLabAI.Data
     close_index = collect(1:10)
@@ -437,6 +460,29 @@ end
     @test D.calculate_distance(dep; metric = "absolute_angular") ≈ [0.0 0.5; 0.5 0.0]
 end
 
+@testset "Data.Distance — KSG MI & distance correlation (parity with Python)" begin
+    D = RiskLabAI.Data
+    # Deterministic closed-form data (identical in both languages); the KSG digamma
+    # formula depends only on the jitter-invariant integer neighbour counts.
+    n = 400
+    x = [sin(0.3t) + 0.2 * cos(0.07t) for t = 0:(n-1)]
+    z = [cos(0.11t) for t = 0:(n-1)]
+    y_lin = 0.8 .* x .+ 0.1 .* z
+    y_non = x .^ 2 .+ 0.05 .* z
+    y_ind = z
+
+    @test D.ksg_mutual_information(x, y_lin; k = 4, random_state = 0) ≈ 2.0869197729128883 atol = 1e-9
+    @test D.ksg_mutual_information(x, y_non; k = 4, random_state = 0) ≈ 2.1897736141895248 atol = 1e-9
+    @test D.ksg_mutual_information(x, y_ind; k = 4, random_state = 0) ≈ -0.11395325035808046 atol = 1e-9
+    # Strong dependence -> high MI; near-independence -> near-zero (can be slightly negative).
+    @test D.ksg_mutual_information(x, y_lin) > D.ksg_mutual_information(x, y_ind)
+
+    @test D.distance_correlation(x, y_lin) ≈ 0.9924531334820932
+    @test D.distance_correlation(x, y_non) ≈ 0.4503227910220032
+    @test D.distance_correlation(x, y_ind) ≈ 0.03608484508267412
+    @test D.distance_correlation(x, x) ≈ 1.0
+end
+
 @testset "Backtest — statistics (parity with Python)" begin
     B = RiskLabAI.Backtest
 
@@ -513,6 +559,70 @@ end
     @test ddp.time_under_water ≈ [1 / 365.25, 2 / 365.25, 1 / 365.25]
 end
 
+@testset "Backtest — CED & Sharpe-difference test (parity with Python)" begin
+    B = RiskLabAI.Backtest
+    n = 300
+    a = [0.001 + 0.012 * sin(0.07t) + 0.004 * cos(0.3t) for t = 0:(n-1)]
+    b = [0.013 * cos(0.05t) + 0.003 * sin(0.21t) for t = 0:(n-1)]
+    r = [0.01 * sin(0.05t) + 0.02 * cos(0.011t) - 0.003 for t = 0:(n-1)]
+
+    # Conditional Expected Drawdown (deterministic; exact parity).
+    @test B.conditional_expected_drawdown(r, 60, 0.90) ≈ 0.7703735604378519
+    @test B.conditional_expected_drawdown(r, 60, 0.95) ≈ 0.7746692629744587
+    @test B.conditional_expected_drawdown(r, 30, 0.80) ≈ 0.5173307336300851
+    @test_throws ArgumentError B.conditional_expected_drawdown(r, 60, 1.5)
+
+    # Naive Sharpe-difference test (deterministic; exact parity).
+    nv = B.sharpe_difference_test(a, b; method = "naive")
+    @test nv.delta ≈ 0.1485861269627159
+    @test nv.se ≈ 0.0813523963928328
+    @test nv.stat ≈ 1.8264505232916093
+    @test nv.pvalue ≈ 0.06778242746585597
+    @test nv.reject == false
+
+    # Ledoit–Wolf: delta / se (HAC) / stat are deterministic (exact); the bootstrap
+    # p-value uses Julia's RNG (behavioural -> structural check).
+    lw = B.sharpe_difference_test(a, b; method = "ledoit_wolf", n_boot = 500, random_state = 0)
+    @test lw.delta ≈ 0.1485861269627159
+    @test lw.se ≈ 0.22337469299514048
+    @test lw.stat ≈ 0.6651878284437011
+    @test 0.0 <= lw.pvalue <= 1.0
+    @test_throws ArgumentError B.sharpe_difference_test(a, b; method = "xyz")
+end
+
+@testset "Backtest — closed-form OU trading rules (parity with Python)" begin
+    B = RiskLabAI.Backtest
+    th, sg, eg = 0.1, 0.1, 1.0
+
+    @test B.theta_from_half_life(10.0) ≈ 0.06931471805599453
+    @test B.stationary_std(th, sg) ≈ 0.223606797749979
+
+    # Closed-form first-passage metrics (deterministic; exact parity).
+    @test B.hit_upper_probability(eg, 2.0, 1.0, th, sg) ≈ 0.9999999999996079
+    @test B.mean_exit_time(eg, 2.0, 1.0, th, sg) ≈ 130958.42974177317 rtol = 1e-9
+    m = B.ou_rule_metrics(2.0, 1.0, th, sg, eg, 0.0)
+    @test m.return_rate ≈ 1.5272021846493343e-5 rtol = 1e-9
+    @test m.time_scaled_sharpe ≈ 2941.8908064682373 rtol = 1e-9
+    @test isnan(B.ou_rule_metrics(-1.0, 1.0, th, sg, eg).hit_probability)   # invalid -> bad
+
+    # Optimizer (grid search vs SciPy L-BFGS-B): the objective surface is flat along
+    # the stop-loss ridge, so the maximized return rate matches even when sl differs.
+    opt = B.optimal_ou_trading_rule(th, sg, eg)
+    @test opt.profit_take > 0 && opt.stop_loss > 0
+    @test opt.return_rate ≈ 0.0921858063421004 atol = 1e-3
+
+    # OU fit (AR(1) regression; deterministic; exact parity).
+    x = zeros(2000)
+    for t = 2:2000
+        x[t] = 0.9 * x[t-1] + 0.1 * sin(0.3 * (t - 1))
+    end
+    f = B.fit_ornstein_uhlenbeck(x)
+    @test f.theta ≈ 0.044973376784760155 rtol = 1e-9
+    @test f.sigma ≈ 0.07109144798150265 rtol = 1e-9
+    @test f.rho ≈ 0.9560229338986339 rtol = 1e-9
+    @test f.r2 ≈ 0.9130968551707074 rtol = 1e-9
+end
+
 @testset "Backtest — PSR & test-set overfitting (parity with Python)" begin
     B = RiskLabAI.Backtest
 
@@ -581,6 +691,46 @@ end
     @test names(err) == ["n_trials", "meanErr", "stdErr"]
     @test nrow(err) == 2
     @test all(isfinite, err.meanErr)
+end
+
+@testset "Backtest — LPLZ HAC Sharpe inference (parity with Python)" begin
+    B = RiskLabAI.Backtest
+    r = [
+        0.012, -0.004, 0.021, 0.008, -0.011, 0.017, 0.003, -0.006, 0.014, 0.009,
+        -0.002, 0.019, 0.006, -0.008, 0.011, 0.004, 0.016, -0.003, 0.013, 0.007,
+        -0.005, 0.018, 0.002, -0.009, 0.015,
+    ]
+
+    @test B.newey_west_automatic_lag(25) == 2
+    @test B.newey_west_automatic_lag(240) == 4
+    @test B.newey_west_automatic_lag(1000) == 6
+    @test B.newey_west_long_run_variance(B.sharpe_ratio_influence_function(r), 2) ≈
+          0.23445542337329167
+    @test B.newey_west_long_run_variance(B.sharpe_ratio_influence_function(r), 0) ≈
+          1.1295168114508831
+
+    res = B.lplz_sharpe_inference(r)
+    @test res.sharpe_ratio ≈ 0.6037202815610235
+    @test res.standard_error ≈ 0.09684119441091
+    @test res.test_statistic ≈ 6.234126760140509
+    @test res.p_value ≈ 4.5430511104277287e-10
+    @test res.significant == true
+    @test res.lag == 2
+    @test res.confidence_interval[1] ≈ 0.41391502829579835
+    @test res.confidence_interval[2] ≈ 0.7935255348262487
+
+    # Custom confidence level, fixed lag, non-zero null.
+    res2 = B.lplz_sharpe_inference(r; confidence_level = 0.99, lag = 3, null_sharpe_ratio = 0.1)
+    @test res2.standard_error ≈ 0.12042504761055403
+    @test res2.test_statistic ≈ 4.182853082109785
+    @test res2.p_value ≈ 2.8787343639696333e-5
+    @test res2.lag == 3
+
+    # Degenerate (fewer than 3 obs): NaN inference.
+    short = B.lplz_sharpe_inference([0.1, 0.2])
+    @test isnan(short.standard_error)
+    @test short.lag == 0
+    @test short.significant == false
 end
 
 @testset "Backtest — strategy risk (parity with Python)" begin
@@ -712,6 +862,42 @@ end
     @test gsig ≈ [0.2, 0.0, 0.1, 0.3, 0.0]
 end
 
+@testset "Backtest — multiple-testing Sharpe haircuts (parity with Python)" begin
+    B = RiskLabAI.Backtest
+    sr = [0.25, 0.18, 0.05, 0.02]
+    T = 120
+
+    @test B.sharpe_ratio_p_values(sr, T) ≈
+          [0.0030849496602720805, 0.024316152257345184, 0.29194121038518256,
+           0.4132903507196785]
+
+    p = B.sharpe_ratio_p_values(sr, T)
+    @test B.holm_adjusted_p_values(p) ≈
+          [0.012339798641, 0.072948456772, 0.58388242077, 0.58388242077]
+    @test B.benjamini_hochberg_yekutieli_adjusted_p_values(p) ≈
+          [0.025707913836, 0.101317301072, 0.810947806626, 0.861021563999]
+
+    h = B.haircut_sharpe_ratios(sr, T; method = "holm")
+    @test h.significant == [true, false, false, false]
+    @test h.haircut_sharpe_ratios ≈
+          [0.205065615311, 0.132747698412, -0.019337871954, -0.019337871954]
+
+    b = B.haircut_sharpe_ratios(sr, T; method = "bhy")
+    @test b.haircut_sharpe_ratios ≈
+          [0.177826597449, 0.116307178741, -0.080459932637, -0.099039237584]
+    @test_throws ArgumentError B.haircut_sharpe_ratios(sr, T; method = "xyz")
+
+    # 6-strategy set with ties (tie-handling must give equal adjusted values).
+    sr2 = [0.30, 0.10, 0.10, 0.22, 0.01, 0.15]
+    p2 = B.sharpe_ratio_p_values(sr2, 250)
+    @test B.holm_adjusted_p_values(p2) ≈
+          [6.304308e-06, 0.17076944701, 0.17076944701, 0.001260545574,
+           0.437183530581, 0.035412131615]
+    @test B.benjamini_hochberg_yekutieli_adjusted_p_values(p2) ≈
+          [1.5445554e-05, 0.16735405807, 0.16735405807, 0.001853001993, 1.0,
+           0.043379861228]
+end
+
 @testset "Features — entropy (parity with Python)" begin
     F = RiskLabAI.Features
     m = "11100010011110100"
@@ -732,6 +918,38 @@ end
     # Kontoyiannis H_k is the *averaged* Σ log2(nᵢ)/Lᵢ (de Prado's formula).
     @test F.kontoyiannis_entropy(m) ≈ 0.9847738922739608
     @test F.kontoyiannis_entropy(m; window = 5) ≈ 0.8868475362417008
+end
+
+@testset "Features — bias-corrected entropy (parity with Python)" begin
+    F = RiskLabAI.Features
+    m = "11100010011110100"
+
+    # Miller–Madow (plug-in + first-order analytic correction).
+    @test F.miller_madow_entropy(m, 1) ≈ 1.0399347534540848
+    @test F.miller_madow_entropy(m, 2) ≈ 1.0562348307729115
+    @test F.miller_madow_entropy(m, 3) ≈ 1.0698448127313827
+
+    # Grassberger (digamma higher-order correction).
+    @test F.grassberger_entropy(m, 1) ≈ 1.083745643356587
+    @test F.grassberger_entropy(m, 2) ≈ 1.0829481408420427
+    @test F.grassberger_entropy(m, 3) ≈ 1.1437749024876813
+
+    # NSB (Bayesian; needs the true alphabet size). Quadrature matches Python to ~1e-8.
+    @test F.nsb_entropy(m, 1, 2) ≈ 0.965537224890827 atol = 1e-8
+    @test F.nsb_entropy(m, 2, 2) ≈ 0.9600582245715601 atol = 1e-8
+    @test F.nsb_entropy(m, 1) ≈ 0.965537224890827 atol = 1e-8   # default alphabet = 2
+
+    # Larger-alphabet message.
+    m2 = "abracadabraalakazamabracadabra"
+    @test F.miller_madow_entropy(m2, 2) ≈ 2.063821752851152
+    @test F.grassberger_entropy(m2, 2) ≈ 2.151409069604457
+    @test F.nsb_entropy(m2, 2) ≈ 2.3265927148279415 atol = 1e-6
+    @test F.nsb_entropy(m2, 2, 7) ≈ 2.2834213811058284 atol = 1e-6
+
+    # Empty message -> 0.
+    @test F.miller_madow_entropy("", 1) == 0.0
+    @test F.grassberger_entropy("", 1) == 0.0
+    @test F.nsb_entropy("", 1, 2) == 0.0
 end
 
 @testset "Features — microstructural (parity with Python)" begin
@@ -786,6 +1004,26 @@ end
     ]
 end
 
+@testset "Features — EDGE spread estimator (parity with Python)" begin
+    F = RiskLabAI.Features
+    # Same 12-bar OHLC fixture as the Python edge.edge_estimator reference.
+    o = [100.0, 101.2, 100.5, 102.1, 101.8, 103.0, 102.4, 104.1, 103.6, 105.2, 104.8, 106.0]
+    h = [101.0, 101.9, 101.3, 102.8, 102.5, 103.6, 103.2, 104.7, 104.3, 105.8, 105.5, 106.6]
+    l = [99.4, 100.6, 99.9, 101.3, 101.0, 102.2, 101.7, 103.4, 102.9, 104.5, 104.0, 105.3]
+    c = [101.1, 100.7, 101.0, 102.3, 101.6, 103.2, 102.1, 104.4, 103.3, 105.4, 104.4, 106.4]
+
+    @test F.edge_estimator(o, h, l, c) ≈ 0.006962635220907141
+    @test F.edge_estimator(o, h, l, c; sign = true) ≈ 0.006962635220907141
+
+    # Degenerate inputs return NaN (fewer than 3 obs; flat / no-trade bars).
+    @test isnan(F.edge_estimator([1.0, 2.0], [1.0, 2.0], [1.0, 2.0], [1.0, 2.0]))
+    flat = fill(100.0, 5)
+    @test isnan(F.edge_estimator(flat, flat, flat, flat))
+
+    # Mismatched lengths raise.
+    @test_throws ArgumentError F.edge_estimator([1.0, 2.0, 3.0], [1.0, 2.0], [1.0], [1.0])
+end
+
 @testset "Features — structural breaks (parity with Python)" begin
     F = RiskLabAI.Features
 
@@ -821,6 +1059,62 @@ end
     adf = F.get_expanding_window_adf(noisy, 6, "c", 1)
     @test adf.statistics ≈
           [0.16894098733, 0.437811843619, 1.415912133027, 0.543280756955, 1.007102910535]
+end
+
+@testset "Features — GSADF / BSADF (parity with Python)" begin
+    F = RiskLabAI.Features
+    # Same 40-point series as the Python structural_breaks reference (rounded to
+    # 6 decimals so both languages compute on identical inputs).
+    y = [
+        0.12573, -0.006375, 0.634048, 0.738948, 0.203279, 0.564874, 1.868874,
+        2.815955, 2.11222, 0.846798, 0.223524, 0.26485, -2.060181, -2.278973,
+        -3.524884, -4.257151, -4.80141, -5.11771, -4.70608, -3.663566, -5.288989,
+        -4.303964, -3.388485, -2.946022, -2.976168, -3.587708, -2.488458,
+        -0.777045, 0.946885, 2.356677, -4.654213, -4.863389, -5.022614,
+        -4.481768, -4.267109, -3.911736, -4.565565, -4.695179, -3.911203,
+        -2.417772,
+    ]
+
+    @test F.psy_minimum_window(length(y)) == 12
+    nmin = 12
+
+    bsadf_exp = [
+        -0.536910634, -0.362311837, 0.34906369, 0.517036689, 0.582574434,
+        0.520469967, 0.102659841, -0.416291845, -0.031199142, -0.478681209,
+        -0.737819991, -0.838846133, -0.866177154, -0.817563944, -1.000451307,
+        -0.126785185, 0.890803186, 1.384764704, -1.610888373, -1.586555274,
+        -1.569062869, -1.655578929, -1.696733029, -1.700368814, -1.6264952,
+        -1.588480421, -1.618163091, -1.737832868,
+    ]
+    sadf_exp = [
+        -0.536910634, -0.38399068, 0.263498555, 0.506163518, 0.582574434,
+        0.520469967, 0.102659841, -0.419886094, -0.031199142, -0.478681209,
+        -0.747317284, -0.851945349, -0.87885276, -0.825252719, -1.016427934,
+        -1.088760162, -0.920870397, -0.626601733, -1.626225512, -1.599491827,
+        -1.579961277, -1.667177256, -1.707893951, -1.763814976, -1.717976507,
+        -1.716496223, -1.820220308, -1.940406359,
+    ]
+
+    bs = F.get_bsadf_sequence(y, nmin, "c", 0)
+    sa = F.get_sadf_sequence(y, nmin, "c", 0)
+    @test bs.values ≈ bsadf_exp atol = 1e-8
+    @test sa.values ≈ sadf_exp atol = 1e-8
+    # Endpoints are 1-based positions (nmin+1 .. T).
+    @test bs.index == collect(13:40)
+    @test F.get_gsadf_statistic(y, nmin, "c", 0) ≈ 1.3847647044558782 atol = 1e-8
+
+    # Date-stamping: 1-based positions (Python 0-based labels + 1).
+    @test F.get_bubble_episodes(bs.index, bs.values, 1.0; min_duration = 1) == [(30, 31)]
+    @test F.get_bubble_episodes(bs.index, bs.values, 0.5; min_duration = 2) ==
+          [(16, 19), (29, 31)]
+
+    # Critical-value simulator is behavioural (random-walk null, Julia RNG):
+    # structural checks only.
+    cv = F.simulate_psy_critical_values(40, nmin; n_simulations = 50, rng = MersenneTwister(0))
+    @test cv.min_sample_length == 12
+    @test isfinite(cv.gsadf_global_cv)
+    @test isfinite(cv.sadf_global_cv)
+    @test length(cv.bsadf_sequence_cv) == 28
 end
 
 @testset "Optimization — HRP & hedging (parity with Python)" begin
@@ -990,6 +1284,51 @@ end
     @test walk[5] == ([1, 2, 3, 4, 5, 6, 7], [9, 10])
 end
 
+@testset "Validation — path-level Adaptive CPCV (parity with Python)" begin
+    V = RiskLabAI.Validation
+    # Closed-form 24×5 performance matrix (identical formula in both languages, so
+    # no RNG and exact parity; the adaptive PBO is fully deterministic).
+    P = [0.04 * sin(0.5t + j) + 0.01 * cos(0.2 * t * j) for t = 1:24, j = 1:5]
+
+    @test V.estimate_volatility_regimes(P; n_regimes = 2) ==
+          [1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0]
+    @test V.estimate_volatility_regimes(P; n_regimes = 3) ==
+          [2, 2, 1, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 2, 2, 1, 0, 0]
+
+    pbo, sel = V.adaptive_probability_of_backtest_overfitting(P; n_partitions = 4)
+    @test pbo ≈ 0.8887779995564427
+    @test sel == 3                                   # Python 0-based 2 -> Julia 1-based 3
+
+    pbo2, sel2 = V.adaptive_probability_of_backtest_overfitting(
+        P; n_partitions = 4, target_fraction = 0.5, n_regimes = 2,
+    )
+    @test pbo2 ≈ 0.777888667110224
+    @test sel2 == 5
+
+    @test_throws ArgumentError V.adaptive_probability_of_backtest_overfitting(
+        P; n_partitions = 3,
+    )
+end
+
+@testset "Validation — path-level Bagged CPCV (behavioural)" begin
+    V = RiskLabAI.Validation
+    P = [0.04 * sin(0.5t + j) + 0.01 * cos(0.2 * t * j) for t = 1:24, j = 1:5]
+
+    # Moving-block bootstrap indices: valid 1-based rows, correct length.
+    idx = V.moving_block_bootstrap_indices(10, 3, MersenneTwister(1))
+    @test length(idx) == 10
+    @test all(1 .<= idx .<= 10)
+
+    # Bagging is stochastic (Julia RNG): the bagged PBO is in [0, 1] and equals the
+    # mean of the per-resample PBOs.
+    bp, pbos = V.bagged_probability_of_backtest_overfitting(
+        P; n_partitions = 4, n_bag = 15, rng = MersenneTwister(0),
+    )
+    @test 0.0 <= bp <= 1.0
+    @test length(pbos) == 15
+    @test bp ≈ sum(pbos) / length(pbos)
+end
+
 @testset "Data.SyntheticData (parity with Python)" begin
     S = RiskLabAI.Data
 
@@ -1139,6 +1478,35 @@ end
     @test count(startswith("R_"), names) == 3
 end
 
+@testset "Features — MDI+ & CPI (behavioural)" begin
+    F = RiskLabAI.Features
+    # col 1 informative, col 2 weakly-informative, col 3 pure noise.
+    rng = MersenneTwister(7)
+    n = 300
+    y = rand(rng, 0:1, n)
+    x = hcat(
+        Float64.(y) .+ 0.5 .* randn(rng, n),
+        0.2 .* Float64.(y) .+ randn(rng, n),
+        randn(rng, n),
+    )
+
+    # MDI+ (behavioural): the informative feature scores highest, all non-negative.
+    imp = F.mdi_plus_importance(x, y; n_trees = 40, random_state = 1)
+    @test length(imp) == 3
+    @test all(imp .>= 0.0)
+    @test argmax(imp) == 1
+    @test imp[1] > imp[3]
+
+    # CPI (behavioural): informative feature has the largest importance and the
+    # smallest p-value (the calibrated significance test MDA lacks).
+    cpi = F.conditional_predictive_impact(x, y; n_splits = 4, n_trees = 40, random_state = 1)
+    @test length(cpi.importance) == 3
+    @test length(cpi.p_value) == 3
+    @test argmax(cpi.importance) == 1
+    @test cpi.p_value[1] < cpi.p_value[3]
+    @test all(0.0 .<= cpi.p_value .<= 1.0)
+end
+
 @testset "Ensemble & CV scoring (DecisionTree.jl)" begin
     E = RiskLabAI.Ensemble
     V = RiskLabAI.Validation
@@ -1205,6 +1573,37 @@ end
     rs = V.random_search_cv(V.KFoldCV(4), x, y, grid; n_iter = 3, random_state = 1)
     @test length(rs.results) == 3
     @test rs.best_score > 0.7
+end
+
+@testset "Validation — leakage-aware HPO & DSR gate (parity with Python)" begin
+    V = RiskLabAI.Validation
+    # deflated_sharpe_gate is deterministic -> exact parity with Python.
+    r = [0.01 * sin(0.05t) + 0.02 * cos(0.011t) + 0.0005 for t = 0:499]
+    g = V.deflated_sharpe_gate(r, 100, 0.05)
+    @test g.observed_sharpe ≈ -0.13536558416850195
+    @test g.benchmark_sharpe ≈ 0.12653014466005713
+    @test g.deflated_sharpe ≈ 4.703000079086612e-9 atol = 1e-12
+    @test g.passes == false
+    g2 = V.deflated_sharpe_gate(r, 20, 0.2; threshold = 0.3)
+    @test g2.benchmark_sharpe ≈ 0.3801415902361039
+    @test g2.passes == false
+
+    # leakage-aware HPO (behavioural): purged-CV-scored random search returns a
+    # valid configuration and finite trial scores.
+    rng = MersenneTwister(11)
+    n = 200
+    y = rand(rng, 0:1, n)
+    x = hcat(3.0 .* y .+ randn(rng, n), randn(rng, n))
+    starts = collect(1:n)
+    hpo = V.leakage_aware_hpo(
+        x, y, Dict(:n_trees => [10, 30], :max_depth => [2, 4]);
+        event_starts = starts, event_ends = starts, n_trials = 3, n_splits = 4,
+        random_state = 1,
+    )
+    @test hpo.n_trials == 3
+    @test haskey(hpo.best_params, :n_trees)
+    @test length(hpo.trial_scores) <= 3
+    @test isfinite(hpo.mean_trial_score)
 end
 
 @testset "Pde — equations (parity with Python)" begin

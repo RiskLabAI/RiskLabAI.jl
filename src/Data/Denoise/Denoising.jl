@@ -13,7 +13,8 @@ Reference: De Prado, M. (2018), Advances in Financial Machine Learning, Ch. 2.
 """
 
 using LinearAlgebra
-using Statistics: mean
+using Statistics: mean, std, cov
+using Random: AbstractRNG, default_rng, randperm, MersenneTwister
 
 """
     marcenko_pastur_pdf(variance, q; num_points=1000) -> (eigenvalues, pdf)
@@ -216,4 +217,101 @@ function optimal_portfolio_denoised(
     bandwidth::Real = 0.01,
 )
     return optimal_portfolio(denoise_cov(cov, q; bandwidth = bandwidth); mu = mu)
+end
+
+# --------------------------------------------------------------------------- #
+# NERCOME: nonparametric eigenvalue-regularized covariance estimation (Lam 2016).
+#
+# de Prado denoises the covariance by Marcenko–Pastur eigenvalue clipping
+# (`denoise_cov`), which assumes a clean noise bulk separated from the signal
+# eigenvalues by a gap. When the spectrum has no clean gap (a slowly-decaying
+# bulk) or is non-stationary, that assumption breaks and clipping degenerates
+# toward the raw sample covariance. NERCOME instead regularizes the eigenvalues
+# by sample-splitting: eigenvectors come from one split, the oracle eigenvalues
+# from projecting the held-out split's covariance onto them, averaged over many
+# random splits. Clean-room from Lam (2016); a data-driven estimator (it takes
+# the return matrix, not a covariance). Admitted in Appraisal 24
+# (`library_extension/appraisals/24_verdict.md`).
+#
+# Stochastic-step divergence (documented): the split permutations use Julia's
+# `randperm`/`rng` rather than NumPy's PCG64 stream, so the estimate is
+# reproducible under a given `rng` but not bit-identical to the Python reference.
+# Parity is therefore mechanism-level (lower covariance error than MP clipping on
+# a no-gap spectrum, symmetric PD, better conditioning), as the existing
+# path-level modules (`denoise_cov` KDE fit, `simulate_psy_critical_values`) do.
+# --------------------------------------------------------------------------- #
+
+# Project a symmetric matrix to the nearest PD one by flooring its eigenvalues.
+function _ensure_positive_definite(matrix::AbstractMatrix{<:Real}; eps::Real = 1e-10)
+    symmetric = (matrix + matrix') / 2.0
+    values, vectors = eigen(Symmetric(symmetric))
+    max_value = isempty(values) ? 0.0 : maximum(values)
+    floor = (length(values) > 0 && max_value > 0) ? max(eps, eps * max_value) : eps
+    values = clamp.(values, floor, Inf)
+    out = (vectors * Diagonal(values)) * vectors'
+    return (out + out') / 2.0
+end
+
+"""
+    nercome_denoised_covariance(returns; n_splits=50, split_fraction=2/3, random_state=nothing) -> Matrix
+
+NERCOME denoised covariance (Lam 2016), estimated by sample-splitting from a
+`T × p` return matrix (rows = observations, columns = assets). For each of
+`n_splits` random row permutations the observations are split in two; the
+eigenvectors `P` come from the first half's sample covariance, and the
+regularized eigenvalues are the oracle projection `dᵢ = pᵢ' S₂ pᵢ` of the second
+half's covariance `S₂` onto those eigenvectors. The estimator `P diag(d) P'` is
+averaged over the splits (each term is PSD, so the average is PSD). Returns are
+standardized to unit sample variance, NERCOME-cleaned in correlation space, then
+scaled back by the sample column standard deviations.
+
+Preferred-when / avoid-when (regime tag, verbatim from `appraisals/24_verdict.md`):
+prefer NERCOME over MP clipping for covariance estimation when the eigenvalue
+spectrum has no clean gap or is non-stationary (better accuracy and conditioning,
+and lower OOS volatility via NCO / min-variance); it converges to clipping on
+clean-gap stationary spectra. It costs more turnover and concentration than
+clipping, gives no risk-adjusted-return edge (none does - 1/N stands), and HRP
+does not benefit (use it through NCO / min-variance).
+
+Unlike [`denoise_cov`](@ref), which cleans a covariance matrix, this takes the
+return matrix. `random_state` seeds Julia's RNG (see the divergence note above;
+the Python reference uses NumPy's PCG64). Mirrors Python's
+`nercome_denoised_covariance`.
+
+Reference: Lam, C. (2016). Nonparametric eigenvalue-regularized precision or
+covariance matrix estimator. The Annals of Statistics, 44(3), 928–953.
+"""
+function nercome_denoised_covariance(
+    returns::AbstractMatrix{<:Real};
+    n_splits::Integer = 50,
+    split_fraction::Real = 2.0 / 3.0,
+    random_state::Union{Integer,Nothing} = nothing,
+)
+    data = Float64.(returns)
+    n, p = size(data)
+    n >= 4 || throw(ArgumentError("NERCOME needs at least 4 observations"))
+    sample_std = vec(std(data; dims = 1))                 # ddof=1 (corrected), per column
+    sample_std = [s <= 0 ? 1.0 : s for s in sample_std]
+    z = data ./ sample_std'
+
+    m = max(p + 1, round(Int, split_fraction * n))
+    m = min(m, n - 2)
+    rng::AbstractRNG = random_state === nothing ? default_rng() : MersenneTwister(random_state)
+    accumulated = zeros(p, p)
+    used = 0
+    for _ = 1:n_splits
+        order = randperm(rng, n)
+        first, second = order[1:m], order[(m+1):end]
+        length(second) < 2 && continue
+        cov_first = cov(view(z, first, :))                # columns = variables (dims=1)
+        cov_second = cov(view(z, second, :))
+        _, vectors = eigen(Symmetric(cov_first))
+        oracle = [dot(view(vectors, :, i), cov_second * view(vectors, :, i)) for i = 1:p]
+        oracle = clamp.(oracle, 0.0, Inf)
+        accumulated += (vectors * Diagonal(oracle)) * vectors'
+        used += 1
+    end
+    estimate = accumulated / max(used, 1)
+    correlation = cov_to_corr(_ensure_positive_definite(estimate))
+    return corr_to_cov(correlation, sample_std)
 end
