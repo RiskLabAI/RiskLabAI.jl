@@ -1,6 +1,6 @@
 name = "RiskLabAI"
 uuid = "a72881da-fdaa-49c1-8962-99caf4ccfee8"
-version = "0.6.1"
+version = "0.6.2"
 authors = ["RiskLab AI <research@risklab.ai>"]
 
 [deps]
