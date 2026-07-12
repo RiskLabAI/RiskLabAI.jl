@@ -80,12 +80,16 @@ function _mean_exit_time_quadrature(entry_gap, profit_take, stop_loss, theta, si
     y0 = -float(entry_gap)
     a, b = y0 - stop_loss, y0 + profit_take
     big = max(a * a, b * b)
-    s_hat(x) = (s = range(a, x; length = 3000); _ou_trapz(exp.(c .* (s .^ 2 .- big)), collect(s)))
+    s_hat(x) =
+        (s = range(a, x; length = 3000); _ou_trapz(exp.(c .* (s .^ 2 .- big)), collect(s)))
     s_hat_b, s_hat_y0 = s_hat(b), s_hat(y0)
     ys = collect(range(a, b; length = 3000))
     s_ya = [s_hat(y) for y in ys]
     s_by = s_hat_b .- s_ya
-    green = [(ys[i] <= y0 ? s_ya[i] * (s_hat_b - s_hat_y0) : s_hat_y0 * s_by[i]) / s_hat_b for i in eachindex(ys)]
+    green = [
+        (ys[i] <= y0 ? s_ya[i] * (s_hat_b - s_hat_y0) : s_hat_y0 * s_by[i]) / s_hat_b
+        for i in eachindex(ys)
+    ]
     speed = (2.0 / (sigma * sigma)) .* exp.(c .* (big .- ys .^ 2))
     return _ou_trapz(green .* speed, ys)
 end
@@ -113,7 +117,8 @@ function mean_exit_time(entry_gap, profit_take, stop_loss, theta, sigma)
     s_ba = pref * (erfi_b - erfi_a)
     s_y0a = pref * (erfi_y0 - erfi_a)
     s_by0 = pref * (erfi_b - erfi_y0)
-    green = [(ys[i] <= y0 ? s_ya[i] * s_by0 : s_y0a * s_by[i]) / s_ba for i in eachindex(ys)]
+    green =
+        [(ys[i] <= y0 ? s_ya[i] * s_by0 : s_y0a * s_by[i]) / s_ba for i in eachindex(ys)]
     speed = (2.0 / (sigma * sigma)) .* exp.(-c .* ys .^ 2)
     return _ou_trapz(green .* speed, ys)
 end
@@ -172,9 +177,10 @@ multi-start (no Optim dependency). Mirrors Python's `optimal_ou_trading_rule`.
 """
 function optimal_ou_trading_rule(theta, sigma, entry_gap; cost = 0.0, bounds = (0.25, 4.0))
     lo, hi = bounds
-    objective(pt, sl) =
-        (v = ou_rule_metrics(pt, sl, theta, sigma, entry_gap, cost).return_rate;
-        isfinite(v) ? v : -1e9)
+    objective(pt, sl) = (
+        v = ou_rule_metrics(pt, sl, theta, sigma, entry_gap, cost).return_rate;
+        isfinite(v) ? v : -1e9
+    )
 
     blo_pt, bhi_pt, blo_sl, bhi_sl = lo, hi, lo, hi
     best_pt, best_sl, best_v = lo, lo, -Inf

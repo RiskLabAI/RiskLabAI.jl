@@ -371,5 +371,11 @@ function sharpe_difference_test(
         abs((delta_b - delta) / se_b) >= z_hat && (count_ge += 1)
     end
     pvalue = (count_ge + 1.0) / (n_boot + 1.0)
-    return (delta = delta, se = se_hat, stat = z_hat, pvalue = pvalue, reject = pvalue < 0.05)
+    return (
+        delta = delta,
+        se = se_hat,
+        stat = z_hat,
+        pvalue = pvalue,
+        reject = pvalue < 0.05,
+    )
 end

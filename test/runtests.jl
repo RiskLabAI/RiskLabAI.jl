@@ -518,9 +518,12 @@ end
     y_non = x .^ 2 .+ 0.05 .* z
     y_ind = z
 
-    @test D.ksg_mutual_information(x, y_lin; k = 4, random_state = 0) ≈ 2.0869197729128883 atol = 1e-9
-    @test D.ksg_mutual_information(x, y_non; k = 4, random_state = 0) ≈ 2.1897736141895248 atol = 1e-9
-    @test D.ksg_mutual_information(x, y_ind; k = 4, random_state = 0) ≈ -0.11395325035808046 atol = 1e-9
+    @test D.ksg_mutual_information(x, y_lin; k = 4, random_state = 0) ≈ 2.0869197729128883 atol =
+        1e-9
+    @test D.ksg_mutual_information(x, y_non; k = 4, random_state = 0) ≈ 2.1897736141895248 atol =
+        1e-9
+    @test D.ksg_mutual_information(x, y_ind; k = 4, random_state = 0) ≈ -0.11395325035808046 atol =
+        1e-9
     # Strong dependence -> high MI; near-independence -> near-zero (can be slightly negative).
     @test D.ksg_mutual_information(x, y_lin) > D.ksg_mutual_information(x, y_ind)
 
@@ -629,7 +632,13 @@ end
 
     # Ledoit–Wolf: delta / se (HAC) / stat are deterministic (exact); the bootstrap
     # p-value uses Julia's RNG (behavioural -> structural check).
-    lw = B.sharpe_difference_test(a, b; method = "ledoit_wolf", n_boot = 500, random_state = 0)
+    lw = B.sharpe_difference_test(
+        a,
+        b;
+        method = "ledoit_wolf",
+        n_boot = 500,
+        random_state = 0,
+    )
     @test lw.delta ≈ 0.1485861269627159
     @test lw.se ≈ 0.22337469299514048
     @test lw.stat ≈ 0.6651878284437011
@@ -743,9 +752,31 @@ end
 @testset "Backtest — LPLZ HAC Sharpe inference (parity with Python)" begin
     B = RiskLabAI.Backtest
     r = [
-        0.012, -0.004, 0.021, 0.008, -0.011, 0.017, 0.003, -0.006, 0.014, 0.009,
-        -0.002, 0.019, 0.006, -0.008, 0.011, 0.004, 0.016, -0.003, 0.013, 0.007,
-        -0.005, 0.018, 0.002, -0.009, 0.015,
+        0.012,
+        -0.004,
+        0.021,
+        0.008,
+        -0.011,
+        0.017,
+        0.003,
+        -0.006,
+        0.014,
+        0.009,
+        -0.002,
+        0.019,
+        0.006,
+        -0.008,
+        0.011,
+        0.004,
+        0.016,
+        -0.003,
+        0.013,
+        0.007,
+        -0.005,
+        0.018,
+        0.002,
+        -0.009,
+        0.015,
     ]
 
     @test B.newey_west_automatic_lag(25) == 2
@@ -767,7 +798,12 @@ end
     @test res.confidence_interval[2] ≈ 0.7935255348262487
 
     # Custom confidence level, fixed lag, non-zero null.
-    res2 = B.lplz_sharpe_inference(r; confidence_level = 0.99, lag = 3, null_sharpe_ratio = 0.1)
+    res2 = B.lplz_sharpe_inference(
+        r;
+        confidence_level = 0.99,
+        lag = 3,
+        null_sharpe_ratio = 0.1,
+    )
     @test res2.standard_error ≈ 0.12042504761055403
     @test res2.test_statistic ≈ 4.182853082109785
     @test res2.p_value ≈ 2.8787343639696333e-5
@@ -914,9 +950,12 @@ end
     sr = [0.25, 0.18, 0.05, 0.02]
     T = 120
 
-    @test B.sharpe_ratio_p_values(sr, T) ≈
-          [0.0030849496602720805, 0.024316152257345184, 0.29194121038518256,
-           0.4132903507196785]
+    @test B.sharpe_ratio_p_values(sr, T) ≈ [
+        0.0030849496602720805,
+        0.024316152257345184,
+        0.29194121038518256,
+        0.4132903507196785,
+    ]
 
     p = B.sharpe_ratio_p_values(sr, T)
     @test B.holm_adjusted_p_values(p) ≈
@@ -937,12 +976,16 @@ end
     # 6-strategy set with ties (tie-handling must give equal adjusted values).
     sr2 = [0.30, 0.10, 0.10, 0.22, 0.01, 0.15]
     p2 = B.sharpe_ratio_p_values(sr2, 250)
-    @test B.holm_adjusted_p_values(p2) ≈
-          [6.304308e-06, 0.17076944701, 0.17076944701, 0.001260545574,
-           0.437183530581, 0.035412131615]
+    @test B.holm_adjusted_p_values(p2) ≈ [
+        6.304308e-06,
+        0.17076944701,
+        0.17076944701,
+        0.001260545574,
+        0.437183530581,
+        0.035412131615,
+    ]
     @test B.benjamini_hochberg_yekutieli_adjusted_p_values(p2) ≈
-          [1.5445554e-05, 0.16735405807, 0.16735405807, 0.001853001993, 1.0,
-           0.043379861228]
+          [1.5445554e-05, 0.16735405807, 0.16735405807, 0.001853001993, 1.0, 0.043379861228]
 end
 
 @testset "Features — entropy (parity with Python)" begin
@@ -1113,12 +1156,45 @@ end
     # Same 40-point series as the Python structural_breaks reference (rounded to
     # 6 decimals so both languages compute on identical inputs).
     y = [
-        0.12573, -0.006375, 0.634048, 0.738948, 0.203279, 0.564874, 1.868874,
-        2.815955, 2.11222, 0.846798, 0.223524, 0.26485, -2.060181, -2.278973,
-        -3.524884, -4.257151, -4.80141, -5.11771, -4.70608, -3.663566, -5.288989,
-        -4.303964, -3.388485, -2.946022, -2.976168, -3.587708, -2.488458,
-        -0.777045, 0.946885, 2.356677, -4.654213, -4.863389, -5.022614,
-        -4.481768, -4.267109, -3.911736, -4.565565, -4.695179, -3.911203,
+        0.12573,
+        -0.006375,
+        0.634048,
+        0.738948,
+        0.203279,
+        0.564874,
+        1.868874,
+        2.815955,
+        2.11222,
+        0.846798,
+        0.223524,
+        0.26485,
+        -2.060181,
+        -2.278973,
+        -3.524884,
+        -4.257151,
+        -4.80141,
+        -5.11771,
+        -4.70608,
+        -3.663566,
+        -5.288989,
+        -4.303964,
+        -3.388485,
+        -2.946022,
+        -2.976168,
+        -3.587708,
+        -2.488458,
+        -0.777045,
+        0.946885,
+        2.356677,
+        -4.654213,
+        -4.863389,
+        -5.022614,
+        -4.481768,
+        -4.267109,
+        -3.911736,
+        -4.565565,
+        -4.695179,
+        -3.911203,
         -2.417772,
     ]
 
@@ -1126,20 +1202,64 @@ end
     nmin = 12
 
     bsadf_exp = [
-        -0.536910634, -0.362311837, 0.34906369, 0.517036689, 0.582574434,
-        0.520469967, 0.102659841, -0.416291845, -0.031199142, -0.478681209,
-        -0.737819991, -0.838846133, -0.866177154, -0.817563944, -1.000451307,
-        -0.126785185, 0.890803186, 1.384764704, -1.610888373, -1.586555274,
-        -1.569062869, -1.655578929, -1.696733029, -1.700368814, -1.6264952,
-        -1.588480421, -1.618163091, -1.737832868,
+        -0.536910634,
+        -0.362311837,
+        0.34906369,
+        0.517036689,
+        0.582574434,
+        0.520469967,
+        0.102659841,
+        -0.416291845,
+        -0.031199142,
+        -0.478681209,
+        -0.737819991,
+        -0.838846133,
+        -0.866177154,
+        -0.817563944,
+        -1.000451307,
+        -0.126785185,
+        0.890803186,
+        1.384764704,
+        -1.610888373,
+        -1.586555274,
+        -1.569062869,
+        -1.655578929,
+        -1.696733029,
+        -1.700368814,
+        -1.6264952,
+        -1.588480421,
+        -1.618163091,
+        -1.737832868,
     ]
     sadf_exp = [
-        -0.536910634, -0.38399068, 0.263498555, 0.506163518, 0.582574434,
-        0.520469967, 0.102659841, -0.419886094, -0.031199142, -0.478681209,
-        -0.747317284, -0.851945349, -0.87885276, -0.825252719, -1.016427934,
-        -1.088760162, -0.920870397, -0.626601733, -1.626225512, -1.599491827,
-        -1.579961277, -1.667177256, -1.707893951, -1.763814976, -1.717976507,
-        -1.716496223, -1.820220308, -1.940406359,
+        -0.536910634,
+        -0.38399068,
+        0.263498555,
+        0.506163518,
+        0.582574434,
+        0.520469967,
+        0.102659841,
+        -0.419886094,
+        -0.031199142,
+        -0.478681209,
+        -0.747317284,
+        -0.851945349,
+        -0.87885276,
+        -0.825252719,
+        -1.016427934,
+        -1.088760162,
+        -0.920870397,
+        -0.626601733,
+        -1.626225512,
+        -1.599491827,
+        -1.579961277,
+        -1.667177256,
+        -1.707893951,
+        -1.763814976,
+        -1.717976507,
+        -1.716496223,
+        -1.820220308,
+        -1.940406359,
     ]
 
     bs = F.get_bsadf_sequence(y, nmin, "c", 0)
@@ -1157,7 +1277,12 @@ end
 
     # Critical-value simulator is behavioural (random-walk null, Julia RNG):
     # structural checks only.
-    cv = F.simulate_psy_critical_values(40, nmin; n_simulations = 50, rng = MersenneTwister(0))
+    cv = F.simulate_psy_critical_values(
+        40,
+        nmin;
+        n_simulations = 50,
+        rng = MersenneTwister(0),
+    )
     @test cv.min_sample_length == 12
     @test isfinite(cv.gsadf_global_cv)
     @test isfinite(cv.sadf_global_cv)
@@ -1213,12 +1338,16 @@ end
 
     # Fully explicit deterministic step (no RNG): single change-point at 30.
     step = vcat(zeros(30), fill(10.0, 30))
-    @test F.pelt_change_points(step; penalty_multiplier = 1.0, min_size = 10, jump = 5) == [30]
+    @test F.pelt_change_points(step; penalty_multiplier = 1.0, min_size = 10, jump = 5) ==
+          [30]
 
     # Edge cases: too-short series -> empty; flat series -> no change-points.
     @test F.pelt_change_points(randn(MersenneTwister(0), 15)) == Int[]
     @test F.pelt_change_points(fill(2.0, 100)) == Int[]
-    @test_throws ArgumentError F.pelt_change_points(randn(MersenneTwister(0), 100); model = "rbf")
+    @test_throws ArgumentError F.pelt_change_points(
+        randn(MersenneTwister(0), 100);
+        model = "rbf",
+    )
 end
 
 @testset "Optimization — HRP & hedging (parity with Python)" begin
@@ -1272,14 +1401,8 @@ end
 
     # A singleton cluster yields silhouette 0 for that point.
     sil_one = C.silhouette_samples(dist, [1, 1, 1, 1, 1, 2])
-    expected_one = [
-        0.538461538462,
-        0.5625,
-        0.545454545455,
-        -0.571428571429,
-        -0.741935483871,
-        0.0,
-    ]
+    expected_one =
+        [0.538461538462, 0.5625, 0.545454545455, -0.571428571429, -0.741935483871, 0.0]
     @test sil_one ≈ expected_one atol = 1e-9
     @test sil_one[6] == 0.0
 
@@ -1404,13 +1527,17 @@ end
     @test sel == 3                                   # Python 0-based 2 -> Julia 1-based 3
 
     pbo2, sel2 = V.adaptive_probability_of_backtest_overfitting(
-        P; n_partitions = 4, target_fraction = 0.5, n_regimes = 2,
+        P;
+        n_partitions = 4,
+        target_fraction = 0.5,
+        n_regimes = 2,
     )
     @test pbo2 ≈ 0.777888667110224
     @test sel2 == 5
 
     @test_throws ArgumentError V.adaptive_probability_of_backtest_overfitting(
-        P; n_partitions = 3,
+        P;
+        n_partitions = 3,
     )
 end
 
@@ -1426,7 +1553,10 @@ end
     # Bagging is stochastic (Julia RNG): the bagged PBO is in [0, 1] and equals the
     # mean of the per-resample PBOs.
     bp, pbos = V.bagged_probability_of_backtest_overfitting(
-        P; n_partitions = 4, n_bag = 15, rng = MersenneTwister(0),
+        P;
+        n_partitions = 4,
+        n_bag = 15,
+        rng = MersenneTwister(0),
     )
     @test 0.0 <= bp <= 1.0
     @test length(pbos) == 15
@@ -1466,9 +1596,8 @@ end
     @test lr ≈ [0.010775, 0.294711297037, 0.003961067977]
 
     # align_params_length: scalars broadcast, short vectors padded with last value.
-    aligned, max_len = S.align_params_length(
-        Dict("mu" => 0.1, "kappa" => [1.0, 2.0], "theta" => 0.04),
-    )
+    aligned, max_len =
+        S.align_params_length(Dict("mu" => 0.1, "kappa" => [1.0, 2.0], "theta" => 0.04))
     @test max_len == 2
     @test aligned["mu"] == [0.1, 0.1]
     @test aligned["kappa"] == [1.0, 2.0]
@@ -1603,7 +1732,8 @@ end
 
     # CPI (behavioural): informative feature has the largest importance and the
     # smallest p-value (the calibrated significance test MDA lacks).
-    cpi = F.conditional_predictive_impact(x, y; n_splits = 4, n_trees = 40, random_state = 1)
+    cpi =
+        F.conditional_predictive_impact(x, y; n_splits = 4, n_trees = 40, random_state = 1)
     @test length(cpi.importance) == 3
     @test length(cpi.p_value) == 3
     @test argmax(cpi.importance) == 1
@@ -1631,18 +1761,32 @@ end
     test = 151:200
 
     schemes = E.bagging_evaluate_schemes(
-        x[train, :], y[train], x[test, :], y[test];
-        n_estimators = 40, max_samples = 60, random_state = 1,
+        x[train, :],
+        y[train],
+        x[test, :],
+        y[test];
+        n_estimators = 40,
+        max_samples = 60,
+        random_state = 1,
     )
     @test Set(keys(schemes)) == Set(["uniform", "c_i", "variance"])
     @test all(0.0 <= v <= 1.0 for v in values(schemes))
     @test schemes["uniform"] > 0.6   # informative signal is learnable
 
     trees, classes = E.fit_bagging(
-        x[train, :], y[train]; n_estimators = 40, max_samples = 60, random_state = 1,
+        x[train, :],
+        y[train];
+        n_estimators = 40,
+        max_samples = 60,
+        random_state = 1,
     )
-    values_boot, mean_boot, std_boot =
-        E.calculate_bootstrap_accuracy(trees, classes, x[test, :], y[test]; n_bootstraps = 50)
+    values_boot, mean_boot, std_boot = E.calculate_bootstrap_accuracy(
+        trees,
+        classes,
+        x[test, :],
+        y[test];
+        n_bootstraps = 50,
+    )
     @test length(values_boot) == 50
     @test 0.0 <= mean_boot <= 1.0
 
@@ -1700,8 +1844,13 @@ end
     x = hcat(3.0 .* y .+ randn(rng, n), randn(rng, n))
     starts = collect(1:n)
     hpo = V.leakage_aware_hpo(
-        x, y, Dict(:n_trees => [10, 30], :max_depth => [2, 4]);
-        event_starts = starts, event_ends = starts, n_trials = 3, n_splits = 4,
+        x,
+        y,
+        Dict(:n_trees => [10, 30], :max_depth => [2, 4]);
+        event_starts = starts,
+        event_ends = starts,
+        n_trials = 3,
+        n_splits = 4,
         random_state = 1,
     )
     @test hpo.n_trials == 3

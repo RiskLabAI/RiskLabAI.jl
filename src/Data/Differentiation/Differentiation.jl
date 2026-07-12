@@ -250,7 +250,10 @@ the wavelet-variance and R/S Hurst estimates (`d̂ = H̄ - 0.5`, clipped to
 Mirrors Python's `adaptive_differencing_order`.
 """
 function adaptive_differencing_order(increments::AbstractVector{<:Real})
-    estimates = filter(isfinite, [wavelet_variance_hurst(increments), rescaled_range_hurst(increments)])
+    estimates = filter(
+        isfinite,
+        [wavelet_variance_hurst(increments), rescaled_range_hurst(increments)],
+    )
     isempty(estimates) && return NaN
     return clamp(mean(estimates) - 0.5, 0.0, 0.99)
 end

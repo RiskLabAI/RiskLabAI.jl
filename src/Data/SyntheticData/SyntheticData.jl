@@ -110,7 +110,9 @@ function simulates_cov_mu(
             "covariance-estimation backend; use shrink=false",
         ),
     )
-    samples = permutedims(rand(rng, MvNormal(vec(mu), Symmetric(Matrix(covariance))), n_observations))
+    samples = permutedims(
+        rand(rng, MvNormal(vec(mu), Symmetric(Matrix(covariance))), n_observations),
+    )
     mu1 = vec(mean(samples; dims = 1))
     cov1 = cov(samples)
     return mu1, cov1
@@ -201,11 +203,13 @@ function compute_log_returns(
         regime_change[i] && (variance[i] = theta[i])
         v_safe = max(variance[i], 0.0)
         variance[i+1] =
-            variance[i] + kappa[i] * (theta[i] - v_safe) * dt +
+            variance[i] +
+            kappa[i] * (theta[i] - v_safe) * dt +
             xi[i] * sqrt(v_safe) * dw_vol[i] * sqrt_dt
         log_returns[i] =
             (mu[i] - 0.5 * v_safe - lambda[i] * (m[i] + (v[i]^2) / 2.0)) * dt +
-            sqrt(v_safe) * dw_stock[i] * sqrt_dt + jump_events[i]
+            sqrt(v_safe) * dw_stock[i] * sqrt_dt +
+            jump_events[i]
     end
     return log_returns
 end
@@ -222,8 +226,10 @@ function align_params_length(regime_params::AbstractDict)
     for (key, value) in regime_params
         if value isa AbstractVector
             if length(value) < max_len
-                aligned[key] =
-                    vcat(Float64.(value), fill(Float64(value[end]), max_len - length(value)))
+                aligned[key] = vcat(
+                    Float64.(value),
+                    fill(Float64(value[end]), max_len - length(value)),
+                )
             else
                 aligned[key] = Float64.(value[1:max_len])
             end
@@ -330,7 +336,8 @@ function generate_prices_from_regimes(
 )
     rng = _synth_rng(random_state)
     regime_names = collect(keys(regimes))
-    simulated = _markov_simulate(transition_matrix, n_steps, length(regime_names); rng = rng)
+    simulated =
+        _markov_simulate(transition_matrix, n_steps, length(regime_names); rng = rng)
     simulated_regimes = [regime_names[s] for s in simulated]
 
     parameter_keys = ["mu", "kappa", "theta", "xi", "rho", "lam", "m", "v"]

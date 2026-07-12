@@ -296,7 +296,8 @@ function nercome_denoised_covariance(
 
     m = max(p + 1, round(Int, split_fraction * n))
     m = min(m, n - 2)
-    rng::AbstractRNG = random_state === nothing ? default_rng() : MersenneTwister(random_state)
+    rng::AbstractRNG =
+        random_state === nothing ? default_rng() : MersenneTwister(random_state)
     accumulated = zeros(p, p)
     used = 0
     for _ = 1:n_splits

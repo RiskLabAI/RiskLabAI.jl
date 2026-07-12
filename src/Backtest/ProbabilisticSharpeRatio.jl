@@ -175,8 +175,7 @@ function lplz_sharpe_inference(
     standard_error = sqrt(lrv / t)
     z = quantile(Normal(), 0.5 + confidence_level / 2.0)
     ci = (sr - z * standard_error, sr + z * standard_error)
-    test_statistic =
-        standard_error > 0 ? (sr - null_sharpe_ratio) / standard_error : NaN
+    test_statistic = standard_error > 0 ? (sr - null_sharpe_ratio) / standard_error : NaN
     p_value = 2.0 * ccdf(Normal(), abs(test_statistic))
     return (
         sharpe_ratio = sr,
