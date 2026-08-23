@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "document_type": "RISKLABAI_JULIA_TEST_INVENTORY",
+  "product": "RiskLabAI",
+  "language": "Julia",
+  "version": "1.0.0",
+  "runner": "Pkg.test / Test",
+  "file_count": 12,
+  "verified_assertions_per_required_lane": {
+    "preserved_non_deep": 508,
+    "causal_factor_analysis": 138,
+    "optional_deep_bsde": 4,
+    "total": 650
+  },
+  "required_lane_count": 4,
+  "required_lane_assertion_total": 2600,
+  "files": [
+    {
+      "path": "test/causal_factor_analysis/test_factor_mirage.jl",
+      "size": 2839,
+      "sha256": "7389B9D98273E33CD471546B3DE15D98863D82AC8BBC1DE74D6AF58B56802148",
+      "group": "CAUSAL_FACTOR_ANALYSIS"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_graph_identification.jl",
+      "size": 19676,
+      "sha256": "309C2A59D6BC9A239CAE4648656AD301B1AC31B025346E0D5ABF3C9B2D87E30D",
+      "group": "CAUSAL_FACTOR_ANALYSIS"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_optimizer.jl",
+      "size": 3447,
+      "sha256": "6588A76ADA964C07717A86BE46672C531E29B945E8DD227F47435FEDD799EBDC",
+      "group": "CAUSAL_FACTOR_ANALYSIS"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_protocol.jl",
+      "size": 10642,
+      "sha256": "50193B1253157A2B7002B3B27CFCD3D503FDD79F58D72CB0D84AD87AC630E502",
+      "group": "CAUSAL_FACTOR_ANALYSIS"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_specification_diagnostics.jl",
+      "size": 1994,
+      "sha256": "297B4F06998A4E264ADA3CB336FC239E0E64CA967695C16A7FCDF1FC2ED624C3",
+      "group": "CAUSAL_FACTOR_ANALYSIS"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_treatment_effects.jl",
+      "size": 2287,
+      "sha256": "A889AE4B8DD117723D4B9666C0D9B2F8325BD50A44BD79DECAA4F055602E1987",
+      "group": "CAUSAL_FACTOR_ANALYSIS"
+    },
+    {
+      "path": "test/fixtures/pelt_x1.txt",
+      "size": 4800,
+      "sha256": "60821B281A4E335F1E33755D4DCCC100B1738708FA86743EF0273C754BC9B04A",
+      "group": "PRESERVED_FIXTURE"
+    },
+    {
+      "path": "test/fixtures/pelt_x2.txt",
+      "size": 4098,
+      "sha256": "0CF964248BB19CC7B4EB2851AE42CA158F67B1D564F0CFCDA40F690642BB0799",
+      "group": "PRESERVED_FIXTURE"
+    },
+    {
+      "path": "test/fixtures/pelt_x3.txt",
+      "size": 6391,
+      "sha256": "12DABDD546F793FD08FDDDA85849B837B6D1C11F918917830F40A1A3CFD7802C",
+      "group": "PRESERVED_FIXTURE"
+    },
+    {
+      "path": "test/fixtures/vrsadf_y.txt",
+      "size": 2345,
+      "sha256": "86FB01DFECCDCD3CBC73526A0F8EBD2007A4262466F14853463DC207670730DC",
+      "group": "PRESERVED_FIXTURE"
+    },
+    {
+      "path": "test/preserved_runtests.jl",
+      "size": 73730,
+      "sha256": "0B97BCC98FD2C80F0C200FEB3E31ED9C37366AF4BF67F1F70F9988F6A4418F51",
+      "group": "PRESERVED_LIBRARY"
+    },
+    {
+      "path": "test/runtests.jl",
+      "size": 2711,
+      "sha256": "B94F8A27571885EEF64F24E2E9DF75279E01FC296AB52506831DB9B35551E9B9",
+      "group": "RUNNER"
+    }
+  ]
+}

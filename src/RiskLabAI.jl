@@ -1,12 +1,14 @@
 module RiskLabAI
 
-using LinearAlgebra, DataFrames, TimeSeries, Random
+using LinearAlgebra, DataFrames, Random
 
 # --------------------------------------------------------------------------- #
 # Submodules (Phase-2 reconstruction; mirrors the Python sub-package layout).
 # Wired in one at a time, each green in CI before the next.
 # `Data` depends on `Utils`, so order matters.
 # --------------------------------------------------------------------------- #
+include("CausalFactorAnalysis/CausalFactorAnalysis.jl")
+
 include("Utils/Utils.jl")
 using .Utils: ewma
 
@@ -82,6 +84,8 @@ using .Pde: Equation, HJBLQ, BlackScholesBarenblatt, PricingDefaultRisk, Pricing
 # Top-level exports.
 # --------------------------------------------------------------------------- #
 export
+    # Causal factor analysis
+    CausalFactorAnalysis,
     # Utils
     ewma,
     # Data.Structures (bars)
