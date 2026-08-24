@@ -13,9 +13,16 @@ Optimisers, and Zygote move behind the optional `deep_bsde` extension; the
 base library remains usable without that stack. The deep solver uses a
 consistent Float64 numerical path.
 
+The test target now keeps weak dependencies out of the base environment. Base
+lanes verify the explicit fallback, while separate Julia 1.10.12 and 1.12.7
+extension lanes install the weak dependencies and run the numerical solver
+tests. The governed workflow also pins JuliaFormatter 2.9.0 for the clean
+causal source, causal tests, and test entry point.
+
 No source-conflicted causal result is admitted. The static Project metadata,
 63-file source inventory, 12-file package-scoped test inventory, public API
-inventory, documentation, examples, dependency extension, and intended package
-file list are frozen. No package artifact has been created. Future artifact
-inspection and separate human authorization for version-control, registration,
-publication, and release remain blocked.
+inventory, documentation, examples, dependency extension, governed CI
+workflow, and 88-file intended package-tree list are frozen. No package
+artifact has been created. Future artifact inspection and separate human
+authorization for version-control, registration, publication, and release
+remain blocked.

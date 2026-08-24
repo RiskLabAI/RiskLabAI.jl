@@ -44,24 +44,39 @@ capability. The tested minimums are Lux 1.31.4, Optimisers 0.4.7, and Zygote
 The base source loads without these packages. Calling `solve_deep_bsde` without
 the extension raises a direct dependency error.
 
+The governed base test target contains only `Test`; it does not promote weak
+dependencies into required dependencies. Base lanes verify four explicit
+extension-absence and fallback assertions. Separate `deep_bsde` lanes install
+and load Lux, Optimisers, and Zygote before running the four numerical solver
+assertions.
+
 TimeSeries is not a required dependency. No preserved source behavior uses it,
 and the complete base library passes without it.
 
 ## Matrix evidence
 
-Four required lanes were exercised: Julia 1.10.12 and 1.12.7, each with the
-minimum and current-compatible dependency sets.
+Four runtime/dependency combinations were exercised: Julia 1.10.12 and 1.12.7,
+each with the minimum and current-compatible required dependency sets. Every
+combination was run once as a base lane and once as a `deep_bsde` extension
+lane, for eight required executions.
 
 In every lane:
 
-- the isolated base source loaded without Lux, Optimisers, or Zygote;
+- the isolated base source loaded without Lux, Optimisers, or Zygote and passed
+  all 4 fallback assertions;
 - all 138 frozen causal-factor tests passed;
 - all 508 non-deep assertions in the 45 preserved test sets passed;
 - all 4 deep-BSDE assertions passed with the optional stack enabled.
 
-That is 650 passing assertions per lane and 2,600 across the four lanes. The
-causal suite includes independent analytical and exhaustive graph oracles; it
-does not use Python-Julia agreement as its sole correctness test.
+That is 650 passing assertions per execution and 5,200 across the four base and
+four extension executions. The causal suite includes independent analytical
+and exhaustive graph oracles; it does not use Python-Julia agreement as its
+sole correctness test.
+
+The CI workflow keeps Julia 1.10.12 LTS and Julia 1.12.7 stable as explicit
+base and extension jobs. JuliaFormatter 2.9.0 checks only the independently
+maintained causal source, causal tests, and test entry point; preserved source
+remains governed by the complete analytical test suite.
 
 The deep solver now converts Lux parameters and state to Float64, matching the
 PDE state and eliminating a mixed-precision fallback present in every original
@@ -73,7 +88,8 @@ authority.
 
 ## Remaining release gates
 
-`Project.toml`, the public surface, package-scoped tests, documentation, and
-source allowlists are complete. No package tree has been installed or
-registered. Temporary artifact inspection and separate human authorization for
+`Project.toml`, the public surface, package-scoped tests, documentation, source
+allowlists, and governed CI workflow are complete. Local source loading and
+temporary test environments retained no release artifact and performed no
+registration. Artifact inspection and separate human authorization for
 version-control, registration, publication, and release remain outstanding.

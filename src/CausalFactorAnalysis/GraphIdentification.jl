@@ -109,16 +109,14 @@ function _node_tuple(value, subject::AbstractString; allow_empty::Bool)
         throw(ArgumentError("$subject must be an iterable collection"))
     end
     nodes = String[_node(item, "$subject member") for item in items]
-    allow_empty || !isempty(nodes) ||
-        throw(ArgumentError("$subject must be nonempty"))
+    allow_empty || !isempty(nodes) || throw(ArgumentError("$subject must be nonempty"))
     length(unique(nodes)) == length(nodes) ||
         throw(ArgumentError("$subject must not contain duplicate nodes"))
     return Tuple(sort(nodes))
 end
 
 function _edge_tuple(value)
-    value isa AbstractString &&
-        throw(ArgumentError("directed_edges must be a collection"))
+    value isa AbstractString && throw(ArgumentError("directed_edges must be a collection"))
     items = try
         collect(value)
     catch
@@ -126,9 +124,9 @@ function _edge_tuple(value)
     end
     edges = Tuple{String,String}[]
     for raw_edge in items
-        raw_edge isa Tuple || raw_edge isa AbstractVector || throw(
-            ArgumentError("each directed edge must be an ordered two-node sequence"),
-        )
+        raw_edge isa Tuple ||
+            raw_edge isa AbstractVector ||
+            throw(ArgumentError("each directed edge must be an ordered two-node sequence"))
         length(raw_edge) == 2 ||
             throw(ArgumentError("each directed edge must contain two nodes"))
         push!(
@@ -182,29 +180,18 @@ end
 function CausalDAG(nodes, directed_edges, observed_nodes)
     normalized_nodes = _node_tuple(nodes, "nodes"; allow_empty = false)
     normalized_edges = _edge_tuple(directed_edges)
-    observed = _node_tuple(
-        observed_nodes,
-        "observed_nodes";
-        allow_empty = true,
-    )
+    observed = _node_tuple(observed_nodes, "observed_nodes"; allow_empty = true)
     node_set = Set(normalized_nodes)
     issubset(Set(observed), node_set) ||
         throw(ArgumentError("observed_nodes must be a subset of nodes"))
     for (source, target) in normalized_edges
-        source in node_set && target in node_set || throw(
-            ArgumentError("every directed edge endpoint must be a graph node"),
-        )
-        source != target ||
-            throw(ArgumentError("directed self-loops are not admissible"))
+        source in node_set && target in node_set ||
+            throw(ArgumentError("every directed edge endpoint must be a graph node"))
+        source != target || throw(ArgumentError("directed self-loops are not admissible"))
     end
     _acyclic(normalized_nodes, normalized_edges) ||
         throw(ArgumentError("directed_edges must define an acyclic graph"))
-    return CausalDAG(
-        normalized_nodes,
-        normalized_edges,
-        observed,
-        Val(:validated),
-    )
+    return CausalDAG(normalized_nodes, normalized_edges, observed, Val(:validated))
 end
 
 function _endpoints(dag::CausalDAG, treatment, outcome)
@@ -230,8 +217,7 @@ end
 function _limit(value, subject)
     value === nothing && return nothing
     value isa Bool && throw(ArgumentError("$subject must be positive or nothing"))
-    value isa Integer ||
-        throw(ArgumentError("$subject must be positive or nothing"))
+    value isa Integer || throw(ArgumentError("$subject must be positive or nothing"))
     value >= 1 || throw(ArgumentError("$subject must be positive"))
     return Int(value)
 end
@@ -262,18 +248,10 @@ function _ancestors(dag::CausalDAG, node::String)
     return visited
 end
 
-_without_outgoing(edges, nodes) =
-    Tuple(edge for edge in edges if !(edge[1] in Set(nodes)))
-_without_incoming(edges, nodes) =
-    Tuple(edge for edge in edges if !(edge[2] in Set(nodes)))
+_without_outgoing(edges, nodes) = Tuple(edge for edge in edges if !(edge[1] in Set(nodes)))
+_without_incoming(edges, nodes) = Tuple(edge for edge in edges if !(edge[2] in Set(nodes)))
 
-function _has_directed_path(
-    dag,
-    left,
-    right;
-    edges = dag.directed_edges,
-    blocked = (),
-)
+function _has_directed_path(dag, left, right; edges = dag.directed_edges, blocked = ())
     blocked_nodes = Set(blocked)
     if left in blocked_nodes || right in blocked_nodes
         return false
@@ -289,8 +267,8 @@ function _has_directed_path(
         append!(
             pending,
             [
-                child for child in children[node] if
-                !(child in visited) && !(child in blocked_nodes)
+                child for
+                child in children[node] if !(child in visited) && !(child in blocked_nodes)
             ],
         )
     end
@@ -320,7 +298,7 @@ function _is_d_separated(dag, left, right, conditioned; edges = dag.directed_edg
     for child in relevant
         child_parents = sort([parent for parent in parents[child] if parent in relevant])
         for first_index in eachindex(child_parents)
-            for second_index in first_index + 1:length(child_parents)
+            for second_index = (first_index+1):length(child_parents)
                 first = child_parents[first_index]
                 second = child_parents[second_index]
                 push!(moral[first], second)
@@ -340,8 +318,8 @@ function _is_d_separated(dag, left, right, conditioned; edges = dag.directed_edg
         append!(
             reachable,
             [
-                neighbor for neighbor in moral[node] if
-                !(neighbor in blocked) && !(neighbor in visited)
+                neighbor for
+                neighbor in moral[node] if !(neighbor in blocked) && !(neighbor in visited)
             ],
         )
     end
@@ -367,19 +345,23 @@ function _simple_paths(
         stack = Any[(start, (start,), Set((start,)))]
         while !isempty(stack)
             states += 1
-            max_path_states !== nothing && states > max_path_states && throw(
-                ArgumentError("complete path search exceeds max_path_states"),
-            )
+            max_path_states !== nothing &&
+                states > max_path_states &&
+                throw(ArgumentError("complete path search exceeds max_path_states"))
             node, path, visited = pop!(stack)
             if node == finish
                 push!(paths, path)
-                max_paths !== nothing && length(paths) > max_paths &&
+                max_paths !== nothing &&
+                    length(paths) > max_paths &&
                     throw(ArgumentError("complete path evidence exceeds max_paths"))
                 continue
             end
             for neighbor in sort(collect(adjacency[node]); rev = true)
                 if !(neighbor in visited)
-                    push!(stack, (neighbor, (path..., neighbor), union(visited, (neighbor,))))
+                    push!(
+                        stack,
+                        (neighbor, (path..., neighbor), union(visited, (neighbor,))),
+                    )
                 end
             end
         end
@@ -393,8 +375,8 @@ function _path_evidence(dag, path, conditioned; edges = dag.directed_edges)
     conditioned_set = Set(conditioned)
     colliders = String[]
     noncolliders = String[]
-    for index in 2:length(path) - 1
-        previous, node, following = path[index - 1], path[index], path[index + 1]
+    for index = 2:(length(path)-1)
+        previous, node, following = path[index-1], path[index], path[index+1]
         if (previous, node) in edge_set && (following, node) in edge_set
             push!(colliders, node)
         else
@@ -413,10 +395,7 @@ function _path_evidence(dag, path, conditioned; edges = dag.directed_edges)
     end
     conditioned_noncolliders =
         Tuple(node for node in noncolliders if node in conditioned_set)
-    is_directed = all(
-        index -> (path[index], path[index + 1]) in edge_set,
-        1:length(path) - 1,
-    )
+    is_directed = all(index -> (path[index], path[index+1]) in edge_set, 1:(length(path)-1))
     is_backdoor = length(path) > 1 && (path[2], path[1]) in edge_set
     return PathEvidence(
         path,
@@ -441,8 +420,7 @@ function _d_separation(
     max_path_states = _DEFAULT_MAX_PATH_STATES,
 )
     paths = Tuple(
-        _path_evidence(dag, path, conditioned; edges = edges) for path in
-        _simple_paths(
+        _path_evidence(dag, path, conditioned; edges = edges) for path in _simple_paths(
             dag,
             left,
             right;
@@ -470,19 +448,13 @@ function d_separation(
 )
     left_nodes = _known_nodes(dag, left, "left"; allow_empty = false)
     right_nodes = _known_nodes(dag, right, "right"; allow_empty = false)
-    conditioned_nodes = _known_nodes(
-        dag,
-        conditioned,
-        "conditioned";
-        allow_empty = true,
-    )
+    conditioned_nodes = _known_nodes(dag, conditioned, "conditioned"; allow_empty = true)
     path_limit = _limit(max_paths, "max_paths")
     state_limit = _limit(max_path_states, "max_path_states")
     isempty(intersect(Set(left_nodes), Set(right_nodes))) &&
     isempty(intersect(Set(left_nodes), Set(conditioned_nodes))) &&
-    isempty(intersect(Set(right_nodes), Set(conditioned_nodes))) || throw(
-        ArgumentError("left, right, and conditioned must be pairwise disjoint"),
-    )
+    isempty(intersect(Set(right_nodes), Set(conditioned_nodes))) ||
+        throw(ArgumentError("left, right, and conditioned must be pairwise disjoint"))
     return _d_separation(
         dag,
         left_nodes,
@@ -502,17 +474,15 @@ function check_backdoor_adjustment_set(
     max_path_states = _DEFAULT_MAX_PATH_STATES,
 )
     treatment_node, outcome_node = _endpoints(dag, treatment, outcome)
-    adjustment = _known_nodes(
-        dag,
-        adjustment_set,
-        "adjustment_set";
-        allow_empty = true,
-    )
+    adjustment = _known_nodes(dag, adjustment_set, "adjustment_set"; allow_empty = true)
     path_limit = _limit(max_paths, "max_paths")
     state_limit = _limit(max_path_states, "max_path_states")
     observed = Set(dag.observed_nodes)
-    endpoints = Tuple(sort(collect(intersect(Set(adjustment), Set((treatment_node, outcome_node))))))
-    descendants = Tuple(sort(collect(intersect(Set(adjustment), _descendants(dag, treatment_node)))))
+    endpoints = Tuple(
+        sort(collect(intersect(Set(adjustment), Set((treatment_node, outcome_node))))),
+    )
+    descendants =
+        Tuple(sort(collect(intersect(Set(adjustment), _descendants(dag, treatment_node)))))
     edges = _without_outgoing(dag.directed_edges, (treatment_node,))
     separation = _d_separation(
         dag,
@@ -565,9 +535,9 @@ function _search_minimal_sets(candidates, is_valid, max_candidates)
         candidate = Tuple(selected)
         if !frame.evaluated
             work += 1 + length(candidate)
-            max_candidates !== nothing && work > max_candidates && throw(
-                ArgumentError("exact minimal-set search exceeds max_candidates"),
-            )
+            max_candidates !== nothing &&
+                work > max_candidates &&
+                throw(ArgumentError("exact minimal-set search exceeds max_candidates"))
             candidate_set = Set(candidate)
             if any(existing -> issubset(Set(existing), candidate_set), valid_sets)
                 pop!(frames)
@@ -611,13 +581,8 @@ function minimal_backdoor_adjustment_sets(
         !(node in (treatment_node, outcome_node)) && !(node in descendants)
     )
     edges = _without_outgoing(dag.directed_edges, (treatment_node,))
-    is_valid(candidate) = _is_d_separated(
-        dag,
-        (treatment_node,),
-        (outcome_node,),
-        candidate;
-        edges = edges,
-    )
+    is_valid(candidate) =
+        _is_d_separated(dag, (treatment_node,), (outcome_node,), candidate; edges = edges)
     return _search_minimal_sets(candidates, is_valid, candidate_limit)
 end
 
@@ -646,13 +611,14 @@ function _directed_path_tuples(
     states = 0
     while !isempty(stack)
         states += 1
-        max_path_states !== nothing && states > max_path_states && throw(
-            ArgumentError("directed-path search exceeds max_path_states"),
-        )
+        max_path_states !== nothing &&
+            states > max_path_states &&
+            throw(ArgumentError("directed-path search exceeds max_path_states"))
         node, path = pop!(stack)
         if node == right
             push!(paths, path)
-            max_paths !== nothing && length(paths) > max_paths &&
+            max_paths !== nothing &&
+                length(paths) > max_paths &&
                 throw(ArgumentError("directed-path evidence exceeds max_paths"))
             continue
         end
@@ -685,16 +651,12 @@ function check_frontdoor_adjustment_set(
     max_path_states = _DEFAULT_MAX_PATH_STATES,
 )
     treatment_node, outcome_node = _endpoints(dag, treatment, outcome)
-    mediators = _known_nodes(
-        dag,
-        mediator_set,
-        "mediator_set";
-        allow_empty = true,
-    )
+    mediators = _known_nodes(dag, mediator_set, "mediator_set"; allow_empty = true)
     path_limit = _limit(max_paths, "max_paths")
     state_limit = _limit(max_path_states, "max_path_states")
     observed = Set(dag.observed_nodes)
-    endpoints = Tuple(sort(collect(intersect(Set(mediators), Set((treatment_node, outcome_node))))))
+    endpoints =
+        Tuple(sort(collect(intersect(Set(mediators), Set((treatment_node, outcome_node))))))
     directed_paths = _directed_paths(
         dag,
         treatment_node,
@@ -704,7 +666,7 @@ function check_frontdoor_adjustment_set(
     )
     unintercepted = Tuple(
         path for path in directed_paths if
-        isempty(intersect(Set(path.nodes[2:end-1]), Set(mediators)))
+        isempty(intersect(Set(path.nodes[2:(end-1)]), Set(mediators)))
     )
     if !isempty(mediators) && isempty(endpoints)
         treatment_edges = _without_outgoing(dag.directed_edges, (treatment_node,))
@@ -738,9 +700,13 @@ function check_frontdoor_adjustment_set(
     all_observed = issubset(Set(mediators), observed)
     directed_path_exists = !isempty(directed_paths)
     admissible =
-        !isempty(mediators) && all_observed && isempty(endpoints) &&
-        directed_path_exists && isempty(unintercepted) &&
-        isempty(open_treatment_mediator) && isempty(open_mediator_outcome)
+        !isempty(mediators) &&
+        all_observed &&
+        isempty(endpoints) &&
+        directed_path_exists &&
+        isempty(unintercepted) &&
+        isempty(open_treatment_mediator) &&
+        isempty(open_mediator_outcome)
     return FrontdoorAdjustmentEvidence(
         treatment_node,
         outcome_node,
@@ -766,25 +732,15 @@ function minimal_frontdoor_adjustment_sets(
     candidate_limit = _limit(max_candidates, "max_candidates")
     _has_directed_path(dag, treatment_node, outcome_node) || return ()
     candidates = Tuple(
-        node for node in dag.observed_nodes if
-        !(node in (treatment_node, outcome_node))
+        node for node in dag.observed_nodes if !(node in (treatment_node, outcome_node))
     )
     treatment_edges = _without_outgoing(dag.directed_edges, (treatment_node,))
     function is_valid(candidate)
         isempty(candidate) && return false
-        _has_directed_path(
-            dag,
-            treatment_node,
-            outcome_node;
-            blocked = candidate,
-        ) && return false
-        _is_d_separated(
-            dag,
-            (treatment_node,),
-            candidate,
-            ();
-            edges = treatment_edges,
-        ) || return false
+        _has_directed_path(dag, treatment_node, outcome_node; blocked = candidate) &&
+            return false
+        _is_d_separated(dag, (treatment_node,), candidate, (); edges = treatment_edges) ||
+            return false
         mediator_edges = _without_outgoing(dag.directed_edges, candidate)
         return _is_d_separated(
             dag,
@@ -797,26 +753,14 @@ function minimal_frontdoor_adjustment_sets(
     return _search_minimal_sets(candidates, is_valid, candidate_limit)
 end
 
-function check_instrument(
-    dag::CausalDAG,
-    instrument,
-    treatment,
-    outcome,
-    conditioned = (),
-)
+function check_instrument(dag::CausalDAG, instrument, treatment, outcome, conditioned = ())
     treatment_node, outcome_node = _endpoints(dag, treatment, outcome)
     instrument_node = _node(instrument, "instrument")
     instrument_node in dag.nodes ||
         throw(ArgumentError("instrument must be a known graph node"))
-    !(instrument_node in (treatment_node, outcome_node)) || throw(
-        ArgumentError("instrument, treatment, and outcome must be distinct"),
-    )
-    controls = _known_nodes(
-        dag,
-        conditioned,
-        "conditioned";
-        allow_empty = true,
-    )
+    !(instrument_node in (treatment_node, outcome_node)) ||
+        throw(ArgumentError("instrument, treatment, and outcome must be distinct"))
+    controls = _known_nodes(dag, conditioned, "conditioned"; allow_empty = true)
     forbidden = Set((instrument_node, treatment_node, outcome_node))
     conditioning_disjoint = isempty(intersect(Set(controls), forbidden))
     observed = Set(dag.observed_nodes)
@@ -824,12 +768,8 @@ function check_instrument(
     unaffected = isempty(intersect(Set(controls), _descendants(dag, treatment_node)))
     if conditioning_disjoint
         treatment_edges = _without_incoming(dag.directed_edges, (treatment_node,))
-        pearl_relevance = !_is_d_separated(
-            dag,
-            (instrument_node,),
-            (treatment_node,),
-            controls,
-        )
+        pearl_relevance =
+            !_is_d_separated(dag, (instrument_node,), (treatment_node,), controls)
         pearl_exclusion = _is_d_separated(
             dag,
             (instrument_node,),
@@ -842,22 +782,17 @@ function check_instrument(
         pearl_exclusion = false
     end
     pearl_graphical =
-        all_observed && conditioning_disjoint && unaffected &&
-        pearl_relevance && pearl_exclusion
+        all_observed &&
+        conditioning_disjoint &&
+        unaffected &&
+        pearl_relevance &&
+        pearl_exclusion
 
     edge_set = Set(dag.directed_edges)
     cfi_direct = (instrument_node, treatment_node) in edge_set
-    instrument_outcome_path = _has_directed_path(
-        dag,
-        instrument_node,
-        outcome_node,
-    )
-    bypasses_treatment = _has_directed_path(
-        dag,
-        instrument_node,
-        outcome_node;
-        blocked = (treatment_node,),
-    )
+    instrument_outcome_path = _has_directed_path(dag, instrument_node, outcome_node)
+    bypasses_treatment =
+        _has_directed_path(dag, instrument_node, outcome_node; blocked = (treatment_node,))
     cfi_full_mediation = instrument_outcome_path && !bypasses_treatment
     instrument_edges = _without_outgoing(dag.directed_edges, (instrument_node,))
     cfi_exogeneity = _is_d_separated(
@@ -868,8 +803,7 @@ function check_instrument(
         edges = instrument_edges,
     )
     cfi_simple =
-        instrument_node in observed && cfi_direct &&
-        cfi_full_mediation && cfi_exogeneity
+        instrument_node in observed && cfi_direct && cfi_full_mediation && cfi_exogeneity
     return InstrumentEvidence(
         instrument_node,
         treatment_node,
@@ -898,8 +832,7 @@ function causal_role_evidence(
 )
     treatment_node, outcome_node = _endpoints(dag, treatment, outcome)
     role_node = _node(node, "node")
-    role_node in dag.nodes ||
-        throw(ArgumentError("node must be a known graph node"))
+    role_node in dag.nodes || throw(ArgumentError("node must be a known graph node"))
     !(role_node in (treatment_node, outcome_node)) ||
         throw(ArgumentError("node must differ from treatment and outcome"))
     path_limit = _limit(max_paths, "max_paths")
@@ -918,11 +851,11 @@ function causal_role_evidence(
         Tuple(path.nodes for path in paths if role_node in path.noncolliders)
     mediator_paths = Tuple(
         path.nodes for path in paths if
-        path.is_directed_from_left && role_node in path.nodes[2:end-1]
+        path.is_directed_from_left && role_node in path.nodes[2:(end-1)]
     )
     backdoor_paths = Tuple(
-        path.nodes for path in paths if
-        path.is_backdoor_from_left && role_node in path.noncolliders
+        path.nodes for
+        path in paths if path.is_backdoor_from_left && role_node in path.noncolliders
     )
     edge_set = Set(dag.directed_edges)
     common_cause_paths = Tuple[]
@@ -930,14 +863,15 @@ function causal_role_evidence(
         role_node in path.noncolliders || continue
         index = findfirst(==(role_node), path.nodes)
         directed_to_treatment = all(
-            position -> (path.nodes[position], path.nodes[position - 1]) in edge_set,
+            position -> (path.nodes[position], path.nodes[position-1]) in edge_set,
             index:-1:2,
         )
         directed_to_outcome = all(
-            position -> (path.nodes[position], path.nodes[position + 1]) in edge_set,
-            index:length(path.nodes) - 1,
+            position -> (path.nodes[position], path.nodes[position+1]) in edge_set,
+            index:(length(path.nodes)-1),
         )
-        directed_to_treatment && directed_to_outcome &&
+        directed_to_treatment &&
+            directed_to_outcome &&
             push!(common_cause_paths, path.nodes)
     end
     return NodeRoleEvidence(

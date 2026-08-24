@@ -4,6 +4,15 @@ using DataFrames
 using LinearAlgebra
 using Random
 using Statistics: mean, cov
+
+const RISKLABAI_TEST_DEEP_BSDE = get(ENV, "RISKLABAI_TEST_DEEP_BSDE", "0") == "1"
+
+if RISKLABAI_TEST_DEEP_BSDE
+    using Lux
+    using Optimisers
+    using Zygote
+end
+
 using RiskLabAI
 
 @testset "RiskLabAI smoke tests" begin
@@ -1891,20 +1900,37 @@ end
     @test xs[:, :, 1] == repeat([1.0 0.5], 16, 1)
 end
 
-@testset "Pde — Deep BSDE solver (Lux)" begin
+@testset "Pde — optional Deep BSDE extension" begin
     P = RiskLabAI.Pde
     eq = P.HJBLQ(1, 0.5, 4)
-    losses, inits = P.solve_deep_bsde(
-        eq;
-        hidden_sizes = [8],
-        iterations = 12,
-        batch_size = 64,
-        init_y = 3.0,
-        learning_rate = 0.02,
-        rng = MersenneTwister(1),
-    )
-    @test length(losses) == 12
-    @test all(isfinite, losses)
-    @test all(isfinite, inits)
-    @test minimum(losses) <= losses[1]   # training improves on the initial loss
+    extension = Base.get_extension(RiskLabAI, :RiskLabAIDeepBSDEExt)
+
+    if RISKLABAI_TEST_DEEP_BSDE
+        extension === nothing && error("Deep-BSDE test extension did not load")
+        losses, inits = P.solve_deep_bsde(
+            eq;
+            hidden_sizes = [8],
+            iterations = 12,
+            batch_size = 64,
+            init_y = 3.0,
+            learning_rate = 0.02,
+            rng = MersenneTwister(1),
+        )
+        @test length(losses) == 12
+        @test all(isfinite, losses)
+        @test all(isfinite, inits)
+        @test minimum(losses) <= losses[1]   # training improves on the initial loss
+    else
+        @test extension === nothing
+        failure = try
+            P.solve_deep_bsde(eq)
+            nothing
+        catch caught
+            caught
+        end
+        @test failure isa ArgumentError
+        message = sprint(showerror, failure)
+        @test occursin("deep_bsde extension", message)
+        @test all(occursin(dependency, message) for dependency in ("Lux", "Optimisers", "Zygote"))
+    end
 end

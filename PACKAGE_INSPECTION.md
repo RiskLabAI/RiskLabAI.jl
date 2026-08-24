@@ -13,10 +13,11 @@ normalization collisions, duplicate paths, links, reparse points, special
 files, caches, compiled output, manifests, credentials, or any undeclared
 member.
 
-The inspected tree must contain exactly the declared RiskLabAI 1.0.0 release
-members. Its package name and existing UUID must be unchanged. The canonical
-BSD-3-Clause license, maintainer and contact, repository, issue, documentation,
-and version records must agree with the reviewed metadata contract.
+The inspected tree must contain exactly the 88 declared RiskLabAI 1.0.0 release
+members, including the governed `.github/workflows/CI.yml`. Its package name
+and existing UUID must be unchanged. The canonical BSD-3-Clause license,
+maintainer and contact, repository, issue, documentation, and version records
+must agree with the reviewed metadata contract.
 
 ## Dependency and extension behavior
 
@@ -32,8 +33,10 @@ In fresh Julia 1.10.12 and 1.12.7 environments, verify the exact package origin,
 `Base.pkgversion(RiskLabAI) == v"1.0.0"`, the 148 root exports, all module
 exports in `PUBLIC_API.json`, and the complete 57-feature causal namespace.
 Run the exact package-scoped test inventory at the approved dependency floors
-and current versions. Repeat the deep solver tests with the optional extension
-loaded and confirm that the base package loads without its weak dependencies.
+and current versions. Run base lanes with only the `Test` target and verify the
+four extension-absence/fallback assertions. Repeat all lanes with Lux,
+Optimisers, and Zygote explicitly installed and loaded, then verify the four
+numerical Deep-BSDE assertions.
 
 ## Final review
 

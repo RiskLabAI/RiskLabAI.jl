@@ -4,51 +4,53 @@
   "product": "RiskLabAI",
   "language": "Julia",
   "version": "1.0.0",
-  "runner": "Pkg.test / Test",
+  "runner": "Pkg.test base lanes / explicit weak-dependency Deep-BSDE lanes / Test",
   "file_count": 12,
   "verified_assertions_per_required_lane": {
     "preserved_non_deep": 508,
     "causal_factor_analysis": 138,
-    "optional_deep_bsde": 4,
+    "lane_specific_deep_bsde_or_fallback": 4,
     "total": 650
   },
-  "required_lane_count": 4,
-  "required_lane_assertion_total": 2600,
+  "base_lane_count": 4,
+  "deep_bsde_lane_count": 4,
+  "required_lane_count": 8,
+  "required_lane_assertion_total": 5200,
   "files": [
     {
       "path": "test/causal_factor_analysis/test_factor_mirage.jl",
-      "size": 2839,
-      "sha256": "7389B9D98273E33CD471546B3DE15D98863D82AC8BBC1DE74D6AF58B56802148",
+      "size": 2829,
+      "sha256": "84B194306913AFE850F6E4B56761491AEA2B13F180BFF24FD83BB20FE10151D7",
       "group": "CAUSAL_FACTOR_ANALYSIS"
     },
     {
       "path": "test/causal_factor_analysis/test_graph_identification.jl",
-      "size": 19676,
-      "sha256": "309C2A59D6BC9A239CAE4648656AD301B1AC31B025346E0D5ABF3C9B2D87E30D",
+      "size": 18944,
+      "sha256": "B15F623E6F474B706F3AA00AB69D693C0F496494DB0E537D824F3B429363D22F",
       "group": "CAUSAL_FACTOR_ANALYSIS"
     },
     {
       "path": "test/causal_factor_analysis/test_optimizer.jl",
-      "size": 3447,
-      "sha256": "6588A76ADA964C07717A86BE46672C531E29B945E8DD227F47435FEDD799EBDC",
+      "size": 3424,
+      "sha256": "C3DD2CB2F226D9C8ABF6C3E645929007BC811419321E10181A5CF8C5AAAC6ECB",
       "group": "CAUSAL_FACTOR_ANALYSIS"
     },
     {
       "path": "test/causal_factor_analysis/test_protocol.jl",
-      "size": 10642,
-      "sha256": "50193B1253157A2B7002B3B27CFCD3D503FDD79F58D72CB0D84AD87AC630E502",
+      "size": 11071,
+      "sha256": "5916A06D7D186DA6A74FA0FD23DC7EDD29BA75BACCBA92CA53E3AB94C201109D",
       "group": "CAUSAL_FACTOR_ANALYSIS"
     },
     {
       "path": "test/causal_factor_analysis/test_specification_diagnostics.jl",
-      "size": 1994,
-      "sha256": "297B4F06998A4E264ADA3CB336FC239E0E64CA967695C16A7FCDF1FC2ED624C3",
+      "size": 1974,
+      "sha256": "0BBB85F99A06450D9940FBFC152C0F239159DA6CC4AB75D6D5A34490E23B717E",
       "group": "CAUSAL_FACTOR_ANALYSIS"
     },
     {
       "path": "test/causal_factor_analysis/test_treatment_effects.jl",
-      "size": 2287,
-      "sha256": "A889AE4B8DD117723D4B9666C0D9B2F8325BD50A44BD79DECAA4F055602E1987",
+      "size": 2220,
+      "sha256": "1D47C23D447AB8C50B8BD013AA6FA3ACA2A577924FFC0D17656BAA9B95CBCAEF",
       "group": "CAUSAL_FACTOR_ANALYSIS"
     },
     {
@@ -77,14 +79,14 @@
     },
     {
       "path": "test/preserved_runtests.jl",
-      "size": 73730,
-      "sha256": "0B97BCC98FD2C80F0C200FEB3E31ED9C37366AF4BF67F1F70F9988F6A4418F51",
+      "size": 74538,
+      "sha256": "3005EE9B73838E7B5FF7E179628F9573ADC08E6C0C146F002B34D8874440C203",
       "group": "PRESERVED_LIBRARY"
     },
     {
       "path": "test/runtests.jl",
-      "size": 2711,
-      "sha256": "B94F8A27571885EEF64F24E2E9DF75279E01FC296AB52506831DB9B35551E9B9",
+      "size": 2657,
+      "sha256": "FAB90A2D9E23A34918915BE579A46B00FC2493346BECC85012B9C78EF31F4DC8",
       "group": "RUNNER"
     }
   ]

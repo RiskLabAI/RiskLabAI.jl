@@ -7,8 +7,9 @@
   "artifact_types": [
     "julia_package_tree"
   ],
-  "candidate_file_count": 88,
+  "candidate_file_count": 89,
   "candidate_files": [
+    ".github/workflows/CI.yml",
     "LICENSE",
     "PACKAGE_FILES.json",
     "PACKAGE_IDENTITY.json",
@@ -101,8 +102,9 @@
   "local_control_files_excluded_from_artifacts": [
     "PACKAGE_IDENTITY.json"
   ],
-  "release_source_file_count": 87,
+  "release_source_file_count": 88,
   "release_source_files": [
+    ".github/workflows/CI.yml",
     "LICENSE",
     "PACKAGE_FILES.json",
     "PACKAGE_INSPECTION.md",

@@ -69,9 +69,8 @@ function _ols_diagnostics(outcome::Vector{Float64}, regressors)
     end
     design = hcat(columns...)
     n_parameters = size(design, 2)
-    n_observations > n_parameters || throw(
-        ArgumentError("the regression requires positive residual degrees of freedom"),
-    )
+    n_observations > n_parameters ||
+        throw(ArgumentError("the regression requires positive residual degrees of freedom"))
     rank(design) == n_parameters ||
         throw(ArgumentError("the generated regression design is rank deficient"))
 
@@ -81,9 +80,8 @@ function _ols_diagnostics(outcome::Vector{Float64}, regressors)
     residual_sum_squares = dot(residuals, residuals)
     centered = outcome .- mean(outcome)
     total_sum_squares = dot(centered, centered)
-    isfinite(total_sum_squares) && total_sum_squares > 0.0 || throw(
-        ArgumentError("the generated outcome must have positive finite variance"),
-    )
+    isfinite(total_sum_squares) && total_sum_squares > 0.0 ||
+        throw(ArgumentError("the generated outcome must have positive finite variance"))
 
     residual_degrees_of_freedom = n_observations - n_parameters
     residual_variance = residual_sum_squares / residual_degrees_of_freedom
@@ -104,8 +102,8 @@ function _ols_diagnostics(outcome::Vector{Float64}, regressors)
     elseif 1.0 < r_squared <= 1.0 + 1.0e-12
         r_squared = 1.0
     end
-    adjusted_r_squared = 1.0 - (1.0 - r_squared) *
-                         (n_observations - 1) / residual_degrees_of_freedom
+    adjusted_r_squared =
+        1.0 - (1.0 - r_squared) * (n_observations - 1) / residual_degrees_of_freedom
     return RegressionDiagnostics(
         Tuple(names),
         Tuple(Float64.(coefficients)),
@@ -123,11 +121,7 @@ function fork_population_diagnostics()
         "fork",
         "confounder",
         _population_regression(("intercept", "X"), (0.0, 0.5), 0.25),
-        _population_regression(
-            ("intercept", "X", "Z"),
-            (0.0, 0.0, 1.0),
-            0.5,
-        ),
+        _population_regression(("intercept", "X", "Z"), (0.0, 0.0, 1.0), 0.5),
     )
 end
 
@@ -136,11 +130,7 @@ function collider_population_diagnostics()
         "collider",
         "collider",
         _population_regression(("intercept", "X"), (0.0, 0.0), 0.0),
-        _population_regression(
-            ("intercept", "X", "Z"),
-            (0.0, -0.5, 0.5),
-            0.5,
-        ),
+        _population_regression(("intercept", "X", "Z"), (0.0, -0.5, 0.5), 0.5),
     )
 end
 
@@ -148,16 +138,8 @@ function confounded_mediator_population_diagnostics()
     return SpecificationPopulationResult(
         "confounded_mediator",
         "confounded_mediator",
-        _population_regression(
-            ("intercept", "X"),
-            (0.0, 1.0),
-            1.0 / 7.0,
-        ),
-        _population_regression(
-            ("intercept", "X", "Z"),
-            (0.0, -0.5, 1.5),
-            11.0 / 14.0,
-        ),
+        _population_regression(("intercept", "X"), (0.0, 1.0), 1.0 / 7.0),
+        _population_regression(("intercept", "X", "Z"), (0.0, -0.5, 1.5), 11.0 / 14.0),
     )
 end
 
@@ -189,10 +171,7 @@ function collider_specification_experiment(sample_size = 5_000, seed = 0)
     )
 end
 
-function confounded_mediator_specification_experiment(
-    sample_size = 5_000,
-    seed = 0,
-)
+function confounded_mediator_specification_experiment(sample_size = 5_000, seed = 0)
     n_observations = _sample_size(sample_size)
     random_state = MersenneTwister(_random_seed(seed))
     x = randn(random_state, n_observations)

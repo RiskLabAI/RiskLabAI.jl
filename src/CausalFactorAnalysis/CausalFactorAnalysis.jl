@@ -11,8 +11,7 @@ include("Optimizer.jl")
 include("GraphIdentification.jl")
 include("Protocol.jl")
 
-export
-    BackdoorAdjustmentEvidence,
+export BackdoorAdjustmentEvidence,
     BacktestStage,
     CausalDAG,
     CausalAdjustmentSetStage,

@@ -41,8 +41,7 @@ function _finite_vector(name::AbstractString, values)
     catch
         throw(ArgumentError("$name must contain representable real values"))
     end
-    all(isfinite, result) ||
-        throw(ArgumentError("$name must contain only finite values"))
+    all(isfinite, result) || throw(ArgumentError("$name must contain only finite values"))
     return result
 end
 
@@ -83,23 +82,13 @@ function _finite_matrix(name::AbstractString, values)
     end
     ndims(result) == 2 ||
         throw(ArgumentError("$name must be a two-dimensional numeric collection"))
-    all(isfinite, result) ||
-        throw(ArgumentError("$name must contain only finite values"))
+    all(isfinite, result) || throw(ArgumentError("$name must contain only finite values"))
     return Matrix{Float64}(result)
 end
 
-function average_treatment_effect(
-    treated_interventional_mean,
-    control_interventional_mean,
-)
-    treated = _finite_real(
-        "treated_interventional_mean",
-        treated_interventional_mean,
-    )
-    control = _finite_real(
-        "control_interventional_mean",
-        control_interventional_mean,
-    )
+function average_treatment_effect(treated_interventional_mean, control_interventional_mean)
+    treated = _finite_real("treated_interventional_mean", treated_interventional_mean)
+    control = _finite_real("control_interventional_mean", control_interventional_mean)
     return _finite_real("average_treatment_effect", treated - control)
 end
 
@@ -115,14 +104,8 @@ function treatment_effect_decomposition(
         counterfactual_control_mean_for_treated,
     )
     observed = _finite_real("observed_difference", treated - control)
-    effect = _finite_real(
-        "average_treatment_effect_on_treated",
-        treated - counterfactual,
-    )
-    selection = _finite_real(
-        "sample_selection_bias",
-        counterfactual - control,
-    )
+    effect = _finite_real("average_treatment_effect_on_treated", treated - counterfactual)
+    selection = _finite_real("sample_selection_bias", counterfactual - control)
     return TreatmentEffectDecomposition(observed, effect, selection)
 end
 
@@ -151,26 +134,14 @@ function difference_in_differences(
         _finite_real("control_after", control_after) -
         _finite_real("control_before", control_before),
     )
-    estimate = _finite_real(
-        "difference_in_differences",
-        treated_change - control_change,
-    )
-    return DifferenceInDifferencesEstimate(
-        treated_change,
-        control_change,
-        estimate,
-    )
+    estimate = _finite_real("difference_in_differences", treated_change - control_change)
+    return DifferenceInDifferencesEstimate(treated_change, control_change, estimate)
 end
 
-function backdoor_adjusted_expectation(
-    conditional_outcome_means,
-    adjustment_probabilities,
-)
+function backdoor_adjusted_expectation(conditional_outcome_means, adjustment_probabilities)
     means = _finite_vector("conditional_outcome_means", conditional_outcome_means)
-    probabilities = _probability_vector(
-        "adjustment_probabilities",
-        adjustment_probabilities,
-    )
+    probabilities =
+        _probability_vector("adjustment_probabilities", adjustment_probabilities)
     length(means) == length(probabilities) || throw(
         ArgumentError(
             "conditional_outcome_means and adjustment_probabilities must have the same length",
@@ -184,18 +155,10 @@ function backdoor_adjusted_average_treatment_effect(
     control_conditional_means,
     adjustment_probabilities,
 )
-    treated = _finite_vector(
-        "treated_conditional_means",
-        treated_conditional_means,
-    )
-    control = _finite_vector(
-        "control_conditional_means",
-        control_conditional_means,
-    )
-    probabilities = _probability_vector(
-        "adjustment_probabilities",
-        adjustment_probabilities,
-    )
+    treated = _finite_vector("treated_conditional_means", treated_conditional_means)
+    control = _finite_vector("control_conditional_means", control_conditional_means)
+    probabilities =
+        _probability_vector("adjustment_probabilities", adjustment_probabilities)
     length(treated) == length(control) == length(probabilities) || throw(
         ArgumentError(
             "treated means, control means, and adjustment probabilities must have the same length",
@@ -216,10 +179,8 @@ function frontdoor_adjusted_probability(
         "mediator_probabilities_given_treatment",
         mediator_probabilities_given_treatment,
     )
-    treatment_weights = _probability_vector(
-        "treatment_probabilities",
-        treatment_probabilities,
-    )
+    treatment_weights =
+        _probability_vector("treatment_probabilities", treatment_probabilities)
     conditional = _finite_matrix(
         "outcome_probabilities_given_mediator_and_treatment",
         outcome_probabilities_given_mediator_and_treatment,
@@ -229,12 +190,12 @@ function frontdoor_adjusted_probability(
             "outcome_probabilities_given_mediator_and_treatment must contain probabilities in [0, 1]",
         ),
     )
-    size(conditional) ==
-    (length(mediator_probabilities), length(treatment_weights)) || throw(
-        ArgumentError(
-            "outcome probability matrix shape must match mediator and treatment state counts",
-        ),
-    )
+    size(conditional) == (length(mediator_probabilities), length(treatment_weights)) ||
+        throw(
+            ArgumentError(
+                "outcome probability matrix shape must match mediator and treatment state counts",
+            ),
+        )
     probability = _finite_real(
         "frontdoor_adjusted_probability",
         dot(mediator_probabilities, conditional * treatment_weights),
@@ -251,14 +212,9 @@ function linear_instrumental_variable_effect(
     outcome_instrument_covariance,
     treatment_instrument_covariance,
 )
-    numerator = _finite_real(
-        "outcome_instrument_covariance",
-        outcome_instrument_covariance,
-    )
-    denominator = _finite_real(
-        "treatment_instrument_covariance",
-        treatment_instrument_covariance,
-    )
+    numerator = _finite_real("outcome_instrument_covariance", outcome_instrument_covariance)
+    denominator =
+        _finite_real("treatment_instrument_covariance", treatment_instrument_covariance)
     denominator == 0.0 &&
         throw(ArgumentError("treatment_instrument_covariance must be nonzero"))
     return _finite_real("instrumental_variable_effect", numerator / denominator)

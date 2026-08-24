@@ -20,10 +20,7 @@
     square_exposures = [1.0 1.0; 1.5 1.0]
     square_targets = [0.0, 1.0]
     expected_square = transpose(square_exposures) \ square_targets
-    for square_covariance in (
-        [1.0 0.2; 0.2 2.0],
-        [5.0 -1.0; -1.0 0.5],
-    )
+    for square_covariance in ([1.0 0.2; 0.2 2.0], [5.0 -1.0; -1.0 0.5])
         @test minimum_variance_factor_weights(
             square_covariance,
             square_exposures,

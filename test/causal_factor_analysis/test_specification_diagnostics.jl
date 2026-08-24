@@ -31,10 +31,8 @@
     @test mediator_sample.conditioned.coefficients[2] ≈ -0.5 atol = 0.08
     @test mediator_sample.conditioned.coefficients[3] ≈ 1.5 atol = 0.08
 
-    @test fork_specification_experiment(200, 17) ==
-          fork_specification_experiment(200, 17)
-    @test fork_specification_experiment(200, 17) !=
-          fork_specification_experiment(200, 18)
+    @test fork_specification_experiment(200, 17) == fork_specification_experiment(200, 17)
+    @test fork_specification_experiment(200, 17) != fork_specification_experiment(200, 18)
     @test_throws ArgumentError fork_specification_experiment(3, 0)
     @test_throws ArgumentError fork_specification_experiment(10, -1)
 end

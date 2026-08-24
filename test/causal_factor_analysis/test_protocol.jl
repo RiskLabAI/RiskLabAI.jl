@@ -66,117 +66,128 @@ function protocol_report(;
 )
     trials = ("strategy-a", "strategy-b", "strategy-c")
     family = "preregistered-family"
-    selection = variable_selection === nothing ? VariableSelectionStage(
-        purpose = "RISK_PREMIA_HARVESTING",
-        selected_variables = ("X", "Z", "I", "M", "C", "D"),
-        method_labels = (
-            "MUTUAL_INFORMATION",
-            "SHAPLEY_VALUES",
-            "MEAN_DECREASE_IMPURITY",
-            "PERMUTATION_FEATURE_IMPORTANCE",
-        ),
-        overlapping_returns = true,
-        strong_time_dependence = true,
-        validation = protocol_validation(),
-    ) : variable_selection
-    discovery = causal_discovery === nothing ? CausalDiscoveryStage(
-        method_labels = (
-            "PC",
-            "ECONOMIC_REASONING",
-            "DOMAIN_EXPERTISE",
-            "OBSERVED_OUTCOMES",
-        ),
-        graph_id = "resolved-dag",
-        graph_nodes = ("X", "Y", "Z", "I", "M", "C", "D"),
-        directed_edges = (
-            ("Z", "X"),
-            ("Z", "Y"),
-            ("I", "X"),
-            ("X", "M"),
-            ("M", "Y"),
-            ("X", "Y"),
-            ("X", "C"),
-            ("Y", "C"),
-            ("X", "D"),
-        ),
-        graph_kind = "DAG",
-        ambiguous_edges = (),
-        assumptions = (
-            "Recorded variables are sufficient for the target effect.",
-            "Directions use temporal and economic restrictions.",
-        ),
-    ) : causal_discovery
-    adjustment = causal_adjustment_set === nothing ? CausalAdjustmentSetStage(
-        treatment = "X",
-        outcome = "Y",
-        method_label = "BACKDOOR_ADJUSTMENT",
-        identified = true,
-        admissible_adjustment_sets = (("Z",),),
-        selected_adjustment_set = ("Z",),
-        confounders = ("Z",),
-        descendants = ("M", "C", "D"),
-        mediators = ("M",),
-        colliders = ("C",),
-        instruments = ("I",),
-        control_justifications = (("Z", "Common cause of factor and return."),),
-        open_backdoor_paths = (),
-    ) : causal_adjustment_set
-    performance = causal_explanatory_and_predictive_power === nothing ?
-                  CausalExplanatoryAndPredictivePowerStage(
-        task_types = ("RETURN_SIZE",),
-        estimator_label = "fold-refit causal regression",
-        explanatory_metric_labels = ("R_SQUARED",),
-        predictive_metric_labels = ("MEAN_SQUARED_ERROR", "SPEARMAN_CORRELATION"),
-        explanatory_evidence_id = "explanatory-evidence",
-        predictive_evidence_id = "predictive-evidence",
-        naive_benchmark_id = "training-mean-benchmark",
-        validation = protocol_validation(),
-    ) : causal_explanatory_and_predictive_power
-    portfolio = causal_portfolio_construction === nothing ?
-                CausalPortfolioConstructionStage(
-        method_labels = (
-            "POSITION_SIZING",
-            "EXPOSURE_CONTROL",
-            "ECONOMIC_RATIONALE",
-            "FRAGILITY_STRESS_TEST",
-            "TRANSACTION_COST_OPTIMIZATION",
-            "TRANSFER_COEFFICIENT",
-        ),
-        causal_exposures = ("X",),
-        controlled_unintended_exposures = ("C", "D"),
-        cost_model_id = "cost-model-v1",
-        constraint_set_id = "constraints-v1",
-        economic_rationale = "Positions target the identified effect.",
-        fragility_scenarios = ("weaken X-to-Y", "perturb Z-to-X"),
-        transfer_coefficient = 0.82,
-    ) : causal_portfolio_construction
-    backtest_stage = backtest === nothing ? BacktestStage(
-        method_labels = ("COMBINATORIAL_PURGED_CROSS_VALIDATION",),
-        trial_family_id = family,
-        declared_trial_ids = trials,
-        validation = protocol_cpcv_validation(),
-    ) : backtest
-    corrections = multiple_testing_adjustments === nothing ?
-                  MultipleTestingAdjustmentsStage(
-        method_labels = ("HOLM", "DEFLATED_SHARPE_RATIO"),
-        trial_family_id = family,
-        declared_trial_ids = trials,
-        family_partitions = (
-            ("primary", ("strategy-a", "strategy-b")),
-            ("robustness", ("strategy-c",)),
-        ),
-        alpha = 0.05,
-        backtests_independent = false,
-        p_value_estimator = "dependence-adjusted-estimator",
-        time_dependence_model = "purged temporal folds",
-        p_value_inputs_assume_independence = false,
-        sharpe_variance = 0.04,
-        effective_trials = 2.0,
-        sample_length = 252,
-        skewness = 0.1,
-        kurtosis = 3.2,
-        selection_bias_evidence_id = "selection-bias-evidence",
-    ) : multiple_testing_adjustments
+    selection =
+        variable_selection === nothing ?
+        VariableSelectionStage(
+            purpose = "RISK_PREMIA_HARVESTING",
+            selected_variables = ("X", "Z", "I", "M", "C", "D"),
+            method_labels = (
+                "MUTUAL_INFORMATION",
+                "SHAPLEY_VALUES",
+                "MEAN_DECREASE_IMPURITY",
+                "PERMUTATION_FEATURE_IMPORTANCE",
+            ),
+            overlapping_returns = true,
+            strong_time_dependence = true,
+            validation = protocol_validation(),
+        ) : variable_selection
+    discovery =
+        causal_discovery === nothing ?
+        CausalDiscoveryStage(
+            method_labels = (
+                "PC",
+                "ECONOMIC_REASONING",
+                "DOMAIN_EXPERTISE",
+                "OBSERVED_OUTCOMES",
+            ),
+            graph_id = "resolved-dag",
+            graph_nodes = ("X", "Y", "Z", "I", "M", "C", "D"),
+            directed_edges = (
+                ("Z", "X"),
+                ("Z", "Y"),
+                ("I", "X"),
+                ("X", "M"),
+                ("M", "Y"),
+                ("X", "Y"),
+                ("X", "C"),
+                ("Y", "C"),
+                ("X", "D"),
+            ),
+            graph_kind = "DAG",
+            ambiguous_edges = (),
+            assumptions = (
+                "Recorded variables are sufficient for the target effect.",
+                "Directions use temporal and economic restrictions.",
+            ),
+        ) : causal_discovery
+    adjustment =
+        causal_adjustment_set === nothing ?
+        CausalAdjustmentSetStage(
+            treatment = "X",
+            outcome = "Y",
+            method_label = "BACKDOOR_ADJUSTMENT",
+            identified = true,
+            admissible_adjustment_sets = (("Z",),),
+            selected_adjustment_set = ("Z",),
+            confounders = ("Z",),
+            descendants = ("M", "C", "D"),
+            mediators = ("M",),
+            colliders = ("C",),
+            instruments = ("I",),
+            control_justifications = (("Z", "Common cause of factor and return."),),
+            open_backdoor_paths = (),
+        ) : causal_adjustment_set
+    performance =
+        causal_explanatory_and_predictive_power === nothing ?
+        CausalExplanatoryAndPredictivePowerStage(
+            task_types = ("RETURN_SIZE",),
+            estimator_label = "fold-refit causal regression",
+            explanatory_metric_labels = ("R_SQUARED",),
+            predictive_metric_labels = ("MEAN_SQUARED_ERROR", "SPEARMAN_CORRELATION"),
+            explanatory_evidence_id = "explanatory-evidence",
+            predictive_evidence_id = "predictive-evidence",
+            naive_benchmark_id = "training-mean-benchmark",
+            validation = protocol_validation(),
+        ) : causal_explanatory_and_predictive_power
+    portfolio =
+        causal_portfolio_construction === nothing ?
+        CausalPortfolioConstructionStage(
+            method_labels = (
+                "POSITION_SIZING",
+                "EXPOSURE_CONTROL",
+                "ECONOMIC_RATIONALE",
+                "FRAGILITY_STRESS_TEST",
+                "TRANSACTION_COST_OPTIMIZATION",
+                "TRANSFER_COEFFICIENT",
+            ),
+            causal_exposures = ("X",),
+            controlled_unintended_exposures = ("C", "D"),
+            cost_model_id = "cost-model-v1",
+            constraint_set_id = "constraints-v1",
+            economic_rationale = "Positions target the identified effect.",
+            fragility_scenarios = ("weaken X-to-Y", "perturb Z-to-X"),
+            transfer_coefficient = 0.82,
+        ) : causal_portfolio_construction
+    backtest_stage =
+        backtest === nothing ?
+        BacktestStage(
+            method_labels = ("COMBINATORIAL_PURGED_CROSS_VALIDATION",),
+            trial_family_id = family,
+            declared_trial_ids = trials,
+            validation = protocol_cpcv_validation(),
+        ) : backtest
+    corrections =
+        multiple_testing_adjustments === nothing ?
+        MultipleTestingAdjustmentsStage(
+            method_labels = ("HOLM", "DEFLATED_SHARPE_RATIO"),
+            trial_family_id = family,
+            declared_trial_ids = trials,
+            family_partitions = (
+                ("primary", ("strategy-a", "strategy-b")),
+                ("robustness", ("strategy-c",)),
+            ),
+            alpha = 0.05,
+            backtests_independent = false,
+            p_value_estimator = "dependence-adjusted-estimator",
+            time_dependence_model = "purged temporal folds",
+            p_value_inputs_assume_independence = false,
+            sharpe_variance = 0.04,
+            effective_trials = 2.0,
+            sample_length = 252,
+            skewness = 0.1,
+            kurtosis = 3.2,
+            selection_bias_evidence_id = "selection-bias-evidence",
+        ) : multiple_testing_adjustments
     return CausalFactorProtocolReport(
         trial_family_id = family,
         declared_trial_ids = trials,
@@ -222,10 +233,7 @@ end
         method_labels = report.causal_discovery.method_labels,
         graph_id = "cyclic",
         graph_nodes = report.causal_discovery.graph_nodes,
-        directed_edges = (
-            report.causal_discovery.directed_edges...,
-            ("Y", "X"),
-        ),
+        directed_edges = (report.causal_discovery.directed_edges..., ("Y", "X")),
         graph_kind = "DAG",
         ambiguous_edges = (),
         assumptions = report.causal_discovery.assumptions,

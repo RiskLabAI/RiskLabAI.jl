@@ -14,10 +14,7 @@ const _VARIABLE_SELECTION_METHODS = Set((
     "MEAN_DECREASE_IMPURITY",
     "PERMUTATION_FEATURE_IMPORTANCE",
 ))
-const _RESEARCH_PURPOSES = Set((
-    "CAUSAL_ATTRIBUTION",
-    "RISK_PREMIA_HARVESTING",
-))
+const _RESEARCH_PURPOSES = Set(("CAUSAL_ATTRIBUTION", "RISK_PREMIA_HARVESTING"))
 const _DISCOVERY_METHODS = Set((
     "PC",
     "LINGAM",
@@ -27,21 +24,16 @@ const _DISCOVERY_METHODS = Set((
     "PEER_REVIEWED_ASSUMPTIONS",
     "DOMAIN_EXPERTISE",
 ))
-const _ADJUSTMENT_METHODS = Set((
-    "BACKDOOR_ADJUSTMENT",
-    "FRONT_DOOR_ADJUSTMENT",
-    "INSTRUMENTAL_VARIABLES",
-))
+const _ADJUSTMENT_METHODS =
+    Set(("BACKDOOR_ADJUSTMENT", "FRONT_DOOR_ADJUSTMENT", "INSTRUMENTAL_VARIABLES"))
 const _VALIDATION_METHODS = Set((
     "PURGED_CROSS_VALIDATION",
     "WALK_FORWARD",
     "RESAMPLING",
     "COMBINATORIAL_PURGED_CROSS_VALIDATION",
 ))
-const _PURGED_VALIDATION_METHODS = Set((
-    "PURGED_CROSS_VALIDATION",
-    "COMBINATORIAL_PURGED_CROSS_VALIDATION",
-))
+const _PURGED_VALIDATION_METHODS =
+    Set(("PURGED_CROSS_VALIDATION", "COMBINATORIAL_PURGED_CROSS_VALIDATION"))
 const _METRICS_BY_TASK = Dict(
     "PROBABILITY" => Set(("LOG_LOSS", "BRIER_SCORE")),
     "RANKING" => Set((
@@ -50,11 +42,7 @@ const _METRICS_BY_TASK = Dict(
         "MEAN_RECIPROCAL_RANK",
         "CLASSIFICATION_ACCURACY",
     )),
-    "RETURN_SIZE" => Set((
-        "MEAN_SQUARED_ERROR",
-        "R_SQUARED",
-        "SPEARMAN_CORRELATION",
-    )),
+    "RETURN_SIZE" => Set(("MEAN_SQUARED_ERROR", "R_SQUARED", "SPEARMAN_CORRELATION")),
 )
 const _PORTFOLIO_METHODS = Set((
     "POSITION_SIZING",
@@ -70,18 +58,11 @@ const _BACKTEST_METHODS = Set((
     "COMBINATORIAL_PURGED_CROSS_VALIDATION",
     "MONTE_CARLO",
 ))
-const _MULTIPLE_TESTING_METHODS = Set((
-    "HOLM",
-    "HOCHBERG",
-    "BENJAMINI_HOCHBERG",
-    "DEFLATED_SHARPE_RATIO",
-))
+const _MULTIPLE_TESTING_METHODS =
+    Set(("HOLM", "HOCHBERG", "BENJAMINI_HOCHBERG", "DEFLATED_SHARPE_RATIO"))
 const _P_VALUE_METHODS = Set(("HOLM", "HOCHBERG", "BENJAMINI_HOCHBERG"))
-const _REFIT_COMPONENTS = Set((
-    "VARIABLE_SELECTION",
-    "CAUSAL_ESTIMATION",
-    "PORTFOLIO_CONSTRUCTION",
-))
+const _REFIT_COMPONENTS =
+    Set(("VARIABLE_SELECTION", "CAUSAL_ESTIMATION", "PORTFOLIO_CONSTRUCTION"))
 
 Base.@kwdef struct EventHorizon
     observation_id::String
@@ -270,10 +251,7 @@ function Base.getproperty(report::CausalFactorProtocolReport, name::Symbol)
             (_STAGE_NAMES[1], getfield(report, :variable_selection)),
             (_STAGE_NAMES[2], getfield(report, :causal_discovery)),
             (_STAGE_NAMES[3], getfield(report, :causal_adjustment_set)),
-            (
-                _STAGE_NAMES[4],
-                getfield(report, :causal_explanatory_and_predictive_power),
-            ),
+            (_STAGE_NAMES[4], getfield(report, :causal_explanatory_and_predictive_power)),
             (_STAGE_NAMES[5], getfield(report, :causal_portfolio_construction)),
             (_STAGE_NAMES[6], getfield(report, :backtest)),
             (_STAGE_NAMES[7], getfield(report, :multiple_testing_adjustments)),
@@ -339,13 +317,7 @@ function _validate_labels(
     errors::Vector{String};
     allow_empty::Bool = false,
 )
-    valid = _validate_string_tuple(
-        value,
-        stage,
-        subject,
-        errors;
-        allow_empty = allow_empty,
-    )
+    valid = _validate_string_tuple(value, stage, subject, errors; allow_empty = allow_empty)
     if valid && !issubset(Set(value), allowed)
         _add_protocol_error!(errors, "$stage: $subject contains a non-source label.")
         return false
@@ -361,21 +333,33 @@ function _validate_event_horizons(evidence, stage, errors)
     result = Dict{String,Tuple{Float64,Float64}}()
     for horizon in evidence.event_horizons
         if !_nonblank(horizon.observation_id)
-            _add_protocol_error!(errors, "$stage: an event horizon has an invalid identifier.")
+            _add_protocol_error!(
+                errors,
+                "$stage: an event horizon has an invalid identifier.",
+            )
             continue
         end
         if haskey(result, horizon.observation_id)
-            _add_protocol_error!(errors, "$stage: event-horizon identifiers must be unique.")
+            _add_protocol_error!(
+                errors,
+                "$stage: event-horizon identifiers must be unique.",
+            )
             continue
         end
         if !_finite_protocol_real(horizon.start) || !_finite_protocol_real(horizon.stop)
-            _add_protocol_error!(errors, "$stage: event-horizon bounds must be finite numbers.")
+            _add_protocol_error!(
+                errors,
+                "$stage: event-horizon bounds must be finite numbers.",
+            )
             continue
         end
         start = Float64(horizon.start)
         stop = Float64(horizon.stop)
         if !(start < stop)
-            _add_protocol_error!(errors, "$stage: every event horizon must have positive length.")
+            _add_protocol_error!(
+                errors,
+                "$stage: every event horizon must have positive length.",
+            )
             continue
         end
         result[horizon.observation_id] = (start, stop)
@@ -388,9 +372,8 @@ _intervals_overlap(left, right) = left[1] < right[2] && right[1] < left[2]
 function _has_any_overlap(horizons)
     intervals = collect(values(horizons))
     for left_index in eachindex(intervals)
-        for right_index in left_index + 1:length(intervals)
-            _intervals_overlap(intervals[left_index], intervals[right_index]) &&
-                return true
+        for right_index = (left_index+1):length(intervals)
+            _intervals_overlap(intervals[left_index], intervals[right_index]) && return true
         end
     end
     return false
@@ -433,7 +416,10 @@ function _validate_fold_evidence(
 
     for fold in evidence.folds
         if !_nonblank(fold.fold_id) || !_nonblank(fold.path_id)
-            _add_protocol_error!(errors, "$stage: fold and path identifiers must be nonblank.")
+            _add_protocol_error!(
+                errors,
+                "$stage: fold and path identifiers must be nonblank.",
+            )
         elseif fold.fold_id in fold_ids
             _add_protocol_error!(errors, "$stage: fold identifiers must be unique.")
         else
@@ -450,31 +436,19 @@ function _validate_fold_evidence(
             "refit components",
             errors,
         )
-        if components_valid && !issubset(required_refit_components, Set(fold.refit_components))
+        if components_valid &&
+           !issubset(required_refit_components, Set(fold.refit_components))
             _add_protocol_error!(
                 errors,
                 "$stage: every fold must refit all required pipeline components.",
             )
         end
 
-        train_valid = _validate_string_tuple(
-            fold.train_ids,
-            stage,
-            "training identifiers",
-            errors,
-        )
-        test_valid = _validate_string_tuple(
-            fold.test_ids,
-            stage,
-            "test identifiers",
-            errors,
-        )
-        fit_valid = _validate_string_tuple(
-            fold.fit_ids,
-            stage,
-            "fit identifiers",
-            errors,
-        )
+        train_valid =
+            _validate_string_tuple(fold.train_ids, stage, "training identifiers", errors)
+        test_valid =
+            _validate_string_tuple(fold.test_ids, stage, "test identifiers", errors)
+        fit_valid = _validate_string_tuple(fold.fit_ids, stage, "fit identifiers", errors)
         prediction_valid = _validate_string_tuple(
             fold.prediction_ids,
             stage,
@@ -507,24 +481,24 @@ function _validate_fold_evidence(
                 "$stage: every fold identifier must have an event horizon.",
             )
 
-        if !isempty(intersect(validation_methods, Set((
-            "PURGED_CROSS_VALIDATION",
-            "WALK_FORWARD",
-        ))))
-            !isempty(intersect(nonresampled_test_ids, test_set)) &&
-                _add_protocol_error!(
-                    errors,
-                    "$stage: ordinary temporal validation cannot duplicate test predictions.",
-                )
+        if !isempty(
+            intersect(validation_methods, Set(("PURGED_CROSS_VALIDATION", "WALK_FORWARD"))),
+        )
+            !isempty(intersect(nonresampled_test_ids, test_set)) && _add_protocol_error!(
+                errors,
+                "$stage: ordinary temporal validation cannot duplicate test predictions.",
+            )
             union!(nonresampled_test_ids, intersect(test_set, known_ids))
         end
 
         if _nonblank(fold.refit_id)
             previous = get(refit_training_sets, fold.refit_id, nothing)
-            previous !== nothing && previous != train_set && _add_protocol_error!(
-                errors,
-                "$stage: a refit identifier cannot represent different training sets.",
-            )
+            previous !== nothing &&
+                previous != train_set &&
+                _add_protocol_error!(
+                    errors,
+                    "$stage: a refit identifier cannot represent different training sets.",
+                )
             refit_training_sets[fold.refit_id] = copy(train_set)
         end
 
@@ -571,10 +545,8 @@ function _validate_fold_evidence(
     end
 
     if "COMBINATORIAL_PURGED_CROSS_VALIDATION" in validation_methods
-        length(path_test_ids) >= 2 || _add_protocol_error!(
-            errors,
-            "$stage: CPCV requires multiple complete paths.",
-        )
+        length(path_test_ids) >= 2 ||
+            _add_protocol_error!(errors, "$stage: CPCV requires multiple complete paths.")
         if !isempty(known_ids) && any(ids -> ids != known_ids, values(path_test_ids))
             _add_protocol_error!(
                 errors,
@@ -588,7 +560,8 @@ function _validate_fold_evidence(
         )
     end
     if "PURGED_CROSS_VALIDATION" in validation_methods &&
-       !isempty(known_ids) && nonresampled_test_ids != known_ids
+       !isempty(known_ids) &&
+       nonresampled_test_ids != known_ids
         _add_protocol_error!(
             errors,
             "$stage: purged cross-validation must predict every observation once.",
@@ -641,9 +614,7 @@ end
 function _protocol_reachable_avoiding(adjacency, start, blocked)
     start in blocked && return Set{String}()
     visited = Set{String}()
-    pending = [
-        node for node in get(adjacency, start, Set{String}()) if !(node in blocked)
-    ]
+    pending = [node for node in get(adjacency, start, Set{String}()) if !(node in blocked)]
     while !isempty(pending)
         node = pop!(pending)
         if node in visited || node in blocked
@@ -653,8 +624,8 @@ function _protocol_reachable_avoiding(adjacency, start, blocked)
         append!(
             pending,
             [
-                target for target in get(adjacency, node, Set{String}()) if
-                !(target in blocked)
+                target for
+                target in get(adjacency, node, Set{String}()) if !(target in blocked)
             ],
         )
     end
@@ -692,7 +663,7 @@ function _protocol_d_separated(edges, left, right, conditioned)
     for child in ancestors
         child_parents = collect(intersect(parents[child], ancestors))
         for first_index in eachindex(child_parents)
-            for second_index in first_index + 1:length(child_parents)
+            for second_index = (first_index+1):length(child_parents)
                 first = child_parents[first_index]
                 second = child_parents[second_index]
                 push!(moral[first], second)
@@ -724,16 +695,9 @@ function _validate_discovery(stage, selected_variables, outcome, errors)
         "causal-discovery method labels",
         errors,
     )
-    _nonblank(stage.graph_id) || _add_protocol_error!(
-        errors,
-        "$label: graph identifier must be nonblank.",
-    )
-    nodes_valid = _validate_string_tuple(
-        stage.graph_nodes,
-        label,
-        "graph nodes",
-        errors,
-    )
+    _nonblank(stage.graph_id) ||
+        _add_protocol_error!(errors, "$label: graph identifier must be nonblank.")
+    nodes_valid = _validate_string_tuple(stage.graph_nodes, label, "graph nodes", errors)
     nodes = nodes_valid ? Set(stage.graph_nodes) : Set{String}()
     if nodes_valid && nodes != union(selected_variables, Set((outcome,)))
         _add_protocol_error!(
@@ -748,7 +712,10 @@ function _validate_discovery(stage, selected_variables, outcome, errors)
     end
     for (source, target) in stage.directed_edges
         if !(source in nodes && target in nodes)
-            _add_protocol_error!(errors, "$label: every directed edge must use graph nodes.")
+            _add_protocol_error!(
+                errors,
+                "$label: every directed edge must use graph nodes.",
+            )
             edges_valid = false
         end
         if source == target
@@ -759,10 +726,8 @@ function _validate_discovery(stage, selected_variables, outcome, errors)
     if edges_valid && !isempty(nodes) && !_protocol_acyclic(nodes, stage.directed_edges)
         _add_protocol_error!(errors, "$label: the resolved graph must be acyclic.")
     end
-    stage.graph_kind == "DAG" || _add_protocol_error!(
-        errors,
-        "$label: the accepted graph must be a resolved DAG.",
-    )
+    stage.graph_kind == "DAG" ||
+        _add_protocol_error!(errors, "$label: the accepted graph must be a resolved DAG.")
     isempty(stage.ambiguous_edges) || _add_protocol_error!(
         errors,
         "$label: identification-relevant ambiguity must be resolved.",
@@ -792,7 +757,10 @@ function _validate_adjustment_sets(value, stage, errors)
         end
         frozen = Set(adjustment_set)
         if frozen in result
-            _add_protocol_error!(errors, "$stage: admissible adjustment sets must be distinct.")
+            _add_protocol_error!(
+                errors,
+                "$stage: admissible adjustment sets must be distinct.",
+            )
             valid = false
         end
         push!(result, frozen)
@@ -803,8 +771,10 @@ end
 function _validate_justifications(value, stage, errors)
     result = Dict{String,String}()
     for item in value
-        if !(item isa Tuple) || length(item) != 2 ||
-           !_nonblank(item[1]) || !_nonblank(item[2])
+        if !(item isa Tuple) ||
+           length(item) != 2 ||
+           !_nonblank(item[1]) ||
+           !_nonblank(item[2])
             _add_protocol_error!(errors, "$stage: a control justification is invalid.")
             continue
         end
@@ -826,18 +796,12 @@ function _validate_adjustment(stage, graph_nodes, adjacency, directed_edges, err
     elseif treatment == outcome
         _add_protocol_error!(errors, "$label: treatment and outcome must be distinct.")
     end
-    treatment in graph_nodes && outcome in graph_nodes || _add_protocol_error!(
-        errors,
-        "$label: treatment and outcome must be graph nodes.",
-    )
-    stage.method_label in _ADJUSTMENT_METHODS || _add_protocol_error!(
-        errors,
-        "$label: adjustment method is not source-listed.",
-    )
-    stage.identified || _add_protocol_error!(
-        errors,
-        "$label: the causal effect must be identified.",
-    )
+    treatment in graph_nodes && outcome in graph_nodes ||
+        _add_protocol_error!(errors, "$label: treatment and outcome must be graph nodes.")
+    stage.method_label in _ADJUSTMENT_METHODS ||
+        _add_protocol_error!(errors, "$label: adjustment method is not source-listed.")
+    stage.identified ||
+        _add_protocol_error!(errors, "$label: the causal effect must be identified.")
 
     selected_valid = _validate_string_tuple(
         stage.selected_adjustment_set,
@@ -846,11 +810,8 @@ function _validate_adjustment(stage, graph_nodes, adjacency, directed_edges, err
         errors;
         allow_empty = true,
     )
-    admissible_sets, _ = _validate_adjustment_sets(
-        stage.admissible_adjustment_sets,
-        label,
-        errors,
-    )
+    admissible_sets, _ =
+        _validate_adjustment_sets(stage.admissible_adjustment_sets, label, errors)
     selected = selected_valid ? Set(stage.selected_adjustment_set) : Set{String}()
     if selected_valid && !(selected in admissible_sets)
         _add_protocol_error!(
@@ -871,10 +832,16 @@ function _validate_adjustment(stage, graph_nodes, adjacency, directed_edges, err
         )
         role_names[field_name] = valid ? Set(value) : Set{String}()
         if valid && !issubset(Set(value), graph_nodes)
-            _add_protocol_error!(errors, "$label: every declared causal role must be a graph node.")
+            _add_protocol_error!(
+                errors,
+                "$label: every declared causal role must be a graph node.",
+            )
         end
         if valid && !isempty(intersect(Set((treatment, outcome)), Set(value)))
-            _add_protocol_error!(errors, "$label: treatment and outcome cannot be role variables.")
+            _add_protocol_error!(
+                errors,
+                "$label: treatment and outcome cannot be role variables.",
+            )
         end
     end
 
@@ -887,15 +854,20 @@ function _validate_adjustment(stage, graph_nodes, adjacency, directed_edges, err
     for mediator in role_names[:mediators]
         if !(mediator in computed_descendants) ||
            !(outcome in _protocol_reachable(adjacency, mediator))
-            _add_protocol_error!(errors, "$label: declared mediators must lie on a causal path.")
+            _add_protocol_error!(
+                errors,
+                "$label: declared mediators must lie on a causal path.",
+            )
         end
     end
     incoming = Dict(node => 0 for node in graph_nodes)
     for targets in values(adjacency), target in targets
         incoming[target] += 1
     end
-    any(node -> get(incoming, node, 0) < 2, role_names[:colliders]) &&
-        _add_protocol_error!(errors, "$label: declared colliders must have converging arrows.")
+    any(node -> get(incoming, node, 0) < 2, role_names[:colliders]) && _add_protocol_error!(
+        errors,
+        "$label: declared colliders must have converging arrows.",
+    )
     outcome in _protocol_reachable(adjacency, treatment) || _add_protocol_error!(
         errors,
         "$label: the graph must retain a treatment-to-outcome path.",
@@ -904,15 +876,15 @@ function _validate_adjustment(stage, graph_nodes, adjacency, directed_edges, err
     graph_confounders = Set(
         node for node in setdiff(graph_nodes, Set((treatment, outcome))) if
         treatment in _protocol_reachable(adjacency, node) &&
-        outcome in _protocol_reachable_avoiding(adjacency, node, Set((treatment,)))
+            outcome in _protocol_reachable_avoiding(adjacency, node, Set((treatment,)))
     )
     role_names[:confounders] == graph_confounders || _add_protocol_error!(
         errors,
         "$label: declared confounders must match graph-implied common causes.",
     )
     graph_colliders = Set(
-        node for (node, degree) in incoming if
-        degree >= 2 && !(node in (treatment, outcome))
+        node for
+        (node, degree) in incoming if degree >= 2 && !(node in (treatment, outcome))
     )
     role_names[:colliders] == graph_colliders || _add_protocol_error!(
         errors,
@@ -921,7 +893,7 @@ function _validate_adjustment(stage, graph_nodes, adjacency, directed_edges, err
     graph_mediators = Set(
         node for node in setdiff(graph_nodes, Set((treatment, outcome))) if
         node in _protocol_reachable(adjacency, treatment) &&
-        outcome in _protocol_reachable(adjacency, node)
+            outcome in _protocol_reachable(adjacency, node)
     )
     role_names[:mediators] == graph_mediators || _add_protocol_error!(
         errors,
@@ -940,14 +912,11 @@ function _validate_adjustment(stage, graph_nodes, adjacency, directed_edges, err
                 errors,
                 "$label: every declared instrument must be relevant in the graph.",
             )
-        outcome in _protocol_reachable_avoiding(
-            adjacency,
-            instrument,
-            Set((treatment,)),
-        ) && _add_protocol_error!(
-            errors,
-            "$label: every declared instrument must satisfy graph-level exclusion.",
-        )
+        outcome in _protocol_reachable_avoiding(adjacency, instrument, Set((treatment,))) &&
+            _add_protocol_error!(
+                errors,
+                "$label: every declared instrument must satisfy graph-level exclusion.",
+            )
         _protocol_d_separated(instrument_edges, instrument, outcome, selected) ||
             _add_protocol_error!(
                 errors,
@@ -977,27 +946,16 @@ function _validate_adjustment(stage, graph_nodes, adjacency, directed_edges, err
             "$label: no declared admissible set may contain a descendant, mediator, collider, or instrument.",
         )
         if stage.method_label == "BACKDOOR_ADJUSTMENT" &&
-           !_protocol_backdoor_d_separated(
-               directed_edges,
-               treatment,
-               outcome,
-               candidate,
-           )
+           !_protocol_backdoor_d_separated(directed_edges, treatment, outcome, candidate)
             _add_protocol_error!(
                 errors,
                 "$label: every declared admissible set must block graph-implied backdoor paths.",
             )
         end
     end
-    issubset(selected, graph_nodes) || _add_protocol_error!(
-        errors,
-        "$label: every selected control must be a graph node.",
-    )
-    justifications = _validate_justifications(
-        stage.control_justifications,
-        label,
-        errors,
-    )
+    issubset(selected, graph_nodes) ||
+        _add_protocol_error!(errors, "$label: every selected control must be a graph node.")
+    justifications = _validate_justifications(stage.control_justifications, label, errors)
     Set(keys(justifications)) == selected || _add_protocol_error!(
         errors,
         "$label: every selected control needs one justification.",
@@ -1009,14 +967,15 @@ function _validate_adjustment(stage, graph_nodes, adjacency, directed_edges, err
         errors;
         allow_empty = true,
     )
-    isempty(stage.open_backdoor_paths) || _add_protocol_error!(
-        errors,
-        "$label: no backdoor path may remain open.",
-    )
+    isempty(stage.open_backdoor_paths) ||
+        _add_protocol_error!(errors, "$label: no backdoor path may remain open.")
 
     if stage.method_label != "FRONT_DOOR_ADJUSTMENT" &&
        stage.frontdoor_criteria_satisfied !== nothing
-        _add_protocol_error!(errors, "$label: front-door evidence requires the front-door method.")
+        _add_protocol_error!(
+            errors,
+            "$label: front-door evidence requires the front-door method.",
+        )
     end
     instrument_premises = (
         stage.instrument_relevance_satisfied,
@@ -1039,12 +998,12 @@ function _validate_adjustment(stage, graph_nodes, adjacency, directed_edges, err
             )
     elseif stage.method_label == "FRONT_DOOR_ADJUSTMENT"
         if isempty(role_names[:mediators]) || stage.frontdoor_criteria_satisfied !== true
-            _add_protocol_error!(errors, "$label: front-door criteria must be explicitly satisfied.")
-        elseif outcome in _protocol_reachable_avoiding(
-            adjacency,
-            treatment,
-            role_names[:mediators],
-        )
+            _add_protocol_error!(
+                errors,
+                "$label: front-door criteria must be explicitly satisfied.",
+            )
+        elseif outcome in
+               _protocol_reachable_avoiding(adjacency, treatment, role_names[:mediators])
             _add_protocol_error!(
                 errors,
                 "$label: front-door mediators must intercept every directed causal path.",
@@ -1056,7 +1015,8 @@ function _validate_adjustment(stage, graph_nodes, adjacency, directed_edges, err
                 treatment,
                 mediator,
                 selected,
-            ) || !_protocol_backdoor_d_separated(
+            ) ||
+               !_protocol_backdoor_d_separated(
                 directed_edges,
                 mediator,
                 outcome,
@@ -1069,7 +1029,8 @@ function _validate_adjustment(stage, graph_nodes, adjacency, directed_edges, err
             end
         end
     elseif stage.method_label == "INSTRUMENTAL_VARIABLES"
-        if isempty(role_names[:instruments]) || any(value -> value !== true, instrument_premises)
+        if isempty(role_names[:instruments]) ||
+           any(value -> value !== true, instrument_premises)
             _add_protocol_error!(
                 errors,
                 "$label: instrumental-variable premises must all hold.",
@@ -1081,10 +1042,8 @@ end
 
 function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
     errors = String[]
-    _nonblank(report.trial_family_id) || _add_protocol_error!(
-        errors,
-        "Protocol: trial-family identifier must be nonblank.",
-    )
+    _nonblank(report.trial_family_id) ||
+        _add_protocol_error!(errors, "Protocol: trial-family identifier must be nonblank.")
     trials_valid = _validate_string_tuple(
         report.declared_trial_ids,
         "Protocol",
@@ -1094,10 +1053,8 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
 
     selection = report.variable_selection
     label = "Stage 1"
-    selection.purpose in _RESEARCH_PURPOSES || _add_protocol_error!(
-        errors,
-        "$label: research purpose is not source-listed.",
-    )
+    selection.purpose in _RESEARCH_PURPOSES ||
+        _add_protocol_error!(errors, "$label: research purpose is not source-listed.")
     selected_valid = _validate_string_tuple(
         selection.selected_variables,
         label,
@@ -1112,10 +1069,12 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
         "variable-selection method labels",
         errors,
     )
-    selection_methods = selection_methods_valid ? Set(selection.method_labels) : Set{String}()
+    selection_methods =
+        selection_methods_valid ? Set(selection.method_labels) : Set{String}()
     if selection.validation === nothing
         selection_horizons = Dict{String,Tuple{Float64,Float64}}()
-        if selection.overlapping_returns || selection.strong_time_dependence ||
+        if selection.overlapping_returns ||
+           selection.strong_time_dependence ||
            "PERMUTATION_FEATURE_IMPORTANCE" in selection_methods
             _add_protocol_error!(
                 errors,
@@ -1135,13 +1094,21 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
             "$label: overlap declaration must match event horizons.",
         )
         validation_methods = Set(selection.validation.method_labels)
-        if actual_overlap && isempty(intersect(validation_methods, _PURGED_VALIDATION_METHODS))
-            _add_protocol_error!(errors, "$label: overlapping returns require purged validation.")
+        if actual_overlap &&
+           isempty(intersect(validation_methods, _PURGED_VALIDATION_METHODS))
+            _add_protocol_error!(
+                errors,
+                "$label: overlapping returns require purged validation.",
+            )
         end
-        if selection.strong_time_dependence &&
-           (!_finite_protocol_real(selection.validation.embargo) ||
-            Float64(selection.validation.embargo) <= 0.0)
-            _add_protocol_error!(errors, "$label: strong time dependence requires an embargo.")
+        if selection.strong_time_dependence && (
+            !_finite_protocol_real(selection.validation.embargo) ||
+            Float64(selection.validation.embargo) <= 0.0
+        )
+            _add_protocol_error!(
+                errors,
+                "$label: strong time dependence requires an embargo.",
+            )
         end
     end
 
@@ -1153,13 +1120,7 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
         safe_outcome,
         errors,
     )
-    _validate_adjustment(
-        adjustment,
-        graph_nodes,
-        graph_adjacency,
-        graph_edges,
-        errors,
-    )
+    _validate_adjustment(adjustment, graph_nodes, graph_adjacency, graph_edges, errors)
 
     stage4 = report.causal_explanatory_and_predictive_power
     label = "Stage 4"
@@ -1176,10 +1137,8 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
             union!(allowed_metrics, _METRICS_BY_TASK[task_type])
         end
     end
-    _nonblank(stage4.estimator_label) || _add_protocol_error!(
-        errors,
-        "$label: estimator label must be nonblank.",
-    )
+    _nonblank(stage4.estimator_label) ||
+        _add_protocol_error!(errors, "$label: estimator label must be nonblank.")
     explanatory_valid = _validate_labels(
         stage4.explanatory_metric_labels,
         allowed_metrics,
@@ -1198,10 +1157,9 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
     )
     has_explanatory = explanatory_valid && !isempty(stage4.explanatory_metric_labels)
     has_predictive = predictive_valid && !isempty(stage4.predictive_metric_labels)
-    has_explanatory || has_predictive || _add_protocol_error!(
-        errors,
-        "$label: at least one performance aspect is required.",
-    )
+    has_explanatory ||
+        has_predictive ||
+        _add_protocol_error!(errors, "$label: at least one performance aspect is required.")
     reported_metrics = union(
         explanatory_valid ? Set(stage4.explanatory_metric_labels) : Set{String}(),
         predictive_valid ? Set(stage4.predictive_metric_labels) : Set{String}(),
@@ -1218,14 +1176,21 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
     if has_explanatory && !_nonblank(stage4.explanatory_evidence_id)
         _add_protocol_error!(errors, "$label: explanatory evidence identifier is required.")
     elseif !has_explanatory && stage4.explanatory_evidence_id !== nothing
-        _add_protocol_error!(errors, "$label: explanatory evidence must match reported metrics.")
+        _add_protocol_error!(
+            errors,
+            "$label: explanatory evidence must match reported metrics.",
+        )
     end
     if has_predictive && !_nonblank(stage4.predictive_evidence_id)
         _add_protocol_error!(errors, "$label: predictive evidence identifier is required.")
     elseif !has_predictive && stage4.predictive_evidence_id !== nothing
-        _add_protocol_error!(errors, "$label: predictive evidence must match reported metrics.")
+        _add_protocol_error!(
+            errors,
+            "$label: predictive evidence must match reported metrics.",
+        )
     end
-    if has_explanatory && has_predictive &&
+    if has_explanatory &&
+       has_predictive &&
        stage4.explanatory_evidence_id == stage4.predictive_evidence_id
         _add_protocol_error!(
             errors,
@@ -1233,15 +1198,19 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
         )
     end
     if selection.purpose == "CAUSAL_ATTRIBUTION" && !has_explanatory
-        _add_protocol_error!(errors, "$label: causal attribution requires explanatory evidence.")
+        _add_protocol_error!(
+            errors,
+            "$label: causal attribution requires explanatory evidence.",
+        )
     end
     if selection.purpose == "RISK_PREMIA_HARVESTING" && !has_predictive
-        _add_protocol_error!(errors, "$label: risk-premia harvesting requires predictive evidence.")
+        _add_protocol_error!(
+            errors,
+            "$label: risk-premia harvesting requires predictive evidence.",
+        )
     end
-    _nonblank(stage4.naive_benchmark_id) || _add_protocol_error!(
-        errors,
-        "$label: a naive benchmark identifier is required.",
-    )
+    _nonblank(stage4.naive_benchmark_id) ||
+        _add_protocol_error!(errors, "$label: a naive benchmark identifier is required.")
     if stage4.multiclass_encoding !== nothing || stage4.averaging_method !== nothing
         stage4.multiclass_encoding == "ONE_VS_REST" || _add_protocol_error!(
             errors,
@@ -1269,9 +1238,10 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
     if !isempty(selection_horizons) && selection_horizons != stage4_horizons
         _add_protocol_error!(errors, "$label: event horizons must match Stage 1.")
     end
-    if selection.strong_time_dependence &&
-       (!_finite_protocol_real(stage4.validation.embargo) ||
-        Float64(stage4.validation.embargo) <= 0.0)
+    if selection.strong_time_dependence && (
+        !_finite_protocol_real(stage4.validation.embargo) ||
+        Float64(stage4.validation.embargo) <= 0.0
+    )
         _add_protocol_error!(errors, "$label: strong time dependence requires an embargo.")
     end
 
@@ -1285,7 +1255,10 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
         errors,
     )
     if portfolio_labels_valid && Set(portfolio.method_labels) != _PORTFOLIO_METHODS
-        _add_protocol_error!(errors, "$label: all source portfolio considerations are required.")
+        _add_protocol_error!(
+            errors,
+            "$label: all source portfolio considerations are required.",
+        )
     end
     causal_valid = _validate_string_tuple(
         portfolio.causal_exposures,
@@ -1301,8 +1274,8 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
         allow_empty = true,
     )
     causal_exposures = causal_valid ? Set(portfolio.causal_exposures) : Set{String}()
-    neutral_exposures = neutral_valid ?
-                        Set(portfolio.controlled_unintended_exposures) : Set{String}()
+    neutral_exposures =
+        neutral_valid ? Set(portfolio.controlled_unintended_exposures) : Set{String}()
     if causal_valid && !issubset(causal_exposures, graph_nodes)
         _add_protocol_error!(errors, "$label: causal exposures must be graph variables.")
     end
@@ -1330,16 +1303,15 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
         errors,
         "$label: causal and neutralized exposures must be disjoint.",
     )
-    issubset(Set(adjustment.colliders), neutral_exposures) || _add_protocol_error!(
-        errors,
-        "$label: declared colliders must be neutralized.",
-    )
+    issubset(Set(adjustment.colliders), neutral_exposures) ||
+        _add_protocol_error!(errors, "$label: declared colliders must be neutralized.")
     for (value, subject) in (
         (portfolio.cost_model_id, "cost model identifier"),
         (portfolio.constraint_set_id, "constraint-set identifier"),
         (portfolio.economic_rationale, "economic rationale"),
     )
-        _nonblank(value) || _add_protocol_error!(errors, "$label: $subject must be nonblank.")
+        _nonblank(value) ||
+            _add_protocol_error!(errors, "$label: $subject must be nonblank.")
     end
     _validate_string_tuple(
         portfolio.fragility_scenarios,
@@ -1372,12 +1344,15 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
         errors,
         "$label: declared trials must match the report exactly.",
     )
-    non_monte_carlo = backtest_labels_valid ?
-                      setdiff(Set(backtest.method_labels), Set(("MONTE_CARLO",))) :
-                      Set{String}()
+    non_monte_carlo =
+        backtest_labels_valid ?
+        setdiff(Set(backtest.method_labels), Set(("MONTE_CARLO",))) : Set{String}()
     if !isempty(non_monte_carlo)
         if backtest.validation === nothing
-            _add_protocol_error!(errors, "$label: temporal backtests require validation evidence.")
+            _add_protocol_error!(
+                errors,
+                "$label: temporal backtests require validation evidence.",
+            )
         else
             _validate_fold_evidence(
                 backtest.validation,
@@ -1385,9 +1360,10 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
                 errors;
                 required_refit_components = _REFIT_COMPONENTS,
             )
-            if selection.strong_time_dependence &&
-               (!_finite_protocol_real(backtest.validation.embargo) ||
-                Float64(backtest.validation.embargo) <= 0.0)
+            if selection.strong_time_dependence && (
+                !_finite_protocol_real(backtest.validation.embargo) ||
+                Float64(backtest.validation.embargo) <= 0.0
+            )
                 _add_protocol_error!(
                     errors,
                     "$label: strong time dependence requires a backtest embargo.",
@@ -1406,12 +1382,13 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
         )
     end
     if backtest_labels_valid && "MONTE_CARLO" in backtest.method_labels
-        _nonblank(backtest.monte_carlo_dgp) || _add_protocol_error!(
-            errors,
-            "$label: Monte Carlo requires an explicit DGP.",
-        )
+        _nonblank(backtest.monte_carlo_dgp) ||
+            _add_protocol_error!(errors, "$label: Monte Carlo requires an explicit DGP.")
     elseif backtest.monte_carlo_dgp !== nothing
-        _add_protocol_error!(errors, "$label: a Monte Carlo DGP requires the Monte Carlo method.")
+        _add_protocol_error!(
+            errors,
+            "$label: a Monte Carlo DGP requires the Monte Carlo method.",
+        )
     end
 
     multiple_testing = report.multiple_testing_adjustments
@@ -1476,17 +1453,13 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
             "$label: alpha must be a finite number between zero and one.",
         )
     end
-    multiple_testing.backtests_independent && _add_protocol_error!(
-        errors,
-        "$label: backtest dependence must be represented.",
-    )
+    multiple_testing.backtests_independent &&
+        _add_protocol_error!(errors, "$label: backtest dependence must be represented.")
 
     methods = methods_valid ? Set(multiple_testing.method_labels) : Set{String}()
     if !isempty(intersect(methods, _P_VALUE_METHODS))
-        _nonblank(multiple_testing.p_value_estimator) || _add_protocol_error!(
-            errors,
-            "$label: p-value estimator must be declared.",
-        )
+        _nonblank(multiple_testing.p_value_estimator) ||
+            _add_protocol_error!(errors, "$label: p-value estimator must be declared.")
         _nonblank(multiple_testing.time_dependence_model) || _add_protocol_error!(
             errors,
             "$label: time dependence treatment must be declared.",
@@ -1510,21 +1483,28 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
         trial_count = length(report.declared_trial_ids)
         if !_finite_protocol_real(multiple_testing.sharpe_variance) ||
            Float64(multiple_testing.sharpe_variance) <= 0.0
-            _add_protocol_error!(errors, "$label: positive Sharpe-ratio variance is required.")
+            _add_protocol_error!(
+                errors,
+                "$label: positive Sharpe-ratio variance is required.",
+            )
         end
         if !_finite_protocol_real(multiple_testing.effective_trials) ||
            !(1.0 <= Float64(multiple_testing.effective_trials) < trial_count)
-            _add_protocol_error!(errors, "$label: effective trials must be below total trials.")
+            _add_protocol_error!(
+                errors,
+                "$label: effective trials must be below total trials.",
+            )
         end
         if multiple_testing.sample_length === nothing ||
            multiple_testing.sample_length isa Bool ||
            Int(multiple_testing.sample_length) <= 1
-            _add_protocol_error!(errors, "$label: sample length must be an integer above one.")
+            _add_protocol_error!(
+                errors,
+                "$label: sample length must be an integer above one.",
+            )
         end
-        _finite_protocol_real(multiple_testing.skewness) || _add_protocol_error!(
-            errors,
-            "$label: skewness must be finite.",
-        )
+        _finite_protocol_real(multiple_testing.skewness) ||
+            _add_protocol_error!(errors, "$label: skewness must be finite.")
         if !_finite_protocol_real(multiple_testing.kurtosis) ||
            Float64(multiple_testing.kurtosis) < 1.0
             _add_protocol_error!(
@@ -1539,10 +1519,8 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
                 "$label: skewness and Pearson kurtosis must satisfy the moment inequality.",
             )
         end
-        _nonblank(multiple_testing.selection_bias_evidence_id) || _add_protocol_error!(
-            errors,
-            "$label: selection-bias evidence is required.",
-        )
+        _nonblank(multiple_testing.selection_bias_evidence_id) ||
+            _add_protocol_error!(errors, "$label: selection-bias evidence is required.")
     elseif any(
         value -> value !== nothing,
         (
@@ -1560,9 +1538,8 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
         )
     end
 
-    isempty(errors) || throw(
-        ArgumentError("Causal factor protocol is invalid. " * join(errors, " ")),
-    )
+    isempty(errors) ||
+        throw(ArgumentError("Causal factor protocol is invalid. " * join(errors, " ")))
     return report
 end
 

@@ -3,15 +3,7 @@ include("preserved_runtests.jl")
 using Test
 using LinearAlgebra
 
-include(
-    joinpath(
-        @__DIR__,
-        "..",
-        "src",
-        "CausalFactorAnalysis",
-        "CausalFactorAnalysis.jl",
-    ),
-)
+include(joinpath(@__DIR__, "..", "src", "CausalFactorAnalysis", "CausalFactorAnalysis.jl"))
 using .CausalFactorAnalysis
 
 const EXPECTED_CAUSAL_FACTOR_EXPORTS = Set((

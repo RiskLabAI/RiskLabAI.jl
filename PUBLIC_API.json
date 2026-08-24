@@ -732,38 +732,38 @@
     },
     {
       "path": "src/CausalFactorAnalysis/CausalFactorAnalysis.jl",
-      "size": 2093,
-      "sha256": "B993E1A9BFAF286BA8C6EF7005EF2C110687EB066AAE98C946BAA81AC77FE728"
+      "size": 2089,
+      "sha256": "2CEDE65173AE33C337A826AED7D0BD3C7105622A60E17071C4E472985B47F4BA"
     },
     {
       "path": "src/CausalFactorAnalysis/FactorMirage.jl",
-      "size": 9101,
-      "sha256": "BF3C981B74C221E2E8C90993C1B410D79FA21F315F67CD62B11419EA186DAA5F"
+      "size": 8659,
+      "sha256": "DE328CEDA83C160CC166F8770F446BCD082B66DDE99511221E30095374F133A2"
     },
     {
       "path": "src/CausalFactorAnalysis/GraphIdentification.jl",
-      "size": 30414,
-      "sha256": "FA9FE18C032F4472925DD24B8662B5FFF98CCC8CF4DA47DB572A58E74DA0455B"
+      "size": 29966,
+      "sha256": "D0734576F874404FCE5C6244FE4E9AF1F4FF3C07BBFEE58D43098E76FD3121FB"
     },
     {
       "path": "src/CausalFactorAnalysis/Optimizer.jl",
-      "size": 5201,
-      "sha256": "FECB323B06BBA87BDD9E299CB01FE32EAA9A90F0CE304A884E03E35F12ABA0B2"
+      "size": 5001,
+      "sha256": "1896FC5BCD0E43691EAB233E86300872D54BD68ECBFE125A88CB5AD736B7E506"
     },
     {
       "path": "src/CausalFactorAnalysis/Protocol.jl",
-      "size": 56986,
-      "sha256": "0B12D6E21DB642E33BDA753E180FFF321BC315EB041AC95F46E55B3B7F7AFCF6"
+      "size": 57203,
+      "sha256": "95DB2ABAA05609F210F77B478457A75800020EAA85806E90018D78C247964E50"
     },
     {
       "path": "src/CausalFactorAnalysis/SpecificationDiagnostics.jl",
-      "size": 7041,
-      "sha256": "304E5149D23695CC8C2D3E3F5F8BB8323FBDA84A57BE6F97E8576201EA1053CC"
+      "size": 6811,
+      "sha256": "3FDB30F7D87DA1F94DC5234268E48AF646C069C4B9D5E78E89B033644C4CB93B"
     },
     {
       "path": "src/CausalFactorAnalysis/TreatmentEffects.jl",
-      "size": 8739,
-      "sha256": "FF1FFC0BA91A2AA9F768211D6E01865D72D45273254B9F7BB7ADB189866CF39D"
+      "size": 8446,
+      "sha256": "23BD47E0B88E8C73C0BA362CDDC3FE6B84F989CF590F0E4AF7410A765344FD4F"
     },
     {
       "path": "src/Cluster/Cluster.jl",

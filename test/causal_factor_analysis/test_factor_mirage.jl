@@ -27,8 +27,7 @@
     @test_throws ArgumentError confounder_undercontrolled_coefficient(Inf, 1.0, 1.0)
     @test_throws ArgumentError collider_model_diagnostics(1.0, 2.0, 3.0, 3)
 
-    @test confounder_undercontrolled_coefficient(0.0, 1.0e308, 1.0e308) ≈
-          1.0 rtol = 1.0e-15
+    @test confounder_undercontrolled_coefficient(0.0, 1.0e308, 1.0e308) ≈ 1.0 rtol = 1.0e-15
     scaled_factor = confounder_factor_return(1.0e200, 0.0, 1.0e-200, 0.0, 1.0)
     @test scaled_factor.correct ≈ 1.0 rtol = 1.0e-15
     @test scaled_factor.misspecified ≈ 1.0 rtol = 1.0e-15

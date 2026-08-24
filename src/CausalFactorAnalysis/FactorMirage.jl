@@ -52,8 +52,7 @@ function _coefficient_times_square_root(name, coefficient, radicand)
     return result
 end
 
-_confounder_coefficient(beta, gamma, delta) =
-    beta + gamma * delta / (1 + delta * delta)
+_confounder_coefficient(beta, gamma, delta) = beta + gamma * delta / (1 + delta * delta)
 
 function _collider_coefficients(beta, gamma, delta)
     denominator = 1 + gamma * gamma
@@ -83,20 +82,13 @@ function confounder_factor_return(
     beta_value = _exact_fraction("beta", beta)
     gamma_value = _exact_fraction("gamma", gamma)
     estimated = _exact_fraction("delta_estimated", delta_estimated)
-    realized = delta_realized === nothing ?
-               estimated : _exact_fraction("delta_realized", delta_realized)
+    realized =
+        delta_realized === nothing ? estimated :
+        _exact_fraction("delta_realized", delta_realized)
 
     correct_signal = x_value * beta_value + z_value * gamma_value
-    estimated_coefficient = _confounder_coefficient(
-        beta_value,
-        gamma_value,
-        estimated,
-    )
-    realized_coefficient = _confounder_coefficient(
-        beta_value,
-        gamma_value,
-        realized,
-    )
+    estimated_coefficient = _confounder_coefficient(beta_value, gamma_value, estimated)
+    realized_coefficient = _confounder_coefficient(beta_value, gamma_value, realized)
     return StrategyPerformance(
         _finite_output("correct factor return", correct_signal * correct_signal),
         _finite_output(
@@ -106,28 +98,16 @@ function confounder_factor_return(
     )
 end
 
-function confounder_forecast_return(
-    beta,
-    gamma,
-    delta_estimated;
-    delta_realized = nothing,
-)
+function confounder_forecast_return(beta, gamma, delta_estimated; delta_realized = nothing)
     beta_value = _exact_fraction("beta", beta)
     gamma_value = _exact_fraction("gamma", gamma)
     estimated = _exact_fraction("delta_estimated", delta_estimated)
-    realized = delta_realized === nothing ?
-               estimated : _exact_fraction("delta_realized", delta_realized)
+    realized =
+        delta_realized === nothing ? estimated :
+        _exact_fraction("delta_realized", delta_realized)
 
-    estimated_coefficient = _confounder_coefficient(
-        beta_value,
-        gamma_value,
-        estimated,
-    )
-    realized_coefficient = _confounder_coefficient(
-        beta_value,
-        gamma_value,
-        realized,
-    )
+    estimated_coefficient = _confounder_coefficient(beta_value, gamma_value, estimated)
+    realized_coefficient = _confounder_coefficient(beta_value, gamma_value, realized)
     second_signal = beta_value * realized + gamma_value
     return StrategyPerformance(
         _finite_output(
@@ -136,9 +116,7 @@ function confounder_forecast_return(
         ),
         _finite_output(
             "undercontrolled forecast return",
-            (1 + realized * realized) *
-            estimated_coefficient *
-            realized_coefficient,
+            (1 + realized * realized) * estimated_coefficient * realized_coefficient,
         ),
     )
 end
@@ -147,11 +125,7 @@ function collider_overcontrolled_coefficients(beta, gamma, delta)
     beta_value = _exact_fraction("beta", beta)
     gamma_value = _exact_fraction("gamma", gamma)
     delta_value = _exact_fraction("delta", delta)
-    beta_hat, theta_hat = _collider_coefficients(
-        beta_value,
-        gamma_value,
-        delta_value,
-    )
+    beta_hat, theta_hat = _collider_coefficients(beta_value, gamma_value, delta_value)
     return ColliderCoefficients(
         _finite_output("overcontrolled beta coefficient", beta_hat),
         _finite_output("collider coefficient", theta_hat),
@@ -168,8 +142,7 @@ function collider_factor_return(x, collider_proxy, beta, gamma, delta)
     beta_x = beta_value * x_value
     denominator = 1 + gamma_value * gamma_value
     overcontrolled_signal =
-        (beta_value - delta_value * gamma_value) * x_value +
-        gamma_value * proxy_value
+        (beta_value - delta_value * gamma_value) * x_value + gamma_value * proxy_value
     return StrategyPerformance(
         _finite_output("correct collider factor return", beta_x * beta_x),
         _finite_output(
@@ -197,34 +170,26 @@ function collider_model_diagnostics(beta, gamma, delta, n_observations)
     beta_value = _exact_fraction("beta", beta)
     gamma_value = _exact_fraction("gamma", gamma)
     delta_value = _exact_fraction("delta", delta)
-    n_observations isa Bool &&
-        throw(ArgumentError("n_observations must be an integer"))
-    n_observations isa Integer ||
-        throw(ArgumentError("n_observations must be an integer"))
+    n_observations isa Bool && throw(ArgumentError("n_observations must be an integer"))
+    n_observations isa Integer || throw(ArgumentError("n_observations must be an integer"))
     n_integer = BigInt(n_observations)
-    n_integer > 3 ||
-        throw(ArgumentError("n_observations must be greater than 3"))
+    n_integer > 3 || throw(ArgumentError("n_observations must be greater than 3"))
     n_value = n_integer // BigInt(1)
 
     gamma_denominator = 1 + gamma_value * gamma_value
     outcome_variance = 1 + beta_value * beta_value
     residual_variance = 1 / gamma_denominator
     correct_r_squared = 1 - 1 / outcome_variance
-    overcontrolled_r_squared =
-        1 - 1 / (gamma_denominator * outcome_variance)
+    overcontrolled_r_squared = 1 - 1 / (gamma_denominator * outcome_variance)
     correct_adjusted_r_squared =
         1 - (((n_integer - 1) // (n_integer - 2)) / outcome_variance)
     overcontrolled_adjusted_r_squared =
-        1 - ((n_integer - 1) // (n_integer - 3)) /
-              (gamma_denominator * outcome_variance)
+        1 - ((n_integer - 1) // (n_integer - 3)) / (gamma_denominator * outcome_variance)
 
     diagnostic_sum =
-        (beta_value * gamma_value + delta_value)^2 +
-        gamma_value * gamma_value +
-        1
+        (beta_value * gamma_value + delta_value)^2 + gamma_value * gamma_value + 1
     correct_beta_variance = 1 / n_value
-    overcontrolled_beta_variance =
-        diagnostic_sum / (n_value * gamma_denominator^2)
+    overcontrolled_beta_variance = diagnostic_sum / (n_value * gamma_denominator^2)
     collider_coefficient_variance = 1 / (n_value * gamma_denominator^2)
     overcontrolled_numerator = beta_value - delta_value * gamma_value
 
@@ -239,29 +204,15 @@ function collider_model_diagnostics(beta, gamma, delta, n_observations)
             overcontrolled_adjusted_r_squared,
         ),
         _finite_output("correct beta variance", correct_beta_variance),
-        _finite_output(
-            "overcontrolled beta variance",
-            overcontrolled_beta_variance,
-        ),
-        _finite_output(
-            "collider coefficient variance",
-            collider_coefficient_variance,
-        ),
-        _coefficient_times_square_root(
-            "correct beta t-statistic",
-            beta_value,
-            n_value,
-        ),
+        _finite_output("overcontrolled beta variance", overcontrolled_beta_variance),
+        _finite_output("collider coefficient variance", collider_coefficient_variance),
+        _coefficient_times_square_root("correct beta t-statistic", beta_value, n_value),
         _coefficient_times_square_root(
             "overcontrolled beta t-statistic",
             overcontrolled_numerator,
             n_value / diagnostic_sum,
         ),
-        _coefficient_times_square_root(
-            "collider t-statistic",
-            gamma_value,
-            n_value,
-        ),
+        _coefficient_times_square_root("collider t-statistic", gamma_value, n_value),
         gamma_value^2 * (n_integer - 3) > 1,
         overcontrolled_numerator^2 > beta_value^2 * diagnostic_sum,
     )
