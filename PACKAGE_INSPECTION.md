@@ -33,10 +33,11 @@ In fresh Julia 1.10.12 and 1.12.7 environments, verify the exact package origin,
 `Base.pkgversion(RiskLabAI) == v"1.0.0"`, the 148 root exports, all module
 exports in `PUBLIC_API.json`, and the complete 57-feature causal namespace.
 Run the exact package-scoped test inventory at the approved dependency floors
-and current versions. Run base lanes with only the `Test` target and verify the
-four extension-absence/fallback assertions. Repeat all lanes with Lux,
-Optimisers, and Zygote explicitly installed and loaded, then verify the four
-numerical Deep-BSDE assertions.
+and current versions. In every temporary test environment, explicitly add all
+seven required external dependencies before running tests. Run base lanes with
+only the `Test` target and verify the four extension-absence/fallback
+assertions. Repeat all lanes with Lux, Optimisers, and Zygote explicitly
+installed and loaded, then verify the four numerical Deep-BSDE assertions.
 
 ## Final review
 

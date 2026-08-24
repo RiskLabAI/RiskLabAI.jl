@@ -56,6 +56,16 @@ jobs:
                     Pkg.PackageSpec(name = "HypothesisTests", version = v"0.11.8"),
                     Pkg.PackageSpec(name = "SpecialFunctions", version = v"2.8.0"),
                 ])
+            else
+                Pkg.add([
+                    Pkg.PackageSpec(name = "Clustering"),
+                    Pkg.PackageSpec(name = "Combinatorics"),
+                    Pkg.PackageSpec(name = "DataFrames"),
+                    Pkg.PackageSpec(name = "DecisionTree"),
+                    Pkg.PackageSpec(name = "Distributions"),
+                    Pkg.PackageSpec(name = "HypothesisTests"),
+                    Pkg.PackageSpec(name = "SpecialFunctions"),
+                ])
             end
             using RiskLabAI
             include(joinpath(pwd(), "test", "runtests.jl"))
@@ -106,6 +116,13 @@ jobs:
                 ])
             else
                 Pkg.add([
+                    Pkg.PackageSpec(name = "Clustering"),
+                    Pkg.PackageSpec(name = "Combinatorics"),
+                    Pkg.PackageSpec(name = "DataFrames"),
+                    Pkg.PackageSpec(name = "DecisionTree"),
+                    Pkg.PackageSpec(name = "Distributions"),
+                    Pkg.PackageSpec(name = "HypothesisTests"),
+                    Pkg.PackageSpec(name = "SpecialFunctions"),
                     Pkg.PackageSpec(name = "Lux"),
                     Pkg.PackageSpec(name = "Optimisers"),
                     Pkg.PackageSpec(name = "Zygote"),

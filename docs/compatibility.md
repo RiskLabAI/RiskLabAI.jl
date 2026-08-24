@@ -48,7 +48,11 @@ The governed base test target contains only `Test`; it does not promote weak
 dependencies into required dependencies. Base lanes verify four explicit
 extension-absence and fallback assertions. Separate `deep_bsde` lanes install
 and load Lux, Optimisers, and Zygote before running the four numerical solver
-assertions.
+assertions. Every CI lane creates a temporary test environment and adds all
+seven required external packages as direct dependencies at either their exact
+floors or current compatible versions. Extension lanes additionally add the
+three weak dependencies. This keeps direct imports in the preserved tests
+independent of incidental manifest state.
 
 TimeSeries is not a required dependency. No preserved source behavior uses it,
 and the complete base library passes without it.
@@ -74,9 +78,10 @@ and exhaustive graph oracles; it does not use Python-Julia agreement as its
 sole correctness test.
 
 The CI workflow keeps Julia 1.10.12 LTS and Julia 1.12.7 stable as explicit
-base and extension jobs. JuliaFormatter 2.9.0 checks only the independently
-maintained causal source, causal tests, and test entry point; preserved source
-remains governed by the complete analytical test suite.
+base and extension jobs. Both minimum and current jobs construct their
+temporary test environments explicitly. JuliaFormatter 2.9.0 checks only the
+independently maintained causal source, causal tests, and test entry point;
+preserved source remains governed by the complete analytical test suite.
 
 The deep solver now converts Lux parameters and state to Float64, matching the
 PDE state and eliminating a mixed-precision fallback present in every original
