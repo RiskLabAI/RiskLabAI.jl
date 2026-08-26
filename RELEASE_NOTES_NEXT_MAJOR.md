@@ -24,7 +24,9 @@ add Lux, Optimisers, and Zygote. The governed workflow also pins JuliaFormatter
 No source-conflicted causal result is admitted. The static Project metadata,
 63-file source inventory, 12-file package-scoped test inventory, public API
 inventory, documentation, examples, dependency extension, governed CI
-workflow, and 88-file intended package-tree list are frozen. No package
+workflow, and 88-file intended release-source list are frozen. The registry
+tree also preserves 60 already-public repository-only files; they are not
+loaded by the active package and do not alter its runtime API. No package
 artifact has been created. Future artifact inspection and separate human
 authorization for version-control, registration, publication, and release
 remain blocked.
