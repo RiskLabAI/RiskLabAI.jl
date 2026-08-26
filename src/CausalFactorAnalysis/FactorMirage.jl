@@ -217,3 +217,83 @@ function collider_model_diagnostics(beta, gamma, delta, n_observations)
         overcontrolled_numerator^2 > beta_value^2 * diagnostic_sum,
     )
 end
+
+function _positive_exact_fraction(name::AbstractString, value)
+    result = _exact_fraction(name, value)
+    result > 0 || throw(ArgumentError("$name must be strictly positive"))
+    return result
+end
+
+"""
+    generalized_confounder_undercontrolled_coefficient(
+        beta, gamma, delta;
+        confounder_variance,
+        exposure_noise_variance,
+    )
+
+Return the population exposure coefficient when a confounder is omitted and
+the confounder and exposure-disturbance variances are not standardized. Both
+variances must be strictly positive. Unit variances reproduce
+[`confounder_undercontrolled_coefficient`](@ref).
+"""
+function generalized_confounder_undercontrolled_coefficient(
+    beta,
+    gamma,
+    delta;
+    confounder_variance,
+    exposure_noise_variance,
+)
+    beta_value = _exact_fraction("beta", beta)
+    gamma_value = _exact_fraction("gamma", gamma)
+    delta_value = _exact_fraction("delta", delta)
+    confounder_variance_value =
+        _positive_exact_fraction("confounder_variance", confounder_variance)
+    exposure_noise_variance_value =
+        _positive_exact_fraction("exposure_noise_variance", exposure_noise_variance)
+
+    denominator = delta_value^2 * confounder_variance_value + exposure_noise_variance_value
+    coefficient =
+        beta_value + delta_value * gamma_value * confounder_variance_value / denominator
+    return _finite_output("generalized undercontrolled coefficient", coefficient)
+end
+
+"""
+    generalized_collider_overcontrolled_coefficients(
+        beta, gamma, delta;
+        outcome_noise_variance,
+        collider_noise_variance,
+    )
+
+Return the two population coefficients after conditioning on a collider when
+the outcome and collider disturbance variances are not standardized. Both
+variances must be strictly positive. Unit variances reproduce
+[`collider_overcontrolled_coefficients`](@ref).
+"""
+function generalized_collider_overcontrolled_coefficients(
+    beta,
+    gamma,
+    delta;
+    outcome_noise_variance,
+    collider_noise_variance,
+)
+    beta_value = _exact_fraction("beta", beta)
+    gamma_value = _exact_fraction("gamma", gamma)
+    delta_value = _exact_fraction("delta", delta)
+    outcome_noise_variance_value =
+        _positive_exact_fraction("outcome_noise_variance", outcome_noise_variance)
+    collider_noise_variance_value =
+        _positive_exact_fraction("collider_noise_variance", collider_noise_variance)
+
+    denominator =
+        collider_noise_variance_value + gamma_value^2 * outcome_noise_variance_value
+    beta_hat =
+        (
+            beta_value * collider_noise_variance_value -
+            delta_value * gamma_value * outcome_noise_variance_value
+        ) / denominator
+    theta_hat = gamma_value * outcome_noise_variance_value / denominator
+    return ColliderCoefficients(
+        _finite_output("generalized overcontrolled beta coefficient", beta_hat),
+        _finite_output("generalized collider coefficient", theta_hat),
+    )
+end

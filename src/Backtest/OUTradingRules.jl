@@ -15,8 +15,8 @@ is the expected net return per unit time `E[gain] / E[τ]`.
 Clean-room Julia port; the closed-form metrics are deterministic and parity-matched
 in `test/runtests.jl`. Deliberate divergence: the optimizer replaces SciPy's
 L-BFGS-B with a coarse-to-fine grid maximization of the same closed-form objective
-(no Optim dependency). Admitted in Appraisal 23
-(`library_extension/appraisals/23_verdict.md`).
+(no Optim dependency). Included after independent validation
+(the documented validation evidence).
 
 References: Lipton, A. & López de Prado, M. (2020), A closed-form solution for
 optimal mean-reverting trading strategies; López de Prado (2018), AFML ch.13.
@@ -165,7 +165,7 @@ Exact optimal OU profit-take / stop-loss by maximizing the closed-form expected 
 return per unit time. Returns a `NamedTuple` `(profit_take, stop_loss, ...)` merged
 with the full `ou_rule_metrics` of the optimum.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer the closed-form OU rule over the Monte-Carlo grid whenever the OU model is
 used — it reproduces the grid optimum within resolution, 18–350× faster, with no
 simulation noise; it degrades in step with the grid off-model (no robustness to

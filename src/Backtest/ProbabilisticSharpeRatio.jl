@@ -73,7 +73,7 @@ end
 # the Sharpe influence function, correcting for both at once; it converges to the
 # PSR denominator (1 − S·SR̂ + (K−1)/4·SR̂²) under i.i.d. returns. Clean-room from
 # the influence-function / HAC math; numeric parity asserted in `test/runtests.jl`.
-# Admitted in Appraisal 08 (`library_extension/appraisals/08_verdict.md`).
+# Included after independent validation (the documented validation evidence).
 # --------------------------------------------------------------------------- #
 
 using Distributions: ccdf
@@ -138,7 +138,7 @@ confidence_interval, test_statistic, p_value, significant, lag)`. The standard
 error is `√(Ω̂/T)` with `Ω̂` the Newey–West long-run variance of the Sharpe
 influence function.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer LPLZ for Sharpe-ratio inference when returns show material serial
 correlation and/or non-normality (estimable from the sample): it restores
 near-nominal CI coverage and test size where the PSR under-covers and over-rejects

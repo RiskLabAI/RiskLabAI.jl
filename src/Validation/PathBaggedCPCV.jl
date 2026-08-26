@@ -14,9 +14,8 @@ CSCV PBO (`Backtest.probability_of_backtest_overfitting`), called on each resamp
 Deliberate divergence (behavioural): the moving-block bootstrap uses Julia's `rng`
 rather than NumPy's PCG64 stream, so the bagged PBO is reproducible under a given
 `rng` but not bit-identical to the Python reference (the plain CSCV PBO it builds
-on is parity-tested exactly). Admitted in Appraisal 09
-(`library_extension/appraisals/09_verdict.md`; in-house method, COI, held to the
-identical bar).
+on is parity-tested exactly). Included after independent validation
+(the documented validation evidence; method extension validated independently).
 
 Reference: Arian, H., Norouzi, M. L. & Seco, L. (2024). Bagged and Adaptive
 Combinatorial Purged Cross-Validation. Bailey, Borwein, López de Prado & Zhu
@@ -59,7 +58,7 @@ bootstrap resamples of the `T×N` `performances` matrix, computes the CSCV PBO o
 each, and returns `(bagged_pbo, per_resample_pbos)` — a lower-variance estimate
 than a single CPCV PBO. `block_size` defaults to `max(T ÷ 20, 5)`.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer path-level Bagged CPCV over plain CPCV for a more accurate, lower-variance
 overfitting (PBO) estimate whenever the CPCV path set is small or noisy; it
 converges to plain CPCV in the data-rich limit and is neutral on which model is

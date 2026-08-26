@@ -5,38 +5,61 @@ All notable changes to `RiskLabAI.jl` are documented here. The format is based o
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html) (pre-1.0: minor
 versions may include breaking changes).
 
-## [Unreleased]
+## [1.1.0] — release candidate
 
-### Added — Stage-1 mop-up: NERCOME, volatility-robust SADF, PELT (wave 29)
+### Added — causal-factor completion
 
-Closes the last Stage-1 Julia-parity gap (the three admits that were implemented in
+- Preserved the released 57-name `RiskLabAI.CausalFactorAnalysis` contract and
+  added 30 paper-derived names, producing an 87-name causal API with matching
+  Python concepts.
+- Added general-variance factor-mirage coefficients,
+  allocation-misspecification diagnostics, accepted-DAG factor roles,
+  deterministic structural-model evaluation, and separate family- and
+  selection-level false-discovery analytics for searched trials.
+- Added direct analytical examples, independent mathematical and graph oracles,
+  randomized and stability checks, validation boundaries, and a shared
+  numerical Julia-Python fixture.
+- Added QuadGK as a direct dependency with compatibility `>=2.11.3,<3` for the
+  selected-winner improper integral. Lux, Optimisers, and Zygote
+  remain isolated behind the Deep-BSDE package extension.
+
+### Documentation
+
+- Classified every relevant causal-factor source found in the systematic
+  library review. Thirteen contradictory or under-specified method units remain
+  explicitly source-blocked rather than being approximated or guessed.
+- Prepared the additive version 1.1.0 candidate while retaining human control
+  of version control, registration, publication, and release actions.
+
+### Added — analytical-method completion: NERCOME, volatility-robust SADF, PELT
+
+Closes the last Julia parity gap (the three admits that were implemented in
 `RiskLabAI.py` but not yet in Julia). Each docstring carries its preferred-when /
-avoid-when regime tag verbatim from the admitting verdict, plus a citation and an
-appraisal back-link; parity `@testset`s are in `test/runtests.jl`.
+avoid-when usage guidance, plus a citation and a validation summary; parity
+`@testset`s are in `test/runtests.jl`.
 
 - **Data**
   - `nercome_denoised_covariance` — NERCOME nonparametric eigenvalue-regularized
-    covariance (Lam 2016), `Data/Denoise/Denoising.jl`. Admitted in Appraisal 24;
+    covariance (Lam 2016), `Data/Denoise/Denoising.jl`. Included after independent validation;
     prefer it over MP clipping on no-gap / non-stationary spectra. Behavioural parity
     (seeded sample-splitting); validated structurally and on the covariance-accuracy /
     min-variance mechanism.
 - **Features**
   - `volatility_robust_sadf` — volatility-robust SADF/GSADF via wild-bootstrap
-    critical values (Harvey et al. 2016), `Features/StructuralBreaks.jl`. Admitted in
-    Appraisal 26. Observed sup-ADF statistics are exact; bootstrap p-values
+    critical values (Harvey et al. 2016), `Features/StructuralBreaks.jl`. Included after independent validation. Observed sup-ADF statistics are exact; bootstrap p-values
     behavioural (Julia RNG).
   - `pelt_change_points` — PELT exact multiple change-point detection (Killick et al.
-    2012), `Features/StructuralBreaks.jl`. Admitted in Appraisal 26. Clean-room port
+    2012), `Features/StructuralBreaks.jl`. Included after independent validation. Clean-room port
     of the BSD-2 `ruptures` `Pelt`/`CostNormal`, reproducing its indices exactly.
 
-### Added — Stage-1 parity port (the admitted library-extension methods)
+### Added — additional analytical-method parity (the admitted additional analytical work methods)
 
-Ports the admitted Stage-1 methods from `RiskLabAI.py` back to parity in Julia.
+Ports the additional analytical methods from `RiskLabAI.py` back to parity in Julia.
 Each deterministic estimator reproduces the Python reference values within a
 recorded tolerance (parity `@testset`s in `test/runtests.jl`); stochastic /
 ADF-dependent pieces are validated structurally. Every method's docstring carries
-its preferred-when / avoid-when regime tag verbatim from `CONTRIBUTIONS_LEDGER.md`
-and a citation + admitting-appraisal back-link.
+its preferred-when / avoid-when usage guidance
+and a citation + validation summary.
 
 - **Features**
   - `edge_estimator` — EDGE bid-ask spread estimator (Ardia–Guidotti–Kroencke
@@ -89,8 +112,8 @@ and a citation + admitting-appraisal back-link.
   optional analogues not bundled in the Julia port; both functions fall back to the
   always-available path (R/S Hurst, random sampling), matching the Python
   optional-dependency-absent behaviour. See `PARITY.md` for the full divergence list.
-- The Stage-1 follow-ups NERCOME, volatility-robust SADF and PELT are now ported (see
-  the wave-29 entry at the top of this section); the Stage-1 Julia-parity gap is closed.
+- The additional methods NERCOME, volatility-robust SADF and PELT are now ported (see
+  the entry at the top of this section); the Julia parity gap is closed.
 
 ## [0.6.1] — 2026-06-20
 

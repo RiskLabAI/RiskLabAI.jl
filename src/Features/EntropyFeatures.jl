@@ -151,7 +151,7 @@ end
 # missing mass back: Miller–Madow to first order, Grassberger to higher order,
 # NSB by integrating over a near-uniform-entropy Bayesian prior. All operate on
 # the same overlapping n-gram counts as the plug-in and return bits / word length.
-# Admitted in Appraisal 06 (`library_extension/appraisals/06_verdict.md`).
+# Included after independent validation (the documented validation evidence).
 # Clean-room from the published math; numeric parity asserted in `test/runtests.jl`.
 # --------------------------------------------------------------------------- #
 
@@ -185,7 +185,7 @@ Miller–Madow bias-corrected Shannon entropy (bits per symbol): the plug-in
 entropy plus the first-order analytic correction `(K̂-1)/(2N)`, with K̂ the number
 of observed n-grams and N the count. The cheapest correction.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer a bias-corrected estimator over the plug-in whenever the symbol counts are
 undersampled (a large effective alphabet relative to the sample: long words, fine
 encodings, or short windows); Miller-Madow is the cheap first-order fix. It
@@ -218,7 +218,7 @@ Grassberger (2008) bias-corrected Shannon entropy (bits per symbol):
 `H = ln N - (1/N) Σ nᵢ G(nᵢ)` converted to bits. A higher-order correction with
 no tuning, intermediate in cost between Miller–Madow and NSB.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer a bias-corrected estimator over the plug-in whenever the symbol counts are
 undersampled; Grassberger is close to NSB at lower cost (the practical default
 when undersampled). It converges to the plug-in when N is much larger than K, with
@@ -322,7 +322,7 @@ effective alphabet of words is `alphabet_size ^ approximate_word_length`, defaul
 to the number of distinct symbols observed). The most accurate estimator in deep
 undersampling, and the most expensive.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer a bias-corrected estimator over the plug-in whenever the symbol counts are
 undersampled; NSB is most accurate in deep undersampling. It converges to the
 plug-in when N is much larger than K, with no over-correction; the gain is

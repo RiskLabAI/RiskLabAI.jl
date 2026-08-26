@@ -175,9 +175,9 @@ end
 # approximation). de Prado's min-d-via-ADF is finite-sample biased and
 # under-differences; AFD anchors the order on a bias-corrected Hurst-blend
 # estimate of the increments with a CV-chosen FFD truncation, raised to the ADF
-# stationarity boundary only if needed. Admitted in Appraisal 13
-# (`library_extension/appraisals/13_verdict.md`; real-data predictive-lift
-# confirmation a tracked obligation).
+# stationarity boundary only if needed. Included after independent validation
+# (the documented validation evidence; real-data predictive-lift
+# confirmation a future validation work).
 #
 # Deliberate divergence: the wavelet-variance Hurst component is an OPTIONAL
 # enhancement (`pywt` in Python). The Julia port carries no wavelet dependency, so
@@ -290,7 +290,7 @@ order along `delta_grid` only as far as the ADF stationarity boundary if needed.
 Returns a `NamedTuple` `(order, d_hat, adf_pvalue, memory_retained, threshold,
 series)`.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer AFD over fixed-width FFD when the differencing order itself must be right —
 strong long memory and finite samples, where min-d under-differences (order error
 0.064 vs FFD 0.371); on weak memory the gap narrows. The implemented AFD is a

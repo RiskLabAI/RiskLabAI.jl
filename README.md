@@ -4,22 +4,24 @@
 
 RiskLabAI is a Julia library for quantitative finance, financial machine
 learning, and causal factor analysis. It provides research-oriented
-implementations of methods associated with Marcos LÃ³pez de Prado's *Advances
+implementations of methods associated with Marcos López de Prado's *Advances
 in Financial Machine Learning*, *Machine Learning for Asset Managers*, and
 *Causal Factor Investing*.
 
-RiskLabAI 1.0.0 preserves the previously published Julia library and adds a
-clean causal-factor-analysis module. The companion
+The RiskLabAI 1.1.0 candidate preserves the 57-name causal-factor-analysis
+contract established in 1.0.0 and adds 30 paper-derived names, producing an
+87-name causal API. The companion
 [RiskLabAI.py](https://github.com/RiskLabAI/RiskLabAI.py) package independently
-implements the same 57 causal concepts. This parity statement applies to the
-causal API, not to every Julia module.
+implements the same concepts. This parity statement applies to the causal API,
+not to every Julia module.
 
 ## What is included
 
 - **Causal factor analysis** - constrained minimum-variance allocation,
-  factor-mirage diagnostics, graphical identification, treatment-effect
-  formulas, specification experiments, and evidence records for the
-  seven-stage causal-factor protocol
+  factor-mirage and allocation-misspecification diagnostics, graphical
+  identification and factor roles, deterministic structural-model evaluation,
+  treatment-effect formulas, search-adjusted false discovery, specification
+  experiments, and evidence records for the seven-stage causal-factor protocol
 - **Financial data structures** - tick, volume, dollar, imbalance, run, and
   time bars
 - **Market features** - entropy, microstructure, structural-break, and feature-
@@ -37,21 +39,20 @@ causal API, not to every Julia module.
 
 ## Compatibility
 
-RiskLabAI 1.0.0 supports Julia 1.10.12 LTS and Julia 1.12.7. The complete
+RiskLabAI 1.1.0 supports Julia 1.10.12 LTS and Julia 1.12.7. The complete
 tested policy and dependency details are in
 [`docs/compatibility.md`](https://github.com/RiskLabAI/RiskLabAI.jl/blob/main/docs/compatibility.md).
 
 ## Installation
 
-Until RiskLabAI is registered in Julia's General registry, install it directly
-from GitHub:
+To install the repository version directly from GitHub:
 
 ```julia
 using Pkg
 Pkg.add(url = "https://github.com/RiskLabAI/RiskLabAI.jl")
 ```
 
-After registration, the standard installation command will be:
+For a version available through Julia's General registry, use:
 
 ```julia
 using Pkg

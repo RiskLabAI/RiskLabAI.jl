@@ -1,11 +1,18 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "document_type": "RISKLABAI_JULIA_PUBLIC_API_INVENTORY",
   "product": "RiskLabAI",
   "language": "Julia",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "package_uuid": "a72881da-fdaa-49c1-8962-99caf4ccfee8",
-  "inventory_rule": "Exported bindings observed from the exact source modules in an isolated supported Julia environment.",
+  "baseline_contract": {
+    "approved_merged_commit": "3a9ff26c7293616a112f0b36eef9beeea892e58c",
+    "released_causal_export_count": 57,
+    "additive_export_count": 30,
+    "total_causal_export_count": 87,
+    "package_version_change_deferred": false
+  },
+  "inventory_rule": "Exported bindings observed from the exact candidate source through the supported Julia package environment.",
   "root_export_count": 148,
   "root_exports": [
     "BlackScholesBarenblatt",
@@ -221,8 +228,9 @@
     },
     {
       "module": "CausalFactorAnalysis",
-      "export_count": 57,
+      "export_count": 87,
       "exports": [
+        "AllocationMisspecificationDiagnostics",
         "BackdoorAdjustmentEvidence",
         "BacktestStage",
         "CausalAdjustmentSetStage",
@@ -236,20 +244,31 @@
         "DSeparationEvidence",
         "DifferenceInDifferencesEstimate",
         "EventHorizon",
+        "FDRComparisonEvidence",
+        "FDRNonIdentificationWitness",
+        "FactorControlRoles",
         "FoldEvidence",
         "FrontdoorAdjustmentEvidence",
+        "GaussianSearchAdjustedFDR",
+        "GaussianTrialMixture",
         "InstrumentEvidence",
+        "MaxSelectionFamilyErrors",
         "MultipleTestingAdjustmentsStage",
         "NodeRoleEvidence",
         "PathEvidence",
         "PopulationRegressionDiagnostics",
         "RegressionDiagnostics",
+        "SelectionLevelProbabilityEvidence",
         "SpecificationExperimentResult",
         "SpecificationPopulationResult",
         "StrategyPerformance",
+        "StructuralCausalModelResult",
         "TreatmentEffectDecomposition",
+        "TreatmentOutcomeRole",
+        "TreatmentOutcomeRoleEvidence",
         "ValidationEvidence",
         "VariableSelectionStage",
+        "allocation_misspecification_diagnostics",
         "average_treatment_effect",
         "backdoor_adjusted_average_treatment_effect",
         "backdoor_adjusted_expectation",
@@ -257,12 +276,15 @@
         "check_backdoor_adjustment_set",
         "check_frontdoor_adjustment_set",
         "check_instrument",
+        "classify_treatment_outcome_role",
         "collider_factor_return",
         "collider_forecast_return",
         "collider_model_diagnostics",
         "collider_overcontrolled_coefficients",
         "collider_population_diagnostics",
         "collider_specification_experiment",
+        "compare_single_and_family_fdr",
+        "conditional_upper_tail_probability",
         "confounded_mediator_population_diagnostics",
         "confounded_mediator_specification_experiment",
         "confounder_factor_return",
@@ -270,14 +292,29 @@
         "confounder_undercontrolled_coefficient",
         "d_separation",
         "difference_in_differences",
+        "evaluate_structural_causal_model",
+        "factor_control_roles",
+        "family_level_false_discovery_rate",
+        "fdr_nonidentification_witness",
         "fork_population_diagnostics",
         "fork_specification_experiment",
         "frontdoor_adjusted_probability",
+        "gaussian_max_selection_cdf",
+        "gaussian_max_selection_log_density",
+        "gaussian_max_selection_log_likelihood",
+        "gaussian_search_adjusted_false_discovery_rate",
+        "gaussian_trial_mixture_cdf",
+        "generalized_collider_overcontrolled_coefficients",
+        "generalized_confounder_undercontrolled_coefficient",
         "linear_instrumental_variable_effect",
+        "max_selection_family_errors",
+        "max_selection_null_probability",
+        "maximum_mixture_cdf",
         "minimal_backdoor_adjustment_sets",
         "minimal_frontdoor_adjustment_sets",
         "minimum_variance_factor_weights",
         "randomized_mean_difference",
+        "single_trial_false_discovery_rate",
         "treatment_effect_decomposition",
         "validate_causal_factor_protocol"
       ]
@@ -668,7 +705,7 @@
       ]
     }
   ],
-  "runtime_source_file_count": 63,
+  "runtime_source_file_count": 67,
   "runtime_sources": [
     {
       "path": "src/Backtest/Backtest.jl",
@@ -677,8 +714,8 @@
     },
     {
       "path": "src/Backtest/BacktestStatistics.jl",
-      "size": 14179,
-      "sha256": "7889FFE3811AEDD52700441510AD10845D0C8CF0E107EA33089A56A438242B85"
+      "size": 14092,
+      "sha256": "EEDD8A638370C50C97C5788116857C805B1E7CF9DDA8FBE57DA499053F55DB20"
     },
     {
       "path": "src/Backtest/BacktestSyntheticData.jl",
@@ -692,18 +729,18 @@
     },
     {
       "path": "src/Backtest/MultipleTesting.jl",
-      "size": 5639,
-      "sha256": "87BD4DF58DD7E8372736589CB8920C4FC2500630854DB8699F72B2D29363CD73"
+      "size": 5597,
+      "sha256": "2773E3D44EBBF2D5BC3FAB402B6D169B0FFB9B8F42F5DABC972322D1983063C7"
     },
     {
       "path": "src/Backtest/OUTradingRules.jl",
-      "size": 9537,
-      "sha256": "342CBEB471511D198A2A02EA4F0832C826BE9AB45FD6A0D5835B9B317903B135"
+      "size": 9495,
+      "sha256": "F744DC3780A44D696817B6FCBE140BADA6BF907B0435C9729E4E16ED6C8DA029"
     },
     {
       "path": "src/Backtest/ProbabilisticSharpeRatio.jl",
-      "size": 7792,
-      "sha256": "95745305045077CBF34D98D2BDA501114797776587C4EFA195BBD4C3AB3176C8"
+      "size": 7750,
+      "sha256": "95F644FB495715828470F111ACE5E8D7A6439E2E601D135904441FB2085E1D20"
     },
     {
       "path": "src/Backtest/ProbabilityOfBacktestOverfitting.jl",
@@ -731,19 +768,34 @@
       "sha256": "6B56738C2BB16CDF04F2DA440E5D20599CB6FD529B35B15529069BC0948AF907"
     },
     {
+      "path": "src/CausalFactorAnalysis/AllocationDiagnostics.jl",
+      "size": 9683,
+      "sha256": "5ACA69BAF9B91CC50335DC1C102F3679D07111C9A59E6D0F58BCB36FBF4C68D4"
+    },
+    {
       "path": "src/CausalFactorAnalysis/CausalFactorAnalysis.jl",
-      "size": 2089,
-      "sha256": "2CEDE65173AE33C337A826AED7D0BD3C7105622A60E17071C4E472985B47F4BA"
+      "size": 3297,
+      "sha256": "9AD230522D874B3B6FB594C56BB17B1B1583CA5ABD1CFA25DB59C87CCF558C7F"
     },
     {
       "path": "src/CausalFactorAnalysis/FactorMirage.jl",
-      "size": 8659,
-      "sha256": "DE328CEDA83C160CC166F8770F446BCD082B66DDE99511221E30095374F133A2"
+      "size": 11607,
+      "sha256": "F8EEBA4077EDD9657EB2C71804F33E8F0562811EF4862C58AAD77C3217DF3853"
+    },
+    {
+      "path": "src/CausalFactorAnalysis/FalseDiscoveryRates.jl",
+      "size": 22149,
+      "sha256": "DF428E40B09930E03888758286125D2CB658A567D26A45D34E13A3011D05BAC5"
     },
     {
       "path": "src/CausalFactorAnalysis/GraphIdentification.jl",
       "size": 29966,
       "sha256": "D0734576F874404FCE5C6244FE4E9AF1F4FF3C07BBFEE58D43098E76FD3121FB"
+    },
+    {
+      "path": "src/CausalFactorAnalysis/GraphRoles.jl",
+      "size": 5922,
+      "sha256": "A6A1A0B151E9FA097B574113820150BD76ADBD63EFBA0794F5483ED76E3F0371"
     },
     {
       "path": "src/CausalFactorAnalysis/Optimizer.jl",
@@ -759,6 +811,11 @@
       "path": "src/CausalFactorAnalysis/SpecificationDiagnostics.jl",
       "size": 6811,
       "sha256": "3FDB30F7D87DA1F94DC5234268E48AF646C069C4B9D5E78E89B033644C4CB93B"
+    },
+    {
+      "path": "src/CausalFactorAnalysis/StructuralModels.jl",
+      "size": 7306,
+      "sha256": "D6ACB5A5EB64CB3A371FAC83E566978A2B46214E2F6D1863A2F6FBD207B2F848"
     },
     {
       "path": "src/CausalFactorAnalysis/TreatmentEffects.jl",
@@ -782,18 +839,18 @@
     },
     {
       "path": "src/Data/Denoise/Denoising.jl",
-      "size": 12655,
-      "sha256": "D789E3F4BAF1E6DCE8A710C46E81270A656FEF920346FB9232A5DC198ED8E327"
+      "size": 12621,
+      "sha256": "C76EB6429BBBFC13A44BDA56FBE04BAC23B2CFB2AF358945B31614863CF680CD"
     },
     {
       "path": "src/Data/Differentiation/Differentiation.jl",
-      "size": 13402,
-      "sha256": "9CE4CCDDBBF77E57FD8865D99B6C6FAADD8C0239350AA33C15A1E45C4A99E461"
+      "size": 13364,
+      "sha256": "3721BBE9A2F1FE3BB1210CA44D86FF81AB286BC53975CD6A8BDC2FD9FCCCCC54"
     },
     {
       "path": "src/Data/Distance/DistanceMetric.jl",
-      "size": 11754,
-      "sha256": "753B8DC76011FBE82810E7FB98EA30F2D38DDB5226DD95F92B840C170F66E245"
+      "size": 11667,
+      "sha256": "67D42574E5B1CB27786ACF91176E307FAB59189DABC33820FC431410DBDDFCC6"
     },
     {
       "path": "src/Data/Labeling/FinancialLabels.jl",
@@ -872,13 +929,13 @@
     },
     {
       "path": "src/Features/EntropyFeatures.jl",
-      "size": 13866,
-      "sha256": "8B187C8174B2D7DFDC1218F8BC137047B1FBEB015000F8C755A2B3F86A3AD6DA"
+      "size": 13734,
+      "sha256": "05608B355EAA975210B79A930E49025C874FB0CB56AB8E61145BFC372AACC08C"
     },
     {
       "path": "src/Features/FeatureImportance.jl",
-      "size": 20944,
-      "sha256": "59125DD8F1AB71F2620DC8512C838994FC903585906E37D6BE542457130A638D"
+      "size": 20857,
+      "sha256": "CD6B2D1C57E1AD6D0C2FBED9A0BBFFD37D7542C982149950DB26132FC831D526"
     },
     {
       "path": "src/Features/Features.jl",
@@ -887,13 +944,13 @@
     },
     {
       "path": "src/Features/MicrostructuralFeatures.jl",
-      "size": 9364,
-      "sha256": "92E38DD1EB3470B315D809B8B5E382B0FA021E7B9D73B53329605089637CF3D9"
+      "size": 9322,
+      "sha256": "C43CD42F440890E9E60AFC896E324F3A660A0D83C9DA179D58CE87D203B5A4AE"
     },
     {
       "path": "src/Features/StructuralBreaks.jl",
-      "size": 28647,
-      "sha256": "DF46E7A17CCFA18718BA3545EDC7D9AB5A19A83DCAC4E6968C9F117AE2F4342F"
+      "size": 28536,
+      "sha256": "8950B7A405C19900A26312332F2069E9133489280377B888A5D9C5F7B73686F9"
     },
     {
       "path": "src/Optimization/Hedging.jl",
@@ -967,18 +1024,18 @@
     },
     {
       "path": "src/Validation/HyperParameterTuning.jl",
-      "size": 9470,
-      "sha256": "1A01C2640FB08BEC1DA80418148F7A049ABCEEA0D807FA4732FAA2B049A6FC7B"
+      "size": 9451,
+      "sha256": "6029124C2EEBF947577E8F92DBE67E697D388CAB71037ED4BD26FF6B929970F0"
     },
     {
       "path": "src/Validation/PathAdaptiveCPCV.jl",
-      "size": 7574,
-      "sha256": "A206D2CA42A7F531923A190081882696D4D686C8E89006FA93D4EA7C422F2415"
+      "size": 7537,
+      "sha256": "920709AD376A191CFCD7231064802678E3C65A086C08C6374C4A9D02FF628BE8"
     },
     {
       "path": "src/Validation/PathBaggedCPCV.jl",
-      "size": 4064,
-      "sha256": "009ACA2A790988505C04A6260C69EAC458961E2CB3200EE9B5AD94C02231F591"
+      "size": 4015,
+      "sha256": "C81794F73B57552CB338DB421F796A64011B08B5357EC925DFE5CFFB662CE4E8"
     },
     {
       "path": "src/Validation/Validation.jl",
@@ -987,8 +1044,9 @@
     }
   ],
   "causal_factor_analysis": {
-    "export_count": 57,
+    "export_count": 87,
     "ordered_exports": [
+      "AllocationMisspecificationDiagnostics",
       "BackdoorAdjustmentEvidence",
       "BacktestStage",
       "CausalAdjustmentSetStage",
@@ -1002,20 +1060,31 @@
       "DSeparationEvidence",
       "DifferenceInDifferencesEstimate",
       "EventHorizon",
+      "FDRComparisonEvidence",
+      "FDRNonIdentificationWitness",
+      "FactorControlRoles",
       "FoldEvidence",
       "FrontdoorAdjustmentEvidence",
+      "GaussianSearchAdjustedFDR",
+      "GaussianTrialMixture",
       "InstrumentEvidence",
+      "MaxSelectionFamilyErrors",
       "MultipleTestingAdjustmentsStage",
       "NodeRoleEvidence",
       "PathEvidence",
       "PopulationRegressionDiagnostics",
       "RegressionDiagnostics",
+      "SelectionLevelProbabilityEvidence",
       "SpecificationExperimentResult",
       "SpecificationPopulationResult",
       "StrategyPerformance",
+      "StructuralCausalModelResult",
       "TreatmentEffectDecomposition",
+      "TreatmentOutcomeRole",
+      "TreatmentOutcomeRoleEvidence",
       "ValidationEvidence",
       "VariableSelectionStage",
+      "allocation_misspecification_diagnostics",
       "average_treatment_effect",
       "backdoor_adjusted_average_treatment_effect",
       "backdoor_adjusted_expectation",
@@ -1023,12 +1092,15 @@
       "check_backdoor_adjustment_set",
       "check_frontdoor_adjustment_set",
       "check_instrument",
+      "classify_treatment_outcome_role",
       "collider_factor_return",
       "collider_forecast_return",
       "collider_model_diagnostics",
       "collider_overcontrolled_coefficients",
       "collider_population_diagnostics",
       "collider_specification_experiment",
+      "compare_single_and_family_fdr",
+      "conditional_upper_tail_probability",
       "confounded_mediator_population_diagnostics",
       "confounded_mediator_specification_experiment",
       "confounder_factor_return",
@@ -1036,17 +1108,33 @@
       "confounder_undercontrolled_coefficient",
       "d_separation",
       "difference_in_differences",
+      "evaluate_structural_causal_model",
+      "factor_control_roles",
+      "family_level_false_discovery_rate",
+      "fdr_nonidentification_witness",
       "fork_population_diagnostics",
       "fork_specification_experiment",
       "frontdoor_adjusted_probability",
+      "gaussian_max_selection_cdf",
+      "gaussian_max_selection_log_density",
+      "gaussian_max_selection_log_likelihood",
+      "gaussian_search_adjusted_false_discovery_rate",
+      "gaussian_trial_mixture_cdf",
+      "generalized_collider_overcontrolled_coefficients",
+      "generalized_confounder_undercontrolled_coefficient",
       "linear_instrumental_variable_effect",
+      "max_selection_family_errors",
+      "max_selection_null_probability",
+      "maximum_mixture_cdf",
       "minimal_backdoor_adjustment_sets",
       "minimal_frontdoor_adjustment_sets",
       "minimum_variance_factor_weights",
       "randomized_mean_difference",
+      "single_trial_false_discovery_rate",
       "treatment_effect_decomposition",
       "validate_causal_factor_protocol"
     ],
-    "ordered_export_sha256": "A6012DFB954F4BB26BE57762E879BA770D30A912B6685174821BC123770E3F9A"
+    "ordered_export_sha256": "F8CFCE9626450B46CB9C094625F7B6AB5B99B830954CC2B962EF744B1E5380E8",
+    "canonical_name_set_sha256": "F8CFCE9626450B46CB9C094625F7B6AB5B99B830954CC2B962EF744B1E5380E8"
   }
 }

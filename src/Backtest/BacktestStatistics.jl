@@ -187,7 +187,7 @@ end
 # max-drawdown. The LW test studentizes the Sharpe difference by a Bartlett HAC
 # standard error and calibrates it with a circular block bootstrap, holding
 # nominal size under serial dependence where the naive z-test over-rejects.
-# Admitted in Appraisal 22 (`library_extension/appraisals/22_verdict.md`).
+# Included after independent validation (the documented validation evidence).
 # CED + the naive test (and the LW delta/se/stat) are parity-matched exactly; the
 # LW bootstrap p-value uses Julia's RNG (behavioural).
 # --------------------------------------------------------------------------- #
@@ -242,7 +242,7 @@ A tail MEAN of the max-drawdown distribution, so lower estimator variance and
 better drawdown-risk ranking than max-drawdown, converging to it on benign
 returns; coherent and factor-attributable.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer CED over max-drawdown as a drawdown-risk statistic (lower estimator variance,
 better ranking of true drawdown risk, most on short/heavy-tailed tracks; converges
 on benign returns).
@@ -321,7 +321,7 @@ a Bartlett HAC standard error and calibrates the two-sided p-value with a
 studentized circular block bootstrap. Returns a `NamedTuple`
 `(delta, se, stat, pvalue, reject)`.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer the Ledoit-Wolf bootstrap Sharpe-difference test when comparing two Sharpes
 under serial dependence/heavy tails (holds nominal size where the naive test
 inflates ~3×; converges on i.i.d.).

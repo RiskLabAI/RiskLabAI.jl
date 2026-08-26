@@ -1,200 +1,31 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "document_type": "RISKLABAI_JULIA_INTENDED_PACKAGE_FILES",
   "product": "RiskLabAI",
   "language": "Julia",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "version_note": "Local 1.1.0 candidate metadata is frozen; version control, registration, publication, and release remain human-controlled.",
   "artifact_types": [
     "julia_package_tree"
   ],
-  "candidate_file_count": 89,
+  "candidate_file_count": 159,
   "candidate_files": [
     ".github/workflows/CI.yml",
+    ".github/workflows/CompatHelper.yml",
+    ".github/workflows/TagBot.yml",
+    ".gitignore",
+    "CHANGELOG.md",
     "LICENSE",
+    "LICENSE.txt",
     "PACKAGE_FILES.json",
-    "PACKAGE_IDENTITY.json",
     "PACKAGE_INSPECTION.md",
+    "PARITY.md",
     "PUBLIC_API.json",
     "Project.toml",
     "README.md",
+    "RECONSTRUCTION_PLAN.md",
     "RELEASE_NOTES_NEXT_MAJOR.md",
     "TEST_INVENTORY.json",
-    "docs/causal_factor_analysis.md",
-    "docs/compatibility.md",
-    "examples/causal_factor_analysis_quickstart.jl",
-    "ext/RiskLabAIDeepBSDEExt.jl",
-    "src/Backtest/Backtest.jl",
-    "src/Backtest/BacktestStatistics.jl",
-    "src/Backtest/BacktestSyntheticData.jl",
-    "src/Backtest/BetSizing.jl",
-    "src/Backtest/MultipleTesting.jl",
-    "src/Backtest/OUTradingRules.jl",
-    "src/Backtest/ProbabilisticSharpeRatio.jl",
-    "src/Backtest/ProbabilityOfBacktestOverfitting.jl",
-    "src/Backtest/StrategyRisk.jl",
-    "src/Backtest/TestSetOverfitting.jl",
-    "src/Backtests/ProbabilityOfBacktestOverfitting.jl",
-    "src/BetSize/BetSizing.jl",
-    "src/CausalFactorAnalysis/CausalFactorAnalysis.jl",
-    "src/CausalFactorAnalysis/FactorMirage.jl",
-    "src/CausalFactorAnalysis/GraphIdentification.jl",
-    "src/CausalFactorAnalysis/Optimizer.jl",
-    "src/CausalFactorAnalysis/Protocol.jl",
-    "src/CausalFactorAnalysis/SpecificationDiagnostics.jl",
-    "src/CausalFactorAnalysis/TreatmentEffects.jl",
-    "src/Cluster/Cluster.jl",
-    "src/Cluster/Clustering.jl",
-    "src/Data/Data.jl",
-    "src/Data/Denoise/Denoising.jl",
-    "src/Data/Differentiation/Differentiation.jl",
-    "src/Data/Distance/DistanceMetric.jl",
-    "src/Data/Labeling/FinancialLabels.jl",
-    "src/Data/Labeling/Labeling.jl",
-    "src/Data/Structures/abstract_bars.jl",
-    "src/Data/Structures/abstract_imbalance_bars.jl",
-    "src/Data/Structures/abstract_information_driven_bars.jl",
-    "src/Data/Structures/abstract_run_bars.jl",
-    "src/Data/Structures/imbalance_bars.jl",
-    "src/Data/Structures/run_bars.jl",
-    "src/Data/Structures/standard_bars.jl",
-    "src/Data/Structures/time_bars.jl",
-    "src/Data/Structures/types.jl",
-    "src/Data/SyntheticData/SyntheticData.jl",
-    "src/Data/Weights/SampleWeight.jl",
-    "src/Ensemble/BaggingAccuracy.jl",
-    "src/Ensemble/Ensemble.jl",
-    "src/Features/EntropyFeatures.jl",
-    "src/Features/FeatureImportance.jl",
-    "src/Features/Features.jl",
-    "src/Features/MicrostructuralFeatures.jl",
-    "src/Features/StructuralBreaks.jl",
-    "src/Optimization/Hedging.jl",
-    "src/Optimization/HierarchicalRiskParity.jl",
-    "src/Optimization/NestedClusteredOptimization.jl",
-    "src/Optimization/Optimization.jl",
-    "src/Pde/DeepBSDESolver.jl",
-    "src/Pde/Equations.jl",
-    "src/Pde/Pde.jl",
-    "src/RiskLabAI.jl",
-    "src/Utils/Utils.jl",
-    "src/Utils/constants.jl",
-    "src/Utils/ewma.jl",
-    "src/Utils/field_inheritance.jl",
-    "src/Validation/CrossValScore.jl",
-    "src/Validation/CrossValidators.jl",
-    "src/Validation/HyperParameterTuning.jl",
-    "src/Validation/PathAdaptiveCPCV.jl",
-    "src/Validation/PathBaggedCPCV.jl",
-    "src/Validation/Validation.jl",
-    "test/causal_factor_analysis/test_factor_mirage.jl",
-    "test/causal_factor_analysis/test_graph_identification.jl",
-    "test/causal_factor_analysis/test_optimizer.jl",
-    "test/causal_factor_analysis/test_protocol.jl",
-    "test/causal_factor_analysis/test_specification_diagnostics.jl",
-    "test/causal_factor_analysis/test_treatment_effects.jl",
-    "test/fixtures/pelt_x1.txt",
-    "test/fixtures/pelt_x2.txt",
-    "test/fixtures/pelt_x3.txt",
-    "test/fixtures/vrsadf_y.txt",
-    "test/preserved_runtests.jl",
-    "test/runtests.jl"
-  ],
-  "local_control_files_excluded_from_artifacts": [
-    "PACKAGE_IDENTITY.json"
-  ],
-  "release_source_file_count": 88,
-  "release_source_files": [
-    ".github/workflows/CI.yml",
-    "LICENSE",
-    "PACKAGE_FILES.json",
-    "PACKAGE_INSPECTION.md",
-    "PUBLIC_API.json",
-    "Project.toml",
-    "README.md",
-    "RELEASE_NOTES_NEXT_MAJOR.md",
-    "TEST_INVENTORY.json",
-    "docs/causal_factor_analysis.md",
-    "docs/compatibility.md",
-    "examples/causal_factor_analysis_quickstart.jl",
-    "ext/RiskLabAIDeepBSDEExt.jl",
-    "src/Backtest/Backtest.jl",
-    "src/Backtest/BacktestStatistics.jl",
-    "src/Backtest/BacktestSyntheticData.jl",
-    "src/Backtest/BetSizing.jl",
-    "src/Backtest/MultipleTesting.jl",
-    "src/Backtest/OUTradingRules.jl",
-    "src/Backtest/ProbabilisticSharpeRatio.jl",
-    "src/Backtest/ProbabilityOfBacktestOverfitting.jl",
-    "src/Backtest/StrategyRisk.jl",
-    "src/Backtest/TestSetOverfitting.jl",
-    "src/Backtests/ProbabilityOfBacktestOverfitting.jl",
-    "src/BetSize/BetSizing.jl",
-    "src/CausalFactorAnalysis/CausalFactorAnalysis.jl",
-    "src/CausalFactorAnalysis/FactorMirage.jl",
-    "src/CausalFactorAnalysis/GraphIdentification.jl",
-    "src/CausalFactorAnalysis/Optimizer.jl",
-    "src/CausalFactorAnalysis/Protocol.jl",
-    "src/CausalFactorAnalysis/SpecificationDiagnostics.jl",
-    "src/CausalFactorAnalysis/TreatmentEffects.jl",
-    "src/Cluster/Cluster.jl",
-    "src/Cluster/Clustering.jl",
-    "src/Data/Data.jl",
-    "src/Data/Denoise/Denoising.jl",
-    "src/Data/Differentiation/Differentiation.jl",
-    "src/Data/Distance/DistanceMetric.jl",
-    "src/Data/Labeling/FinancialLabels.jl",
-    "src/Data/Labeling/Labeling.jl",
-    "src/Data/Structures/abstract_bars.jl",
-    "src/Data/Structures/abstract_imbalance_bars.jl",
-    "src/Data/Structures/abstract_information_driven_bars.jl",
-    "src/Data/Structures/abstract_run_bars.jl",
-    "src/Data/Structures/imbalance_bars.jl",
-    "src/Data/Structures/run_bars.jl",
-    "src/Data/Structures/standard_bars.jl",
-    "src/Data/Structures/time_bars.jl",
-    "src/Data/Structures/types.jl",
-    "src/Data/SyntheticData/SyntheticData.jl",
-    "src/Data/Weights/SampleWeight.jl",
-    "src/Ensemble/BaggingAccuracy.jl",
-    "src/Ensemble/Ensemble.jl",
-    "src/Features/EntropyFeatures.jl",
-    "src/Features/FeatureImportance.jl",
-    "src/Features/Features.jl",
-    "src/Features/MicrostructuralFeatures.jl",
-    "src/Features/StructuralBreaks.jl",
-    "src/Optimization/Hedging.jl",
-    "src/Optimization/HierarchicalRiskParity.jl",
-    "src/Optimization/NestedClusteredOptimization.jl",
-    "src/Optimization/Optimization.jl",
-    "src/Pde/DeepBSDESolver.jl",
-    "src/Pde/Equations.jl",
-    "src/Pde/Pde.jl",
-    "src/RiskLabAI.jl",
-    "src/Utils/Utils.jl",
-    "src/Utils/constants.jl",
-    "src/Utils/ewma.jl",
-    "src/Utils/field_inheritance.jl",
-    "src/Validation/CrossValScore.jl",
-    "src/Validation/CrossValidators.jl",
-    "src/Validation/HyperParameterTuning.jl",
-    "src/Validation/PathAdaptiveCPCV.jl",
-    "src/Validation/PathBaggedCPCV.jl",
-    "src/Validation/Validation.jl",
-    "test/causal_factor_analysis/test_factor_mirage.jl",
-    "test/causal_factor_analysis/test_graph_identification.jl",
-    "test/causal_factor_analysis/test_optimizer.jl",
-    "test/causal_factor_analysis/test_protocol.jl",
-    "test/causal_factor_analysis/test_specification_diagnostics.jl",
-    "test/causal_factor_analysis/test_treatment_effects.jl",
-    "test/fixtures/pelt_x1.txt",
-    "test/fixtures/pelt_x2.txt",
-    "test/fixtures/pelt_x3.txt",
-    "test/fixtures/vrsadf_y.txt",
-    "test/preserved_runtests.jl",
-    "test/runtests.jl"
-  ],
-  "preserved_repository_only_file_count": 60,
-  "preserved_repository_only_files": [
     "_superseded/README.md",
     "_superseded/src/Backtests/BacktestStatistics.jl",
     "_superseded/src/Backtests/BacktestSyntheticData.jl",
@@ -244,22 +75,117 @@
     "_superseded/src/Validation/PurgedKFoldStacked.jl",
     "_superseded/src/Validation/PurgedKFoldStackedSplit.jl",
     "_superseded/src/Validation/purgeTrainingTimes.jl",
-    ".github/workflows/CompatHelper.yml",
-    ".github/workflows/TagBot.yml",
-    ".gitignore",
-    "CHANGELOG.md",
     "docs/.gitignore",
-    "docs/make.jl",
     "docs/Project.toml",
+    "docs/causal_factor_analysis.md",
+    "docs/compatibility.md",
+    "docs/make.jl",
     "docs/src/index.md",
-    "LICENSE.txt",
-    "PARITY.md",
-    "RECONSTRUCTION_PLAN.md"
+    "examples/causal_factor_analysis_quickstart.jl",
+    "ext/RiskLabAIDeepBSDEExt.jl",
+    "src/Backtest/Backtest.jl",
+    "src/Backtest/BacktestStatistics.jl",
+    "src/Backtest/BacktestSyntheticData.jl",
+    "src/Backtest/BetSizing.jl",
+    "src/Backtest/MultipleTesting.jl",
+    "src/Backtest/OUTradingRules.jl",
+    "src/Backtest/ProbabilisticSharpeRatio.jl",
+    "src/Backtest/ProbabilityOfBacktestOverfitting.jl",
+    "src/Backtest/StrategyRisk.jl",
+    "src/Backtest/TestSetOverfitting.jl",
+    "src/Backtests/ProbabilityOfBacktestOverfitting.jl",
+    "src/BetSize/BetSizing.jl",
+    "src/CausalFactorAnalysis/AllocationDiagnostics.jl",
+    "src/CausalFactorAnalysis/CausalFactorAnalysis.jl",
+    "src/CausalFactorAnalysis/FactorMirage.jl",
+    "src/CausalFactorAnalysis/FalseDiscoveryRates.jl",
+    "src/CausalFactorAnalysis/GraphIdentification.jl",
+    "src/CausalFactorAnalysis/GraphRoles.jl",
+    "src/CausalFactorAnalysis/Optimizer.jl",
+    "src/CausalFactorAnalysis/Protocol.jl",
+    "src/CausalFactorAnalysis/SpecificationDiagnostics.jl",
+    "src/CausalFactorAnalysis/StructuralModels.jl",
+    "src/CausalFactorAnalysis/TreatmentEffects.jl",
+    "src/Cluster/Cluster.jl",
+    "src/Cluster/Clustering.jl",
+    "src/Data/Data.jl",
+    "src/Data/Denoise/Denoising.jl",
+    "src/Data/Differentiation/Differentiation.jl",
+    "src/Data/Distance/DistanceMetric.jl",
+    "src/Data/Labeling/FinancialLabels.jl",
+    "src/Data/Labeling/Labeling.jl",
+    "src/Data/Structures/abstract_bars.jl",
+    "src/Data/Structures/abstract_imbalance_bars.jl",
+    "src/Data/Structures/abstract_information_driven_bars.jl",
+    "src/Data/Structures/abstract_run_bars.jl",
+    "src/Data/Structures/imbalance_bars.jl",
+    "src/Data/Structures/run_bars.jl",
+    "src/Data/Structures/standard_bars.jl",
+    "src/Data/Structures/time_bars.jl",
+    "src/Data/Structures/types.jl",
+    "src/Data/SyntheticData/SyntheticData.jl",
+    "src/Data/Weights/SampleWeight.jl",
+    "src/Ensemble/BaggingAccuracy.jl",
+    "src/Ensemble/Ensemble.jl",
+    "src/Features/EntropyFeatures.jl",
+    "src/Features/FeatureImportance.jl",
+    "src/Features/Features.jl",
+    "src/Features/MicrostructuralFeatures.jl",
+    "src/Features/StructuralBreaks.jl",
+    "src/Optimization/Hedging.jl",
+    "src/Optimization/HierarchicalRiskParity.jl",
+    "src/Optimization/NestedClusteredOptimization.jl",
+    "src/Optimization/Optimization.jl",
+    "src/Pde/DeepBSDESolver.jl",
+    "src/Pde/Equations.jl",
+    "src/Pde/Pde.jl",
+    "src/RiskLabAI.jl",
+    "src/Utils/Utils.jl",
+    "src/Utils/constants.jl",
+    "src/Utils/ewma.jl",
+    "src/Utils/field_inheritance.jl",
+    "src/Validation/CrossValScore.jl",
+    "src/Validation/CrossValidators.jl",
+    "src/Validation/HyperParameterTuning.jl",
+    "src/Validation/PathAdaptiveCPCV.jl",
+    "src/Validation/PathBaggedCPCV.jl",
+    "src/Validation/Validation.jl",
+    "test/causal_factor_analysis/fixtures/additive_numeric_parity.tsv",
+    "test/causal_factor_analysis/test_additive_numeric_parity.jl",
+    "test/causal_factor_analysis/test_allocation_diagnostics.jl",
+    "test/causal_factor_analysis/test_factor_mirage.jl",
+    "test/causal_factor_analysis/test_false_discovery_rates.jl",
+    "test/causal_factor_analysis/test_generalized_factor_mirage.jl",
+    "test/causal_factor_analysis/test_graph_identification.jl",
+    "test/causal_factor_analysis/test_graph_roles.jl",
+    "test/causal_factor_analysis/test_optimizer.jl",
+    "test/causal_factor_analysis/test_protocol.jl",
+    "test/causal_factor_analysis/test_specification_diagnostics.jl",
+    "test/causal_factor_analysis/test_structural_models.jl",
+    "test/causal_factor_analysis/test_treatment_effects.jl",
+    "test/fixtures/pelt_x1.txt",
+    "test/fixtures/pelt_x2.txt",
+    "test/fixtures/pelt_x3.txt",
+    "test/fixtures/vrsadf_y.txt",
+    "test/preserved_runtests.jl",
+    "test/runtests.jl"
   ],
-  "registered_tree_file_count": 148,
-  "registered_tree_policy": "The Julia registry tree is the exact union of release_source_files and preserved_repository_only_files. Repository-only files remain unimported and are not part of the public runtime API.",
-  "runtime_source_file_count": 63,
-  "runtime_source_files": [
+  "candidate_only_control_files": [],
+  "candidate_only_control_policy": "Analytical ledgers and verification records remain outside the candidate root.",
+  "baseline_active_release_files": [
+    ".github/workflows/CI.yml",
+    "LICENSE",
+    "PACKAGE_FILES.json",
+    "PACKAGE_INSPECTION.md",
+    "PUBLIC_API.json",
+    "Project.toml",
+    "README.md",
+    "RELEASE_NOTES_NEXT_MAJOR.md",
+    "TEST_INVENTORY.json",
+    "docs/causal_factor_analysis.md",
+    "docs/compatibility.md",
+    "examples/causal_factor_analysis_quickstart.jl",
+    "ext/RiskLabAIDeepBSDEExt.jl",
     "src/Backtest/Backtest.jl",
     "src/Backtest/BacktestStatistics.jl",
     "src/Backtest/BacktestSyntheticData.jl",
@@ -322,10 +248,7 @@
     "src/Validation/HyperParameterTuning.jl",
     "src/Validation/PathAdaptiveCPCV.jl",
     "src/Validation/PathBaggedCPCV.jl",
-    "src/Validation/Validation.jl"
-  ],
-  "test_file_count": 12,
-  "test_files": [
+    "src/Validation/Validation.jl",
     "test/causal_factor_analysis/test_factor_mirage.jl",
     "test/causal_factor_analysis/test_graph_identification.jl",
     "test/causal_factor_analysis/test_optimizer.jl",
@@ -339,8 +262,1064 @@
     "test/preserved_runtests.jl",
     "test/runtests.jl"
   ],
+  "release_source_file_count": 99,
+  "release_source_files": [
+    ".github/workflows/CI.yml",
+    "LICENSE",
+    "PACKAGE_FILES.json",
+    "PACKAGE_INSPECTION.md",
+    "PUBLIC_API.json",
+    "Project.toml",
+    "README.md",
+    "RELEASE_NOTES_NEXT_MAJOR.md",
+    "TEST_INVENTORY.json",
+    "docs/causal_factor_analysis.md",
+    "docs/compatibility.md",
+    "examples/causal_factor_analysis_quickstart.jl",
+    "ext/RiskLabAIDeepBSDEExt.jl",
+    "src/Backtest/Backtest.jl",
+    "src/Backtest/BacktestStatistics.jl",
+    "src/Backtest/BacktestSyntheticData.jl",
+    "src/Backtest/BetSizing.jl",
+    "src/Backtest/MultipleTesting.jl",
+    "src/Backtest/OUTradingRules.jl",
+    "src/Backtest/ProbabilisticSharpeRatio.jl",
+    "src/Backtest/ProbabilityOfBacktestOverfitting.jl",
+    "src/Backtest/StrategyRisk.jl",
+    "src/Backtest/TestSetOverfitting.jl",
+    "src/Backtests/ProbabilityOfBacktestOverfitting.jl",
+    "src/BetSize/BetSizing.jl",
+    "src/CausalFactorAnalysis/AllocationDiagnostics.jl",
+    "src/CausalFactorAnalysis/CausalFactorAnalysis.jl",
+    "src/CausalFactorAnalysis/FactorMirage.jl",
+    "src/CausalFactorAnalysis/FalseDiscoveryRates.jl",
+    "src/CausalFactorAnalysis/GraphIdentification.jl",
+    "src/CausalFactorAnalysis/GraphRoles.jl",
+    "src/CausalFactorAnalysis/Optimizer.jl",
+    "src/CausalFactorAnalysis/Protocol.jl",
+    "src/CausalFactorAnalysis/SpecificationDiagnostics.jl",
+    "src/CausalFactorAnalysis/StructuralModels.jl",
+    "src/CausalFactorAnalysis/TreatmentEffects.jl",
+    "src/Cluster/Cluster.jl",
+    "src/Cluster/Clustering.jl",
+    "src/Data/Data.jl",
+    "src/Data/Denoise/Denoising.jl",
+    "src/Data/Differentiation/Differentiation.jl",
+    "src/Data/Distance/DistanceMetric.jl",
+    "src/Data/Labeling/FinancialLabels.jl",
+    "src/Data/Labeling/Labeling.jl",
+    "src/Data/Structures/abstract_bars.jl",
+    "src/Data/Structures/abstract_imbalance_bars.jl",
+    "src/Data/Structures/abstract_information_driven_bars.jl",
+    "src/Data/Structures/abstract_run_bars.jl",
+    "src/Data/Structures/imbalance_bars.jl",
+    "src/Data/Structures/run_bars.jl",
+    "src/Data/Structures/standard_bars.jl",
+    "src/Data/Structures/time_bars.jl",
+    "src/Data/Structures/types.jl",
+    "src/Data/SyntheticData/SyntheticData.jl",
+    "src/Data/Weights/SampleWeight.jl",
+    "src/Ensemble/BaggingAccuracy.jl",
+    "src/Ensemble/Ensemble.jl",
+    "src/Features/EntropyFeatures.jl",
+    "src/Features/FeatureImportance.jl",
+    "src/Features/Features.jl",
+    "src/Features/MicrostructuralFeatures.jl",
+    "src/Features/StructuralBreaks.jl",
+    "src/Optimization/Hedging.jl",
+    "src/Optimization/HierarchicalRiskParity.jl",
+    "src/Optimization/NestedClusteredOptimization.jl",
+    "src/Optimization/Optimization.jl",
+    "src/Pde/DeepBSDESolver.jl",
+    "src/Pde/Equations.jl",
+    "src/Pde/Pde.jl",
+    "src/RiskLabAI.jl",
+    "src/Utils/Utils.jl",
+    "src/Utils/constants.jl",
+    "src/Utils/ewma.jl",
+    "src/Utils/field_inheritance.jl",
+    "src/Validation/CrossValScore.jl",
+    "src/Validation/CrossValidators.jl",
+    "src/Validation/HyperParameterTuning.jl",
+    "src/Validation/PathAdaptiveCPCV.jl",
+    "src/Validation/PathBaggedCPCV.jl",
+    "src/Validation/Validation.jl",
+    "test/causal_factor_analysis/fixtures/additive_numeric_parity.tsv",
+    "test/causal_factor_analysis/test_additive_numeric_parity.jl",
+    "test/causal_factor_analysis/test_allocation_diagnostics.jl",
+    "test/causal_factor_analysis/test_factor_mirage.jl",
+    "test/causal_factor_analysis/test_false_discovery_rates.jl",
+    "test/causal_factor_analysis/test_generalized_factor_mirage.jl",
+    "test/causal_factor_analysis/test_graph_identification.jl",
+    "test/causal_factor_analysis/test_graph_roles.jl",
+    "test/causal_factor_analysis/test_optimizer.jl",
+    "test/causal_factor_analysis/test_protocol.jl",
+    "test/causal_factor_analysis/test_specification_diagnostics.jl",
+    "test/causal_factor_analysis/test_structural_models.jl",
+    "test/causal_factor_analysis/test_treatment_effects.jl",
+    "test/fixtures/pelt_x1.txt",
+    "test/fixtures/pelt_x2.txt",
+    "test/fixtures/pelt_x3.txt",
+    "test/fixtures/vrsadf_y.txt",
+    "test/preserved_runtests.jl",
+    "test/runtests.jl"
+  ],
+  "release_file_list_sha256": "95007A9CFC0EC99FB248BF64418BF8E7F6C114B429485BFA88D545DF58585509",
+  "release_file_records_excluding_self": [
+    {
+      "path": ".github/workflows/CI.yml",
+      "size": 6102,
+      "sha256": "B97DB6BB229BAD614E9972BA2283D570CD1424BCE7484B9115468C032356AC6C"
+    },
+    {
+      "path": "LICENSE",
+      "size": 1524,
+      "sha256": "C218B2652D7FC88A70415780B13ABC03BDCE419197CBA3C47FBBAFEF396686EA"
+    },
+    {
+      "path": "PACKAGE_INSPECTION.md",
+      "size": 3037,
+      "sha256": "F93D99688775BCE82CA92E356AB695F409B1DE3538C62622B1219ABFC63590E8"
+    },
+    {
+      "path": "PUBLIC_API.json",
+      "size": 36329,
+      "sha256": "0D7259C22F7DC28D1AAE70FA2E4F1172CEE7A1541306BD756F236579D281A066"
+    },
+    {
+      "path": "Project.toml",
+      "size": 1416,
+      "sha256": "E2D051F2F44B1EEF3EBDCFA210A8514A428F1D6B2E84F1CB7C8B8C8706833A7D"
+    },
+    {
+      "path": "README.md",
+      "size": 4484,
+      "sha256": "0610FE5E0C75DD54F5C3322A8A6BFE3E3510A4102D29E1860AB2B02AAC847F24"
+    },
+    {
+      "path": "RELEASE_NOTES_NEXT_MAJOR.md",
+      "size": 2088,
+      "sha256": "E8297D7498AA962EA5B0B95E4BCFC3603658448267828B5668FF7A4A03004D9D"
+    },
+    {
+      "path": "TEST_INVENTORY.json",
+      "size": 4818,
+      "sha256": "B3F94657405E6C6EC7948B2B96900E02ADAB57B3B86CC840725BFC92AE959DF2"
+    },
+    {
+      "path": "docs/causal_factor_analysis.md",
+      "size": 9205,
+      "sha256": "99F3A6789B3F0C1A547EC919F47A766797BAFE34939C7ACBEDE2D3F9A4AC038C"
+    },
+    {
+      "path": "docs/compatibility.md",
+      "size": 4589,
+      "sha256": "6BC8E4494B75D267652BE9C41E02AED7545395AEC2DC964F042CAC0AD9508091"
+    },
+    {
+      "path": "examples/causal_factor_analysis_quickstart.jl",
+      "size": 1674,
+      "sha256": "D5283DD5BAE3FE8B34E9EBD34CBAE0E533C5D86607667D223DB094A8BAFE49E7"
+    },
+    {
+      "path": "ext/RiskLabAIDeepBSDEExt.jl",
+      "size": 150,
+      "sha256": "D5807D752841D38A0F64E386E377D59217CEBFE47B15A4E4B29B823971078332"
+    },
+    {
+      "path": "src/Backtest/Backtest.jl",
+      "size": 3320,
+      "sha256": "2BD5FD263B4BE056A9846A915E475A33014CF356FDD9D2201ED6003D99126118"
+    },
+    {
+      "path": "src/Backtest/BacktestStatistics.jl",
+      "size": 14092,
+      "sha256": "EEDD8A638370C50C97C5788116857C805B1E7CF9DDA8FBE57DA499053F55DB20"
+    },
+    {
+      "path": "src/Backtest/BacktestSyntheticData.jl",
+      "size": 2657,
+      "sha256": "B5A098CCA8B057A4A480FF38E9D4CB9AD02BB8C2C2E5D41E65E8BFE8244ABB66"
+    },
+    {
+      "path": "src/Backtest/BetSizing.jl",
+      "size": 8349,
+      "sha256": "AD2C6BD4359D48A9A9520779C09B8EE2B5540D50C2D9E730994F239C0D809B5F"
+    },
+    {
+      "path": "src/Backtest/MultipleTesting.jl",
+      "size": 5597,
+      "sha256": "2773E3D44EBBF2D5BC3FAB402B6D169B0FFB9B8F42F5DABC972322D1983063C7"
+    },
+    {
+      "path": "src/Backtest/OUTradingRules.jl",
+      "size": 9495,
+      "sha256": "F744DC3780A44D696817B6FCBE140BADA6BF907B0435C9729E4E16ED6C8DA029"
+    },
+    {
+      "path": "src/Backtest/ProbabilisticSharpeRatio.jl",
+      "size": 7750,
+      "sha256": "95F644FB495715828470F111ACE5E8D7A6439E2E601D135904441FB2085E1D20"
+    },
+    {
+      "path": "src/Backtest/ProbabilityOfBacktestOverfitting.jl",
+      "size": 3865,
+      "sha256": "84AC8ADBF512A80A69DBD5D4836F31249A09B3BC1EB5AFFD9C43F8702C825523"
+    },
+    {
+      "path": "src/Backtest/StrategyRisk.jl",
+      "size": 7067,
+      "sha256": "308E5968BA23DBCAC94BF6DA99B1871A947AEBFEB579F99346C130A93E57FBF1"
+    },
+    {
+      "path": "src/Backtest/TestSetOverfitting.jl",
+      "size": 6199,
+      "sha256": "6BCAD71DB9AB6D2A33B582F19C7A78D783C34DA602D99AA35588BF64006391B8"
+    },
+    {
+      "path": "src/Backtests/ProbabilityOfBacktestOverfitting.jl",
+      "size": 2736,
+      "sha256": "8DE0E7C5A69B99A175F0C2667EACAC1C877DDA91DB5524223118F3C5D22EEEC6"
+    },
+    {
+      "path": "src/BetSize/BetSizing.jl",
+      "size": 13711,
+      "sha256": "6B56738C2BB16CDF04F2DA440E5D20599CB6FD529B35B15529069BC0948AF907"
+    },
+    {
+      "path": "src/CausalFactorAnalysis/AllocationDiagnostics.jl",
+      "size": 9683,
+      "sha256": "5ACA69BAF9B91CC50335DC1C102F3679D07111C9A59E6D0F58BCB36FBF4C68D4"
+    },
+    {
+      "path": "src/CausalFactorAnalysis/CausalFactorAnalysis.jl",
+      "size": 3297,
+      "sha256": "9AD230522D874B3B6FB594C56BB17B1B1583CA5ABD1CFA25DB59C87CCF558C7F"
+    },
+    {
+      "path": "src/CausalFactorAnalysis/FactorMirage.jl",
+      "size": 11607,
+      "sha256": "F8EEBA4077EDD9657EB2C71804F33E8F0562811EF4862C58AAD77C3217DF3853"
+    },
+    {
+      "path": "src/CausalFactorAnalysis/FalseDiscoveryRates.jl",
+      "size": 22149,
+      "sha256": "DF428E40B09930E03888758286125D2CB658A567D26A45D34E13A3011D05BAC5"
+    },
+    {
+      "path": "src/CausalFactorAnalysis/GraphIdentification.jl",
+      "size": 29966,
+      "sha256": "D0734576F874404FCE5C6244FE4E9AF1F4FF3C07BBFEE58D43098E76FD3121FB"
+    },
+    {
+      "path": "src/CausalFactorAnalysis/GraphRoles.jl",
+      "size": 5922,
+      "sha256": "A6A1A0B151E9FA097B574113820150BD76ADBD63EFBA0794F5483ED76E3F0371"
+    },
+    {
+      "path": "src/CausalFactorAnalysis/Optimizer.jl",
+      "size": 5001,
+      "sha256": "1896FC5BCD0E43691EAB233E86300872D54BD68ECBFE125A88CB5AD736B7E506"
+    },
+    {
+      "path": "src/CausalFactorAnalysis/Protocol.jl",
+      "size": 57203,
+      "sha256": "95DB2ABAA05609F210F77B478457A75800020EAA85806E90018D78C247964E50"
+    },
+    {
+      "path": "src/CausalFactorAnalysis/SpecificationDiagnostics.jl",
+      "size": 6811,
+      "sha256": "3FDB30F7D87DA1F94DC5234268E48AF646C069C4B9D5E78E89B033644C4CB93B"
+    },
+    {
+      "path": "src/CausalFactorAnalysis/StructuralModels.jl",
+      "size": 7306,
+      "sha256": "D6ACB5A5EB64CB3A371FAC83E566978A2B46214E2F6D1863A2F6FBD207B2F848"
+    },
+    {
+      "path": "src/CausalFactorAnalysis/TreatmentEffects.jl",
+      "size": 8446,
+      "sha256": "23BD47E0B88E8C73C0BA362CDDC3FE6B84F989CF590F0E4AF7410A765344FD4F"
+    },
+    {
+      "path": "src/Cluster/Cluster.jl",
+      "size": 777,
+      "sha256": "1370F63F6936C27FF5928B2DCAF887570A32999ADD6DBDA6B87A68749F23D9CB"
+    },
+    {
+      "path": "src/Cluster/Clustering.jl",
+      "size": 11078,
+      "sha256": "5B71F12566C47A9014007A4B6A845F0D338D7342C00AE96B3DF78965E5B8D8DC"
+    },
+    {
+      "path": "src/Data/Data.jl",
+      "size": 3554,
+      "sha256": "F9A08E3A514DADCBC14F556B40D2D07046D06AF6C9CE0D670A0C013F793771B7"
+    },
+    {
+      "path": "src/Data/Denoise/Denoising.jl",
+      "size": 12621,
+      "sha256": "C76EB6429BBBFC13A44BDA56FBE04BAC23B2CFB2AF358945B31614863CF680CD"
+    },
+    {
+      "path": "src/Data/Differentiation/Differentiation.jl",
+      "size": 13364,
+      "sha256": "3721BBE9A2F1FE3BB1210CA44D86FF81AB286BC53975CD6A8BDC2FD9FCCCCC54"
+    },
+    {
+      "path": "src/Data/Distance/DistanceMetric.jl",
+      "size": 11667,
+      "sha256": "67D42574E5B1CB27786ACF91176E307FAB59189DABC33820FC431410DBDDFCC6"
+    },
+    {
+      "path": "src/Data/Labeling/FinancialLabels.jl",
+      "size": 2921,
+      "sha256": "00646787E0D55B3CF59B8CF575030B4008154BF6BA917F48B1C4822FF4A23F4E"
+    },
+    {
+      "path": "src/Data/Labeling/Labeling.jl",
+      "size": 9735,
+      "sha256": "D487F3ED3B0CDEF04C40DF7D57724FC0220D16AB3144FB1C28889799AC1F34FD"
+    },
+    {
+      "path": "src/Data/Structures/abstract_bars.jl",
+      "size": 4774,
+      "sha256": "646E7D7C75BB595752BCC0F7C433E6C951EC908D70471A099A45B26015A5D87C"
+    },
+    {
+      "path": "src/Data/Structures/abstract_imbalance_bars.jl",
+      "size": 4580,
+      "sha256": "13984D66AF1F7746F8138E8F47C4402BD3802E7C198F39DCF5490295D76938F4"
+    },
+    {
+      "path": "src/Data/Structures/abstract_information_driven_bars.jl",
+      "size": 2340,
+      "sha256": "572B41B860A867197E0FF732E27329F22D2AAA38751642E62700DC2D11987D31"
+    },
+    {
+      "path": "src/Data/Structures/abstract_run_bars.jl",
+      "size": 6878,
+      "sha256": "82CA0C4087DD54B3E314F7D16A9146557AA97800953FFC26D1002310258D2EFE"
+    },
+    {
+      "path": "src/Data/Structures/imbalance_bars.jl",
+      "size": 3125,
+      "sha256": "A2887D6B3CBA1A9BF71CA7581E2E13E2BD82854D5B39F9A268B1924D40F77DE6"
+    },
+    {
+      "path": "src/Data/Structures/run_bars.jl",
+      "size": 2978,
+      "sha256": "420900A27ABED792A063AC043B6825FF5DBB150B8E4018BC341C0DED78A51847"
+    },
+    {
+      "path": "src/Data/Structures/standard_bars.jl",
+      "size": 2402,
+      "sha256": "B693ECF7F95AEDBF3CD49AD9C14E1E7D70CA4B85591121443E01F4A557C9D637"
+    },
+    {
+      "path": "src/Data/Structures/time_bars.jl",
+      "size": 4006,
+      "sha256": "EFB7FA94FA17DD236BD40DE2C1528F0D5355314C83CA7C1076036726A1A33A70"
+    },
+    {
+      "path": "src/Data/Structures/types.jl",
+      "size": 871,
+      "sha256": "BF7A371208DE55E389A9643069A77D6422BBDE327053241C18EA6B5DB5CB0618"
+    },
+    {
+      "path": "src/Data/SyntheticData/SyntheticData.jl",
+      "size": 14074,
+      "sha256": "90A2D56DEBA678D06C893EC450E31DF40DAC18C639712A156A49E53A37608AE4"
+    },
+    {
+      "path": "src/Data/Weights/SampleWeight.jl",
+      "size": 5700,
+      "sha256": "28778ED250F4F770F873418DB240DE547E1B2FA3530D40B2AD94F7972C396642"
+    },
+    {
+      "path": "src/Ensemble/BaggingAccuracy.jl",
+      "size": 5870,
+      "sha256": "C0291FAFDF479C23F3030814746C9D7771B7BE5748607ED8BBC41D4363D33AF5"
+    },
+    {
+      "path": "src/Ensemble/Ensemble.jl",
+      "size": 479,
+      "sha256": "BDB8AB43A20557E97427BBDCFC9CE68C5BAA7993B59001A500C781DE96239ECD"
+    },
+    {
+      "path": "src/Features/EntropyFeatures.jl",
+      "size": 13734,
+      "sha256": "05608B355EAA975210B79A930E49025C874FB0CB56AB8E61145BFC372AACC08C"
+    },
+    {
+      "path": "src/Features/FeatureImportance.jl",
+      "size": 20857,
+      "sha256": "CD6B2D1C57E1AD6D0C2FBED9A0BBFFD37D7542C982149950DB26132FC831D526"
+    },
+    {
+      "path": "src/Features/Features.jl",
+      "size": 2062,
+      "sha256": "D0E2A8CF861445ED8811A05E2AAA615EAE71B71F551A8561FF43756D2F685772"
+    },
+    {
+      "path": "src/Features/MicrostructuralFeatures.jl",
+      "size": 9322,
+      "sha256": "C43CD42F440890E9E60AFC896E324F3A660A0D83C9DA179D58CE87D203B5A4AE"
+    },
+    {
+      "path": "src/Features/StructuralBreaks.jl",
+      "size": 28536,
+      "sha256": "8950B7A405C19900A26312332F2069E9133489280377B888A5D9C5F7B73686F9"
+    },
+    {
+      "path": "src/Optimization/Hedging.jl",
+      "size": 1542,
+      "sha256": "5D53049AB53DA667DAB50C8A85C0C4AEC8B72FB173EF10492CE29CAC2DD4C4CF"
+    },
+    {
+      "path": "src/Optimization/HierarchicalRiskParity.jl",
+      "size": 5366,
+      "sha256": "D183F89F5630B7A90698B0C5E8FD4B12BE4C2CB35B63584D3E68BE228E66DF3F"
+    },
+    {
+      "path": "src/Optimization/NestedClusteredOptimization.jl",
+      "size": 3203,
+      "sha256": "606C77D03C188329A2D34A47B66E30F9EF071830F759FCAF3212174F0C75A040"
+    },
+    {
+      "path": "src/Optimization/Optimization.jl",
+      "size": 1046,
+      "sha256": "F3F2B5BF989A38B2597212B189D46B3F15822EC70D0A10B88665B8232749B111"
+    },
+    {
+      "path": "src/Pde/DeepBSDESolver.jl",
+      "size": 4156,
+      "sha256": "98713B61985616C1B75A75AEEFDFC04EB098CCE8B113DC82C30E66C290F5CE2B"
+    },
+    {
+      "path": "src/Pde/Equations.jl",
+      "size": 6691,
+      "sha256": "E9FDB03662BFA332071DFEE0B5EAD08EB9083013394D2A467E4E74850619D9F8"
+    },
+    {
+      "path": "src/Pde/Pde.jl",
+      "size": 1150,
+      "sha256": "83EC54078F611573F5BDDAAAB1A196FDBCF5BDF60441D73F15A5DFACC8960318"
+    },
+    {
+      "path": "src/RiskLabAI.jl",
+      "size": 9192,
+      "sha256": "F1568851BCEA6C59D24D2BD3362E91A74A1FA2EA96CDFDB10E25B8D80BE2600F"
+    },
+    {
+      "path": "src/Utils/Utils.jl",
+      "size": 1422,
+      "sha256": "00040198C01FAA14E1382615E45FB9C4134E811358873ACAADE6395300AF6757"
+    },
+    {
+      "path": "src/Utils/constants.jl",
+      "size": 1878,
+      "sha256": "4375C297224F43D46DCBB3C48CDE48C03E0411003A8EB7BE0F7043D21D0EA1C0"
+    },
+    {
+      "path": "src/Utils/ewma.jl",
+      "size": 603,
+      "sha256": "1859782577AB7D54D2ABDEA9E2D55E27E1A5085DF9CAC4747BD07F531D802B50"
+    },
+    {
+      "path": "src/Utils/field_inheritance.jl",
+      "size": 1354,
+      "sha256": "1B49243A727EF52DD281E5C99833F4628D11E171A362DD93F0569A29BBC68615"
+    },
+    {
+      "path": "src/Validation/CrossValScore.jl",
+      "size": 2838,
+      "sha256": "0B201D8E86ED57E48739263D24B5D6E15A63920AF57F25677A0A01BAC26F1D75"
+    },
+    {
+      "path": "src/Validation/CrossValidators.jl",
+      "size": 11066,
+      "sha256": "7CD01DAA03DCE65A3FD8FD63A659CA49F41C065EBCB57D74A7143D04A02EF274"
+    },
+    {
+      "path": "src/Validation/HyperParameterTuning.jl",
+      "size": 9451,
+      "sha256": "6029124C2EEBF947577E8F92DBE67E697D388CAB71037ED4BD26FF6B929970F0"
+    },
+    {
+      "path": "src/Validation/PathAdaptiveCPCV.jl",
+      "size": 7537,
+      "sha256": "920709AD376A191CFCD7231064802678E3C65A086C08C6374C4A9D02FF628BE8"
+    },
+    {
+      "path": "src/Validation/PathBaggedCPCV.jl",
+      "size": 4015,
+      "sha256": "C81794F73B57552CB338DB421F796A64011B08B5357EC925DFE5CFFB662CE4E8"
+    },
+    {
+      "path": "src/Validation/Validation.jl",
+      "size": 1729,
+      "sha256": "8D77D7E5FDC0C523C1832A749EB945AB1651DD02CBA839170372DC1262AC04C1"
+    },
+    {
+      "path": "test/causal_factor_analysis/fixtures/additive_numeric_parity.tsv",
+      "size": 1200,
+      "sha256": "E2B46AB385DB863D9F4C764F3754D6C0931ED7C62DCB2C589927DB924986DD7E"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_additive_numeric_parity.jl",
+      "size": 6777,
+      "sha256": "8668086C0D082ABDD4C49B524EC5BBD4B18570743F1134F8C226692D0F0A026E"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_allocation_diagnostics.jl",
+      "size": 13344,
+      "sha256": "6352768CFCD30CC2298F86E849306FEFCA8873DCED93CD1F946E843BEBC786EB"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_factor_mirage.jl",
+      "size": 2829,
+      "sha256": "84B194306913AFE850F6E4B56761491AEA2B13F180BFF24FD83BB20FE10151D7"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_false_discovery_rates.jl",
+      "size": 11250,
+      "sha256": "841E2B0FEDF50CB8ADA2B83E029EE9B504D223173769FE099221BFFA8FDFCC3C"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_generalized_factor_mirage.jl",
+      "size": 8265,
+      "sha256": "ED02E433879FC91C125C29478681CC0653BC532EB34D49932A4671585252A994"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_graph_identification.jl",
+      "size": 18944,
+      "sha256": "B15F623E6F474B706F3AA00AB69D693C0F496494DB0E537D824F3B429363D22F"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_graph_roles.jl",
+      "size": 6590,
+      "sha256": "1FA00ADE370AD3E239258AF501D86767168C1A35095F16E108BD3D412201A6B4"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_optimizer.jl",
+      "size": 3424,
+      "sha256": "C3DD2CB2F226D9C8ABF6C3E645929007BC811419321E10181A5CF8C5AAAC6ECB"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_protocol.jl",
+      "size": 11071,
+      "sha256": "5916A06D7D186DA6A74FA0FD23DC7EDD29BA75BACCBA92CA53E3AB94C201109D"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_specification_diagnostics.jl",
+      "size": 1974,
+      "sha256": "0BBB85F99A06450D9940FBFC152C0F239159DA6CC4AB75D6D5A34490E23B717E"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_structural_models.jl",
+      "size": 6678,
+      "sha256": "24FCD62D2EA75F38D7F9D1634FF06AA1694E75A9BB3F1880C91F3E88F4F88152"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_treatment_effects.jl",
+      "size": 2220,
+      "sha256": "1D47C23D447AB8C50B8BD013AA6FA3ACA2A577924FFC0D17656BAA9B95CBCAEF"
+    },
+    {
+      "path": "test/fixtures/pelt_x1.txt",
+      "size": 4560,
+      "sha256": "D91CCA3A9AC511AD7E57690342491639C2221B7D6971A84D48C06142DCBF7EBF"
+    },
+    {
+      "path": "test/fixtures/pelt_x2.txt",
+      "size": 3898,
+      "sha256": "A6ED3EC032127997915CC490713622C466060B09A196DB6E64B71E75C1F3A9D2"
+    },
+    {
+      "path": "test/fixtures/pelt_x3.txt",
+      "size": 6071,
+      "sha256": "4ED138F86A26DBEAA424E52656286EFE0ECEF8EC9F5901F4F39B6653348F91CA"
+    },
+    {
+      "path": "test/fixtures/vrsadf_y.txt",
+      "size": 2225,
+      "sha256": "15174F32C7EA4FCF7A158C80C47ABDFB25B1DEFBEDD2DA0B1103B6B2AFF33AD5"
+    },
+    {
+      "path": "test/preserved_runtests.jl",
+      "size": 72675,
+      "sha256": "C312ED56CF28C0D980B88D3AC37AEA01028F9929840D4786184C7362889725E2"
+    },
+    {
+      "path": "test/runtests.jl",
+      "size": 4087,
+      "sha256": "509E9630B753FE1BF9A63D3FE5F729C89C996A5BFC5FCA892E00CCA3F12CE088"
+    }
+  ],
+  "self_hash_policy": "PACKAGE_FILES.json is listed but omitted from its own hash records to avoid a self-referential digest.",
+  "preserved_repository_only_file_count": 60,
+  "preserved_repository_only_files": [
+    ".github/workflows/CompatHelper.yml",
+    ".github/workflows/TagBot.yml",
+    ".gitignore",
+    "CHANGELOG.md",
+    "LICENSE.txt",
+    "PARITY.md",
+    "RECONSTRUCTION_PLAN.md",
+    "_superseded/README.md",
+    "_superseded/src/Backtests/BacktestStatistics.jl",
+    "_superseded/src/Backtests/BacktestSyntheticData.jl",
+    "_superseded/src/Backtests/StrategyRisk.jl",
+    "_superseded/src/Backtests/TestSetOverfitting.jl",
+    "_superseded/src/BetSize/MixtureModel.jl",
+    "_superseded/src/Calibration/HyperParameterTuning.jl",
+    "_superseded/src/Controller/all.jl",
+    "_superseded/src/Controller/bars_initializer.jl",
+    "_superseded/src/Controller/data_structure_controller.jl",
+    "_superseded/src/Data/Structures/DataStructuresLopez.jl",
+    "_superseded/src/Differentiation/Differentiation.jl",
+    "_superseded/src/Ensemble/BaggingClassifierAccuracy.jl",
+    "_superseded/src/Features/BekkerParkinsonVolatilityEstimator.jl",
+    "_superseded/src/Features/ClusteredMeanDecreaseAccuracy.jl",
+    "_superseded/src/Features/ClusteredMeanDecreaseImpurity.jl",
+    "_superseded/src/Features/Clustering.jl",
+    "_superseded/src/Features/CorwinSchultz.jl",
+    "_superseded/src/Features/DistanceMetric.jl",
+    "_superseded/src/Features/Entropy.jl",
+    "_superseded/src/Features/GenerateSyntheticData.jl",
+    "_superseded/src/Features/MeanDecreaseAccuracy.jl",
+    "_superseded/src/Features/MeanDecreaseImpurity.jl",
+    "_superseded/src/Features/OrthogonalFeatures.jl",
+    "_superseded/src/Features/SingleFeatureImportance.jl",
+    "_superseded/src/Features/StructuralBreaks/StructuralBreaks.jl",
+    "_superseded/src/Features/WeightedTau.jl",
+    "_superseded/src/HPC/HPC.jl",
+    "_superseded/src/Models/HyperParameterTuning.jl",
+    "_superseded/src/Optimization/DistanceFromCorrelation.jl",
+    "_superseded/src/Optimization/HRP.jl",
+    "_superseded/src/Optimization/NCO.jl",
+    "_superseded/src/Optimization/QuasiDiagonal.jl",
+    "_superseded/src/Risk/StrategyRisk.jl",
+    "_superseded/src/Utils/RollingFunctions.jl",
+    "_superseded/src/Utils/VectorFunctions.jl",
+    "_superseded/src/Validation/BacktestPathNumber.jl",
+    "_superseded/src/Validation/CalculateEmbargoTimes.jl",
+    "_superseded/src/Validation/CrossValidationScore.jl",
+    "_superseded/src/Validation/CrossValidationScore2.jl",
+    "_superseded/src/Validation/PurgedKFold.jl",
+    "_superseded/src/Validation/PurgedKFoldCombinatorial.jl",
+    "_superseded/src/Validation/PurgedKFoldCombinatorialSplit.jl",
+    "_superseded/src/Validation/PurgedKFoldCombinatorialSplit2.jl",
+    "_superseded/src/Validation/PurgedKFoldCombinatorialStacked.jl",
+    "_superseded/src/Validation/PurgedKFoldSplit.jl",
+    "_superseded/src/Validation/PurgedKFoldStacked.jl",
+    "_superseded/src/Validation/PurgedKFoldStackedSplit.jl",
+    "_superseded/src/Validation/purgeTrainingTimes.jl",
+    "docs/.gitignore",
+    "docs/Project.toml",
+    "docs/make.jl",
+    "docs/src/index.md"
+  ],
+  "preserved_repository_only_records": [
+    {
+      "path": ".github/workflows/CompatHelper.yml",
+      "size": 490,
+      "sha256": "DC50C96CDE509B6F61E1CB1BB1BF6CFBB2BAF751EEEE2851EE15CC4BE6C40DB0"
+    },
+    {
+      "path": ".github/workflows/TagBot.yml",
+      "size": 439,
+      "sha256": "E77C5742742B9C1180723DC5BCE6D24B8D4BF09579CCBC3F40F64C3C96D79103"
+    },
+    {
+      "path": ".gitignore",
+      "size": 817,
+      "sha256": "8C378C84EB5D4F9734E1B98ADA2F5149AB446CA23EC1C287A54DF565FAFEA86E"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "size": 11280,
+      "sha256": "D2ABC6637111D6FCFE34158F98CC6C2E6A79FA704D6E7308A3B09B6893888097"
+    },
+    {
+      "path": "LICENSE.txt",
+      "size": 1694,
+      "sha256": "C5672228DA6CC339847A35B28525673C604933280027EA19FCBF68A3CF78C249"
+    },
+    {
+      "path": "PARITY.md",
+      "size": 42742,
+      "sha256": "B001EB2E401E079269836795A4C1EBDE44D8FE15CD590ACEAE71FB4084FE82F4"
+    },
+    {
+      "path": "RECONSTRUCTION_PLAN.md",
+      "size": 7108,
+      "sha256": "ED444661E4CC7FC89C1DE9383A638B666E9AB99ED99A93C172D9B3EF8D24DD18"
+    },
+    {
+      "path": "_superseded/README.md",
+      "size": 1564,
+      "sha256": "44582035FDF683276D03D8CF2A0CB7A8E04BA385438DF40EF6F1E0559891336A"
+    },
+    {
+      "path": "_superseded/src/Backtests/BacktestStatistics.jl",
+      "size": 7305,
+      "sha256": "136C5A17B644C7D290619537CBAD8C98090129C4F8BBFA54BE5B72E0FEECADE1"
+    },
+    {
+      "path": "_superseded/src/Backtests/BacktestSyntheticData.jl",
+      "size": 6028,
+      "sha256": "026790266E3B658DCBF1830F307100D73D46FBFFCF7E60942CA64D43E5D0B143"
+    },
+    {
+      "path": "_superseded/src/Backtests/StrategyRisk.jl",
+      "size": 6415,
+      "sha256": "4706AEA04BE14416FB4669982BE30F13966B675CCEBCAA0990E8C325F2D04413"
+    },
+    {
+      "path": "_superseded/src/Backtests/TestSetOverfitting.jl",
+      "size": 6420,
+      "sha256": "435B0ED8723874FB1669BAAC7A67D53AAE29F4AEF3C679B0F99A82BB8AD62509"
+    },
+    {
+      "path": "_superseded/src/BetSize/MixtureModel.jl",
+      "size": 7856,
+      "sha256": "FA6E679D42B1A15482CEE3CB18AA683E2F12F449C3EDD7C15F2D7CA16184AFA1"
+    },
+    {
+      "path": "_superseded/src/Calibration/HyperParameterTuning.jl",
+      "size": 457,
+      "sha256": "7AACCA92CC33EA87879673543F7BA52E3073156CA65BE7D8011B79FFCC4DE115"
+    },
+    {
+      "path": "_superseded/src/Controller/all.jl",
+      "size": 1,
+      "sha256": "01BA4719C80B6FE911B091A7C05124B64EEECE964E09C058EF8F9805DACA546B"
+    },
+    {
+      "path": "_superseded/src/Controller/bars_initializer.jl",
+      "size": 18150,
+      "sha256": "D149FA5C762F53A8A5220B812E872173FD001532DCD856C49E4A5A82A3EF1961"
+    },
+    {
+      "path": "_superseded/src/Controller/data_structure_controller.jl",
+      "size": 7602,
+      "sha256": "FC4D74232DD2E77F508EF494ADEB6B506A42538A4091F44DD4C7070D347C730E"
+    },
+    {
+      "path": "_superseded/src/Data/Structures/DataStructuresLopez.jl",
+      "size": 16700,
+      "sha256": "75375E55E2436EE18C89559532B4E1830678560CE57BC21EF5CE0CAE307C5815"
+    },
+    {
+      "path": "_superseded/src/Differentiation/Differentiation.jl",
+      "size": 9343,
+      "sha256": "80365E2F5FACC9F99D210DDA6619AD375E8887DCCF18BEC89CB0826A5889C73E"
+    },
+    {
+      "path": "_superseded/src/Ensemble/BaggingClassifierAccuracy.jl",
+      "size": 1292,
+      "sha256": "0B92553AF806FE0D28FF9ED476C155A73673AD71C3DBAF336C8A9FE0E3F5C9C7"
+    },
+    {
+      "path": "_superseded/src/Features/BekkerParkinsonVolatilityEstimator.jl",
+      "size": 2285,
+      "sha256": "4DBA88463D0D6E3CC9A07157E3343F315DA59D9CDF166EEA59A1E29BE8C05736"
+    },
+    {
+      "path": "_superseded/src/Features/ClusteredMeanDecreaseAccuracy.jl",
+      "size": 2636,
+      "sha256": "C9ED82D9BC035C45AC45C44B69284D6F1A09990C12CE772E472875357EA8844A"
+    },
+    {
+      "path": "_superseded/src/Features/ClusteredMeanDecreaseImpurity.jl",
+      "size": 2760,
+      "sha256": "CE9AD6BE44F3D79F7BA63D6EBE08BD8456E0F9A79EBD4D7C8666EF866525DAC8"
+    },
+    {
+      "path": "_superseded/src/Features/Clustering.jl",
+      "size": 13016,
+      "sha256": "AEFF1556BD06E4C61FAD153C7C7F949C85286B6909558918204018C5AA300C1F"
+    },
+    {
+      "path": "_superseded/src/Features/CorwinSchultz.jl",
+      "size": 2882,
+      "sha256": "765838D1CDD7FB03753856B85FB7D4E4F310BF65D2CB8CF38FD4631FB9675A72"
+    },
+    {
+      "path": "_superseded/src/Features/DistanceMetric.jl",
+      "size": 6123,
+      "sha256": "B31A7AC3E09CC213F9733EC4A5E17FCA2BB9579078F77EECB34A05F21AE6F8AC"
+    },
+    {
+      "path": "_superseded/src/Features/Entropy.jl",
+      "size": 4993,
+      "sha256": "90910F1EE645D90DA2937BA3B3D1DBDECAA181AC61574DEDBC83998D11488801"
+    },
+    {
+      "path": "_superseded/src/Features/GenerateSyntheticData.jl",
+      "size": 1573,
+      "sha256": "42C22399CAB4D5A4914CE9F75847EA9E3756CC4AB93CE70492DBE89D9BE7436B"
+    },
+    {
+      "path": "_superseded/src/Features/MeanDecreaseAccuracy.jl",
+      "size": 2695,
+      "sha256": "8DCD92ED8BF7405B87D28EB8CB405662EF0C289155EC4AA0371AF40B1523FAC6"
+    },
+    {
+      "path": "_superseded/src/Features/MeanDecreaseImpurity.jl",
+      "size": 1565,
+      "sha256": "375BCF9FA4C7A4CD9D09294B296A6E197CC5023917D389D97546110F72D9A972"
+    },
+    {
+      "path": "_superseded/src/Features/OrthogonalFeatures.jl",
+      "size": 2070,
+      "sha256": "8180301D5AA7837D92A2873EE4DB3476F7E8BC7AD377D5A64877A73AB1B8FC88"
+    },
+    {
+      "path": "_superseded/src/Features/SingleFeatureImportance.jl",
+      "size": 3048,
+      "sha256": "81C51D03C4AE48CBAD29E6D110795B6D1069B4160E219F0BD6428813172FBA28"
+    },
+    {
+      "path": "_superseded/src/Features/StructuralBreaks/StructuralBreaks.jl",
+      "size": 11184,
+      "sha256": "71B0D44DC0BB95272FC30FBA783E30C5A48B64157A5AEADBAE4B20701BBC42C9"
+    },
+    {
+      "path": "_superseded/src/Features/WeightedTau.jl",
+      "size": 920,
+      "sha256": "584F0C7061B6F17A21FECF23B4EF871219CA6B04599BE49F2661E339F819E8EC"
+    },
+    {
+      "path": "_superseded/src/HPC/HPC.jl",
+      "size": 4002,
+      "sha256": "D7FF12EFFB2CA62280ABB4B12EAA076F93E36F8354F917F52E9E6F4B3AA21322"
+    },
+    {
+      "path": "_superseded/src/Models/HyperParameterTuning.jl",
+      "size": 3491,
+      "sha256": "4FCAC887DA5A14DA70EEFD4A7BB4DE7652AED83B4F15836DEDFC014B8BBEA9F9"
+    },
+    {
+      "path": "_superseded/src/Optimization/DistanceFromCorrelation.jl",
+      "size": 719,
+      "sha256": "2640E36C29B04B8F2EDDB361916CDE47804C154B102E0981A2495FD68F958986"
+    },
+    {
+      "path": "_superseded/src/Optimization/HRP.jl",
+      "size": 8406,
+      "sha256": "596822AEE3212C9F2F0A4950A63E36FF2ABD16FA6E2C36373E7EE99A116E74F9"
+    },
+    {
+      "path": "_superseded/src/Optimization/NCO.jl",
+      "size": 3899,
+      "sha256": "9B0E588AFDFD408EA15536ED03DBEECBE0F6AEE263CC7DB99D4B4994C8435279"
+    },
+    {
+      "path": "_superseded/src/Optimization/QuasiDiagonal.jl",
+      "size": 1613,
+      "sha256": "B6CB9997EBA63EC89E56B1EF8556EFCD9BE89B1E1976A5620BCBD62458442303"
+    },
+    {
+      "path": "_superseded/src/Risk/StrategyRisk.jl",
+      "size": 8567,
+      "sha256": "E1FD0CCFB6790587503B4902F172A214D3B5A370BCB4D8581ABFBF7186606E7B"
+    },
+    {
+      "path": "_superseded/src/Utils/RollingFunctions.jl",
+      "size": 1931,
+      "sha256": "D83C4709FBBB62640A53BD3823F4EC4A595D3BB07F6B90122BB8E8A03A83150A"
+    },
+    {
+      "path": "_superseded/src/Utils/VectorFunctions.jl",
+      "size": 1266,
+      "sha256": "0CDA9105D46ADCEA7058C0500E790A4DE63F46CA59C7D27F9EC9D7F5DA398752"
+    },
+    {
+      "path": "_superseded/src/Validation/BacktestPathNumber.jl",
+      "size": 828,
+      "sha256": "586F13C09480B04C9BEC37E238949E1AFF1E1010B8D3C34B1FF2C1F03190103D"
+    },
+    {
+      "path": "_superseded/src/Validation/CalculateEmbargoTimes.jl",
+      "size": 1721,
+      "sha256": "ABAB08116172B2DAD89FDB113C5448FFF2F5944241AF8C9D3C8A5BA4D606C028"
+    },
+    {
+      "path": "_superseded/src/Validation/CrossValidationScore.jl",
+      "size": 3746,
+      "sha256": "197D6F063EE42C4073F4C26942138909D3FAC5954BB93D0483AF80D1EAFFF053"
+    },
+    {
+      "path": "_superseded/src/Validation/CrossValidationScore2.jl",
+      "size": 4276,
+      "sha256": "B69F5386857D3CC50A8A1035D1AFA8FD6106F23CC8AD0715FA215C05CA5335B8"
+    },
+    {
+      "path": "_superseded/src/Validation/PurgedKFold.jl",
+      "size": 1420,
+      "sha256": "CA49E850A5E05E59B5D3D7A3C3A38FF221EFF1FE63838D83479DF359C05C6D38"
+    },
+    {
+      "path": "_superseded/src/Validation/PurgedKFoldCombinatorial.jl",
+      "size": 1762,
+      "sha256": "7DDBD9B04E9809D77CA2E9885FDF12C3847D140E358003F3377DBE4AC3C7CEA5"
+    },
+    {
+      "path": "_superseded/src/Validation/PurgedKFoldCombinatorialSplit.jl",
+      "size": 4199,
+      "sha256": "307741A99752468EBB81B8C335A0BA219EF6140A015A2B57B61D3648BF6E19AA"
+    },
+    {
+      "path": "_superseded/src/Validation/PurgedKFoldCombinatorialSplit2.jl",
+      "size": 3346,
+      "sha256": "2D9FE3C82B4CDC271FF56A08ADAC78EB1443D87F2F6A05E58C7EA5D2507576C9"
+    },
+    {
+      "path": "_superseded/src/Validation/PurgedKFoldCombinatorialStacked.jl",
+      "size": 2466,
+      "sha256": "FA32A110BCCFB606A716BFF46DF25AEB82920A058072F4B36153E7C113FFACC8"
+    },
+    {
+      "path": "_superseded/src/Validation/PurgedKFoldSplit.jl",
+      "size": 1962,
+      "sha256": "81397D10947A8C199D01BACCEF0CCCB71E3154B1E37DCFEE7B33EA4E61A021D1"
+    },
+    {
+      "path": "_superseded/src/Validation/PurgedKFoldStacked.jl",
+      "size": 1720,
+      "sha256": "989F879BB4D798AB52DE3811DF32B02ACB8AD54ED04FB9F0939BCF13486F58C8"
+    },
+    {
+      "path": "_superseded/src/Validation/PurgedKFoldStackedSplit.jl",
+      "size": 3248,
+      "sha256": "B6EF352F0007AE1367CDBF1A90ED07577D8655B06EE63508084FE67801A2C9D8"
+    },
+    {
+      "path": "_superseded/src/Validation/purgeTrainingTimes.jl",
+      "size": 2377,
+      "sha256": "4626BE223150DAA0A7DF7ABCB3DD7A5BAE61AA6AC5F22DE4D1012C926EA1D8DB"
+    },
+    {
+      "path": "docs/.gitignore",
+      "size": 13,
+      "sha256": "7A0620A706AE387525F9B320517C3F6F403E88141FC2871DF3B119FF00118188"
+    },
+    {
+      "path": "docs/Project.toml",
+      "size": 59,
+      "sha256": "5325DD2A6D579E38013A016961367BE50C0BAA8F8079C35F5F3EEE2361C192AC"
+    },
+    {
+      "path": "docs/make.jl",
+      "size": 602,
+      "sha256": "642600561444C1BF0F681417B20E4EEAB330BB14B188656754DC06AA021E7FCE"
+    },
+    {
+      "path": "docs/src/index.md",
+      "size": 493,
+      "sha256": "BF7524A1161CAAF404464ADE89A20AE73DE86994D6EBEE8A71BDB09435EE447D"
+    }
+  ],
+  "repository_tree_file_count": 159,
+  "repository_tree_file_list_sha256": "D2AB81F318916B373F0041F4C616CB21E48935CD7E1183F007A330F5EA66237F",
+  "repository_tree_policy": "The repository tree is the exact disjoint union of active release-source files and already-public repository-only files. Repository-only files are preserved but are not wheel payload members or active package load roots.",
+  "runtime_source_file_count": 67,
+  "runtime_source_files": [
+    "src/Backtest/Backtest.jl",
+    "src/Backtest/BacktestStatistics.jl",
+    "src/Backtest/BacktestSyntheticData.jl",
+    "src/Backtest/BetSizing.jl",
+    "src/Backtest/MultipleTesting.jl",
+    "src/Backtest/OUTradingRules.jl",
+    "src/Backtest/ProbabilisticSharpeRatio.jl",
+    "src/Backtest/ProbabilityOfBacktestOverfitting.jl",
+    "src/Backtest/StrategyRisk.jl",
+    "src/Backtest/TestSetOverfitting.jl",
+    "src/Backtests/ProbabilityOfBacktestOverfitting.jl",
+    "src/BetSize/BetSizing.jl",
+    "src/CausalFactorAnalysis/AllocationDiagnostics.jl",
+    "src/CausalFactorAnalysis/CausalFactorAnalysis.jl",
+    "src/CausalFactorAnalysis/FactorMirage.jl",
+    "src/CausalFactorAnalysis/FalseDiscoveryRates.jl",
+    "src/CausalFactorAnalysis/GraphIdentification.jl",
+    "src/CausalFactorAnalysis/GraphRoles.jl",
+    "src/CausalFactorAnalysis/Optimizer.jl",
+    "src/CausalFactorAnalysis/Protocol.jl",
+    "src/CausalFactorAnalysis/SpecificationDiagnostics.jl",
+    "src/CausalFactorAnalysis/StructuralModels.jl",
+    "src/CausalFactorAnalysis/TreatmentEffects.jl",
+    "src/Cluster/Cluster.jl",
+    "src/Cluster/Clustering.jl",
+    "src/Data/Data.jl",
+    "src/Data/Denoise/Denoising.jl",
+    "src/Data/Differentiation/Differentiation.jl",
+    "src/Data/Distance/DistanceMetric.jl",
+    "src/Data/Labeling/FinancialLabels.jl",
+    "src/Data/Labeling/Labeling.jl",
+    "src/Data/Structures/abstract_bars.jl",
+    "src/Data/Structures/abstract_imbalance_bars.jl",
+    "src/Data/Structures/abstract_information_driven_bars.jl",
+    "src/Data/Structures/abstract_run_bars.jl",
+    "src/Data/Structures/imbalance_bars.jl",
+    "src/Data/Structures/run_bars.jl",
+    "src/Data/Structures/standard_bars.jl",
+    "src/Data/Structures/time_bars.jl",
+    "src/Data/Structures/types.jl",
+    "src/Data/SyntheticData/SyntheticData.jl",
+    "src/Data/Weights/SampleWeight.jl",
+    "src/Ensemble/BaggingAccuracy.jl",
+    "src/Ensemble/Ensemble.jl",
+    "src/Features/EntropyFeatures.jl",
+    "src/Features/FeatureImportance.jl",
+    "src/Features/Features.jl",
+    "src/Features/MicrostructuralFeatures.jl",
+    "src/Features/StructuralBreaks.jl",
+    "src/Optimization/Hedging.jl",
+    "src/Optimization/HierarchicalRiskParity.jl",
+    "src/Optimization/NestedClusteredOptimization.jl",
+    "src/Optimization/Optimization.jl",
+    "src/Pde/DeepBSDESolver.jl",
+    "src/Pde/Equations.jl",
+    "src/Pde/Pde.jl",
+    "src/RiskLabAI.jl",
+    "src/Utils/Utils.jl",
+    "src/Utils/constants.jl",
+    "src/Utils/ewma.jl",
+    "src/Utils/field_inheritance.jl",
+    "src/Validation/CrossValScore.jl",
+    "src/Validation/CrossValidators.jl",
+    "src/Validation/HyperParameterTuning.jl",
+    "src/Validation/PathAdaptiveCPCV.jl",
+    "src/Validation/PathBaggedCPCV.jl",
+    "src/Validation/Validation.jl"
+  ],
+  "test_file_count": 19,
+  "test_files": [
+    "test/causal_factor_analysis/fixtures/additive_numeric_parity.tsv",
+    "test/causal_factor_analysis/test_additive_numeric_parity.jl",
+    "test/causal_factor_analysis/test_allocation_diagnostics.jl",
+    "test/causal_factor_analysis/test_factor_mirage.jl",
+    "test/causal_factor_analysis/test_false_discovery_rates.jl",
+    "test/causal_factor_analysis/test_generalized_factor_mirage.jl",
+    "test/causal_factor_analysis/test_graph_identification.jl",
+    "test/causal_factor_analysis/test_graph_roles.jl",
+    "test/causal_factor_analysis/test_optimizer.jl",
+    "test/causal_factor_analysis/test_protocol.jl",
+    "test/causal_factor_analysis/test_specification_diagnostics.jl",
+    "test/causal_factor_analysis/test_structural_models.jl",
+    "test/causal_factor_analysis/test_treatment_effects.jl",
+    "test/fixtures/pelt_x1.txt",
+    "test/fixtures/pelt_x2.txt",
+    "test/fixtures/pelt_x3.txt",
+    "test/fixtures/vrsadf_y.txt",
+    "test/preserved_runtests.jl",
+    "test/runtests.jl"
+  ],
   "wheel_python_source_members": [],
   "generated_metadata_members": {
-    "policy": "Generated package-manager metadata is not pre-enumerated by filename here; the future artifact inspector must validate its normalized field set and reject undeclared payload files."
+    "policy": "Future package-manager-generated metadata must be validated by normalized fields and must not introduce undeclared payload files."
   }
 }

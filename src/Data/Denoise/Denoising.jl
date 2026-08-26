@@ -228,10 +228,10 @@ end
 # bulk) or is non-stationary, that assumption breaks and clipping degenerates
 # toward the raw sample covariance. NERCOME instead regularizes the eigenvalues
 # by sample-splitting: eigenvectors come from one split, the oracle eigenvalues
-# from projecting the held-out split's covariance onto them, averaged over many
+# from projecting the validation sample split's covariance onto them, averaged over many
 # random splits. Clean-room from Lam (2016); a data-driven estimator (it takes
-# the return matrix, not a covariance). Admitted in Appraisal 24
-# (`library_extension/appraisals/24_verdict.md`).
+# the return matrix, not a covariance). Included after independent validation
+# (the documented validation evidence).
 #
 # Stochastic-step divergence (documented): the split permutations use Julia's
 # `randperm`/`rng` rather than NumPy's PCG64 stream, so the estimate is
@@ -265,7 +265,7 @@ averaged over the splits (each term is PSD, so the average is PSD). Returns are
 standardized to unit sample variance, NERCOME-cleaned in correlation space, then
 scaled back by the sample column standard deviations.
 
-Preferred-when / avoid-when (regime tag, verbatim from `appraisals/24_verdict.md`):
+Preferred-when / avoid-when guidance:
 prefer NERCOME over MP clipping for covariance estimation when the eigenvalue
 spectrum has no clean gap or is non-stationary (better accuracy and conditioning,
 and lower OOS volatility via NCO / min-variance); it converges to clipping on

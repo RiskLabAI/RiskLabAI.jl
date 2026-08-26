@@ -339,7 +339,7 @@ end
 # decision-stump basis and scores a feature by its out-of-bag partial variance;
 # CPI measures the model-loss increase when a feature is replaced by a
 # conditionally-resampled Gaussian knockoff, with a paired significance test.
-# Admitted in Appraisal 10 (`library_extension/appraisals/10_verdict.md`).
+# Included after independent validation (the documented validation evidence).
 # --------------------------------------------------------------------------- #
 
 using Random: randn
@@ -397,7 +397,7 @@ feature by the out-of-bag partial variance of its block; the per-tree scores are
 averaged. The tree representation + regularised GLM + out-of-sample partial
 contribution remove the in-sample / cardinality inflation of plain MDI.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer MDI+ over MDI when features are noisy, high-cardinality, or mixed-type — it
 rejects noise/cardinality inflation (noise-rejection 0.94 vs MDI 0.50) and recovers
 true relevance better; it converges to MDI when features are orthogonal and
@@ -457,7 +457,7 @@ Pooled across folds, the mean increase is the importance and a one-sided paired
 t-test gives a p-value, so the method tests whether a feature matters — the
 calibrated test MDA lacks.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer CPI when a statistically valid test of whether a feature matters is needed
 (MDA has none) — nominal size, good power.
 
