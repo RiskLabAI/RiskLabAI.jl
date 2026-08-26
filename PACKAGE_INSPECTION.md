@@ -13,11 +13,18 @@ normalization collisions, duplicate paths, links, reparse points, special
 files, caches, compiled output, manifests, credentials, or any undeclared
 member.
 
-The inspected tree must contain exactly the 88 declared RiskLabAI 1.0.0 release
-members, including the governed `.github/workflows/CI.yml`. Its package name
-and existing UUID must be unchanged. The canonical BSD-3-Clause license,
-maintainer and contact, repository, issue, documentation, and version records
-must agree with the reviewed metadata contract.
+The inspected registry tree must contain exactly 148 tracked files: the 88
+intended release-source members and the 60 preserved repository-only members
+declared separately in `PACKAGE_FILES.json`. The latter retain already-public
+history, documentation infrastructure, and superseded source paths without
+deleting them. They must not be included, imported, or referenced by the
+active `src`, `ext`, or test load graph, and they do not enlarge the public
+runtime API.
+
+The package name and existing UUID must be unchanged. The canonical
+BSD-3-Clause license, maintainer and contact, repository, issue,
+documentation, and version records must agree with the reviewed metadata
+contract. `PACKAGE_IDENTITY.json` must remain absent from the registry tree.
 
 ## Dependency and extension behavior
 
@@ -41,8 +48,10 @@ installed and loaded, then verify the four numerical Deep-BSDE assertions.
 
 ## Final review
 
-Scan every member name and every decoded public text member against the release
-hygiene denylist. Record the tree hash, member hashes, resolved dependency
-versions, module origins, test results, and every deviation. Any deviation
-keeps the package rejected. Human registration, release, publication, and
+Scan every member name and every decoded public text member, including the 60
+preserved repository-only members, against the release hygiene denylist.
+Verify that no preserved path is reachable from an active `include`, `using`,
+or `import`. Record the tree hash, member hashes, resolved dependency versions,
+module origins, test results, and every deviation. Any deviation keeps the
+package rejected. Human registration, release, publication, and
 version-control authority remain separate decisions after inspection.
