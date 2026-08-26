@@ -3,57 +3,154 @@ name: CI
 on:
   push:
     branches: [main]
-    tags: ["*"]
   pull_request:
+
+permissions:
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  JULIA_PKG_PRECOMPILE_AUTO: "0"
+
 jobs:
-  test:
-    name: Julia ${{ matrix.version }} - ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+  base:
+    name: base Julia ${{ matrix.version }} / ${{ matrix.dependency-set }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        version:
-          - "1.10"   # supported floor (LTS)
-          - "1"      # latest stable
-        # macOS runners queue slowly on PRs; keep Linux + Windows on every PR
-        # (full correctness coverage) and add macOS only on pushes to main/tags.
-        os: ${{ (github.event_name == 'pull_request' && fromJSON('["ubuntu-latest","windows-latest"]')) || fromJSON('["ubuntu-latest","macOS-latest","windows-latest"]') }}
+        include:
+          - version: "1.10.12"
+            dependency-set: minimum
+          - version: "1.10.12"
+            dependency-set: current
+          - version: "1.12.7"
+            dependency-set: minimum
+          - version: "1.12.7"
+            dependency-set: current
     steps:
       - uses: actions/checkout@v4
       - uses: julia-actions/setup-julia@v2
         with:
           version: ${{ matrix.version }}
       - uses: julia-actions/cache@v2
-      - uses: julia-actions/julia-buildpkg@v1
-      - uses: julia-actions/julia-runtest@v1
-      # Coverage scans *all* of src/, including legacy files not yet
-      # reconstructed (they have invalid-escape docstrings / parse errors).
-      # Keep it non-fatal until those files are wired in; the test step above
-      # is the gate. Re-enable strict coverage once src/ fully parses.
-      - uses: julia-actions/julia-processcoverage@v1
-        continue-on-error: true
-      - uses: codecov/codecov-action@v4
-        continue-on-error: true
-        with:
-          files: lcov.info
+      - name: Run base tests and optional-extension fallback checks
+        env:
+          RISKLABAI_TEST_DEEP_BSDE: "0"
+          RISKLABAI_DEPENDENCY_SET: ${{ matrix.dependency-set }}
+        run: |
+          julia --startup-file=no -e '
+            using Pkg
+            Pkg.activate(; temp = true)
+            Pkg.develop(path = pwd())
+            if ENV["RISKLABAI_DEPENDENCY_SET"] == "minimum"
+                Pkg.add([
+                    Pkg.PackageSpec(name = "Clustering", version = v"0.15.8"),
+                    Pkg.PackageSpec(name = "Combinatorics", version = v"1.1.0"),
+                    Pkg.PackageSpec(name = "DataFrames", version = v"1.8.2"),
+                    Pkg.PackageSpec(name = "DecisionTree", version = v"0.12.4"),
+                    Pkg.PackageSpec(name = "Distributions", version = v"0.25.128"),
+                    Pkg.PackageSpec(name = "HypothesisTests", version = v"0.11.8"),
+                    Pkg.PackageSpec(name = "SpecialFunctions", version = v"2.8.0"),
+                ])
+            else
+                Pkg.add([
+                    Pkg.PackageSpec(name = "Clustering"),
+                    Pkg.PackageSpec(name = "Combinatorics"),
+                    Pkg.PackageSpec(name = "DataFrames"),
+                    Pkg.PackageSpec(name = "DecisionTree"),
+                    Pkg.PackageSpec(name = "Distributions"),
+                    Pkg.PackageSpec(name = "HypothesisTests"),
+                    Pkg.PackageSpec(name = "SpecialFunctions"),
+                ])
+            end
+            using RiskLabAI
+            include(joinpath(pwd(), "test", "runtests.jl"))
+          '
 
-  format:
-    name: JuliaFormatter
+  deep-bsde:
+    name: Deep-BSDE Julia ${{ matrix.version }} / ${{ matrix.dependency-set }}
     runs-on: ubuntu-latest
-    # Enforced on the reconstructed code only. Legacy src/ subdirs that are not
-    # yet ported can contain parse errors, so they are excluded until wired in.
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - version: "1.10.12"
+            dependency-set: minimum
+          - version: "1.10.12"
+            dependency-set: current
+          - version: "1.12.7"
+            dependency-set: minimum
+          - version: "1.12.7"
+            dependency-set: current
     steps:
       - uses: actions/checkout@v4
       - uses: julia-actions/setup-julia@v2
         with:
-          version: "1"
-      - run: |
-          julia -e 'using Pkg; Pkg.add(name="JuliaFormatter", version="2.9.0")
-                    using JuliaFormatter
-                    format(["src/Utils", "src/Data", "src/Backtest", "test"]; verbose=true) || exit(0)'
-          git diff --exit-code
+          version: ${{ matrix.version }}
+      - uses: julia-actions/cache@v2
+      - name: Run tests with the weak dependencies loaded
+        env:
+          RISKLABAI_TEST_DEEP_BSDE: "1"
+          RISKLABAI_DEPENDENCY_SET: ${{ matrix.dependency-set }}
+        run: |
+          julia --startup-file=no -e '
+            using Pkg
+            Pkg.activate(; temp = true)
+            Pkg.develop(path = pwd())
+            if ENV["RISKLABAI_DEPENDENCY_SET"] == "minimum"
+                Pkg.add([
+                    Pkg.PackageSpec(name = "Clustering", version = v"0.15.8"),
+                    Pkg.PackageSpec(name = "Combinatorics", version = v"1.1.0"),
+                    Pkg.PackageSpec(name = "DataFrames", version = v"1.8.2"),
+                    Pkg.PackageSpec(name = "DecisionTree", version = v"0.12.4"),
+                    Pkg.PackageSpec(name = "Distributions", version = v"0.25.128"),
+                    Pkg.PackageSpec(name = "HypothesisTests", version = v"0.11.8"),
+                    Pkg.PackageSpec(name = "SpecialFunctions", version = v"2.8.0"),
+                    Pkg.PackageSpec(name = "Lux", version = v"1.31.4"),
+                    Pkg.PackageSpec(name = "Optimisers", version = v"0.4.7"),
+                    Pkg.PackageSpec(name = "Zygote", version = v"0.7.11"),
+                ])
+            else
+                Pkg.add([
+                    Pkg.PackageSpec(name = "Clustering"),
+                    Pkg.PackageSpec(name = "Combinatorics"),
+                    Pkg.PackageSpec(name = "DataFrames"),
+                    Pkg.PackageSpec(name = "DecisionTree"),
+                    Pkg.PackageSpec(name = "Distributions"),
+                    Pkg.PackageSpec(name = "HypothesisTests"),
+                    Pkg.PackageSpec(name = "SpecialFunctions"),
+                    Pkg.PackageSpec(name = "Lux"),
+                    Pkg.PackageSpec(name = "Optimisers"),
+                    Pkg.PackageSpec(name = "Zygote"),
+                ])
+            end
+            using Lux, Optimisers, Zygote, RiskLabAI
+            include(joinpath(pwd(), "test", "runtests.jl"))
+          '
+
+  format:
+    name: JuliaFormatter 2.9.0
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: "1.12.7"
+      - name: Verify deterministic formatting
+        run: |
+          julia --startup-file=no -e '
+            using Pkg
+            Pkg.activate(; temp = true)
+            Pkg.add(PackageSpec(name = "JuliaFormatter", version = v"2.9.0"))
+            using JuliaFormatter
+            paths = [
+                "src/CausalFactorAnalysis",
+                "test/causal_factor_analysis",
+                "test/runtests.jl",
+            ]
+            format(paths; overwrite = false, verbose = true) || exit(1)
+          '

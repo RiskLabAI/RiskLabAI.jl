@@ -22,6 +22,9 @@ using Lux
 using Zygote
 using Optimisers
 
+import RiskLabAI.Pde: Equation, pde_driver, pde_hamiltonian, pde_sample,
+    pde_terminal, solve_deep_bsde
+
 _act(x) = max(x, zero(x))
 
 # Per-time-step MLP: ReLU after each hidden bias-free linear layer, raw output.
@@ -83,8 +86,8 @@ function solve_deep_bsde(
     net_states = []
     for model in models
         ps, st = Lux.setup(rng, model)
-        push!(net_params, ps)
-        push!(net_states, st)
+        push!(net_params, Lux.f64(ps))
+        push!(net_states, Lux.f64(st))
     end
     states = Tuple(net_states)
 
