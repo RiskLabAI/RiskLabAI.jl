@@ -1,56 +1,126 @@
-# RiskLabAI 1.0.0 pre-package source
+# RiskLabAI
 
-Status: **local-only and blocked**.
+[![CI](https://github.com/RiskLabAI/RiskLabAI.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/RiskLabAI/RiskLabAI.jl/actions/workflows/CI.yml)
 
-This directory is the source-only Julia continuity root for the next major
-RiskLabAI release. It is the same RiskLabAI product and preserves package UUID
-`a72881da-fdaa-49c1-8962-99caf4ccfee8`; it is not a separate package.
+RiskLabAI is a Julia library for quantitative finance, financial machine
+learning, and causal factor analysis. It provides research-oriented
+implementations of methods associated with Marcos LÃ³pez de Prado's *Advances
+in Financial Machine Learning*, *Machine Learning for Asset Managers*, and
+*Causal Factor Investing*.
 
-The `src` directory preserves all 56 source paths captured from the current
-public Julia `main` baseline and adds seven causal-factor source files. No prior
-source path or non-causal module has been deleted. Fifty-five baseline source
-files remain byte-identical; the root module differs only by the additive
-`CausalFactorAnalysis` include and export.
+RiskLabAI 1.0.0 preserves the previously published Julia library and adds a
+clean causal-factor-analysis module. The companion
+[RiskLabAI.py](https://github.com/RiskLabAI/RiskLabAI.py) package independently
+implements the same 57 causal concepts. This parity statement applies to the
+causal API, not to every Julia module.
 
-The causal module exposes the same 57 public concepts as the completed Python
-namespace. Its 138 focused tests pass on Julia 1.10.12 LTS and Julia 1.12.7
-stable at both dependency endpoints, including the independent four-node graph
-oracles. All 508 non-deep preserved assertions also pass in each lane, and the
-four deep-BSDE assertions pass with the optional extension enabled.
+## What is included
 
-The static `Project.toml` contract now records the existing package UUID,
-version `1.0.0`, supported Julia lines, exact required dependencies, and the
-optional `deep_bsde` extension. No package tree has been registered, installed,
-published, or released. The full runtime matrix, documentation, API inventory,
-12-file package-scoped test inventory, and intended package file list are
-complete. Artifact inspection and human-controlled version-control,
-registration, publication, and release decisions remain blocked, and the
-recorded source-conflict exclusions remain binding.
+- **Causal factor analysis** - constrained minimum-variance allocation,
+  factor-mirage diagnostics, graphical identification, treatment-effect
+  formulas, specification experiments, and evidence records for the
+  seven-stage causal-factor protocol
+- **Financial data structures** - tick, volume, dollar, imbalance, run, and
+  time bars
+- **Market features** - entropy, microstructure, structural-break, and feature-
+  importance utilities
+- **Portfolio and clustering methods** - hierarchical risk parity, nested
+  clustered optimization, hedging, correlation clustering, and silhouette
+  diagnostics
+- **Backtest analytics** - Sharpe-ratio inference, probability of backtest
+  overfitting, strategy risk, multiple-testing corrections, bet sizing, and
+  Ornstein-Uhlenbeck trading rules
+- **Validation** - K-fold, purged, combinatorial-purged, and walk-forward
+  validation, plus grid and random search
+- **Optional capability** - a Deep-BSDE PDE solver using Lux, Optimisers, and
+  Zygote through a Julia package extension
 
-## Confirmed identity and stewardship
+## Compatibility
 
-- Product and package name: `RiskLabAI`
-- Julia package UUID: `a72881da-fdaa-49c1-8962-99caf4ccfee8`
-- Intended license: BSD-3-Clause
-- Rights holder and public maintainer: Hamid Arian
-- Copyright: 2022-2026
-- Contact: arian@risklab.ai
-- Repository: https://github.com/RiskLabAI/RiskLabAI.jl
-- Issues: https://github.com/RiskLabAI/RiskLabAI.jl/issues
-- Documentation: https://github.com/RiskLabAI/RiskLabAI.jl#readme
+RiskLabAI 1.0.0 supports Julia 1.10.12 LTS and Julia 1.12.7. The complete
+tested policy and dependency details are in
+[`docs/compatibility.md`](https://github.com/RiskLabAI/RiskLabAI.jl/blob/main/docs/compatibility.md).
 
-The rights holder has confirmed permission to publish and license every file
-admitted to the clean public package. This confirmation does not clear
-artifact-inspection or human-authorization gates.
+## Installation
 
-See `PACKAGE_IDENTITY.json` for the fail-closed machine-readable state.
+Until RiskLabAI is registered in Julia's General registry, install it directly
+from GitHub:
 
-The complete Julia contract is recorded in `Project.toml`, `PUBLIC_API.json`,
-`TEST_INVENTORY.json`, and `PACKAGE_FILES.json`. Future package-tree checks are
-specified in `PACKAGE_INSPECTION.md`; that document grants no registry or
-release authority.
+```julia
+using Pkg
+Pkg.add(url = "https://github.com/RiskLabAI/RiskLabAI.jl")
+```
 
-The 57-concept contract is documented in `docs/causal_factor_analysis.md`, and
-runtime details are in `docs/compatibility.md`. A small deterministic example
-is in `examples/causal_factor_analysis_quickstart.jl`, and the blocked
-next-major summary is in `RELEASE_NOTES_NEXT_MAJOR.md`.
+After registration, the standard installation command will be:
+
+```julia
+using Pkg
+Pkg.add("RiskLabAI")
+```
+
+To enable the optional Deep-BSDE solver, add its three weak dependencies to
+the active environment:
+
+```julia
+using Pkg
+Pkg.add(["Lux", "Optimisers", "Zygote"])
+```
+
+The base package does not require this automatic-differentiation stack.
+
+## Causal-factor quick start
+
+```julia
+using RiskLabAI
+using RiskLabAI.CausalFactorAnalysis
+using LinearAlgebra: Diagonal
+
+covariance = Matrix(Diagonal([1.0, 2.0, 4.0]))
+factor_exposures = [1.0 0.0; 0.0 1.0; 1.0 1.0]
+target_exposures = [0.0, 1.0]
+
+weights = minimum_variance_factor_weights(
+    covariance,
+    factor_exposures,
+    target_exposures,
+)
+@assert isapprox(weights, [-2.0 / 7.0, 5.0 / 7.0, 2.0 / 7.0])
+
+effect = average_treatment_effect(3.5, 1.25)
+@assert effect == 2.25
+
+dag = CausalDAG(
+    ("T", "U", "Y"),
+    (("U", "T"), ("U", "Y"), ("T", "Y")),
+    ("T", "U", "Y"),
+)
+@assert check_backdoor_adjustment_set(dag, "T", "Y", ("U",)).admissible
+```
+
+The complete deterministic example is
+[`examples/causal_factor_analysis_quickstart.jl`](https://github.com/RiskLabAI/RiskLabAI.jl/blob/main/examples/causal_factor_analysis_quickstart.jl).
+The causal API and its limits are documented in
+[`docs/causal_factor_analysis.md`](https://github.com/RiskLabAI/RiskLabAI.jl/blob/main/docs/causal_factor_analysis.md).
+
+## Development
+
+```bash
+git clone https://github.com/RiskLabAI/RiskLabAI.jl
+cd RiskLabAI.jl
+julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.test()'
+```
+
+Please branch from `main`, keep changes focused, and include tests for behavior
+changes.
+
+## Scope
+
+RiskLabAI is research software, not investment advice. Graph routines evaluate
+criteria on a caller-supplied directed acyclic graph; they do not discover or
+certify that graph. Protocol records validate declared evidence structures;
+they do not prove that empirical assumptions are true.
+
+## License
+
+RiskLabAI is distributed under the
+[BSD 3-Clause License](https://github.com/RiskLabAI/RiskLabAI.jl/blob/main/LICENSE).
