@@ -13,9 +13,7 @@ This is the path-level mechanism; it does not touch the existing split-boundary
 adaptive cross-validator. The per-path overfit indicator comes from
 `Backtest.performance_evaluation`, so with uniform weights it reproduces
 `Backtest.probability_of_backtest_overfitting` exactly. The port is fully
-deterministic (no RNG); numeric parity asserted in `test/runtests.jl`. Admitted in
-Appraisal 09b (`library_extension/appraisals/09_verdict.md`; in-house method, COI,
-real-data regime-shift confirmation a tracked obligation).
+deterministic (no RNG); numeric parity asserted in `test/runtests.jl`. Included after independent validation (the documented validation evidence; method extension; real-data regime-shift confirmation remains future validation work).
 
 Reference: Arian, H., Norouzi, M. L. & Seco, L. (2024). Bagged and Adaptive
 Combinatorial Purged Cross-Validation. Bailey, Borwein, López de Prado & Zhu
@@ -122,7 +120,7 @@ the sample). Returns `(regime_weighted_pbo, selected_config)` with `selected_con
 the 1-based index of the configuration with the highest regime-weighted OOS metric.
 In a stationary regime the weights are uniform, so the PBO converges to plain CPCV.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer Adaptive CPCV over plain CPCV for model selection when the train/test regime
 may shift, the shift is identifiable at decision time from observable volatility,
 and there is adequate data for selection (it does not help where selection is

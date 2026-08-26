@@ -1,10 +1,11 @@
 # Julia runtime and dependency support
 
-Status: **matrix verified; release blocked**.
+Status: **local 1.1.0 candidate; release blocked**.
 
-This policy applies to the blocked RiskLabAI `1.0.0` release candidate. The
-assigned version does not authorize package registration, artifact creation,
-publication, or release.
+This policy is inherited from the approved RiskLabAI `1.0.0` baseline and
+applies to the additive `1.1.0` candidate. Local compatibility and package
+inspection do not authorize version control, registration, publication, or
+release.
 
 ## Supported Julia policy
 
@@ -31,6 +32,7 @@ The required external dependency floors are:
 - DecisionTree 0.12.4;
 - Distributions 0.25.128;
 - HypothesisTests 0.11.8;
+- QuadGK 2.11.3;
 - SpecialFunctions 2.8.0.
 
 The current-compatible lanes resolved Distributions 0.25.131 and
@@ -49,7 +51,7 @@ dependencies into required dependencies. Base lanes verify four explicit
 extension-absence and fallback assertions. Separate `deep_bsde` lanes install
 and load Lux, Optimisers, and Zygote before running the four numerical solver
 assertions. Every CI lane creates a temporary test environment and adds all
-seven required external packages as direct dependencies at either their exact
+eight required external packages as direct dependencies at either their exact
 floors or current compatible versions. Extension lanes additionally add the
 three weak dependencies. This keeps direct imports in the preserved tests
 independent of incidental manifest state.
@@ -64,18 +66,15 @@ each with the minimum and current-compatible required dependency sets. Every
 combination was run once as a base lane and once as a `deep_bsde` extension
 lane, for eight required executions.
 
-In every lane:
-
-- the isolated base source loaded without Lux, Optimisers, or Zygote and passed
-  all 4 fallback assertions;
-- all 138 frozen causal-factor tests passed;
-- all 508 non-deep assertions in the 45 preserved test sets passed;
-- all 4 deep-BSDE assertions passed with the optional stack enabled.
-
-That is 650 passing assertions per execution and 5,200 across the four base and
-four extension executions. The causal suite includes independent analytical
-and exhaustive graph oracles; it does not use Python-Julia agreement as its
-sole correctness test.
+Every lane passed 12,926 assertions, including 12,414 causal-factor
+assertions. That is 103,408 passing assertions in the eight executions,
+including 99,312 causal-factor assertions. Base lanes loaded without Lux,
+Optimisers, or Zygote and passed all four extension-absence and fallback
+assertions. Extension lanes loaded the three weak dependencies and passed all
+four numerical deep-BSDE assertions. There were no failures, errors, broken
+tests, or skips. The causal suite includes independent analytical and
+exhaustive graph oracles; it does not use Python-Julia agreement as its sole
+correctness test.
 
 The CI workflow keeps Julia 1.10.12 LTS and Julia 1.12.7 stable as explicit
 base and extension jobs. Both minimum and current jobs construct their
@@ -87,14 +86,15 @@ The deep solver now converts Lux parameters and state to Float64, matching the
 PDE state and eliminating a mixed-precision fallback present in every original
 lane. This changes neither the public API nor the estimand.
 
-The causal public design remains exactly 57 concepts and matches the Python
-namespace. No excluded legacy causal implementation was used as a correctness
-authority.
+The original 57-concept causal contract remains unchanged. Thirty additive
+concepts bring the public causal namespace to 87 names, with the same public
+set in Python and Julia. No excluded legacy causal implementation was used as
+a correctness authority.
 
-## Remaining release gates
+## Human-controlled release gates
 
 `Project.toml`, the public surface, package-scoped tests, documentation, source
-allowlists, and governed CI workflow are complete. Local source loading and
-temporary test environments retained no release artifact and performed no
-registration. Artifact inspection and separate human authorization for
-version-control, registration, publication, and release remain outstanding.
+allowlists, and governed CI workflow are complete. The local 1.1.0 candidate is
+bound to the approved merged 1.0.0 baseline commit and tree. Package-inspection
+evidence is retained outside the distributable tree. Version-control,
+registration, publication, and release actions require separate human action.

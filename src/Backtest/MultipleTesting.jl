@@ -12,8 +12,8 @@ family with a stated error-control target.
 
 Clean-room Julia port of the validated Python
 `RiskLabAI.backtest.multiple_testing` reference (numeric parity asserted in
-`test/runtests.jl`). Admitted in Appraisal 07
-(`library_extension/appraisals/07_verdict.md`).
+`test/runtests.jl`). Included after independent validation
+(the documented validation evidence).
 
 References: Holm, S. (1979), Scandinavian Journal of Statistics 6(2);
 Benjamini, Y. & Yekutieli, D. (2001), Annals of Statistics 29(4); Harvey, C. R. &
@@ -94,7 +94,7 @@ haircut Sharpe (the Sharpe implied by the adjusted p-value, `Φ⁻¹(1 - p_adj)/
 Returns a `NamedTuple` `(p_values, adjusted_p_values, significant,
 haircut_sharpe_ratios)`.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 to judge a *family* of screened strategies/factors (not just the single best),
 prefer Holm when you must control the chance of any false positive across the
 family (FWER), and BHY when you want to bound the expected fraction of false

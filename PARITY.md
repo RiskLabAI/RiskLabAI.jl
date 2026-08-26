@@ -475,13 +475,12 @@ commented-out batch-norm is omitted). The set-transformer architectures
 (`ISAB`/`MAB`/`SAB`/`PMA`/`DeepTimeSetTransformer`) and the `Monte-Carlo`/`DTNN`/
 `FBSNN` solver variants are research scaffolding and are not ported.
 
-## Stage-1 library-extension methods — parity port (wave 27)
+## additional analytical methods — parity port
 
-The admitted Stage-1 methods from `RiskLabAI.py` (the `CONTRIBUTIONS_LEDGER.md`
+The additional analytical methods from `RiskLabAI.py` (the public method specification
 rows), ported to parity. Deterministic estimators reproduce the Python reference
 values within the recorded tolerance; stochastic / ADF-dependent pieces are
-behavioural (validated structurally). Each docstring carries the ledger regime tag
-verbatim + citation + admitting-appraisal back-link.
+behavioural (validated structurally). Each docstring carries the documented usage guidance + citation + validation summary.
 
 | Concept | Python | Julia | Notes |
 |---|---|---|---|
@@ -507,16 +506,16 @@ leakage-aware HPO's Optuna sampler (`optuna`) → random sampling. The OU optimi
 uses a coarse-to-fine grid search in place of SciPy L-BFGS-B. CSCV-path order is the
 lexicographic `Combinatorics.combinations` order (matches `itertools.combinations`).
 
-## Stage-1 library-extension mop-up — parity port (wave 29)
+## additional analytical-method completion — parity port
 
-The three remaining Stage-1 admits, closing the Stage-1 Julia-parity gap. Each
-docstring carries the verdict regime tag verbatim + citation + admitting-appraisal
-back-link.
+The three remaining additional analytical methods, closing the Julia parity gap. Each
+docstring carries the documented usage guidance + citation + independent validation
+summary.
 
 | Concept | Python | Julia | Notes |
 |---|---|---|---|
-| NERCOME sample-split denoiser | `data.denoise.nercome.nercome_denoised_covariance` | `Data.nercome_denoised_covariance` | **behavioural** (seeded sample-splitting; Julia RNG ≠ NumPy PCG64). Validated structurally (symmetric, PD, reproducible under a seed) and on the admitted mechanism (Appraisal 24): lower relative-Frobenius covariance error than MP clipping on a no-gap / non-stationary spectrum, and lower min-variance OOS variance |
-| Volatility-robust SADF | `features.structural_breaks.volatility_robust_sadf` | `Features.volatility_robust_sadf` | observed `sadf` / `gsadf` sup-ADF statistics **exact** (~1e-6, deterministic, share the `_psy_sadf_bsadf_sequences` kernel); wild-bootstrap p-values **behavioural** (Rademacher signs from Julia RNG). Reproduces the Appraisal-26 size result (plain GSADF empirical size ~0.48 vs vol-robust ~0.05 under a 4x variance break) |
+| NERCOME sample-split denoiser | `data.denoise.nercome.nercome_denoised_covariance` | `Data.nercome_denoised_covariance` | **behavioural** (seeded sample-splitting; Julia RNG ≠ NumPy PCG64). Validated structurally (symmetric, PD, reproducible under a seed) and on the documented mechanism (independent validation): lower relative-Frobenius covariance error than MP clipping on a no-gap / non-stationary spectrum, and lower min-variance OOS variance |
+| Volatility-robust SADF | `features.structural_breaks.volatility_robust_sadf` | `Features.volatility_robust_sadf` | observed `sadf` / `gsadf` sup-ADF statistics **exact** (~1e-6, deterministic, share the `_psy_sadf_bsadf_sequences` kernel); wild-bootstrap p-values **behavioural** (Rademacher signs from Julia RNG). Reproduces the independent validation size result (plain GSADF empirical size ~0.48 vs vol-robust ~0.05 under a 4x variance break) |
 | PELT change-points | `features.structural_breaks.pelt_change_points` (via BSD-2 `ruptures`) | `Features.pelt_change_points` | **exact** change-point indices — clean-room port of `ruptures.Pelt` + `CostNormal` (same candidate grid, admissible-set pruning and Gaussian segment cost), so the two agree on a shared series (mean-shift, pure-variance, and multi-break fixtures) |
 
 **Deliberate divergences (this wave):** NERCOME and the vol-robust wild bootstrap are
@@ -527,3 +526,39 @@ not used (the Python side uses the permissive BSD-2 `ruptures`, and the Julia si
 a clean-room reimplementation of the published Killick et al. 2012 algorithm).
 
 _(further submodules appended as they are wired)_
+
+## Additive causal-factor completion
+
+The released 57-name `CausalFactorAnalysis` set is preserved. The additive
+release candidate exposes the same 30 new public names in Python and Julia,
+producing an 87-name causal API:
+
+- Evidence and value types: `AllocationMisspecificationDiagnostics`,
+  `FDRComparisonEvidence`, `FDRNonIdentificationWitness`, `FactorControlRoles`,
+  `GaussianSearchAdjustedFDR`, `GaussianTrialMixture`,
+  `MaxSelectionFamilyErrors`, `SelectionLevelProbabilityEvidence`,
+  `StructuralCausalModelResult`, `TreatmentOutcomeRole`, and
+  `TreatmentOutcomeRoleEvidence`.
+- Mirage and allocation functions:
+  `generalized_confounder_undercontrolled_coefficient`,
+  `generalized_collider_overcontrolled_coefficients`, and
+  `allocation_misspecification_diagnostics`.
+- Graph and structural-model functions: `factor_control_roles`,
+  `classify_treatment_outcome_role`, and `evaluate_structural_causal_model`.
+- False-discovery functions: `single_trial_false_discovery_rate`,
+  `family_level_false_discovery_rate`, `max_selection_family_errors`,
+  `compare_single_and_family_fdr`, `maximum_mixture_cdf`,
+  `conditional_upper_tail_probability`, `gaussian_trial_mixture_cdf`,
+  `gaussian_max_selection_cdf`, `gaussian_max_selection_log_density`,
+  `gaussian_max_selection_log_likelihood`,
+  `gaussian_search_adjusted_false_discovery_rate`,
+  `fdr_nonidentification_witness`, and `max_selection_null_probability`.
+
+The formulas, evidence fields, validation intent, deterministic ordering, and
+estimands match. Language-native differences are deliberate: Python uses
+frozen records, protected NumPy snapshots, `Enum`, and SciPy quadrature; Julia
+uses immutable structs with independent arrays, a validated symbol-backed role,
+multiple dispatch, and directly declared QuadGK. Quadrature error estimates are
+backend-specific. The shared numerical fixture supplements independent native
+mathematical and graph oracles; neither implementation is treated as the sole
+correctness authority.

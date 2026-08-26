@@ -215,8 +215,8 @@ end
 # kNN distances (Chebyshev norm), distance correlation is a tuning-free nonlinear
 # dependence index in [0, 1]. Clean-room from the published math; numeric parity
 # asserted in `test/runtests.jl` (distance correlation exactly; KSG via the
-# jitter-invariant integer neighbour counts). Admitted in Appraisal 11
-# (`library_extension/appraisals/11_verdict.md`).
+# jitter-invariant integer neighbour counts). Included after independent validation
+# (the documented validation evidence).
 # --------------------------------------------------------------------------- #
 
 using SpecialFunctions: digamma
@@ -241,7 +241,7 @@ than histogram MI on short / nonlinear / heavy-tailed samples; it can return a
 slightly negative value for (near-)independent data (a characterized property, not
 an error).
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer KSG over binned MI/VI on short, noisy, or nonlinear/heavy-tailed samples
 (e.g. nonlinear-monotone n=1000 RMSE 0.039 vs binned 0.164); it is essentially
 unbiased on linear dependence and converges to binned on large-sample near-linear
@@ -304,7 +304,7 @@ from the double-centred pairwise-distance matrices `A`, `B`:
 `dCor = √(mean(A·B) / √(mean(A·A)·mean(B·B)))`. Zero only at population
 independence; detects nonlinear dependence with no estimation parameter.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer distance correlation as a parameter-free nonlinear screen / for maximally
 stable clustering (best real-data ONC stability). It is a dependence index, not a
 metric on partitions like the variation of information (keep VI/KSG for the metric

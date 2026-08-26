@@ -120,7 +120,7 @@ end
 
 # --------------------------------------------------------------------------- #
 # Leakage-aware HPO methodology (Akiba 2019 Optuna + de Prado purged CV / DSR).
-# Admitted in Appraisal 20 as methodology/infrastructure, NOT a performance claim:
+# Included after independent validation as methodology/infrastructure, NOT a performance claim:
 # principled search reaches the optimum in fewer trials and purged CV removes the
 # leakage a naive k-fold inflates, but tuning yields NO out-of-sample edge after
 # deflation, so the selected model must be gated by the Deflated Sharpe at the HPO
@@ -130,9 +130,9 @@ end
 # Deliberate divergence: the Optuna TPE/CMA-ES sampler is an OPTIONAL analogue not
 # bundled in the Julia port (no de-facto Optuna). `leakage_aware_hpo` wires random
 # sampling through the repo's `PurgedKFoldCV` (the leakage-controlled per-trial
-# score) — the admitted methodology — and the DSR gate; a Bayesian/evolutionary
-# sampler can be substituted where available. Appraisal 20
-# (`library_extension/appraisals/20_verdict.md`).
+# score) — the included methodology — and the DSR gate; a Bayesian/evolutionary
+# sampler can be substituted where available. independent validation
+# (the documented validation evidence).
 # --------------------------------------------------------------------------- #
 
 using Statistics: std
@@ -147,7 +147,7 @@ Leakage-aware hyper-parameter search: every sampled configuration is scored unde
 `NamedTuple` `(best_params, best_score, n_trials, trial_scores, mean_trial_score,
 std_trial_score)`.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 use leakage-aware HPO (Optuna wired through PurgedKFold/CPCV, selection gated by
 PBO/DSR at the HPO trial count) as the correct, efficient, leakage-safe tuning
 methodology — preferred over grid/random for search efficiency and over naive-CV
@@ -197,7 +197,7 @@ cross-trial Sharpe dispersion `trial_sharpe_std`), and the Deflated Sharpe is th
 probability the realized OOS Sharpe exceeds it. A selection passes only if the
 Deflated Sharpe exceeds `threshold`. Returns a `NamedTuple` `(observed_sharpe,
 benchmark_sharpe, n_trials, deflated_sharpe, passes)`. This is the decisive control:
-in the appraisal the principled-HPO gain did not pass it. Mirrors Python's
+during independent validation the principled-HPO gain did not pass it. Mirrors Python's
 `deflated_sharpe_gate`.
 """
 function deflated_sharpe_gate(

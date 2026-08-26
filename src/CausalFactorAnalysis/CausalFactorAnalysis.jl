@@ -10,6 +10,10 @@ include("FactorMirage.jl")
 include("Optimizer.jl")
 include("GraphIdentification.jl")
 include("Protocol.jl")
+include("AllocationDiagnostics.jl")
+include("GraphRoles.jl")
+include("StructuralModels.jl")
+include("FalseDiscoveryRates.jl")
 
 export BackdoorAdjustmentEvidence,
     BacktestStage,
@@ -67,6 +71,36 @@ export BackdoorAdjustmentEvidence,
     minimum_variance_factor_weights,
     randomized_mean_difference,
     treatment_effect_decomposition,
-    validate_causal_factor_protocol
+    validate_causal_factor_protocol,
+    AllocationMisspecificationDiagnostics,
+    FDRComparisonEvidence,
+    FDRNonIdentificationWitness,
+    FactorControlRoles,
+    GaussianSearchAdjustedFDR,
+    GaussianTrialMixture,
+    MaxSelectionFamilyErrors,
+    SelectionLevelProbabilityEvidence,
+    StructuralCausalModelResult,
+    TreatmentOutcomeRole,
+    TreatmentOutcomeRoleEvidence,
+    allocation_misspecification_diagnostics,
+    classify_treatment_outcome_role,
+    compare_single_and_family_fdr,
+    conditional_upper_tail_probability,
+    evaluate_structural_causal_model,
+    factor_control_roles,
+    family_level_false_discovery_rate,
+    fdr_nonidentification_witness,
+    gaussian_max_selection_cdf,
+    gaussian_max_selection_log_density,
+    gaussian_max_selection_log_likelihood,
+    gaussian_search_adjusted_false_discovery_rate,
+    gaussian_trial_mixture_cdf,
+    generalized_collider_overcontrolled_coefficients,
+    generalized_confounder_undercontrolled_coefficient,
+    max_selection_family_errors,
+    max_selection_null_probability,
+    maximum_mixture_cdf,
+    single_trial_false_discovery_rate
 
 end

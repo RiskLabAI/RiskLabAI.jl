@@ -3,8 +3,7 @@ include("preserved_runtests.jl")
 using Test
 using LinearAlgebra
 
-include(joinpath(@__DIR__, "..", "src", "CausalFactorAnalysis", "CausalFactorAnalysis.jl"))
-using .CausalFactorAnalysis
+using RiskLabAI.CausalFactorAnalysis
 
 const EXPECTED_CAUSAL_FACTOR_EXPORTS = Set((
     :BackdoorAdjustmentEvidence,
@@ -64,6 +63,36 @@ const EXPECTED_CAUSAL_FACTOR_EXPORTS = Set((
     :randomized_mean_difference,
     :treatment_effect_decomposition,
     :validate_causal_factor_protocol,
+    :AllocationMisspecificationDiagnostics,
+    :FDRComparisonEvidence,
+    :FDRNonIdentificationWitness,
+    :FactorControlRoles,
+    :GaussianSearchAdjustedFDR,
+    :GaussianTrialMixture,
+    :MaxSelectionFamilyErrors,
+    :SelectionLevelProbabilityEvidence,
+    :StructuralCausalModelResult,
+    :TreatmentOutcomeRole,
+    :TreatmentOutcomeRoleEvidence,
+    :allocation_misspecification_diagnostics,
+    :classify_treatment_outcome_role,
+    :compare_single_and_family_fdr,
+    :conditional_upper_tail_probability,
+    :evaluate_structural_causal_model,
+    :factor_control_roles,
+    :family_level_false_discovery_rate,
+    :fdr_nonidentification_witness,
+    :gaussian_max_selection_cdf,
+    :gaussian_max_selection_log_density,
+    :gaussian_max_selection_log_likelihood,
+    :gaussian_search_adjusted_false_discovery_rate,
+    :gaussian_trial_mixture_cdf,
+    :generalized_collider_overcontrolled_coefficients,
+    :generalized_confounder_undercontrolled_coefficient,
+    :max_selection_family_errors,
+    :max_selection_null_probability,
+    :maximum_mixture_cdf,
+    :single_trial_false_discovery_rate,
 ))
 
 @testset "CausalFactorAnalysis" begin
@@ -75,4 +104,10 @@ const EXPECTED_CAUSAL_FACTOR_EXPORTS = Set((
     include("causal_factor_analysis/test_optimizer.jl")
     include("causal_factor_analysis/test_graph_identification.jl")
     include("causal_factor_analysis/test_protocol.jl")
+    include("causal_factor_analysis/test_generalized_factor_mirage.jl")
+    include("causal_factor_analysis/test_allocation_diagnostics.jl")
+    include("causal_factor_analysis/test_graph_roles.jl")
+    include("causal_factor_analysis/test_structural_models.jl")
+    include("causal_factor_analysis/test_false_discovery_rates.jl")
+    include("causal_factor_analysis/test_additive_numeric_parity.jl")
 end

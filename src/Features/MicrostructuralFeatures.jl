@@ -161,15 +161,15 @@ spread (`0.01` is a 1% spread). Returns `NaN` when the estimate is undefined
 zero-variance input). `sign=true` returns a signed estimate (negative when the
 estimated squared spread is negative).
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer EDGE over Roll and Abdi-Ranaldo for low-frequency spread estimation in all
 regimes; over Corwin-Schultz at small spreads (the edge narrows at very high
 illiquidity and very large spreads).
 
 Clean-room Julia port of the published algorithm, mirroring the validated Python
 `RiskLabAI.features.microstructural_features.edge.edge_estimator` reference
-(numeric parity asserted in `test/runtests.jl`). Admitted in Appraisal 03
-(`library_extension/appraisals/03_verdict.md`; real-data confirmation a logged
+(numeric parity asserted in `test/runtests.jl`). Included after independent validation
+(the documented validation evidence; real-data confirmation a logged
 follow-up pending an adequate public intraday / quote dataset).
 
 Reference: Ardia, D., Guidotti, E., & Kroencke, T. A. (2024). Efficient

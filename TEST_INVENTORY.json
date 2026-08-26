@@ -1,22 +1,41 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "document_type": "RISKLABAI_JULIA_TEST_INVENTORY",
   "product": "RiskLabAI",
   "language": "Julia",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "version_note": "The local 1.1.0 candidate retains the approved eight-lane compatibility matrix.",
   "runner": "Pkg.test base lanes / explicit weak-dependency Deep-BSDE lanes / Test",
-  "file_count": 12,
+  "file_count": 19,
   "verified_assertions_per_required_lane": {
     "preserved_non_deep": 508,
-    "causal_factor_analysis": 138,
+    "causal_factor_analysis": 12414,
     "lane_specific_deep_bsde_or_fallback": 4,
-    "total": 650
+    "total": 12926
   },
   "base_lane_count": 4,
   "deep_bsde_lane_count": 4,
   "required_lane_count": 8,
-  "required_lane_assertion_total": 5200,
+  "required_lane_assertion_total": 103408,
   "files": [
+    {
+      "path": "test/causal_factor_analysis/fixtures/additive_numeric_parity.tsv",
+      "size": 1200,
+      "sha256": "E2B46AB385DB863D9F4C764F3754D6C0931ED7C62DCB2C589927DB924986DD7E",
+      "group": "CAUSAL_PARITY_FIXTURE"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_additive_numeric_parity.jl",
+      "size": 6777,
+      "sha256": "8668086C0D082ABDD4C49B524EC5BBD4B18570743F1134F8C226692D0F0A026E",
+      "group": "CAUSAL_FACTOR_ANALYSIS"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_allocation_diagnostics.jl",
+      "size": 13344,
+      "sha256": "6352768CFCD30CC2298F86E849306FEFCA8873DCED93CD1F946E843BEBC786EB",
+      "group": "CAUSAL_FACTOR_ANALYSIS"
+    },
     {
       "path": "test/causal_factor_analysis/test_factor_mirage.jl",
       "size": 2829,
@@ -24,9 +43,27 @@
       "group": "CAUSAL_FACTOR_ANALYSIS"
     },
     {
+      "path": "test/causal_factor_analysis/test_false_discovery_rates.jl",
+      "size": 11250,
+      "sha256": "841E2B0FEDF50CB8ADA2B83E029EE9B504D223173769FE099221BFFA8FDFCC3C",
+      "group": "CAUSAL_FACTOR_ANALYSIS"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_generalized_factor_mirage.jl",
+      "size": 8265,
+      "sha256": "ED02E433879FC91C125C29478681CC0653BC532EB34D49932A4671585252A994",
+      "group": "CAUSAL_FACTOR_ANALYSIS"
+    },
+    {
       "path": "test/causal_factor_analysis/test_graph_identification.jl",
       "size": 18944,
       "sha256": "B15F623E6F474B706F3AA00AB69D693C0F496494DB0E537D824F3B429363D22F",
+      "group": "CAUSAL_FACTOR_ANALYSIS"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_graph_roles.jl",
+      "size": 6590,
+      "sha256": "1FA00ADE370AD3E239258AF501D86767168C1A35095F16E108BD3D412201A6B4",
       "group": "CAUSAL_FACTOR_ANALYSIS"
     },
     {
@@ -45,6 +82,12 @@
       "path": "test/causal_factor_analysis/test_specification_diagnostics.jl",
       "size": 1974,
       "sha256": "0BBB85F99A06450D9940FBFC152C0F239159DA6CC4AB75D6D5A34490E23B717E",
+      "group": "CAUSAL_FACTOR_ANALYSIS"
+    },
+    {
+      "path": "test/causal_factor_analysis/test_structural_models.jl",
+      "size": 6678,
+      "sha256": "24FCD62D2EA75F38D7F9D1634FF06AA1694E75A9BB3F1880C91F3E88F4F88152",
       "group": "CAUSAL_FACTOR_ANALYSIS"
     },
     {
@@ -79,14 +122,14 @@
     },
     {
       "path": "test/preserved_runtests.jl",
-      "size": 72649,
-      "sha256": "72BE89B073A52697AC6BD39E9DA67717FEC832B81875E6317C2ABF98C4071896",
+      "size": 72675,
+      "sha256": "C312ED56CF28C0D980B88D3AC37AEA01028F9929840D4786184C7362889725E2",
       "group": "PRESERVED_LIBRARY"
     },
     {
       "path": "test/runtests.jl",
-      "size": 2657,
-      "sha256": "FAB90A2D9E23A34918915BE579A46B00FC2493346BECC85012B9C78EF31F4DC8",
+      "size": 4087,
+      "sha256": "509E9630B753FE1BF9A63D3FE5F729C89C996A5BFC5FCA892E00CCA3F12CE088",
       "group": "RUNNER"
     }
   ]

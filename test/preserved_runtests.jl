@@ -366,7 +366,7 @@ end
     # NERCOME is a seeded, sample-splitting estimator: the split permutations use
     # Julia's RNG, not NumPy's PCG64, so (like the other path-level modules) the
     # estimate is reproducible under a given seed but not bit-identical to Python.
-    # We assert the documented properties and the admitted mechanism (Appraisal 24:
+    # We assert the documented properties and the documented mechanism (independent validation:
     # lower covariance error than MP clipping on a no-gap / non-stationary spectrum).
     D = RiskLabAI.Data
 
@@ -380,7 +380,7 @@ end
     @test est_a == est_b                          # reproducible under a fixed seed
     @test_throws ArgumentError D.nercome_denoised_covariance(randn(3, 4))  # needs >= 4 obs
 
-    # Mechanism (verbatim regime, Appraisal 24): on a slowly-decaying spectrum with
+    # Mechanism (verbatim regime, independent validation): on a slowly-decaying spectrum with
     # no clean gap and T ~ p, NERCOME recovers the covariance more accurately than MP
     # eigenvalue clipping (and than the raw sample covariance). Fully deterministic
     # under the fixed RNG seeds below.
@@ -404,7 +404,7 @@ end
         push!(clipping_error, relative_frobenius(clipping, sigma))
         push!(raw_error, relative_frobenius(sample_cov, sigma))
     end
-    @test mean(nercome_error) < mean(clipping_error)   # the admitted edge
+    @test mean(nercome_error) < mean(clipping_error)   # the documented effect
     @test mean(nercome_error) < mean(raw_error)         # regularizes the raw sample
 end
 

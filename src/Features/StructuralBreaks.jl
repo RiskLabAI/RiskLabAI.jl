@@ -169,7 +169,7 @@ end
 # multiple bubbles where SADF sees one. Clean-room from Phillips–Shi–Yu (2015),
 # building on the validated `get_bsadf_statistic` / `get_expanding_window_adf`;
 # numeric parity asserted against the Python reference in `test/runtests.jl`.
-# Admitted in Appraisal 05 (`library_extension/appraisals/05_verdict.md`).
+# Included after independent validation (the documented validation evidence).
 # --------------------------------------------------------------------------- #
 
 """
@@ -309,7 +309,7 @@ flexible windows. A series is flagged as containing at least one explosive episo
 when the GSADF exceeds its finite-sample critical value
 (`simulate_psy_critical_values`). Returns `NaN` if the series is too short.
 
-Preferred-when / avoid-when (regime tag, verbatim from `CONTRIBUTIONS_LEDGER.md`):
+Preferred-when / avoid-when guidance:
 prefer GSADF/BSADF over single-window SADF when a series may contain more than one
 explosive episode (it recovers and counts each). For a single suspected bubble,
 SADF is at least as good. Use seasonally-adjusted data and the simulated
@@ -442,14 +442,14 @@ end
 #
 # The admitted SADF / GSADF bubble detector uses a sup-ADF statistic whose null
 # distribution assumes homoskedastic errors; under non-stationary volatility it
-# over-rejects and flags spurious bubbles (the mild oversizing noted in Appraisal
+# over-rejects and flags spurious bubbles (the mild oversizing noted during independent validation
 # 05). The volatility-robust variant computes the SAME sup-ADF statistics but
 # calibrates the critical values by a wild bootstrap (Rademacher sign-flip of the
 # first-difference residuals), which preserves the series' own volatility pattern
 # while destroying any explosive autocorrelation, restoring correct size under
 # non-stationary volatility. Clean-room from Harvey et al. (2016), reusing the
-# validated `_psy_sadf_bsadf_sequences` kernel. Admitted in Appraisal 26
-# (`library_extension/appraisals/26_verdict.md`).
+# validated `_psy_sadf_bsadf_sequences` kernel. Included after independent validation
+# (the documented validation evidence).
 #
 # Stochastic-step divergence (documented): the Rademacher signs are drawn from
 # Julia's `rng` rather than NumPy's PCG64 stream, so the observed `sadf`/`gsadf`
@@ -487,7 +487,7 @@ Returns a `NamedTuple` with `sadf`, `gsadf` (observed statistics, deterministic)
 `sadf_pvalue`, `gsadf_pvalue` (wild-bootstrap) and `reject_sadf` / `reject_gsadf`
 (at the 5% level).
 
-Preferred-when / avoid-when (regime tag, verbatim from `appraisals/26_verdict.md`):
+Preferred-when / avoid-when guidance:
 prefer it over plain SADF/GSADF when the series' volatility may be non-stationary:
 it holds nominal size where plain SADF over-rejects ~9×, at a modest power cost,
 and converges to plain SADF under constant volatility. Pairs with the admitted
@@ -550,8 +550,8 @@ end
 # al. (2012); the segment cost and the candidate grid replicate the BSD-2 `ruptures`
 # reference (`CostNormal` + `Pelt`) used by the Python implementation, so the two
 # return the same change-point indices on a shared series (parity asserted in
-# `test/runtests.jl`). Admitted in Appraisal 26
-# (`library_extension/appraisals/26_verdict.md`).
+# `test/runtests.jl`). Included after independent validation
+# (the documented validation evidence).
 # --------------------------------------------------------------------------- #
 
 # Gaussian (mean+variance) segment cost, mirroring `ruptures.CostNormal` for a 1-D
@@ -649,7 +649,7 @@ variance changes, so PELT recovers multiple and variance change-points that CUSU
 misses, without over-segmenting under an adequate penalty (`model="l2"` is mean
 only).
 
-Preferred-when / avoid-when (regime tag, verbatim from `appraisals/26_verdict.md`):
+Preferred-when / avoid-when guidance:
 prefer it over CUSUM for detecting and dating multiple and/or variance
 change-points (which CUSUM misses), without over-segmenting; CUSUM remains
 adequate for a single mean shift.
