@@ -12,6 +12,19 @@ Reference: De Prado, M. (2018), Advances in Financial Machine Learning, Ch. 5.
 using Statistics: cor, mean, std
 using HypothesisTests: ADFTest, pvalue
 
+function _differencing_forward_fill(series)
+    result = Float64.(series)
+    previous = NaN
+    for index in eachindex(result)
+        if isnan(result[index])
+            result[index] = previous
+        else
+            previous = result[index]
+        end
+    end
+    return result
+end
+
 """
     calculate_weights_std(degree, size) -> Vector{Float64}
 
@@ -35,6 +48,8 @@ Weights for the fixed-width-window (FFD) method, generated until the magnitude
 drops below `threshold`; ordered with `w₀` at the end (Snippet 5.3).
 """
 function calculate_weights_ffd(degree::Real, threshold::Real = 1e-5)
+    isfinite(degree) && isfinite(threshold) && threshold > 0 || throw(ArgumentError("FFD requires a finite order and positive finite threshold"))
+    degree > -1 || threshold > abs(degree) || throw(ArgumentError("These integration weights never cross the supplied truncation threshold"))
     weights = Float64[1.0]
     k = 1
     while true
@@ -52,7 +67,9 @@ end
 Standard (expanding-window) fractionally differentiated series. Returns a vector
 the same length as `series`; the warm-up region (where the cumulative relative
 weight loss is below `threshold`) is filled with `NaN`. Mirrors Python's
-`fractional_difference_std` for a single series.
+`fractional_difference_std` for a single series. Internal missing observations
+are forward-filled; leading missing observations and output positions are
+retained. The warm-up threshold is calculated from the original series length.
 """
 function fractional_difference_std(
     series::AbstractVector{<:Real},
@@ -62,6 +79,9 @@ function fractional_difference_std(
     n = length(series)
     result = fill(NaN, n)
     n == 0 && return result
+    filled = _differencing_forward_fill(series)
+    first_valid = findfirst(!isnan, filled)
+    isnothing(first_valid) && return result
 
     weights = calculate_weights_std(degree, n)
     cumulative = cumsum(abs.(weights))
@@ -69,10 +89,10 @@ function fractional_difference_std(
     skip = count(<(threshold), cumulative)
 
     weights_natural = reverse(weights)  # [w0, w1, ...]
-    for k = (skip+1):n
+    for k = (first_valid+skip):n
         acc = 0.0
-        for m = 0:(k-1)
-            acc += weights_natural[m+1] * series[k-m]
+        for m = 0:(k-first_valid)
+            acc += weights_natural[m+1] * filled[k-m]
         end
         result[k] = acc
     end
@@ -85,6 +105,8 @@ end
 Fixed-width-window (FFD) fractionally differentiated series. Returns a vector
 the same length as `series`, with the first `width-1` entries (the warm-up)
 filled with `NaN`. Mirrors Python's `fractional_difference_fixed_single`.
+Internal missing observations are forward-filled before filtering; leading
+missing observations and original observation positions are retained.
 """
 function fractional_difference_fixed(
     series::AbstractVector{<:Real},
@@ -96,11 +118,14 @@ function fractional_difference_fixed(
     n = length(series)
     result = fill(NaN, n)
     n < width && return result
+    filled = _differencing_forward_fill(series)
+    first_valid = findfirst(!isnan, filled)
+    isnothing(first_valid) && return result
 
-    for k = width:n
+    for k = (first_valid+width-1):n
         acc = 0.0
         for m = 0:(width-1)
-            acc += weights[m+1] * series[k-m]
+            acc += weights[m+1] * filled[k-m]
         end
         result[k] = acc
     end
@@ -198,12 +223,13 @@ _polyfit_slope(x, y) =
 """
     wavelet_variance_hurst(series; wavelet="db2", skip_fine=1) -> Float64
 
-Wavelet-variance Hurst estimate. Optional component (no wavelet dependency in the
-Julia port): always returns `NaN`, so `adaptive_differencing_order` falls back to
-the R/S estimate alone (Python's pywt-absent path). Mirrors Python's
-`wavelet_variance_hurst` when `pywt` is unavailable.
+Wavelet-variance Hurst estimate with the public default `db2` filter and
+half-sample symmetric extension. Native closed-form `db2`, `haar` and `db1`
+filters need no additional dependency. Other named filters are rejected.
+The public level rule and mean-square detail powers are retained, including
+boundary-dominated short inputs. Fewer than two retained octaves returns NaN.
 """
-wavelet_variance_hurst(series; wavelet = "db2", skip_fine::Integer = 1) = NaN
+wavelet_variance_hurst(series; wavelet = "db2", skip_fine::Integer = 1) = _differencing_wavelet_hurst(series, wavelet, skip_fine)
 
 """
     rescaled_range_hurst(series) -> Float64
@@ -246,7 +272,8 @@ end
 
 Bias-corrected memory order `d̂` of a series of increments: a ridge-style blend of
 the wavelet-variance and R/S Hurst estimates (`d̂ = H̄ - 0.5`, clipped to
-`[0, 0.99]`). With no wavelet dependency the blend is the R/S estimate alone.
+`[0, 0.99]`). The default db2 component is available natively. Only finite
+component estimates enter the equal-weight blend.
 Mirrors Python's `adaptive_differencing_order`.
 """
 function adaptive_differencing_order(increments::AbstractVector{<:Real})
@@ -288,7 +315,9 @@ chooses the fixed-width-FFD weight-truncation threshold by cross-validation (the
 threshold retaining the most memory subject to ADF stationarity), and raises the
 order along `delta_grid` only as far as the ADF stationarity boundary if needed.
 Returns a `NamedTuple` `(order, d_hat, adf_pvalue, memory_retained, threshold,
-series)`.
+series)`. The returned vector retains the original length and NaN warm-up.
+Memory-order estimation removes missing levels before forming increments;
+filtering forward-fills the original series while preserving its positions.
 
 Preferred-when / avoid-when guidance:
 prefer AFD over fixed-width FFD when the differencing order itself must be right —
@@ -307,6 +336,7 @@ function adaptive_fractional_difference(
     adf_maxlag::Integer = 1,
 )
     grid = delta_grid === nothing ? DEFAULT_DELTA_GRID : collect(delta_grid)
+    original = Float64.(series)
     level = float.(filter(!isnan, series))
     increments = diff(level)
     d_hat = adaptive_differencing_order(increments)
@@ -325,10 +355,10 @@ function adaptive_fractional_difference(
     best_threshold = cv_thresholds[2]
     best = nothing
     for threshold in cv_thresholds
-        diffv = fractional_difference_fixed(level, order_anchor; threshold = threshold)
+        diffv = fractional_difference_fixed(original, order_anchor; threshold = threshold)
         count(!isnan, diffv) < 20 && continue
         pv = _adf_pvalue(diffv, adf_maxlag)
-        mem = _memory_retained(diffv, level)
+        mem = _memory_retained(diffv, original)
         candidate = (pv < adf_significance, isfinite(mem) ? mem : -1.0, threshold, pv)
         if best === nothing || (candidate[1], candidate[2]) > (best[1], best[2])
             best = candidate
@@ -337,14 +367,14 @@ function adaptive_fractional_difference(
     best !== nothing && (best_threshold = best[3])
 
     order = order_anchor
-    diffv = fractional_difference_fixed(level, order; threshold = best_threshold)
+    diffv = fractional_difference_fixed(original, order; threshold = best_threshold)
     pv = count(!isnan, diffv) >= 20 ? _adf_pvalue(diffv, adf_maxlag) : 1.0
     grid_up = [g for g in grid if g > order_anchor]
     gi = 1
     while pv >= adf_significance && gi <= length(grid_up)
         order = grid_up[gi]
         gi += 1
-        diffv = fractional_difference_fixed(level, order; threshold = best_threshold)
+        diffv = fractional_difference_fixed(original, order; threshold = best_threshold)
         pv = count(!isnan, diffv) >= 20 ? _adf_pvalue(diffv, adf_maxlag) : 1.0
     end
 
@@ -352,7 +382,7 @@ function adaptive_fractional_difference(
         order = order,
         d_hat = d_hat,
         adf_pvalue = pv,
-        memory_retained = _memory_retained(diffv, level),
+        memory_retained = _memory_retained(diffv, original),
         threshold = best_threshold,
         series = diffv,
     )

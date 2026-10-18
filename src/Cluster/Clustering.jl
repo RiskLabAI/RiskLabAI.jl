@@ -4,10 +4,10 @@ API (López de Prado, AFML Ch. 4): the Optimized Nested Clustering (ONC)
 algorithm and its k-means base step, plus random block-correlation generators.
 
 Parity note: k-means is **stochastic** and not bit-identical across
-implementations (`Clustering.jl` here vs scikit-learn in Python), so
-`cluster_k_means_base`/`cluster_k_means_top` and the random generators are
-**behavioural** ports — the tests check structural properties (valid partitions,
-shapes), not exact values. `silhouette_samples` is deterministic and matches the
+implementations (`Clustering.jl` here vs scikit-learn in Python). Supplied label
+providers validate selection and refinement independently of those generators;
+supplied block cuts and Gaussian primitives replay random correlations.
+The default fitted partitions remain behavioural. `silhouette_samples` matches the
 canonical (scikit-learn) definition exactly. `covariance_to_correlation`
 delegates to `Data.cov_to_corr` (the single source of truth).
 
@@ -18,7 +18,7 @@ Reference: De Prado, M. (2020), Machine Learning for Asset Managers, Ch. 4.
 """
 
 using Statistics: mean, std, cov
-using Random: AbstractRNG, MersenneTwister, default_rng, shuffle, randn, seed!
+using Random: AbstractRNG, MersenneTwister, default_rng, shuffle, randn
 using Clustering: kmeans, assignments
 using ..Data: cov_to_corr
 
@@ -48,7 +48,9 @@ function silhouette_samples(
     labels::AbstractVector{<:Integer},
 )
     n = length(labels)
+    size(distance) == (n, n) || throw(DimensionMismatch("Distance and label dimensions differ."))
     unique_labels = unique(labels)
+    2 <= length(unique_labels) < n || throw(ArgumentError("Silhouettes require between two and n-1 distinct labels."))
     scores = zeros(Float64, n)
     for i = 1:n
         same = findall(==(labels[i]), labels)
@@ -74,36 +76,56 @@ end
 _correlation_distance(correlation) =
     sqrt.((1 .- map(x -> isnan(x) ? 0.0 : x, correlation)) ./ 2.0)
 
+function _embedding_distances(features)
+    n = size(features, 1)
+    distance = zeros(Float64, n, n)
+    for right in 2:n, left in 1:(right-1)
+        value = sqrt(sum(abs2(features[left, column] - features[right, column]) for column in axes(features, 2)))
+        distance[left, right] = distance[right, left] = value
+    end
+    return distance
+end
+
 """
     cluster_k_means_base(correlation; max_clusters=10, iterations=10, random_state=nothing)
         -> (correlation_sorted, clusters, silhouette)
 
 K-means base step: over `2:max_clusters` clusters and `iterations` initialisations,
 keep the clustering with the highest silhouette t-statistic (mean/std, population
-std). Returns the cluster-sorted correlation matrix, a `Dict(label => item
-indices)`, and the per-item silhouette vector (original order). Behavioural
-(k-means is stochastic). Mirrors Python's `cluster_k_means_base`.
+std) using Euclidean distances between rows of the correlation-distance
+embedding. Returns the cluster-sorted correlation matrix, a `Dict(label => item
+indices)`, and the per-item silhouette vector (original order). Optional
+`label_provider(features, cluster_count, rng)` supplies integer candidate labels.
+Labels retain provider values; item positions are one-based. Ordering within
+equal labels is stable. Default native k-means remains stochastic.
 """
 function cluster_k_means_base(
     correlation::AbstractMatrix{<:Real};
     max_clusters::Integer = 10,
     iterations::Integer = 10,
     random_state = nothing,
+    label_provider = nothing,
 )
+    n = size(correlation, 1)
+    size(correlation, 2) == n || throw(DimensionMismatch("Correlation must be square."))
+    2 <= max_clusters < n || throw(ArgumentError("max_clusters must be between two and n-1."))
+    iterations > 0 || throw(ArgumentError("iterations must be positive."))
     distance = _correlation_distance(correlation)
-    random_state !== nothing && seed!(random_state)
+    silhouette_distance = _embedding_distances(distance)
+    rng = _rng(random_state)
 
     best_labels = nothing
     best_silhouette = nothing
     best_score = -Inf
     for _ = 1:iterations
         for n_clusters = 2:max_clusters
-            labels = assignments(kmeans(Matrix(distance), n_clusters))
-            silhouette = silhouette_samples(distance, labels)
+            labels = label_provider === nothing ? assignments(kmeans(permutedims(distance), n_clusters; rng = rng)) : Int.(label_provider(copy(distance), n_clusters, rng))
+            length(labels) == n || throw(DimensionMismatch("Candidate labels must cover every item."))
+            silhouette = silhouette_samples(silhouette_distance, labels)
             stat_mean = mean(silhouette)
             stat_std = std(silhouette; corrected = false)
             score = stat_std == 0 ? sign(stat_mean) * Inf : stat_mean / stat_std
-            if best_labels === nothing || score > best_score
+            if score > best_score
                 best_score = score
                 best_labels = labels
                 best_silhouette = silhouette
@@ -111,6 +133,7 @@ function cluster_k_means_base(
         end
     end
 
+    best_labels === nothing && throw(ArgumentError("Clustering failed to find a valid solution."))
     index_sorted = sortperm(best_labels)
     correlation_sorted = correlation[index_sorted, index_sorted]
     clusters = Dict(c => findall(==(c), best_labels) for c in unique(best_labels))
@@ -148,14 +171,15 @@ function make_new_outputs(
     for (key, items) in clusters_new
         labels[items] .= key
     end
-    silhouette_new = silhouette_samples(distance, labels)
+    silhouette_new = silhouette_samples(_embedding_distances(distance), labels)
     return (correlation_new, clusters_new, silhouette_new)
 end
 
 # cluster silhouette t-statistic (pandas .std() -> sample std, ddof = 1)
 function _cluster_t_stats(silhouette, clusters)
     t_stats = Dict{Int,Float64}()
-    for (i, items) in clusters
+    for i in sort(collect(keys(clusters)))
+        items = clusters[i]
         s = std(silhouette[items]; corrected = true)
         s > 0 && (t_stats[i] = mean(silhouette[items]) / s)
     end
@@ -169,13 +193,15 @@ end
 Optimized Nested Clustering (ONC): run the base k-means, then recursively
 re-cluster the clusters whose silhouette t-statistic is below average, keeping
 the re-clustering only if it improves the mean t-statistic. Behavioural (built on
-stochastic k-means). Mirrors Python's `cluster_k_means_top`.
+stochastic k-means). A supplied `label_provider` is forwarded through every
+recursive candidate fit, preserving the strict public refinement decision.
 """
 function cluster_k_means_top(
     correlation::AbstractMatrix{<:Real};
     max_clusters = nothing,
     iterations::Integer = 10,
     random_state = nothing,
+    label_provider = nothing,
 )
     n = size(correlation, 2)
     mc = max_clusters === nothing ? n - 1 : min(max_clusters, n - 1)
@@ -188,12 +214,14 @@ function cluster_k_means_top(
         max_clusters = mc,
         iterations = iterations,
         random_state = random_state,
+        label_provider = label_provider,
     )
 
     cluster_t_stats = _cluster_t_stats(silhouette, clusters)
     isempty(cluster_t_stats) && return (correlation_sorted, clusters, silhouette)
-    t_stat_mean = mean(values(cluster_t_stats))
-    redo = [i for (i, t) in cluster_t_stats if t < t_stat_mean]
+    ordered_keys = sort(collect(keys(cluster_t_stats)))
+    t_stat_mean = mean(cluster_t_stats[key] for key in ordered_keys)
+    redo = [key for key in ordered_keys if cluster_t_stats[key] < t_stat_mean]
     length(redo) <= 1 && return (correlation_sorted, clusters, silhouette)
 
     keys_redo = reduce(vcat, (clusters[i] for i in redo))
@@ -207,13 +235,15 @@ function cluster_k_means_top(
         max_clusters = min(remained, size(correlation_temp, 2) - 1),
         iterations = iterations,
         random_state = random_state,
+        label_provider = label_provider,
     )
     clusters_2 = Dict(k => keys_redo[v] for (k, v) in clusters_2_local)
     clusters_1 = Dict(i => clusters[i] for i in keys(clusters) if !(i in redo))
 
     correlation_new, clusters_new, silhouette_new =
         make_new_outputs(correlation, clusters_1, clusters_2)
-    new_t_stats = collect(values(_cluster_t_stats(silhouette_new, clusters_new)))
+    new_stats = _cluster_t_stats(silhouette_new, clusters_new)
+    new_t_stats = [new_stats[key] for key in sort(collect(keys(new_stats)))]
     isempty(new_t_stats) && return (correlation_sorted, clusters, silhouette)
 
     if mean(new_t_stats) <= t_stat_mean_redo
@@ -226,26 +256,34 @@ end
     random_covariance_sub(n_observations, n_columns, sigma; random_state=nothing) -> Matrix
 
 Random covariance of one block: a shared factor plus idiosyncratic noise.
-Stochastic. Mirrors Python's `random_covariance_sub`.
+Optional `common_draws` and `idiosyncratic_draws` are standard Gaussian primitives
+with shapes `(n_observations,)` and `(n_observations, n_columns)`. A singleton
+block retains the public unit covariance without consuming Gaussian draws.
 """
 function random_covariance_sub(
     n_observations::Integer,
     n_columns::Integer,
     sigma::Real;
     random_state = nothing,
+    common_draws = nothing,
+    idiosyncratic_draws = nothing,
 )
     n_columns == 1 && return ones(1, 1)
     rng = _rng(random_state)
-    data = repeat(randn(rng, n_observations, 1), 1, n_columns)
-    data = data .+ sigma .* randn(rng, n_observations, n_columns)
+    common = common_draws === nothing ? randn(rng, n_observations) : Float64.(common_draws)
+    noise = idiosyncratic_draws === nothing ? randn(rng, n_observations, n_columns) : Matrix{Float64}(idiosyncratic_draws)
+    length(common) == n_observations || throw(DimensionMismatch("Common draws must match n_observations."))
+    size(noise) == (n_observations, n_columns) || throw(DimensionMismatch("Idiosyncratic draws have the wrong shape."))
+    data = reshape(common, :, 1) .+ sigma .* noise
     return cov(data)
 end
 
 """
     random_block_covariance(n_columns, n_blocks; block_size_min=1, sigma=1.0, random_state=nothing) -> Matrix
 
-Random block-diagonal covariance matrix. Stochastic. Mirrors Python's
-`random_block_covariance`.
+Random block-diagonal covariance matrix. Optional distinct integer `cuts` replay
+the block partition and `block_draws` supplies one `(common, noise)` record per
+block. The sample covariance and observation-count rules match the reference.
 """
 function random_block_covariance(
     n_columns::Integer,
@@ -253,17 +291,24 @@ function random_block_covariance(
     block_size_min::Integer = 1,
     sigma::Real = 1.0,
     random_state = nothing,
+    cuts = nothing,
+    block_draws = nothing,
 )
+    n_blocks > 0 && block_size_min > 0 && n_columns >= n_blocks * block_size_min || throw(ArgumentError("Requested blocks cannot fit the available columns."))
     rng = _rng(random_state)
     limit = n_columns - (block_size_min - 1) * n_blocks
-    chosen = sort(shuffle(rng, collect(1:(limit-1)))[1:(n_blocks-1)])
+    chosen = cuts === nothing ? sort(shuffle(rng, collect(1:(limit-1)))[1:(n_blocks-1)]) : sort(Int.(cuts))
+    length(chosen) == n_blocks - 1 && length(unique(chosen)) == length(chosen) && all(cut -> 1 <= cut < limit, chosen) || throw(ArgumentError("Block cuts must be distinct interior positions."))
+    block_draws === nothing || length(block_draws) == n_blocks || throw(DimensionMismatch("Supply one primitive record per block."))
     parts = vcat(chosen, limit)
     parts = vcat(parts[1], diff(parts)) .- 1 .+ block_size_min
 
     blocks = Matrix{Float64}[]
-    for col_size in parts
+    for (index, col_size) in enumerate(parts)
         n_obs = Int(max(col_size * (col_size + 1) / 2.0, 100))
-        push!(blocks, random_covariance_sub(n_obs, col_size, sigma; random_state = rng))
+        common = block_draws === nothing ? nothing : block_draws[index].common
+        noise = block_draws === nothing ? nothing : block_draws[index].noise
+        push!(blocks, random_covariance_sub(n_obs, col_size, sigma; random_state = rng, common_draws = common, idiosyncratic_draws = noise))
     end
 
     total = sum(size(b, 1) for b in blocks)
@@ -281,13 +326,16 @@ end
     random_block_correlation(n_columns, n_blocks; random_state=nothing, block_size_min=1) -> Matrix
 
 Random block-diagonal correlation matrix with an added market component.
-Stochastic. Mirrors Python's `random_block_correlation`.
+Optional `draws=(cuts, blocks, market)` supplies block cuts, per-block
+`(common, noise)` primitives and the corresponding market primitives. Equal
+seeds across Julia and NumPy are not equivalent random streams.
 """
 function random_block_correlation(
     n_columns::Integer,
     n_blocks::Integer;
     random_state = nothing,
     block_size_min::Integer = 1,
+    draws = nothing,
 )
     rng = _rng(random_state)
     covariance_1 = random_block_covariance(
@@ -296,6 +344,8 @@ function random_block_correlation(
         block_size_min = block_size_min,
         sigma = 0.5,
         random_state = rng,
+        cuts = draws === nothing ? nothing : draws.cuts,
+        block_draws = draws === nothing ? nothing : draws.blocks,
     )
     covariance_2 = random_block_covariance(
         n_columns,
@@ -303,6 +353,7 @@ function random_block_correlation(
         block_size_min = n_columns,
         sigma = 1.0,
         random_state = rng,
+        block_draws = draws === nothing ? nothing : [draws.market],
     )
     return covariance_to_correlation(covariance_1 .+ covariance_2)
 end

@@ -46,30 +46,40 @@ optimal weights within each cluster, compute optimal weights between clusters
 (each cluster treated as one asset), then recombine. `number_clusters` defaults
 to `N ÷ 2`. Behavioural (built on stochastic k-means). Mirrors Python's
 `get_optimal_portfolio_weights_nco`.
+Optional `clusters` supplies a partition of one-based asset indices, allowing
+the allocation arithmetic to be replayed independently of the k-means supplier.
 """
 function get_optimal_portfolio_weights_nco(
     covariance::AbstractMatrix{<:Real};
-    mu::Union{Nothing,AbstractVector{<:Real}} = nothing,
+    mu::Union{Nothing,AbstractVecOrMat{<:Real}} = nothing,
     number_clusters::Union{Nothing,Integer} = nothing,
+    clusters = nothing,
 )
     n = size(covariance, 2)
     correlation = covariance_to_correlation(covariance)
     nc = number_clusters === nothing ? max(n ÷ 2, 2) : number_clusters
 
-    _, clusters, _ = cluster_k_means_base(correlation; max_clusters = nc, iterations = 10)
-    labels = collect(keys(clusters))
+    partition = if clusters === nothing
+        cluster_k_means_base(correlation; max_clusters = nc, iterations = 10)[2]
+    else
+        Dict(key => Int.(collect(items)) for (key, items) in pairs(clusters))
+    end
+    !isempty(partition) && all(!isempty, values(partition)) && sort(reduce(vcat, values(partition))) == collect(1:n) || throw(ArgumentError("clusters must partition every asset index exactly once"))
+    expected_mean = mu === nothing ? nothing : vec(mu)
+    expected_mean === nothing || length(expected_mean) == n || throw(ArgumentError("mu must have one value per asset"))
+    labels = collect(keys(partition))
 
     weights_intra = zeros(Float64, n, length(labels))
     for (column, label) in enumerate(labels)
-        assets = clusters[label]
+        assets = partition[label]
         cov_intra = covariance[assets, assets]
-        mu_intra = mu === nothing ? nothing : mu[assets]
+        mu_intra = expected_mean === nothing ? nothing : expected_mean[assets]
         weights_intra[assets, column] =
             get_optimal_portfolio_weights(cov_intra; mu = mu_intra)
     end
 
     covariance_inter = weights_intra' * covariance * weights_intra
-    mu_inter = mu === nothing ? nothing : weights_intra' * mu
+    mu_inter = expected_mean === nothing ? nothing : weights_intra' * expected_mean
     weights_inter = get_optimal_portfolio_weights(covariance_inter; mu = mu_inter)
 
     return weights_intra * weights_inter

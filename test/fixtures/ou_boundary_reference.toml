@@ -1,0 +1,263 @@
+[[cases]]
+variant = "python_fit"
+case = "public"
+theta = 0.03875384332527206
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.02
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.27312671498613755, "stop_loss" = 4.0, "hit_probability" = 0.99999299682278, "expected_gain" = 0.25309678952246867, "std_gain" = 0.011308156469046567, "expected_holding_time" = 4.983531328665575, "return_rate" = 0.050786635586424544, "time_scaled_sharpe" = 10.025966075168057}
+
+[[cases]]
+variant = "python_fit"
+case = "cost_0.0"
+theta = 0.03875384332527206
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.0
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.1, "stop_loss" = 4.0, "hit_probability" = 0.9999972391477709, "expected_gain" = 0.09998868050586109, "std_gain" = 0.006812473694528697, "expected_holding_time" = 1.7381432472382545, "return_rate" = 0.057526145019827134, "time_scaled_sharpe" = 11.132769473288915}
+
+[[cases]]
+variant = "python_fit"
+case = "cost_0.01"
+theta = 0.03875384332527206
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.01
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.19369633060399827, "stop_loss" = 4.0, "hit_probability" = 0.9999948692724169, "expected_gain" = 0.18367481389055973, "std_gain" = 0.009499163080237037, "expected_holding_time" = 3.455068160535042, "return_rate" = 0.053160981305247636, "time_scaled_sharpe" = 10.402457619396303}
+
+[[cases]]
+variant = "python_fit"
+case = "cost_0.02"
+theta = 0.03875384332527206
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.02
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.27312671498613755, "stop_loss" = 4.0, "hit_probability" = 0.99999299682278, "expected_gain" = 0.25309678952246867, "std_gain" = 0.011308156469046567, "expected_holding_time" = 4.983531328665575, "return_rate" = 0.050786635586424544, "time_scaled_sharpe" = 10.025966075168057}
+
+[[cases]]
+variant = "python_fit"
+case = "cost_0.05"
+theta = 0.03875384332527206
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.05
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.42945788222675485, "stop_loss" = 4.0, "hit_probability" = 0.99998960337072, "expected_gain" = 0.379411830795242, "std_gain" = 0.014282183151331606, "expected_holding_time" = 8.209614868814175, "return_rate" = 0.046215545656899434, "time_scaled_sharpe" = 9.271604100878715}
+
+[[cases]]
+variant = "python_fit"
+case = "cost_0.1"
+theta = 0.03875384332527206
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.1
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.6038255890564114, "stop_loss" = 4.0, "hit_probability" = 0.9999861566028458, "expected_gain" = 0.5037618564703534, "std_gain" = 0.017129204555603992, "expected_holding_time" = 12.20012340821004, "return_rate" = 0.04129153776685146, "time_scaled_sharpe" = 8.41988138056398}
+
+[[cases]]
+variant = "python_fit"
+case = "cost_0.2"
+theta = 0.03875384332527206
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.2
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.8477502252205524, "stop_loss" = 4.0, "hit_probability" = 0.9999816976775661, "expected_gain" = 0.6476615001328512, "std_gain" = 0.02073907403297452, "expected_holding_time" = 18.636878509537773, "return_rate" = 0.03475160820527956, "time_scaled_sharpe" = 7.233893863363783}
+
+[[cases]]
+variant = "python_fit"
+case = "bound_2.0"
+theta = 0.03875384332527206
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.02
+lower = 0.1
+upper = 2.0
+expected = {"profit_take" = 0.28625072009459973, "stop_loss" = 2.0, "hit_probability" = 0.9880354236782118, "expected_gain" = 0.23889669886328477, "std_gain" = 0.2485757595986656, "expected_holding_time" = 4.908604497563999, "return_rate" = 0.048668964668439355, "time_scaled_sharpe" = 0.43378282514328065}
+
+[[cases]]
+variant = "python_fit"
+case = "bound_3.0"
+theta = 0.03875384332527206
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.02
+lower = 0.1
+upper = 3.0
+expected = {"profit_take" = 0.2739857654387698, "stop_loss" = 3.0, "hit_probability" = 0.9995075377527677, "expected_gain" = 0.25237345105131503, "std_gain" = 0.0726367317288919, "expected_holding_time" = 4.983672949995734, "return_rate" = 0.05064005073838785, "time_scaled_sharpe" = 1.556369116290546}
+
+[[cases]]
+variant = "python_fit"
+case = "bound_4.0"
+theta = 0.03875384332527206
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.02
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.27312671498613755, "stop_loss" = 4.0, "hit_probability" = 0.99999299682278, "expected_gain" = 0.25309678952246867, "std_gain" = 0.011308156469046567, "expected_holding_time" = 4.983531328665575, "return_rate" = 0.050786635586424544, "time_scaled_sharpe" = 10.025966075168057}
+
+[[cases]]
+variant = "python_fit"
+case = "bound_5.0"
+theta = 0.03875384332527206
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.02
+lower = 0.1
+upper = 5.0
+expected = {"profit_take" = 0.2731085046091358, "stop_loss" = 5.0, "hit_probability" = 0.9999999653727247, "expected_gain" = 0.2531083220157559, "std_gain" = 0.000981241393003243, "expected_holding_time" = 4.983452234257733, "return_rate" = 0.05078975579936615, "time_scaled_sharpe" = 115.54879328551758}
+
+[[cases]]
+variant = "python_fit"
+case = "preliminary"
+theta = 0.06931471805599453
+sigma = 0.25
+entry_gap = 1.0
+cost = 0.1
+lower = 0.25
+upper = 4.0
+expected = {"profit_take" = 0.5354638197873653, "stop_loss" = 4.0, "hit_probability" = 0.9999999999898131, "expected_gain" = 0.435463819741163, "std_gain" = 1.447580755213817e-05, "expected_holding_time" = 7.285376134589267, "return_rate" = 0.05977231809263523, "time_scaled_sharpe" = 11145.082498910962}
+
+[[cases]]
+variant = "julia_fit"
+case = "public"
+theta = 0.0387538433252701
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.02
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.2731267149861377, "stop_loss" = 4.0, "hit_probability" = 0.99999299682278, "expected_gain" = 0.25309678952246883, "std_gain" = 0.011308156469049745, "expected_holding_time" = 4.983531328665764, "return_rate" = 0.05078663558642264, "time_scaled_sharpe" = 10.025966075165053}
+
+[[cases]]
+variant = "julia_fit"
+case = "cost_0.0"
+theta = 0.0387538433252701
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.0
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.1, "stop_loss" = 4.0, "hit_probability" = 0.9999972391477709, "expected_gain" = 0.09998868050586107, "std_gain" = 0.006812473694530597, "expected_holding_time" = 1.738143247238321, "return_rate" = 0.057526145019824934, "time_scaled_sharpe" = 11.132769473285597}
+
+[[cases]]
+variant = "julia_fit"
+case = "cost_0.01"
+theta = 0.0387538433252701
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.01
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.1936963306039987, "stop_loss" = 4.0, "hit_probability" = 0.9999948692724169, "expected_gain" = 0.18367481389056015, "std_gain" = 0.009499163080239709, "expected_holding_time" = 3.455068160535181, "return_rate" = 0.05316098130524563, "time_scaled_sharpe" = 10.402457619393195}
+
+[[cases]]
+variant = "julia_fit"
+case = "cost_0.02"
+theta = 0.0387538433252701
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.02
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.2731267149861377, "stop_loss" = 4.0, "hit_probability" = 0.99999299682278, "expected_gain" = 0.25309678952246883, "std_gain" = 0.011308156469049745, "expected_holding_time" = 4.983531328665764, "return_rate" = 0.05078663558642264, "time_scaled_sharpe" = 10.025966075165053}
+
+[[cases]]
+variant = "julia_fit"
+case = "cost_0.05"
+theta = 0.0387538433252701
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.05
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.42945788222675685, "stop_loss" = 4.0, "hit_probability" = 0.99998960337072, "expected_gain" = 0.37941183079524393, "std_gain" = 0.01428218315133567, "expected_holding_time" = 8.209614868814517, "return_rate" = 0.04621554565689775, "time_scaled_sharpe" = 9.271604100875932}
+
+[[cases]]
+variant = "julia_fit"
+case = "cost_0.1"
+theta = 0.0387538433252701
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.1
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.603825589056417, "stop_loss" = 4.0, "hit_probability" = 0.9999861566028458, "expected_gain" = 0.5037618564703591, "std_gain" = 0.017129204555608936, "expected_holding_time" = 12.200123408210608, "return_rate" = 0.041291537766849996, "time_scaled_sharpe" = 8.419881380561447}
+
+[[cases]]
+variant = "julia_fit"
+case = "cost_0.2"
+theta = 0.0387538433252701
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.2
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.8477502252205595, "stop_loss" = 4.0, "hit_probability" = 0.9999816976775661, "expected_gain" = 0.6476615001328583, "std_gain" = 0.02073907403298053, "expected_holding_time" = 18.636878509538604, "return_rate" = 0.03475160820527839, "time_scaled_sharpe" = 7.233893863361605}
+
+[[cases]]
+variant = "julia_fit"
+case = "bound_2.0"
+theta = 0.0387538433252701
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.02
+lower = 0.1
+upper = 2.0
+expected = {"profit_take" = 0.28625072009460195, "stop_loss" = 2.0, "hit_probability" = 0.98803542367821, "expected_gain" = 0.23889669886328257, "std_gain" = 0.24857575959868544, "expected_holding_time" = 4.908604497564171, "return_rate" = 0.048668964668437203, "time_scaled_sharpe" = 0.43378282514323446}
+
+[[cases]]
+variant = "julia_fit"
+case = "bound_3.0"
+theta = 0.0387538433252701
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.02
+lower = 0.1
+upper = 3.0
+expected = {"profit_take" = 0.27398576543876846, "stop_loss" = 3.0, "hit_probability" = 0.9995075377527675, "expected_gain" = 0.25237345105131315, "std_gain" = 0.07263673172890373, "expected_holding_time" = 4.9836729499958885, "return_rate" = 0.05064005073838591, "time_scaled_sharpe" = 1.5563691162902569}
+
+[[cases]]
+variant = "julia_fit"
+case = "bound_4.0"
+theta = 0.0387538433252701
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.02
+lower = 0.1
+upper = 4.0
+expected = {"profit_take" = 0.2731267149861377, "stop_loss" = 4.0, "hit_probability" = 0.99999299682278, "expected_gain" = 0.25309678952246883, "std_gain" = 0.011308156469049745, "expected_holding_time" = 4.983531328665764, "return_rate" = 0.05078663558642264, "time_scaled_sharpe" = 10.025966075165053}
+
+[[cases]]
+variant = "julia_fit"
+case = "bound_5.0"
+theta = 0.0387538433252701
+sigma = 0.27822884144301363
+entry_gap = 1.0
+cost = 0.02
+lower = 0.1
+upper = 5.0
+expected = {"profit_take" = 0.27310850460913694, "stop_loss" = 5.0, "hit_probability" = 0.9999999653727247, "expected_gain" = 0.253108322015757, "std_gain" = 0.0009812413930036577, "expected_holding_time" = 4.983452234257941, "return_rate" = 0.05078975579936425, "time_scaled_sharpe" = 115.54879328546681}
+
+[[cases]]
+variant = "julia_fit"
+case = "preliminary"
+theta = 0.06931471805599453
+sigma = 0.25
+entry_gap = 1.0
+cost = 0.1
+lower = 0.25
+upper = 4.0
+expected = {"profit_take" = 0.5354638197873653, "stop_loss" = 4.0, "hit_probability" = 0.9999999999898131, "expected_gain" = 0.435463819741163, "std_gain" = 1.447580755213817e-05, "expected_holding_time" = 7.285376134589267, "return_rate" = 0.05977231809263523, "time_scaled_sharpe" = 11145.082498910962}

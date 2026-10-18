@@ -23,6 +23,7 @@ optimal mean-reverting trading strategies; López de Prado (2018), AFML ch.13.
 """
 
 using SpecialFunctions: erfi
+using LinearAlgebra: pinv, eigen, SymTridiagonal
 
 # Trapezoidal integral ∫ y dx (matches numpy.trapz, including descending x).
 function _ou_trapz(y, x)
@@ -94,33 +95,103 @@ function _mean_exit_time_quadrature(entry_gap, profit_take, stop_loss, theta, si
     return _ou_trapz(green .* speed, ys)
 end
 
+const _OU_QUADRATURE_NODES, _OU_QUADRATURE_WEIGHTS = let
+    off_diagonal = [i / sqrt(4.0 * i * i - 1.0) for i in 1:63]
+    decomposition = eigen(SymTridiagonal(zeros(64), off_diagonal))
+    decomposition.values, 2.0 .* decomposition.vectors[1, :].^2
+end
+
+"""Return split-integral time, probabilities and analytic barrier derivatives."""
+function _ou_exit_geometry(entry_gap, profit_take, stop_loss, theta, sigma)
+    c = theta / (sigma * sigma)
+    y0 = -float(entry_gap)
+    a, b = y0 - stop_loss, y0 + profit_take
+    rc = sqrt(c)
+    pref = sqrt(pi) / (2.0 * rc)
+    ea, eb, ey = erfi(rc * a), erfi(rc * b), erfi(rc * y0)
+    all(isfinite, (ea, eb, ey)) || return nothing
+    total = pref * (eb - ea)
+    upper, lower = pref * (ey - ea) / total, pref * (eb - ey) / total
+    integrals = Tuple{Float64, Float64}[]
+    for (left, right) in [(a, y0), (y0, b)]
+        half = (right - left) / 2.0
+        nodes = (left + right) / 2.0 .+ half .* _OU_QUADRATURE_NODES
+        values = erfi.(rc .* nodes)
+        speed = (2.0 / (sigma * sigma)) .* exp.(-c .* nodes .* nodes)
+        from_lower = pref .* (values .- ea) .* speed
+        from_upper = pref .* (eb .- values) .* speed
+        push!(integrals, (half * sum(_OU_QUADRATURE_WEIGHTS .* from_lower), half * sum(_OU_QUADRATURE_WEIGHTS .* from_upper)))
+    end
+    time = lower * integrals[1][1] + upper * integrals[2][2]
+    ratio_upper, ratio_lower = exp(c * b * b) / total, exp(c * a * a) / total
+    time_profit = upper * ratio_upper * (integrals[1][1] + integrals[2][1])
+    time_stop = lower * ratio_lower * (integrals[1][2] + integrals[2][2])
+    result = (time, upper, lower, time_profit, time_stop, -upper * ratio_upper, lower * ratio_lower)
+    return all(isfinite, result) ? result : nothing
+end
+
+"""Differentiate the same first-passage return-rate objective at finite barriers."""
+function _ou_rate_gradient(profit_take, stop_loss, theta, sigma, entry_gap, cost)
+    geometry = _ou_exit_geometry(entry_gap, profit_take, stop_loss, theta, sigma)
+    (isnothing(geometry) || geometry[1] <= 0) && return (NaN, NaN)
+    time, upper, lower, time_profit, time_stop, upper_profit, upper_stop = geometry
+    gain = profit_take * upper - stop_loss * lower - cost
+    gain_profit = upper + (profit_take + stop_loss) * upper_profit
+    gain_stop = -lower + (profit_take + stop_loss) * upper_stop
+    return ((gain_profit * time - gain * time_profit) / (time * time), (gain_stop * time - gain * time_stop) / (time * time))
+end
+
+"""Retain edge endpoints and refine every sampled stationary maximum bracket."""
+function _ou_boundary_candidates(theta, sigma, entry_gap, cost, lo, hi)
+    candidates = Tuple{Float64, Float64}[]
+    for axis in 1:2
+        for fixed in [lo, hi]
+            point(value) = axis == 1 ? (value, fixed) : (fixed, value)
+            grid = collect(range(lo, hi; length=41))
+            derivatives = Float64[]
+            for value in grid
+                pair = point(value)
+                push!(candidates, pair)
+                push!(derivatives, _ou_rate_gradient(pair..., theta, sigma, entry_gap, cost)[axis])
+            end
+            for index in 1:length(grid)-1
+                dl, dr = derivatives[index], derivatives[index+1]
+                (isfinite(dl) && isfinite(dr) && dl > 0 && dr < 0) || continue
+                left, right = grid[index], grid[index+1]
+                for _ in 1:52
+                    middle = (left + right) / 2.0
+                    (middle == left || middle == right) && break
+                    derivative = _ou_rate_gradient(point(middle)..., theta, sigma, entry_gap, cost)[axis]
+                    isfinite(derivative) || break
+                    if derivative > 0
+                        left = middle
+                    elseif derivative < 0
+                        right = middle
+                    else
+                        left = right = middle
+                        break
+                    end
+                end
+                push!(candidates, point((left + right) / 2.0))
+            end
+        end
+    end
+    return candidates
+end
+
 """
     mean_exit_time(entry_gap, profit_take, stop_loss, theta, sigma) -> Float64
 
 Closed-form OU mean first-exit time `E[τ]` from the two-barrier interval via the
-Karlin–Taylor Green's function. Mirrors Python's `mean_exit_time`.
+Karlin–Taylor Green's function, integrated separately on each side of entry.
+Mirrors Python's `mean_exit_time`.
 """
 function mean_exit_time(entry_gap, profit_take, stop_loss, theta, sigma)
-    c = theta / (sigma * sigma)
     y0 = -float(entry_gap)
-    a, b = y0 - stop_loss, y0 + profit_take
-    b <= a && return NaN
-    rc = sqrt(c)
-    pref = sqrt(pi) / (2.0 * rc)
-    ys = collect(range(a, b; length = 400))
-    erfi_y = erfi.(rc .* ys)
-    erfi_a, erfi_b, erfi_y0 = erfi(rc * a), erfi(rc * b), erfi(rc * y0)
-    (all(isfinite, erfi_y) && isfinite(erfi_b)) ||
-        return _mean_exit_time_quadrature(entry_gap, profit_take, stop_loss, theta, sigma)
-    s_ya = pref .* (erfi_y .- erfi_a)
-    s_by = pref .* (erfi_b .- erfi_y)
-    s_ba = pref * (erfi_b - erfi_a)
-    s_y0a = pref * (erfi_y0 - erfi_a)
-    s_by0 = pref * (erfi_b - erfi_y0)
-    green =
-        [(ys[i] <= y0 ? s_ya[i] * s_by0 : s_y0a * s_by[i]) / s_ba for i in eachindex(ys)]
-    speed = (2.0 / (sigma * sigma)) .* exp.(-c .* ys .^ 2)
-    return _ou_trapz(green .* speed, ys)
+    y0 + profit_take <= y0 - stop_loss && return NaN
+    geometry = _ou_exit_geometry(entry_gap, profit_take, stop_loss, theta, sigma)
+    isnothing(geometry) && return _mean_exit_time_quadrature(entry_gap, profit_take, stop_loss, theta, sigma)
+    return geometry[1]
 end
 
 """
@@ -143,7 +214,7 @@ function ou_rule_metrics(profit_take, stop_loss, theta, sigma, entry_gap, cost =
     (profit_take <= 0 || stop_loss <= 0) && return bad
     u = hit_upper_probability(entry_gap, profit_take, stop_loss, theta, sigma)
     isfinite(u) || return bad
-    q = 1.0 - u
+    q = hit_upper_probability(-entry_gap, stop_loss, profit_take, theta, sigma)
     expected_gain = profit_take * u - stop_loss * q - cost
     std_gain = (profit_take + stop_loss) * sqrt(max(u * q, 0.0))
     e_tau = mean_exit_time(entry_gap, profit_take, stop_loss, theta, sigma)
@@ -173,7 +244,8 @@ misspecification), so check the OU fit at decision time. Objective: expected net
 return per unit time.
 
 Deliberate divergence: a coarse-to-fine grid search replaces SciPy's L-BFGS-B
-multi-start (no Optim dependency). Mirrors Python's `optimal_ou_trading_rule`.
+multi-start (no Optim dependency). Both searches additionally check endpoints and
+refine derivative roots on all four box edges. Mirrors Python's `optimal_ou_trading_rule`.
 """
 function optimal_ou_trading_rule(theta, sigma, entry_gap; cost = 0.0, bounds = (0.25, 4.0))
     lo, hi = bounds
@@ -198,6 +270,12 @@ function optimal_ou_trading_rule(theta, sigma, entry_gap; cost = 0.0, bounds = (
         blo_pt, bhi_pt = max(lo, best_pt - dpt), min(hi, best_pt + dpt)
         blo_sl, bhi_sl = max(lo, best_sl - dsl), min(hi, best_sl + dsl)
     end
+    for (pt, sl) in _ou_boundary_candidates(theta, sigma, entry_gap, cost, lo, hi)
+        value = objective(pt, sl)
+        if value > best_v
+            best_v, best_pt, best_sl = value, pt, sl
+        end
+    end
     metrics = ou_rule_metrics(best_pt, best_sl, theta, sigma, entry_gap, cost)
     return merge((profit_take = best_pt, stop_loss = best_sl), metrics)
 end
@@ -214,15 +292,14 @@ function fit_ornstein_uhlenbeck(series::AbstractVector{<:Real}; dt::Real = 1.0)
     x = float.(filter(isfinite, series))
     x0 = @view x[1:(end-1)]
     x1 = @view x[2:end]
-    mx0, mx1 = mean(x0), mean(x1)
-    b = sum((x0 .- mx0) .* (x1 .- mx1)) / sum((x0 .- mx0) .^ 2)
-    a = mx1 - b * mx0
+    mx1 = mean(x1)
+    a, b = pinv(hcat(ones(length(x0)), x0)) * x1
     residual = x1 .- (a .+ b .* x0)
     b = min(max(b, 1e-6), 0.999999)
     theta = -log(b) / dt
     mu = a / (1.0 - b)
     n1 = length(x1)
-    var_eps = sum(residual .^ 2) / (n1 - 2)              # ddof = 2
+    var_eps = sum((residual .- mean(residual)) .^ 2) / (n1 - 2)              # ddof = 2
     sigma = sqrt(var_eps * 2.0 * theta / (1.0 - b * b))
     ss_tot = sum((x1 .- mx1) .^ 2)
     r2 = ss_tot > 0 ? 1.0 - sum(residual .^ 2) / ss_tot : 0.0

@@ -113,10 +113,14 @@ end
 
 """
     mix_gaussians(mu1, mu2, sigma1, sigma2, probability, n_obs;
-        rng=Random.default_rng()) -> Vector{Float64}
+        rng=Random.default_rng(), normal_draws=nothing, permutation=nothing)
+        -> Vector{Float64}
 
 Mixture of two Gaussian bet outcomes: `⌊n_obs·probability⌋` draws from
-`N(mu1, sigma1)` and the rest from `N(mu2, sigma2)`, shuffled. Stochastic.
+`N(mu1, sigma1)` and the rest from `N(mu2, sigma2)`, shuffled. Supply a pair of
+standard-normal draw vectors and a one-based output permutation for exact replay.
+Neither supplied draws nor the permutation are mutated. Default draws use the
+native random stream, without implying NumPy seed equivalence.
 Mirrors Python's `mix_gaussians`.
 """
 function mix_gaussians(
@@ -127,14 +131,28 @@ function mix_gaussians(
     probability::Real,
     n_obs::Integer;
     rng::AbstractRNG = Random.default_rng(),
+    normal_draws = nothing,
+    permutation = nothing,
 )
+    n_obs >= 0 && 0 <= probability <= 1 && sigma1 >= 0 && sigma2 >= 0 || throw(ArgumentError("mixture sizes, probabilities and deviations must be valid"))
     n_obs1 = trunc(Int, n_obs * probability)
     n_obs2 = n_obs - n_obs1
-    returns1 = mu1 .+ sigma1 .* randn(rng, n_obs1)
-    returns2 = mu2 .+ sigma2 .* randn(rng, n_obs2)
+    if normal_draws !== nothing
+        length(normal_draws) == 2 && length(normal_draws[1]) == n_obs1 && length(normal_draws[2]) == n_obs2 || throw(DimensionMismatch("normal draws must match both mixture component counts"))
+        all(isfinite, normal_draws[1]) && all(isfinite, normal_draws[2]) || throw(ArgumentError("normal draws must be finite"))
+    end
+    draws1 = normal_draws === nothing ? randn(rng, n_obs1) : Float64[normal_draws[1]...]
+    draws2 = normal_draws === nothing ? randn(rng, n_obs2) : Float64[normal_draws[2]...]
+    returns1 = mu1 .+ sigma1 .* draws1
+    returns2 = mu2 .+ sigma2 .* draws2
     returns = vcat(returns1, returns2)
-    shuffle!(rng, returns)
-    return returns
+    if permutation === nothing
+        shuffle!(rng, returns)
+        return returns
+    end
+    indices = Int[permutation...]
+    sort(indices) == collect(1:n_obs) || throw(ArgumentError("permutation must index every mixture observation exactly once"))
+    return returns[indices]
 end
 
 """

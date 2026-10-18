@@ -81,7 +81,7 @@ function find_trend_using_trend_scanning(
                 best_t = t
             end
         end
-        push!(results, (idx, vertical_time, best_t, sign(best_t)))
+        isnan(best_t) || push!(results, (idx, vertical_time, best_t, sign(best_t)))
     end
     return results
 end

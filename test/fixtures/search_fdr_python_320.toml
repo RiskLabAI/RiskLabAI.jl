@@ -1,0 +1,4615 @@
+[[single]]
+alpha = 0.0
+beta = 0.0
+probability = 0.0
+expected = 0.0
+
+[[single]]
+alpha = 0.0
+beta = 0.0
+probability = 0.01
+expected = 0.0
+
+[[single]]
+alpha = 0.0
+beta = 0.0
+probability = 0.5
+expected = 0.0
+
+[[single]]
+alpha = 0.0
+beta = 0.01
+probability = 0.0
+expected = 0.0
+
+[[single]]
+alpha = 0.0
+beta = 0.01
+probability = 0.01
+expected = 0.0
+
+[[single]]
+alpha = 0.0
+beta = 0.01
+probability = 0.5
+expected = 0.0
+
+[[single]]
+alpha = 0.0
+beta = 0.5
+probability = 0.0
+expected = 0.0
+
+[[single]]
+alpha = 0.0
+beta = 0.5
+probability = 0.01
+expected = 0.0
+
+[[single]]
+alpha = 0.0
+beta = 0.5
+probability = 0.5
+expected = 0.0
+
+[[single]]
+alpha = 0.01
+beta = 0.0
+probability = 0.0
+expected = 0.0
+
+[[single]]
+alpha = 0.01
+beta = 0.0
+probability = 0.01
+expected = 0.00010099989900010116
+
+[[single]]
+alpha = 0.01
+beta = 0.0
+probability = 0.5
+expected = 0.009900990099009908
+
+[[single]]
+alpha = 0.01
+beta = 0.0
+probability = 1.0
+expected = 1.0
+
+[[single]]
+alpha = 0.01
+beta = 0.01
+probability = 0.0
+expected = 0.0
+
+[[single]]
+alpha = 0.01
+beta = 0.01
+probability = 0.01
+expected = 0.00010201999591920019
+
+[[single]]
+alpha = 0.01
+beta = 0.01
+probability = 0.5
+expected = 0.010000000000000004
+
+[[single]]
+alpha = 0.01
+beta = 0.01
+probability = 1.0
+expected = 1.0
+
+[[single]]
+alpha = 0.01
+beta = 0.5
+probability = 0.0
+expected = 0.0
+
+[[single]]
+alpha = 0.01
+beta = 0.5
+probability = 0.01
+expected = 0.00020197939810139378
+
+[[single]]
+alpha = 0.01
+beta = 0.5
+probability = 0.5
+expected = 0.019607843137254912
+
+[[single]]
+alpha = 0.01
+beta = 0.5
+probability = 1.0
+expected = 1.0
+
+[[single]]
+alpha = 0.01
+beta = 1.0
+probability = 0.01
+expected = 1.0
+
+[[single]]
+alpha = 0.01
+beta = 1.0
+probability = 0.5
+expected = 1.0
+
+[[single]]
+alpha = 0.01
+beta = 1.0
+probability = 1.0
+expected = 1.0
+
+[[single]]
+alpha = 0.5
+beta = 0.0
+probability = 0.0
+expected = 0.0
+
+[[single]]
+alpha = 0.5
+beta = 0.0
+probability = 0.01
+expected = 0.0050251256281407045
+
+[[single]]
+alpha = 0.5
+beta = 0.0
+probability = 0.5
+expected = 0.33333333333333337
+
+[[single]]
+alpha = 0.5
+beta = 0.0
+probability = 1.0
+expected = 1.0
+
+[[single]]
+alpha = 0.5
+beta = 0.01
+probability = 0.0
+expected = 0.0
+
+[[single]]
+alpha = 0.5
+beta = 0.01
+probability = 0.01
+expected = 0.00507562683991473
+
+[[single]]
+alpha = 0.5
+beta = 0.01
+probability = 0.5
+expected = 0.33557046979865773
+
+[[single]]
+alpha = 0.5
+beta = 0.01
+probability = 1.0
+expected = 1.0
+
+[[single]]
+alpha = 0.5
+beta = 0.5
+probability = 0.0
+expected = 0.0
+
+[[single]]
+alpha = 0.5
+beta = 0.5
+probability = 0.01
+expected = 0.010000000000000004
+
+[[single]]
+alpha = 0.5
+beta = 0.5
+probability = 0.5
+expected = 0.5
+
+[[single]]
+alpha = 0.5
+beta = 0.5
+probability = 1.0
+expected = 1.0
+
+[[single]]
+alpha = 0.5
+beta = 1.0
+probability = 0.01
+expected = 1.0
+
+[[single]]
+alpha = 0.5
+beta = 1.0
+probability = 0.5
+expected = 1.0
+
+[[single]]
+alpha = 0.5
+beta = 1.0
+probability = 1.0
+expected = 1.0
+
+[[single]]
+alpha = 1.0
+beta = 0.0
+probability = 0.0
+expected = 0.0
+
+[[single]]
+alpha = 1.0
+beta = 0.0
+probability = 0.01
+expected = 0.010000000000000004
+
+[[single]]
+alpha = 1.0
+beta = 0.0
+probability = 0.5
+expected = 0.5
+
+[[single]]
+alpha = 1.0
+beta = 0.0
+probability = 1.0
+expected = 1.0
+
+[[single]]
+alpha = 1.0
+beta = 0.01
+probability = 0.0
+expected = 0.0
+
+[[single]]
+alpha = 1.0
+beta = 0.01
+probability = 0.01
+expected = 0.010099989900010101
+
+[[single]]
+alpha = 1.0
+beta = 0.01
+probability = 0.5
+expected = 0.5025125628140703
+
+[[single]]
+alpha = 1.0
+beta = 0.01
+probability = 1.0
+expected = 1.0
+
+[[single]]
+alpha = 1.0
+beta = 0.5
+probability = 0.0
+expected = 0.0
+
+[[single]]
+alpha = 1.0
+beta = 0.5
+probability = 0.01
+expected = 0.01980198019801981
+
+[[single]]
+alpha = 1.0
+beta = 0.5
+probability = 0.5
+expected = 0.6666666666666666
+
+[[single]]
+alpha = 1.0
+beta = 0.5
+probability = 1.0
+expected = 1.0
+
+[[single]]
+alpha = 1.0
+beta = 1.0
+probability = 0.01
+expected = 1.0
+
+[[single]]
+alpha = 1.0
+beta = 1.0
+probability = 0.5
+expected = 1.0
+
+[[single]]
+alpha = 1.0
+beta = 1.0
+probability = 1.0
+expected = 1.0
+
+[[family]]
+alpha = 0.0
+beta = 0.0
+probability = 0.0
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.0
+probability = 0.0
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.0
+probability = 0.0
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.0
+probability = 0.0
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.0
+probability = 0.01
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.0
+probability = 0.01
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.0
+probability = 0.01
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.0
+probability = 0.01
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.0
+probability = 0.5
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.0
+probability = 0.5
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.0
+probability = 0.5
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.0
+probability = 0.5
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.01
+probability = 0.0
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.01
+probability = 0.0
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.01
+probability = 0.0
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.01
+probability = 0.0
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.01
+probability = 0.01
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.01
+probability = 0.01
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.01
+probability = 0.01
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.01
+probability = 0.01
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.01
+probability = 0.5
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.01
+probability = 0.5
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.01
+probability = 0.5
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.01
+probability = 0.5
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.5
+probability = 0.0
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.5
+probability = 0.0
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.5
+probability = 0.0
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.5
+probability = 0.0
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.5
+probability = 0.01
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.5
+probability = 0.01
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.5
+probability = 0.01
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.5
+probability = 0.01
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.5
+probability = 0.5
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.5
+probability = 0.5
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.5
+probability = 0.5
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 0.0
+beta = 0.5
+probability = 0.5
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 0.0
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 0.0
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 0.0
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 0.0
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 0.01
+trials = 1
+expected = 0.00010099989900010116
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 0.01
+trials = 2
+expected = 1.0000990098019709e-06
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 0.01
+trials = 17
+expected = 1.000000000000017e-36
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 0.01
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 0.5
+trials = 1
+expected = 0.009900990099009908
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 0.5
+trials = 2
+expected = 0.0033222591362126255
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 0.5
+trials = 17
+expected = 7.629452157269584e-08
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 0.5
+trials = 1000
+expected = 9.332636185033007e-304
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 1.0
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 1.0
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 1.0
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 0.0
+probability = 1.0
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 0.0
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 0.0
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 0.0
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 0.0
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 0.01
+trials = 1
+expected = 0.00010201999591920019
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 0.01
+trials = 2
+expected = 1.0102010097969297e-06
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 0.01
+trials = 17
+expected = 1.0101010101010324e-36
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 0.01
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 0.5
+trials = 1
+expected = 0.010000000000000004
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 0.5
+trials = 2
+expected = 0.0033557046979865767
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 0.5
+trials = 17
+expected = 7.706517324636286e-08
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 0.5
+trials = 1000
+expected = 9.426905237407257e-304
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 1.0
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 1.0
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 1.0
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 0.01
+probability = 1.0
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 0.0
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 0.0
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 0.0
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 0.0
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 0.01
+trials = 1
+expected = 0.00020197939810139378
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 0.01
+trials = 2
+expected = 2.0001960192098816e-06
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 0.01
+trials = 17
+expected = 2.000000000000038e-36
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 0.01
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 0.5
+trials = 1
+expected = 0.019607843137254912
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 0.5
+trials = 2
+expected = 0.006622516556291391
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 0.5
+trials = 17
+expected = 1.525890315036842e-07
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 0.5
+trials = 1000
+expected = 1.8665272370064987e-303
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 1.0
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 1.0
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 1.0
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 0.5
+probability = 1.0
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 1.0
+probability = 0.01
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 1.0
+probability = 0.01
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 1.0
+probability = 0.01
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 1.0
+probability = 0.01
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 1.0
+probability = 0.5
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 1.0
+probability = 0.5
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 1.0
+probability = 0.5
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 1.0
+probability = 0.5
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 1.0
+probability = 1.0
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 1.0
+probability = 1.0
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 1.0
+probability = 1.0
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 0.01
+beta = 1.0
+probability = 1.0
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 0.0
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 0.0
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 0.0
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 0.0
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 0.01
+trials = 1
+expected = 0.0050251256281407045
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 0.01
+trials = 2
+expected = 5.0002500125006296e-05
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 0.01
+trials = 17
+expected = 5.000000000000051e-35
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 0.01
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 0.5
+trials = 1
+expected = 0.33333333333333337
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 0.5
+trials = 2
+expected = 0.14285714285714288
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 0.5
+trials = 17
+expected = 3.81471181759574e-06
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 0.5
+trials = 1000
+expected = 4.66631809251667e-302
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 1.0
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 1.0
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 1.0
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 0.0
+probability = 1.0
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 0.0
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 0.0
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 0.0
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 0.0
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 0.01
+trials = 1
+expected = 0.00507562683991473
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 0.01
+trials = 2
+expected = 5.05075503737054e-05
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 0.01
+trials = 17
+expected = 5.050505050505128e-35
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 0.01
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 0.5
+trials = 1
+expected = 0.33557046979865773
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 0.5
+trials = 2
+expected = 0.14409221902017294
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 0.5
+trials = 17
+expected = 3.853244111722812e-06
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 0.5
+trials = 1000
+expected = 4.713452618703798e-302
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 1.0
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 1.0
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 1.0
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 0.01
+probability = 1.0
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 0.0
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 0.0
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 0.0
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 0.0
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 0.01
+trials = 1
+expected = 0.010000000000000004
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 0.01
+trials = 2
+expected = 0.00010000000000000009
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 0.01
+trials = 17
+expected = 1.0000000000000121e-34
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 0.01
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 0.5
+trials = 1
+expected = 0.5
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 0.5
+trials = 2
+expected = 0.25
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 0.5
+trials = 17
+expected = 7.629394531250002e-06
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 0.5
+trials = 1000
+expected = 9.332636185032827e-302
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 1.0
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 1.0
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 1.0
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 0.5
+probability = 1.0
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 1.0
+probability = 0.01
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 1.0
+probability = 0.01
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 1.0
+probability = 0.01
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 1.0
+probability = 0.01
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 1.0
+probability = 0.5
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 1.0
+probability = 0.5
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 1.0
+probability = 0.5
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 1.0
+probability = 0.5
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 1.0
+probability = 1.0
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 1.0
+probability = 1.0
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 1.0
+probability = 1.0
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 0.5
+beta = 1.0
+probability = 1.0
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 0.0
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 0.0
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 0.0
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 0.0
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 0.01
+trials = 1
+expected = 0.010000000000000004
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 0.01
+trials = 2
+expected = 0.00010000000000000009
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 0.01
+trials = 17
+expected = 1.0000000000000121e-34
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 0.01
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 0.5
+trials = 1
+expected = 0.5
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 0.5
+trials = 2
+expected = 0.25
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 0.5
+trials = 17
+expected = 7.629394531250002e-06
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 0.5
+trials = 1000
+expected = 9.332636185032827e-302
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 1.0
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 1.0
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 1.0
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 0.0
+probability = 1.0
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 0.0
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 0.0
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 0.0
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 0.0
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 0.01
+trials = 1
+expected = 0.010099989900010101
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 0.01
+trials = 2
+expected = 0.00010100999897979915
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 0.01
+trials = 17
+expected = 1.0101010101010275e-34
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 0.01
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 0.5
+trials = 1
+expected = 0.5025125628140703
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 0.5
+trials = 2
+expected = 0.2518891687657431
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 0.5
+trials = 17
+expected = 7.706458528579676e-06
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 0.5
+trials = 1000
+expected = 9.426905237407079e-302
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 1.0
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 1.0
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 1.0
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 0.01
+probability = 1.0
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 0.0
+trials = 1
+expected = 0.0
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 0.0
+trials = 2
+expected = 0.0
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 0.0
+trials = 17
+expected = 0.0
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 0.0
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 0.01
+trials = 1
+expected = 0.01980198019801981
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 0.01
+trials = 2
+expected = 0.00019998000199980022
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 0.01
+trials = 17
+expected = 2.000000000000028e-34
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 0.01
+trials = 1000
+expected = 0.0
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 0.5
+trials = 1
+expected = 0.6666666666666666
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 0.5
+trials = 2
+expected = 0.39999999999999997
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 0.5
+trials = 17
+expected = 1.5258672648066353e-05
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 0.5
+trials = 1000
+expected = 1.866527237006463e-301
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 1.0
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 1.0
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 1.0
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 0.5
+probability = 1.0
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 1.0
+probability = 0.01
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 1.0
+probability = 0.01
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 1.0
+probability = 0.01
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 1.0
+probability = 0.01
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 1.0
+probability = 0.5
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 1.0
+probability = 0.5
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 1.0
+probability = 0.5
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 1.0
+probability = 0.5
+trials = 1000
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 1.0
+probability = 1.0
+trials = 1
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 1.0
+probability = 1.0
+trials = 2
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 1.0
+probability = 1.0
+trials = 17
+expected = 1.0
+
+[[family]]
+alpha = 1.0
+beta = 1.0
+probability = 1.0
+trials = 1000
+expected = 1.0
+
+[[errors]]
+alpha = 0.0
+beta = 0.0
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.0
+beta = 0.0
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.0
+beta = 0.0
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.0
+beta = 0.0
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.0, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.0
+beta = 0.0
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.3, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.0
+beta = 0.0
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.0
+beta = 0.0
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.0
+beta = 0.0
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.0, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.0
+beta = 0.0
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.9, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.0
+beta = 0.0
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.81, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.0
+beta = 0.0
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.0
+beta = 0.0
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.0
+beta = 0.2
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.19999999999999998}
+
+[[errors]]
+alpha = 0.0
+beta = 0.2
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.05523809523809523}
+
+[[errors]]
+alpha = 0.0
+beta = 0.2
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 0.0, "family_type_ii_error" = 4.019988717840501e-13}
+
+[[errors]]
+alpha = 0.0
+beta = 0.2
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.0, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.0
+beta = 0.2
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.3, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.19999999999999998}
+
+[[errors]]
+alpha = 0.0
+beta = 0.2
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.1138461538461538}
+
+[[errors]]
+alpha = 0.0
+beta = 0.2
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 0.0, "family_type_ii_error" = 7.393477636002704e-08}
+
+[[errors]]
+alpha = 0.0
+beta = 0.2
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.0, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.0
+beta = 0.2
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.9, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.20000000000000032}
+
+[[errors]]
+alpha = 0.0
+beta = 0.2
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.81, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.19157894736842132}
+
+[[errors]]
+alpha = 0.0
+beta = 0.2
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.07640584112771333}
+
+[[errors]]
+alpha = 0.0
+beta = 0.2
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 0.0, "family_type_ii_error" = 6.13518051448395e-37}
+
+[[errors]]
+alpha = 0.0
+beta = 0.8
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.8}
+
+[[errors]]
+alpha = 0.0
+beta = 0.8
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.6552380952380954}
+
+[[errors]]
+alpha = 0.0
+beta = 0.8
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.014780882941434611}
+
+[[errors]]
+alpha = 0.0
+beta = 0.8
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.0, "family_type_i_error" = 0.0, "family_type_ii_error" = 3.0550539125987036e-92}
+
+[[errors]]
+alpha = 0.0
+beta = 0.8
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.3, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.7999999999999999}
+
+[[errors]]
+alpha = 0.0
+beta = 0.8
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.7138461538461536}
+
+[[errors]]
+alpha = 0.0
+beta = 0.8
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.048974388785174926}
+
+[[errors]]
+alpha = 0.0
+beta = 0.8
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.0, "family_type_i_error" = 0.0, "family_type_ii_error" = 3.1510206083891404e-66}
+
+[[errors]]
+alpha = 0.0
+beta = 0.8
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.9, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.7999999999999997}
+
+[[errors]]
+alpha = 0.0
+beta = 0.8
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.81, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.7915789473684207}
+
+[[errors]]
+alpha = 0.0
+beta = 0.8
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 0.0, "family_type_ii_error" = 0.6216038314760649}
+
+[[errors]]
+alpha = 0.0
+beta = 0.8
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 0.0, "family_type_ii_error" = 1.6829673572159275e-09}
+
+[[errors]]
+alpha = 0.0
+beta = 1.0
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 0.0, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 0.0
+beta = 1.0
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 0.0, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 0.0
+beta = 1.0
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 0.0, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 0.0
+beta = 1.0
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.0, "family_type_i_error" = 0.0, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 0.0
+beta = 1.0
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.3, "family_type_i_error" = 0.0, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 0.0
+beta = 1.0
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 0.0, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 0.0
+beta = 1.0
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 0.0, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 0.0
+beta = 1.0
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.0, "family_type_i_error" = 0.0, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 0.0
+beta = 1.0
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.9, "family_type_i_error" = 0.0, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 0.0
+beta = 1.0
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.81, "family_type_i_error" = 0.0, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 0.0
+beta = 1.0
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 0.0, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 0.0
+beta = 1.0
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 0.0, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 0.01
+beta = 0.0
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 0.010000000000000009, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.01
+beta = 0.0
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 0.01990000000000002, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.01
+beta = 0.0
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.0, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 0.18209306240276926, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.01
+beta = 0.0
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.0, "family_type_i_error" = 0.9999568287525893, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.01
+beta = 0.0
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.3, "family_type_i_error" = 0.010000000000000009, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.01
+beta = 0.0
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 0.01990000000000002, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.01
+beta = 0.0
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.0, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 0.18209306240276926, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.01
+beta = 0.0
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.0, "family_type_i_error" = 0.9999568287525893, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.01
+beta = 0.0
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.9, "family_type_i_error" = 0.010000000000000009, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.01
+beta = 0.0
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.81, "family_type_i_error" = 0.01990000000000002, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.01
+beta = 0.0
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 0.18209306240276926, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.01
+beta = 0.0
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.0, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 0.9999568287525893, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.01
+beta = 0.2
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 0.010000000000000009, "family_type_ii_error" = 0.2}
+
+[[errors]]
+alpha = 0.01
+beta = 0.2
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 0.01990000000000002, "family_type_ii_error" = 0.055047619047619054}
+
+[[errors]]
+alpha = 0.01
+beta = 0.2
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.2, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 0.18209306240276926, "family_type_ii_error" = 3.855763208579199e-13}
+
+[[errors]]
+alpha = 0.01
+beta = 0.2
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.0, "family_type_i_error" = 0.9999568287525893, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.01
+beta = 0.2
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.3, "family_type_i_error" = 0.010000000000000009, "family_type_ii_error" = 0.19999999999999998}
+
+[[errors]]
+alpha = 0.01
+beta = 0.2
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 0.01990000000000002, "family_type_ii_error" = 0.11292307692307686}
+
+[[errors]]
+alpha = 0.01
+beta = 0.2
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.2, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 0.18209306240276926, "family_type_ii_error" = 6.448173349961299e-08}
+
+[[errors]]
+alpha = 0.01
+beta = 0.2
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.0, "family_type_i_error" = 0.9999568287525893, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.01
+beta = 0.2
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.9, "family_type_i_error" = 0.010000000000000009, "family_type_ii_error" = 0.20000000000000015}
+
+[[errors]]
+alpha = 0.01
+beta = 0.2
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.81, "family_type_i_error" = 0.01990000000000002, "family_type_ii_error" = 0.18968421052631596}
+
+[[errors]]
+alpha = 0.01
+beta = 0.2
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 0.18209306240276926, "family_type_ii_error" = 0.06326608162201589}
+
+[[errors]]
+alpha = 0.01
+beta = 0.2
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.2, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 0.9999568287525893, "family_type_ii_error" = 3.29895941628808e-41}
+
+[[errors]]
+alpha = 0.01
+beta = 0.8
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 0.010000000000000009, "family_type_ii_error" = 0.8}
+
+[[errors]]
+alpha = 0.01
+beta = 0.8
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 0.01990000000000002, "family_type_ii_error" = 0.6544761904761904}
+
+[[errors]]
+alpha = 0.01
+beta = 0.8
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.8, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 0.18209306240276926, "family_type_ii_error" = 0.014599469051146534}
+
+[[errors]]
+alpha = 0.01
+beta = 0.8
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.0, "family_type_i_error" = 0.9999568287525893, "family_type_ii_error" = 1.647604955041141e-92}
+
+[[errors]]
+alpha = 0.01
+beta = 0.8
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.3, "family_type_i_error" = 0.010000000000000009, "family_type_ii_error" = 0.8}
+
+[[errors]]
+alpha = 0.01
+beta = 0.8
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 0.01990000000000002, "family_type_ii_error" = 0.7101538461538461}
+
+[[errors]]
+alpha = 0.01
+beta = 0.8
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.8, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 0.18209306240276926, "family_type_ii_error" = 0.04566846750074507}
+
+[[errors]]
+alpha = 0.01
+beta = 0.8
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.0, "family_type_i_error" = 0.9999568287525893, "family_type_ii_error" = 9.568016667753333e-68}
+
+[[errors]]
+alpha = 0.01
+beta = 0.8
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.9, "family_type_i_error" = 0.010000000000000009, "family_type_ii_error" = 0.7999999999999997}
+
+[[errors]]
+alpha = 0.01
+beta = 0.8
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.81, "family_type_i_error" = 0.01990000000000002, "family_type_ii_error" = 0.7839999999999998}
+
+[[errors]]
+alpha = 0.01
+beta = 0.8
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 0.18209306240276926, "family_type_ii_error" = 0.5187461188610349}
+
+[[errors]]
+alpha = 0.01
+beta = 0.8
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 0.8, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 0.9999568287525893, "family_type_ii_error" = 1.6566467315699085e-13}
+
+[[errors]]
+alpha = 0.01
+beta = 1.0
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 0.010000000000000009, "family_type_ii_error" = 0.9999999999999999}
+
+[[errors]]
+alpha = 0.01
+beta = 1.0
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 0.01990000000000002, "family_type_ii_error" = 0.999047619047619}
+
+[[errors]]
+alpha = 0.01
+beta = 1.0
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 1.0, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 0.18209306240276926, "family_type_ii_error" = 0.9900473578023274}
+
+[[errors]]
+alpha = 0.01
+beta = 1.0
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.0, "family_type_i_error" = 0.9999568287525893, "family_type_ii_error" = 0.6064548228400276}
+
+[[errors]]
+alpha = 0.01
+beta = 1.0
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.3, "family_type_i_error" = 0.010000000000000009, "family_type_ii_error" = 0.9999999999999998}
+
+[[errors]]
+alpha = 0.01
+beta = 1.0
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 0.01990000000000002, "family_type_ii_error" = 0.9953846153846151}
+
+[[errors]]
+alpha = 0.01
+beta = 1.0
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 1.0, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 0.18209306240276926, "family_type_ii_error" = 0.9416796087099288}
+
+[[errors]]
+alpha = 0.01
+beta = 1.0
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.0, "family_type_i_error" = 0.9999568287525893, "family_type_ii_error" = 0.04956308282314992}
+
+[[errors]]
+alpha = 0.01
+beta = 1.0
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.9, "family_type_i_error" = 0.010000000000000009, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 0.01
+beta = 1.0
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.81, "family_type_i_error" = 0.01990000000000002, "family_type_ii_error" = 0.9905263157894734}
+
+[[errors]]
+alpha = 0.01
+beta = 1.0
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 0.18209306240276926, "family_type_ii_error" = 0.8368987998610151}
+
+[[errors]]
+alpha = 0.01
+beta = 1.0
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.01, "trial_type_ii_error" = 1.0, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 0.9999568287525893, "family_type_ii_error" = 0.00011848257529216657}
+
+[[errors]]
+alpha = 0.4
+beta = 0.0
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 0.4, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.4
+beta = 0.0
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 0.64, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.4
+beta = 0.0
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.0, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 0.9999634384155993, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.4
+beta = 0.0
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.4
+beta = 0.0
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.3, "family_type_i_error" = 0.4, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.4
+beta = 0.0
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 0.64, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.4
+beta = 0.0
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.0, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 0.9999634384155993, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.4
+beta = 0.0
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.4
+beta = 0.0
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.9, "family_type_i_error" = 0.4, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.4
+beta = 0.0
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.81, "family_type_i_error" = 0.64, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.4
+beta = 0.0
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 0.9999634384155993, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.4
+beta = 0.0
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.0, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.4
+beta = 0.2
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 0.4, "family_type_ii_error" = 0.2}
+
+[[errors]]
+alpha = 0.4
+beta = 0.2
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 0.64, "family_type_ii_error" = 0.047619047619047616}
+
+[[errors]]
+alpha = 0.4
+beta = 0.2
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.2, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 0.9999634384155993, "family_type_ii_error" = 7.054294986864034e-14}
+
+[[errors]]
+alpha = 0.4
+beta = 0.2
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.4
+beta = 0.2
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.3, "family_type_i_error" = 0.4, "family_type_ii_error" = 0.19999999999999987}
+
+[[errors]]
+alpha = 0.4
+beta = 0.2
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 0.64, "family_type_ii_error" = 0.07692307692307686}
+
+[[errors]]
+alpha = 0.4
+beta = 0.2
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.2, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 0.9999634384155993, "family_type_ii_error" = 1.2676378520362053e-10}
+
+[[errors]]
+alpha = 0.4
+beta = 0.2
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 0.4
+beta = 0.2
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.9, "family_type_i_error" = 0.4, "family_type_ii_error" = 0.20000000000000032}
+
+[[errors]]
+alpha = 0.4
+beta = 0.2
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.81, "family_type_i_error" = 0.64, "family_type_ii_error" = 0.1157894736842107}
+
+[[errors]]
+alpha = 0.4
+beta = 0.2
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 0.9999634384155993, "family_type_ii_error" = 5.4124094930650975e-06}
+
+[[errors]]
+alpha = 0.4
+beta = 0.2
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.2, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 1.0, "family_type_ii_error" = 1.5417963251463286e-252}
+
+[[errors]]
+alpha = 0.4
+beta = 0.8
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 0.4, "family_type_ii_error" = 0.8}
+
+[[errors]]
+alpha = 0.4
+beta = 0.8
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 0.64, "family_type_ii_error" = 0.6247619047619049}
+
+[[errors]]
+alpha = 0.4
+beta = 0.8
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.8, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 0.9999634384155993, "family_type_ii_error" = 0.00896482519768437}
+
+[[errors]]
+alpha = 0.4
+beta = 0.8
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 4.237320268597899e-103}
+
+[[errors]]
+alpha = 0.4
+beta = 0.8
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.3, "family_type_i_error" = 0.4, "family_type_ii_error" = 0.8}
+
+[[errors]]
+alpha = 0.4
+beta = 0.8
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 0.64, "family_type_ii_error" = 0.5661538461538461}
+
+[[errors]]
+alpha = 0.4
+beta = 0.8
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.8, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 0.9999634384155993, "family_type_ii_error" = 0.0024245681434085543}
+
+[[errors]]
+alpha = 0.4
+beta = 0.8
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 1.7049817353925232e-131}
+
+[[errors]]
+alpha = 0.4
+beta = 0.8
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.9, "family_type_i_error" = 0.4, "family_type_ii_error" = 0.8}
+
+[[errors]]
+alpha = 0.4
+beta = 0.8
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.81, "family_type_i_error" = 0.64, "family_type_ii_error" = 0.48842105263157887}
+
+[[errors]]
+alpha = 0.4
+beta = 0.8
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 0.9999634384155993, "family_type_ii_error" = 7.513154993163264e-05}
+
+[[errors]]
+alpha = 0.4
+beta = 0.8
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 0.8, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 1.0, "family_type_ii_error" = 2.4642768560314816e-208}
+
+[[errors]]
+alpha = 0.4
+beta = 1.0
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 0.4, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 0.4
+beta = 1.0
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 0.64, "family_type_ii_error" = 0.9619047619047618}
+
+[[errors]]
+alpha = 0.4
+beta = 1.0
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 1.0, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 0.9999634384155993, "family_type_ii_error" = 0.6676079717550942}
+
+[[errors]]
+alpha = 0.4
+beta = 1.0
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 1.6829673572159275e-09}
+
+[[errors]]
+alpha = 0.4
+beta = 1.0
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.3, "family_type_i_error" = 0.4, "family_type_ii_error" = 0.9999999999999998}
+
+[[errors]]
+alpha = 0.4
+beta = 1.0
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 0.64, "family_type_ii_error" = 0.8153846153846152}
+
+[[errors]]
+alpha = 0.4
+beta = 1.0
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 1.0, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 0.9999634384155993, "family_type_ii_error" = 0.07756279364089252}
+
+[[errors]]
+alpha = 0.4
+beta = 1.0
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 3.038590321326928e-56}
+
+[[errors]]
+alpha = 0.4
+beta = 1.0
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.9, "family_type_i_error" = 0.4, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 0.4
+beta = 1.0
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.81, "family_type_i_error" = 0.64, "family_type_ii_error" = 0.6210526315789475}
+
+[[errors]]
+alpha = 0.4
+beta = 1.0
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 0.9999634384155993, "family_type_ii_error" = 0.00014625950588852937}
+
+[[errors]]
+alpha = 0.4
+beta = 1.0
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 0.4, "trial_type_ii_error" = 1.0, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 1.0, "family_type_ii_error" = 1.513470582304313e-194}
+
+[[errors]]
+alpha = 1.0
+beta = 0.0
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 0.0
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 0.0
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 0.0
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 0.0
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.3, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 0.0
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 0.0
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 0.0
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 0.0
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.9, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 0.0
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.81, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 0.0
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 0.0
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.0, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 0.2
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.2}
+
+[[errors]]
+alpha = 1.0
+beta = 0.2
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.03619047619047619}
+
+[[errors]]
+alpha = 1.0
+beta = 0.2
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 1.0, "family_type_ii_error" = 3.758997345754602e-15}
+
+[[errors]]
+alpha = 1.0
+beta = 0.2
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 0.2
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.3, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.19999999999999998}
+
+[[errors]]
+alpha = 1.0
+beta = 0.2
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.021538461538461527}
+
+[[errors]]
+alpha = 1.0
+beta = 0.2
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 1.0, "family_type_ii_error" = 8.366825542820168e-18}
+
+[[errors]]
+alpha = 1.0
+beta = 0.2
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 0.2
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.9, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.19999999999999998}
+
+[[errors]]
+alpha = 1.0
+beta = 0.2
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.81, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.002105263157894737}
+
+[[errors]]
+alpha = 1.0
+beta = 0.2
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 1.0, "family_type_ii_error" = 1.1937023366691845e-34}
+
+[[errors]]
+alpha = 1.0
+beta = 0.2
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.2, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 0.8
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.8}
+
+[[errors]]
+alpha = 1.0
+beta = 0.8
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.579047619047619}
+
+[[errors]]
+alpha = 1.0
+beta = 0.8
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.004133061290436298}
+
+[[errors]]
+alpha = 1.0
+beta = 0.8
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 6.51016927069412e-120}
+
+[[errors]]
+alpha = 1.0
+beta = 0.8
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.3, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.7999999999999999}
+
+[[errors]]
+alpha = 1.0
+beta = 0.8
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.34461538461538455}
+
+[[errors]]
+alpha = 1.0
+beta = 0.8
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 1.0, "family_type_ii_error" = 9.19942197190405e-06}
+
+[[errors]]
+alpha = 1.0
+beta = 0.8
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 1.541796325145978e-252}
+
+[[errors]]
+alpha = 1.0
+beta = 0.8
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.9, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.8}
+
+[[errors]]
+alpha = 1.0
+beta = 0.8
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.81, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.03368421052631578}
+
+[[errors]]
+alpha = 1.0
+beta = 0.8
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 1.0, "family_type_ii_error" = 1.312489599271145e-22}
+
+[[errors]]
+alpha = 1.0
+beta = 0.8
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 0.8, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[errors]]
+alpha = 1.0
+beta = 1.0
+probability = 0.05
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.05000000000000001, "family_type_i_error" = 1.0, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 1.0
+beta = 1.0
+probability = 0.05
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.0025000000000000005, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.9047619047619047}
+
+[[errors]]
+alpha = 1.0
+beta = 1.0
+probability = 0.05
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 9.536743164062544e-27, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.3584859224085419}
+
+[[errors]]
+alpha = 1.0
+beta = 1.0
+probability = 0.05
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.05, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 5.291822747744794e-23}
+
+[[errors]]
+alpha = 1.0
+beta = 1.0
+probability = 0.3
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.3, "family_type_i_error" = 1.0, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 1.0
+beta = 1.0
+probability = 0.3
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.08999999999999998, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.5384615384615383}
+
+[[errors]]
+alpha = 1.0
+beta = 1.0
+probability = 0.3
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 3.486784400999994e-11, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.000797922663003941}
+
+[[errors]]
+alpha = 1.0
+beta = 1.0
+probability = 0.3
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.3, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.0, "family_type_i_error" = 1.0, "family_type_ii_error" = 1.2532566399656417e-155}
+
+[[errors]]
+alpha = 1.0
+beta = 1.0
+probability = 0.9
+trials = 1
+expected = {"n_trials" = 1, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.9, "family_type_i_error" = 1.0, "family_type_ii_error" = 1.0}
+
+[[errors]]
+alpha = 1.0
+beta = 1.0
+probability = 0.9
+trials = 2
+expected = {"n_trials" = 2, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.81, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.05263157894736841}
+
+[[errors]]
+alpha = 1.0
+beta = 1.0
+probability = 0.9
+trials = 20
+expected = {"n_trials" = 20, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 0.12157665459056931, "family_type_i_error" = 1.0, "family_type_ii_error" = 1.1384032599155186e-20}
+
+[[errors]]
+alpha = 1.0
+beta = 1.0
+probability = 0.9
+trials = 1000
+expected = {"n_trials" = 1000, "trial_null_probability" = 0.9, "trial_type_i_error" = 1.0, "trial_type_ii_error" = 1.0, "family_null_probability" = 1.7478712517226825e-46, "family_type_i_error" = 1.0, "family_type_ii_error" = 0.0}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.2
+probability = 0.05
+trials = 1
+family_alpha = 0.010000000000000009
+family_beta = 0.2
+expected = {"n_trials" = 1, "single_trial_false_discovery_rate" = 0.0006574621959237345, "family_level_false_discovery_rate" = 0.0006574621959237345, "log_observed_type_i_inflation" = 0.0, "log_required_type_i_inflation" = -6.938893903907228e-18, "equation_13_log_gap" = 6.938893903907228e-18, "identification_condition_holds" = true, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.2
+probability = 0.05
+trials = 2
+family_alpha = 0.01990000000000002
+family_beta = 0.055047619047619054
+expected = {"n_trials" = 2, "single_trial_false_discovery_rate" = 0.0006574621959237345, "family_level_false_discovery_rate" = 5.277732028593118e-05, "log_observed_type_i_inflation" = 0.6881346387364013, "log_required_type_i_inflation" = 3.211045245753012, "equation_13_log_gap" = -2.5229106070166107, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.2
+probability = 0.05
+trials = 20
+family_alpha = 0.18209306240276926
+family_beta = 3.855763208579199e-13
+expected = {"n_trials" = 20, "single_trial_false_discovery_rate" = 0.0006574621959237345, "family_level_false_discovery_rate" = 1.736574768093494e-27, "log_observed_type_i_inflation" = 2.9019327952804965, "log_required_type_i_inflation" = 57.1933500432272, "equation_13_log_gap" = -54.291417247946704, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.2
+probability = 0.3
+trials = 1
+family_alpha = 0.010000000000000009
+family_beta = 0.19999999999999998
+expected = {"n_trials" = 1, "single_trial_false_discovery_rate" = 0.005328596802841924, "family_level_false_discovery_rate" = 0.005328596802841924, "log_observed_type_i_inflation" = 0.0, "log_required_type_i_inflation" = 5.551115123125783e-17, "equation_13_log_gap" = -5.551115123125783e-17, "identification_condition_holds" = true, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.2
+probability = 0.3
+trials = 2
+family_alpha = 0.01990000000000002
+family_beta = 0.11292307692307686
+expected = {"n_trials" = 2, "single_trial_false_discovery_rate" = 0.005328596802841924, "family_level_false_discovery_rate" = 0.0022137594233101105, "log_observed_type_i_inflation" = 0.6881346387364013, "log_required_type_i_inflation" = 1.569657042422256, "equation_13_log_gap" = -0.8815224036858547, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.2
+probability = 0.3
+trials = 20
+family_alpha = 0.18209306240276926
+family_beta = 6.448173349961299e-08
+expected = {"n_trials" = 20, "single_trial_false_discovery_rate" = 0.005328596802841924, "family_level_false_discovery_rate" = 6.349192904750963e-12, "log_observed_type_i_inflation" = 2.9019327952804965, "log_required_type_i_inflation" = 23.455301712929124, "equation_13_log_gap" = -20.553368917648626, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.2
+probability = 0.9
+trials = 1
+family_alpha = 0.010000000000000009
+family_beta = 0.20000000000000015
+expected = {"n_trials" = 1, "single_trial_false_discovery_rate" = 0.10112359550561806, "family_level_false_discovery_rate" = 0.1011235955056181, "log_observed_type_i_inflation" = 0.0, "log_required_type_i_inflation" = 0.0, "equation_13_log_gap" = 0.0, "identification_condition_holds" = true, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.2
+probability = 0.9
+trials = 2
+family_alpha = 0.01990000000000002
+family_beta = 0.18968421052631596
+expected = {"n_trials" = 2, "single_trial_false_discovery_rate" = 0.10112359550561806, "family_level_false_discovery_rate" = 0.09477360520699216, "log_observed_type_i_inflation" = 0.6881346387364013, "log_required_type_i_inflation" = 0.7600267093994899, "equation_13_log_gap" = -0.07189207066308856, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.2
+probability = 0.9
+trials = 20
+family_alpha = 0.18209306240276926
+family_beta = 0.06326608162201589
+expected = {"n_trials" = 20, "single_trial_false_discovery_rate" = 0.10112359550561806, "family_level_false_discovery_rate" = 0.026199527223105708, "log_observed_type_i_inflation" = 2.9019327952804965, "log_required_type_i_inflation" = 4.332595801503621, "equation_13_log_gap" = -1.4306630062231247, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.2
+probability = 0.9
+trials = 1000
+family_alpha = 0.9999568287525893
+family_beta = 3.29895941628808e-41
+expected = {"n_trials" = 1000, "single_trial_false_discovery_rate" = 0.10112359550561806, "family_level_false_discovery_rate" = 1.747795793940429e-46, "log_observed_type_i_inflation" = 4.605127013808775, "log_required_type_i_inflation" = 107.78088378647672, "equation_13_log_gap" = -103.17575677266795, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.8
+probability = 0.05
+trials = 1
+family_alpha = 0.010000000000000009
+family_beta = 0.8
+expected = {"n_trials" = 1, "single_trial_false_discovery_rate" = 0.0026246719160105004, "family_level_false_discovery_rate" = 0.0026246719160105004, "log_observed_type_i_inflation" = 0.0, "log_required_type_i_inflation" = -6.938893903907228e-18, "equation_13_log_gap" = 6.938893903907228e-18, "identification_condition_holds" = true, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.8
+probability = 0.05
+trials = 2
+family_alpha = 0.01990000000000002
+family_beta = 0.6544761904761904
+expected = {"n_trials" = 2, "single_trial_false_discovery_rate" = 0.0026246719160105004, "family_level_false_discovery_rate" = 0.00014432431922798837, "log_observed_type_i_inflation" = 0.6881346387364013, "log_required_type_i_inflation" = 3.591266625246936, "equation_13_log_gap" = -2.9031319865105347, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.8
+probability = 0.05
+trials = 20
+family_alpha = 0.18209306240276926
+family_beta = 0.014599469051146534
+expected = {"n_trials" = 20, "single_trial_false_discovery_rate" = 0.0026246719160105004, "family_level_false_discovery_rate" = 1.7623034629590272e-27, "log_observed_type_i_inflation" = 2.9019327952804965, "log_required_type_i_inflation" = 58.56493731429062, "equation_13_log_gap" = -55.66300451901012, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.8
+probability = 0.05
+trials = 1000
+family_alpha = 0.9999568287525893
+family_beta = 1.647604955041141e-92
+expected = {"n_trials" = 1000, "single_trial_false_discovery_rate" = 0.0026246719160105004, "family_level_false_discovery_rate" = 0.0, "log_observed_type_i_inflation" = 4.605127013808775, "log_required_type_i_inflation" = 2994.3972724872588, "equation_13_log_gap" = -2989.79214547345, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.8
+probability = 0.3
+trials = 1
+family_alpha = 0.010000000000000009
+family_beta = 0.8
+expected = {"n_trials" = 1, "single_trial_false_discovery_rate" = 0.020979020979020994, "family_level_false_discovery_rate" = 0.020979020979020994, "log_observed_type_i_inflation" = 0.0, "log_required_type_i_inflation" = 0.0, "equation_13_log_gap" = 0.0, "identification_condition_holds" = true, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.8
+probability = 0.3
+trials = 2
+family_alpha = 0.01990000000000002
+family_beta = 0.7101538461538461
+expected = {"n_trials" = 2, "single_trial_false_discovery_rate" = 0.020979020979020994, "family_level_false_discovery_rate" = 0.006744467164499483, "log_observed_type_i_inflation" = 0.6881346387364013, "log_required_type_i_inflation" = 1.8373699804801076, "equation_13_log_gap" = -1.1492353417437062, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.8
+probability = 0.3
+trials = 20
+family_alpha = 0.18209306240276926
+family_beta = 0.04566846750074507
+expected = {"n_trials" = 20, "single_trial_false_discovery_rate" = 0.020979020979020994, "family_level_false_discovery_rate" = 6.653025996861344e-12, "log_observed_type_i_inflation" = 2.9019327952804965, "log_required_type_i_inflation" = 24.79485198896942, "equation_13_log_gap" = -21.892919193688922, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.8
+probability = 0.3
+trials = 1000
+family_alpha = 0.9999568287525893
+family_beta = 9.568016667753333e-68
+expected = {"n_trials" = 1000, "single_trial_false_discovery_rate" = 0.020979020979020994, "family_level_false_discovery_rate" = 0.0, "log_observed_type_i_inflation" = 4.605127013808775, "log_required_type_i_inflation" = 1204.7349443779829, "equation_13_log_gap" = -1200.1298173641742, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.8
+probability = 0.9
+trials = 1
+family_alpha = 0.010000000000000009
+family_beta = 0.7999999999999997
+expected = {"n_trials" = 1, "single_trial_false_discovery_rate" = 0.3103448275862072, "family_level_false_discovery_rate" = 0.3103448275862068, "log_observed_type_i_inflation" = 0.0, "log_required_type_i_inflation" = 1.7763568394002505e-15, "equation_13_log_gap" = -1.7763568394002505e-15, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.8
+probability = 0.9
+trials = 2
+family_alpha = 0.01990000000000002
+family_beta = 0.7839999999999998
+expected = {"n_trials" = 2, "single_trial_false_discovery_rate" = 0.3103448275862072, "family_level_false_discovery_rate" = 0.28200283419933864, "log_observed_type_i_inflation" = 0.6881346387364013, "log_required_type_i_inflation" = 0.8241754429663506, "equation_13_log_gap" = -0.13604080422994924, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.8
+probability = 0.9
+trials = 20
+family_alpha = 0.18209306240276926
+family_beta = 0.5187461188610349
+expected = {"n_trials" = 20, "single_trial_false_discovery_rate" = 0.3103448275862072, "family_level_false_discovery_rate" = 0.04976200450218708, "log_observed_type_i_inflation" = 2.9019327952804965, "log_required_type_i_inflation" = 5.052885842835017, "equation_13_log_gap" = -2.15095304755452, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.01
+beta = 0.8
+probability = 0.9
+trials = 1000
+family_alpha = 0.9999568287525893
+family_beta = 1.6566467315699085e-13
+expected = {"n_trials" = 1000, "single_trial_false_discovery_rate" = 0.3103448275862072, "family_level_false_discovery_rate" = 1.747795793940727e-46, "log_observed_type_i_inflation" = 4.605127013808775, "log_required_type_i_inflation" = 109.16717814759645, "equation_13_log_gap" = -104.56205113378768, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.2
+probability = 0.05
+trials = 1
+family_alpha = 0.4
+family_beta = 0.2
+expected = {"n_trials" = 1, "single_trial_false_discovery_rate" = 0.025641025641025644, "family_level_false_discovery_rate" = 0.025641025641025644, "log_observed_type_i_inflation" = 0.0, "log_required_type_i_inflation" = -6.938893903907228e-18, "equation_13_log_gap" = 6.938893903907228e-18, "identification_condition_holds" = true, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.2
+probability = 0.05
+trials = 2
+family_alpha = 0.64
+family_beta = 0.047619047619047616
+expected = {"n_trials" = 2, "single_trial_false_discovery_rate" = 0.025641025641025644, "family_level_false_discovery_rate" = 0.0016813787305590589, "log_observed_type_i_inflation" = 0.4700036292457355, "log_required_type_i_inflation" = 3.2188758248682006, "equation_13_log_gap" = -2.748872195622465, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.2
+probability = 0.05
+trials = 20
+family_alpha = 0.9999634384155993
+family_beta = 7.054294986864034e-14
+expected = {"n_trials" = 20, "single_trial_false_discovery_rate" = 0.025641025641025644, "family_level_false_discovery_rate" = 9.536394485623088e-27, "log_observed_type_i_inflation" = 0.9162541696213633, "log_required_type_i_inflation" = 57.19335004322751, "equation_13_log_gap" = -56.27709587360615, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.2
+probability = 0.3
+trials = 1
+family_alpha = 0.4
+family_beta = 0.19999999999999987
+expected = {"n_trials" = 1, "single_trial_false_discovery_rate" = 0.17647058823529413, "family_level_false_discovery_rate" = 0.17647058823529407, "log_observed_type_i_inflation" = 0.0, "log_required_type_i_inflation" = 1.6653345369377348e-16, "equation_13_log_gap" = -1.6653345369377348e-16, "identification_condition_holds" = true, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.2
+probability = 0.3
+trials = 2
+family_alpha = 0.64
+family_beta = 0.07692307692307686
+expected = {"n_trials" = 2, "single_trial_false_discovery_rate" = 0.17647058823529413, "family_level_false_discovery_rate" = 0.0641711229946524, "log_observed_type_i_inflation" = 0.4700036292457355, "log_required_type_i_inflation" = 1.6094379124341007, "equation_13_log_gap" = -1.1394342831883653, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.2
+probability = 0.3
+trials = 20
+family_alpha = 0.9999634384155993
+family_beta = 1.2676378520362053e-10
+expected = {"n_trials" = 20, "single_trial_false_discovery_rate" = 0.17647058823529413, "family_level_false_discovery_rate" = 3.486656919079815e-11, "log_observed_type_i_inflation" = 0.9162541696213633, "log_required_type_i_inflation" = 23.455301777284095, "equation_13_log_gap" = -22.53904760766273, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.2
+probability = 0.9
+trials = 1
+family_alpha = 0.4
+family_beta = 0.20000000000000032
+expected = {"n_trials" = 1, "single_trial_false_discovery_rate" = 0.8181818181818182, "family_level_false_discovery_rate" = 0.8181818181818183, "log_observed_type_i_inflation" = 0.0, "log_required_type_i_inflation" = -4.440892098500626e-16, "equation_13_log_gap" = 4.440892098500626e-16, "identification_condition_holds" = true, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.2
+probability = 0.9
+trials = 2
+family_alpha = 0.64
+family_beta = 0.1157894736842107
+expected = {"n_trials" = 2, "single_trial_false_discovery_rate" = 0.8181818181818182, "family_level_false_discovery_rate" = 0.7552447552447553, "log_observed_type_i_inflation" = 0.4700036292457355, "log_required_type_i_inflation" = 0.8472978603872034, "equation_13_log_gap" = -0.37729423114146793, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.2
+probability = 0.9
+trials = 20
+family_alpha = 0.9999634384155993
+family_beta = 5.4124094930650975e-06
+expected = {"n_trials" = 20, "single_trial_false_discovery_rate" = 0.8181818181818182, "family_level_false_discovery_rate" = 0.12157332795979572, "log_observed_type_i_inflation" = 0.9162541696213633, "log_required_type_i_inflation" = 4.397946397999306, "equation_13_log_gap" = -3.481692228377942, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.8
+probability = 0.05
+trials = 1
+family_alpha = 0.4
+family_beta = 0.8
+expected = {"n_trials" = 1, "single_trial_false_discovery_rate" = 0.09523809523809529, "family_level_false_discovery_rate" = 0.09523809523809529, "log_observed_type_i_inflation" = 0.0, "log_required_type_i_inflation" = -6.938893903907228e-18, "equation_13_log_gap" = 6.938893903907228e-18, "identification_condition_holds" = true, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.8
+probability = 0.05
+trials = 2
+family_alpha = 0.64
+family_beta = 0.6247619047619049
+expected = {"n_trials" = 2, "single_trial_false_discovery_rate" = 0.09523809523809529, "family_level_false_discovery_rate" = 0.004256451183825489, "log_observed_type_i_inflation" = 0.4700036292457355, "log_required_type_i_inflation" = 3.673765816303888, "equation_13_log_gap" = -3.2037621870581523, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.8
+probability = 0.05
+trials = 20
+family_alpha = 0.9999634384155993
+family_beta = 0.00896482519768437
+expected = {"n_trials" = 20, "single_trial_false_discovery_rate" = 0.09523809523809529, "family_level_false_discovery_rate" = 9.622659950010994e-27, "log_observed_type_i_inflation" = 0.9162541696213633, "log_required_type_i_inflation" = 58.57063915331599, "equation_13_log_gap" = -57.65438498369463, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.8
+probability = 0.3
+trials = 1
+family_alpha = 0.4
+family_beta = 0.8
+expected = {"n_trials" = 1, "single_trial_false_discovery_rate" = 0.4615384615384615, "family_level_false_discovery_rate" = 0.4615384615384615, "log_observed_type_i_inflation" = 0.0, "log_required_type_i_inflation" = 0.0, "equation_13_log_gap" = 0.0, "identification_condition_holds" = true, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.8
+probability = 0.3
+trials = 2
+family_alpha = 0.64
+family_beta = 0.5661538461538461
+expected = {"n_trials" = 2, "single_trial_false_discovery_rate" = 0.4615384615384615, "family_level_false_discovery_rate" = 0.12732095490716175, "log_observed_type_i_inflation" = 0.4700036292457355, "log_required_type_i_inflation" = 2.240709689275959, "equation_13_log_gap" = -1.7707060600302233, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.8
+probability = 0.3
+trials = 20
+family_alpha = 0.9999634384155993
+family_beta = 0.0024245681434085543
+expected = {"n_trials" = 20, "single_trial_false_discovery_rate" = 0.4615384615384615, "family_level_false_discovery_rate" = 3.495131102164888e-11, "log_observed_type_i_inflation" = 0.9162541696213633, "log_required_type_i_inflation" = 24.83916862636238, "equation_13_log_gap" = -23.922914456741015, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.8
+probability = 0.9
+trials = 1
+family_alpha = 0.4
+family_beta = 0.8
+expected = {"n_trials" = 1, "single_trial_false_discovery_rate" = 0.9473684210526316, "family_level_false_discovery_rate" = 0.9473684210526316, "log_observed_type_i_inflation" = 0.0, "log_required_type_i_inflation" = 0.0, "equation_13_log_gap" = 0.0, "identification_condition_holds" = true, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.8
+probability = 0.9
+trials = 2
+family_alpha = 0.64
+family_beta = 0.48842105263157887
+expected = {"n_trials" = 2, "single_trial_false_discovery_rate" = 0.9473684210526316, "family_level_false_discovery_rate" = 0.8421052631578947, "log_observed_type_i_inflation" = 0.4700036292457355, "log_required_type_i_inflation" = 1.686398953570229, "equation_13_log_gap" = -1.2163953243244936, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[comparison]]
+alpha = 0.4
+beta = 0.8
+probability = 0.9
+trials = 20
+family_alpha = 0.9999634384155993
+family_beta = 7.513154993163264e-05
+expected = {"n_trials" = 20, "single_trial_false_discovery_rate" = 0.9473684210526316, "family_level_false_discovery_rate" = 0.12158077398998082, "log_observed_type_i_inflation" = 0.9162541696213633, "log_required_type_i_inflation" = 5.784171037170888, "equation_13_log_gap" = -4.867916867549525, "identification_condition_holds" = false, "single_trial_upper_bounds_family" = true}
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.0
+probability = 0.0
+trials = 1
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.0
+probability = 0.0
+trials = 3
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.0
+probability = 0.0
+trials = 1000
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.0
+probability = 0.7
+trials = 1
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.0
+probability = 0.7
+trials = 3
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.0
+probability = 0.7
+trials = 1000
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.0
+probability = 1.0
+trials = 1
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.0
+probability = 1.0
+trials = 3
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.0
+probability = 1.0
+trials = 1000
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.8
+probability = 0.0
+trials = 1
+expected = 0.8
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.8
+probability = 0.0
+trials = 3
+expected = 0.5120000000000001
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.8
+probability = 0.0
+trials = 1000
+expected = 1.230231922161183e-97
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.8
+probability = 0.7
+trials = 1
+expected = 0.24000000000000005
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.8
+probability = 0.7
+trials = 3
+expected = 0.013824000000000006
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.8
+probability = 0.7
+trials = 1000
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.8
+probability = 1.0
+trials = 1
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.8
+probability = 1.0
+trials = 3
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 0.8
+probability = 1.0
+trials = 1000
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 1.0
+probability = 0.0
+trials = 1
+expected = 1.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 1.0
+probability = 0.0
+trials = 3
+expected = 1.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 1.0
+probability = 0.0
+trials = 1000
+expected = 1.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 1.0
+probability = 0.7
+trials = 1
+expected = 0.30000000000000004
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 1.0
+probability = 0.7
+trials = 3
+expected = 0.027000000000000007
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 1.0
+probability = 0.7
+trials = 1000
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 1.0
+probability = 1.0
+trials = 1
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 1.0
+probability = 1.0
+trials = 3
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.0
+alternative_cdf = 1.0
+probability = 1.0
+trials = 1000
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.0
+probability = 0.0
+trials = 1
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.0
+probability = 0.0
+trials = 3
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.0
+probability = 0.0
+trials = 1000
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.0
+probability = 0.7
+trials = 1
+expected = 0.13999999999999999
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.0
+probability = 0.7
+trials = 3
+expected = 0.002743999999999998
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.0
+probability = 0.7
+trials = 1000
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.0
+probability = 1.0
+trials = 1
+expected = 0.2
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.0
+probability = 1.0
+trials = 3
+expected = 0.008000000000000004
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.0
+probability = 1.0
+trials = 1000
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.8
+probability = 0.0
+trials = 1
+expected = 0.8
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.8
+probability = 0.0
+trials = 3
+expected = 0.5120000000000001
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.8
+probability = 0.0
+trials = 1000
+expected = 1.230231922161183e-97
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.8
+probability = 0.7
+trials = 1
+expected = 0.38
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.8
+probability = 0.7
+trials = 3
+expected = 0.05487200000000001
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.8
+probability = 0.7
+trials = 1000
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.8
+probability = 1.0
+trials = 1
+expected = 0.2
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.8
+probability = 1.0
+trials = 3
+expected = 0.008000000000000004
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 0.8
+probability = 1.0
+trials = 1000
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 1.0
+probability = 0.0
+trials = 1
+expected = 1.0
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 1.0
+probability = 0.0
+trials = 3
+expected = 1.0
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 1.0
+probability = 0.0
+trials = 1000
+expected = 1.0
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 1.0
+probability = 0.7
+trials = 1
+expected = 0.44000000000000006
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 1.0
+probability = 0.7
+trials = 3
+expected = 0.08518400000000004
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 1.0
+probability = 0.7
+trials = 1000
+expected = 0.0
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 1.0
+probability = 1.0
+trials = 1
+expected = 0.2
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 1.0
+probability = 1.0
+trials = 3
+expected = 0.008000000000000004
+
+[[mixture]]
+null_cdf = 0.2
+alternative_cdf = 1.0
+probability = 1.0
+trials = 1000
+expected = 0.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.0
+probability = 0.0
+trials = 1
+expected = 0.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.0
+probability = 0.0
+trials = 3
+expected = 0.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.0
+probability = 0.0
+trials = 1000
+expected = 0.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.0
+probability = 0.7
+trials = 1
+expected = 0.7
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.0
+probability = 0.7
+trials = 3
+expected = 0.3429999999999999
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.0
+probability = 0.7
+trials = 1000
+expected = 1.2532566399656417e-155
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.0
+probability = 1.0
+trials = 1
+expected = 1.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.0
+probability = 1.0
+trials = 3
+expected = 1.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.0
+probability = 1.0
+trials = 1000
+expected = 1.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.8
+probability = 0.0
+trials = 1
+expected = 0.8
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.8
+probability = 0.0
+trials = 3
+expected = 0.5120000000000001
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.8
+probability = 0.0
+trials = 1000
+expected = 1.230231922161183e-97
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.8
+probability = 0.7
+trials = 1
+expected = 0.94
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.8
+probability = 0.7
+trials = 3
+expected = 0.8305839999999999
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.8
+probability = 0.7
+trials = 1000
+expected = 1.3423123924932985e-27
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.8
+probability = 1.0
+trials = 1
+expected = 1.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.8
+probability = 1.0
+trials = 3
+expected = 1.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 0.8
+probability = 1.0
+trials = 1000
+expected = 1.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 1.0
+probability = 0.0
+trials = 1
+expected = 1.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 1.0
+probability = 0.0
+trials = 3
+expected = 1.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 1.0
+probability = 0.0
+trials = 1000
+expected = 1.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 1.0
+probability = 0.7
+trials = 1
+expected = 1.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 1.0
+probability = 0.7
+trials = 3
+expected = 1.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 1.0
+probability = 0.7
+trials = 1000
+expected = 1.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 1.0
+probability = 1.0
+trials = 1
+expected = 1.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 1.0
+probability = 1.0
+trials = 3
+expected = 1.0
+
+[[mixture]]
+null_cdf = 1.0
+alternative_cdf = 1.0
+probability = 1.0
+trials = 1000
+expected = 1.0
+
+[[conditional]]
+value = 0.0
+threshold = 0.0
+expected = 1.0
+
+[[conditional]]
+value = 0.5
+threshold = 0.0
+expected = 0.5
+
+[[conditional]]
+value = 1.0
+threshold = 0.0
+expected = 0.0
+
+[[conditional]]
+value = 0.2
+threshold = 0.2
+expected = 1.0
+
+[[conditional]]
+value = 0.6
+threshold = 0.2
+expected = 0.5
+
+[[conditional]]
+value = 1.0
+threshold = 0.2
+expected = 0.0
+
+[[conditional]]
+value = 0.95
+threshold = 0.95
+expected = 1.0
+
+[[conditional]]
+value = 0.975
+threshold = 0.95
+expected = 0.5
+
+[[conditional]]
+value = 1.0
+threshold = 0.95
+expected = 0.0
+
+[[conditional]]
+value = 0.9999999999999999
+threshold = 0.9999999999999999
+expected = 1.0
+
+[[conditional]]
+value = 1.0
+threshold = 0.9999999999999999
+expected = 0.0
+
+[[conditional]]
+value = 1.0
+threshold = 0.9999999999999999
+expected = 0.0
+
+[[gaussian]]
+model = {"trial_null_probability" = 0.2, "null_standard_deviation" = 1.0, "alternative_mean" = 1.0, "alternative_standard_deviation" = 1.0}
+trials = 1
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [0.0, 1.2450949855791113e-16, 0.005629944814939914, 0.22692420314516568, 0.38512252323559215, 0.6403938335069408, 0.999999999998976, 1.0], "maximum_cdf" = [0.0, 1.2450949855791123e-16, 0.0056299448149399155, 0.22692420314516565, 0.38512252323559215, 0.6403938335069408, 0.999999999998976, 1.0], "log_density" = [-802.5283764456389, -34.52756290317816, -4.2444464074005435, -1.2969472498654016, -1.0439385332046727, -1.0450581582928573, -25.641943822984913, -761.642082084519], "log_likelihood" = -1631.9703556050843}
+
+[[gaussian]]
+model = {"trial_null_probability" = 0.2, "null_standard_deviation" = 1.0, "alternative_mean" = 1.0, "alternative_standard_deviation" = 1.0}
+trials = 3
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [0.0, 1.2450949855791113e-16, 0.005629944814939914, 0.22692420314516568, 0.38512252323559215, 0.6403938335069408, 0.999999999998976, 1.0], "maximum_cdf" = [0.0, 1.93022284876579e-48, 1.7844829946544371e-07, 0.0116853697036224, 0.0571211253604207, 0.26262824047569017, 0.9999999999969281, 1.0], "log_density" = [-2413.8655240093467, -106.67324994903092, -13.505145396418571, -3.1646134094163507, -1.8537137508411272, -0.8377897236910243, -24.543331534318853, -760.5434697958508], "log_likelihood" = -3324.9868375689143}
+
+[[gaussian]]
+model = {"trial_null_probability" = 0.2, "null_standard_deviation" = 1.0, "alternative_mean" = 1.0, "alternative_standard_deviation" = 1.0}
+trials = 50
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [0.0, 1.2450949855791113e-16, 0.005629944814939914, 0.22692420314516568, 0.38512252323559215, 0.6403938335069408, 0.999999999998976, 1.0], "maximum_cdf" = [0.0, 0.0, 3.351250521473572e-113, 6.223589705354836e-33, 1.9052234442328337e-21, 2.100666296143906e-10, 0.9999999999488021, 1.0], "log_density" = [-40303.29246982343, -1825.1008735935116, -254.13554970528276, -70.0587462258042, -43.88740943223836, -18.970959577488493, -21.729920817606942, -757.7300590790908], "log_likelihood" = -43294.90598825445}
+
+[[gaussian]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 1.0, "alternative_mean" = 2.0, "alternative_standard_deviation" = 0.7}
+trials = 1
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [0.0, 4.976768459417393e-16, 0.018200106660201065, 0.40042747339601725, 0.5563824261399762, 0.733254054717345, 0.9999999999999994, 1.0], "maximum_cdf" = [0.0, 4.976768459417384e-16, 0.018200106660201058, 0.40042747339601725, 0.5563824261399762, 0.733254054717345, 0.9999999999999994, 1.0], "log_density" = [-801.142082084519, -33.14208208451888, -3.1420818702748505, -1.1360716533496924, -1.2271498086353194, -1.5386459774751615, -33.13894944715923, -801.142082084519], "log_likelihood" = -1675.6091450104511}
+
+[[gaussian]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 1.0, "alternative_mean" = 2.0, "alternative_standard_deviation" = 0.7}
+trials = 3
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [0.0, 4.976768459417393e-16, 0.018200106660201065, 0.40042747339601725, 0.5563824261399762, 0.733254054717345, 0.9999999999999994, 1.0], "maximum_cdf" = [0.0, 1.2326571748530495e-46, 6.028673990996148e-06, 0.06420540658840716, 0.17223452506214007, 0.3942424813632952, 0.9999999999999983, 1.0], "log_density" = [-2409.706640925987, -102.5166312183083, -10.056125230538644, -1.8679046027211754, -1.3011363287084088, -1.0605597715099815, -32.04033715849112, -800.0434697958508], "log_likelihood" = -3358.5928050321154}
+
+[[gaussian]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 1.0, "alternative_mean" = 2.0, "alternative_standard_deviation" = 0.7}
+trials = 50
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [0.0, 4.976768459417393e-16, 0.018200106660201065, 0.40042747339601725, 0.5563824261399762, 0.733254054717345, 0.9999999999999994, 1.0], "maximum_cdf" = [0.0, 0.0, 1.0085481961284023e-87, 1.337190684197694e-20, 1.8563941746403058e-13, 1.831148898749296e-07, 0.9999999999999722, 1.0], "log_density" = [-40233.97775176743, -1755.8225139293004, -195.5401222636783, -42.06995697989157, -26.04379761736655, -12.829511998268794, -29.226926441731106, -797.2300590790908], "log_likelihood" = -43092.74064007676}
+
+[[gaussian]]
+model = {"trial_null_probability" = 0.5, "null_standard_deviation" = 0.5, "alternative_mean" = -0.3, "alternative_standard_deviation" = 1.8}
+trials = 1
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [2.1121980051740505e-108, 4.719208142406766e-06, 0.0862514803280707, 0.5330919163054518, 0.7564920513933289, 0.8947370415558804, 0.9999989986940683, 1.0], "maximum_cdf" = [2.112198005174078e-108, 4.719208142406769e-06, 0.0862514803280707, 0.5330919163054518, 0.7564920513933289, 0.8947370415558804, 0.9999989986940683, 1.0], "log_density" = [-245.42363781076554, -11.349563736691428, -2.643975397714572, -0.676819032419627, -1.0718742586784766, -2.295575869340985, -12.831045218172912, -252.83104521817285], "log_likelihood" = -529.1235365419564}
+
+[[gaussian]]
+model = {"trial_null_probability" = 0.5, "null_standard_deviation" = 0.5, "alternative_mean" = -0.3, "alternative_standard_deviation" = 1.8}
+trials = 3
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [2.1121980051740505e-108, 4.719208142406766e-06, 0.0862514803280707, 0.5330919163054518, 0.7564920513933289, 0.8947370415558804, 0.9999989986940683, 1.0], "maximum_cdf" = [1e-323, 1.0510113291775238e-16, 0.0006416521779511355, 0.15149778774399802, 0.43292544049039877, 0.7162856517787943, 0.9999969960852126, 1.0], "log_density" = [-740.1879473810126, -34.77869052578415, -6.446339229034354, -0.8363295814109684, -0.5313884757899405, -1.419414405062582, -11.732434932117668, -251.73243292950474], "log_likelihood" = -1047.664977459717}
+
+[[gaussian]]
+model = {"trial_null_probability" = 0.5, "null_standard_deviation" = 0.5, "alternative_mean" = -0.3, "alternative_standard_deviation" = 1.8}
+trials = 50
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [2.1121980051740505e-108, 4.719208142406766e-06, 0.0862514803280707, 0.5330919163054518, 0.7564920513933289, 0.8947370415558804, 0.9999989986940683, 1.0], "maximum_cdf" = [0.0, 4.9369260744714505e-267, 6.142255512284417e-54, 2.1882898764053227e-14, 8.714018114453068e-07, 0.0038438892103337587, 0.9999499359315958, 1.0], "log_density" = [-12390.15320034876, -608.3671481364037, -118.80586733198977, -27.588805549648033, -10.833950644849885, -3.83359806146066, -8.919071276759977, -248.9190222127447], "log_likelihood" = -13417.420663562616}
+
+[[gaussian]]
+model = {"trial_null_probability" = 0.0, "null_standard_deviation" = 1.0, "alternative_mean" = 0.7, "alternative_standard_deviation" = 1.2}
+trials = 1
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [1.8919197417672145e-252, 2.0838581586720548e-13, 0.012224472655044684, 0.27983446359970576, 0.43381616738909634, 0.6615388804893103, 0.9999999994114537, 1.0], "maximum_cdf" = [1.891919741767248e-252, 2.0838581586720558e-13, 0.012224472655044687, 0.27983446359970576, 0.43381616738909634, 0.6615388804893103, 0.9999999994114537, 1.0], "log_density" = [-576.2713989788876, -27.38251008999863, -3.632510089998628, -1.2713989788875162, -1.1151489788875162, -1.188065645554183, -19.60473231222085, -537.3825100899986], "log_likelihood" = -1167.8482751644335}
+
+[[gaussian]]
+model = {"trial_null_probability" = 0.0, "null_standard_deviation" = 1.0, "alternative_mean" = 0.7, "alternative_standard_deviation" = 1.2}
+trials = 3
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [1.8919197417672145e-252, 2.0838581586720548e-13, 0.012224472655044684, 0.27983446359970576, 0.43381616738909634, 0.6615388804893103, 0.9999999994114537, 1.0], "maximum_cdf" = [0.0, 9.049080755289804e-39, 1.8267974647244166e-06, 0.021913088852046566, 0.08164267006835571, 0.28951170161099293, 0.999999998234361, 1.0], "log_density" = [-1734.4004894593281, -84.68266810014123, -11.342528563637064, -2.719900794361375, -1.6868055143403602, -0.9158263986950342, -18.50612002472983, -536.2838978013305], "log_likelihood" = -2390.5382366565636}
+
+[[gaussian]]
+model = {"trial_null_probability" = 0.0, "null_standard_deviation" = 1.0, "alternative_mean" = 0.7, "alternative_standard_deviation" = 1.2}
+trials = 50
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [1.8919197417672145e-252, 2.0838581586720548e-13, 0.012224472655044684, 0.27983446359970576, 0.43381616738909634, 0.6615388804893103, 0.9999999994114537, 1.0], "maximum_cdf" = [0.0, 0.0, 2.2988290158971764e-96, 2.213400454711025e-28, 7.333083998172823e-19, 1.0660282131066695e-09, 0.9999999705726843, 1.0], "log_density" = [-28973.438093816618, -1454.2403594054329, -215.53194076108085, -59.7636715249376, -38.12471216442274, -17.52218216444558, -15.692709335631475, -533.4704870845704], "log_likelihood" = -31307.784156257138}
+
+[[gaussian]]
+model = {"trial_null_probability" = 1.0, "null_standard_deviation" = 1.3, "alternative_mean" = -0.3, "alternative_standard_deviation" = 0.8}
+trials = 1
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [3.381810035284777e-208, 3.7813024815574395e-10, 0.06196790283637124, 0.5, 0.6497388029480756, 0.8220164401331345, 0.9999999996218698, 1.0], "maximum_cdf" = [3.3818100352848606e-208, 3.7813024815574426e-10, 0.061967902836371255, 0.5, 0.6497388029480756, 0.8220164401331345, 0.9999999996218698, 1.0], "log_density" = [-474.55408386276076, -20.11621404027571, -2.3647347503348852, -1.1813027976721637, -1.255267294713584, -1.6073383006307436, -20.11621404027571, -474.55408386276076], "log_likelihood" = -995.7492389494244}
+
+[[gaussian]]
+model = {"trial_null_probability" = 1.0, "null_standard_deviation" = 1.3, "alternative_mean" = -0.3, "alternative_standard_deviation" = 0.8}
+trials = 3
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [3.381810035284777e-208, 3.7813024815574395e-10, 0.06196790283637124, 0.5, 0.6497388029480756, 0.8220164401331345, 0.9999999996218698, 1.0], "maximum_cdf" = [0.0, 5.406600237250157e-29, 0.00023795804709835785, 0.12500000000000003, 0.27429406575547083, 0.5554455736712605, 0.9999999988656094, 1.0], "log_density" = [-1428.8940481005022, -62.40916656724683, -6.828399910017865, -1.4689848701239445, -1.0190246829870309, -0.9007157798906211, -19.017601752363863, -473.45547157409266], "log_likelihood" = -1993.993413237225}
+
+[[gaussian]]
+model = {"trial_null_probability" = 1.0, "null_standard_deviation" = 1.3, "alternative_mean" = -0.3, "alternative_standard_deviation" = 0.8}
+trials = 50
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [3.381810035284777e-208, 3.7813024815574395e-10, 0.06196790283637124, 0.5, 0.6497388029480756, 0.8220164401331345, 0.9999999996218698, 1.0], "maximum_cdf" = [0.0, 0.0, 4.058260623095073e-61, 8.881784197001244e-16, 4.334511889874803e-10, 5.5465785865522435e-05, 0.9999999810934905, 1.0], "log_density" = [-23878.887185754367, -1079.2975290180084, -134.72850922950843, -31.233491639681336, -18.47130137435358, -7.299064609438286, -16.204191053375947, -470.64206085733264], "log_likelihood" = -25636.763333536066}
+
+[[gaussian]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 2.0, "alternative_mean" = 0.0, "alternative_standard_deviation" = 2.0}
+trials = 1
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [2.7536241186061556e-89, 3.167124183311986e-05, 0.15865525393145707, 0.5, 0.5987063256829237, 0.7257468822499265, 0.9999683287581669, 1.0], "maximum_cdf" = [2.7536241186061497e-89, 3.167124183311984e-05, 0.15865525393145707, 0.5, 0.5987063256829237, 0.7257468822499265, 0.9999683287581669, 1.0], "log_density" = [-201.61208571376463, -9.612085713764618, -2.112085713764618, -1.612085713764618, -1.643335713764618, -1.7920857137646182, -9.612085713764618, -201.61208571376463], "log_likelihood" = -429.607935710117}
+
+[[gaussian]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 2.0, "alternative_mean" = 0.0, "alternative_standard_deviation" = 2.0}
+trials = 3
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [2.7536241186061556e-89, 3.167124183311986e-05, 0.15865525393145707, 0.5, 0.5987063256829237, 0.7257468822499265, 0.9999683287581669, 1.0], "maximum_cdf" = [2.087920559592253e-266, 3.176839524402604e-14, 0.003993589074329777, 0.12500000000000003, 0.2146058420403026, 0.3822570786514705, 0.9999049892836716, 1.0], "log_density" = [-608.3477841672911, -29.23367639815109, -4.695516715115035, -1.8997677862163989, -1.5706915759153692, -1.3345813690715462, -8.513536768583263, -200.51347342509652], "log_likelihood" = -856.1090282054404}
+
+[[gaussian]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 2.0, "alternative_mean" = 0.0, "alternative_standard_deviation" = 2.0}
+trials = 50
+observations = [-40.0, -8.0, -2.0, 0.0, 0.5, 1.2, 8.0, 40.0]
+expected = {"trial_cdf" = [2.7536241186061556e-89, 3.167124183311986e-05, 0.15865525393145707, 0.5, 0.5987063256829237, 0.7257468822499265, 0.9999683287581669, 1.0], "maximum_cdf" = [0.0, 1.0795794825414816e-225, 1.0537144249096151e-40, 8.881784197001244e-16, 7.255917518935037e-12, 1.0946088135956346e-07, 0.9984176660436752, 1.0], "log_density" = [-10189.640675892104, -513.3450355481738, -88.41012331379038, -31.66427455577379, -22.867532403398563, -13.587207335724898, -5.7016146237619685, -197.70006270833647], "log_likelihood" = -11062.916526381065}
+
+[[aggregate]]
+model = {"trial_null_probability" = 0.2, "null_standard_deviation" = 1.0, "alternative_mean" = 1.0, "alternative_standard_deviation" = 1.0}
+trials = 1
+thresholds = [-1.0, 0.0, 0.7, 2.0, 4.0]
+expected = {"n_trials" = 1, "thresholds" = [-1.0, 0.0, 0.7, 2.0, 4.0], "trial_type_i_errors" = [0.8413447460685429, 0.5, 0.24196365222307303, 0.022750131948179195, 3.167124183311986e-05], "trial_type_ii_errors" = [0.022750131948179195, 0.15865525393145707, 0.3820885778110473, 0.8413447460685429, 0.9986501019683699], "family_type_i_errors" = [0.8413447460685429, 0.5, 0.241963652223073, 0.02275013194817921, 3.167124183311998e-05], "family_type_ii_errors" = [0.022750131948179212, 0.15865525393145702, 0.3820885778110474, 0.841344746068543, 0.9986501019683699], "mean_family_type_i_error" = 0.32121804029632567, "mean_family_type_ii_error" = 0.4806977623455193, "family_null_probability" = 0.2, "false_discovery_rate" = 0.13392862968652702}
+
+[[aggregate]]
+model = {"trial_null_probability" = 0.2, "null_standard_deviation" = 1.0, "alternative_mean" = 1.0, "alternative_standard_deviation" = 1.0}
+trials = 3
+thresholds = [-1.0, 0.0, 0.7, 2.0, 4.0]
+expected = {"n_trials" = 3, "thresholds" = [-1.0, 0.0, 0.7, 2.0, 4.0], "trial_type_i_errors" = [0.8413447460685429, 0.5, 0.24196365222307303, 0.022750131948179195, 3.167124183311986e-05], "trial_type_ii_errors" = [0.022750131948179195, 0.15865525393145707, 0.3820885778110473, 0.8413447460685429, 0.9986501019683699], "family_type_i_errors" = [0.9960064109256702, 0.875, 0.5644178326233253, 0.06670946508530941, 9.501071632845058e-05], "family_type_ii_errors" = [9.328192599059492e-05, 0.010771542039941934, 0.09287671813195748, 0.6529181572203536, 0.996719294977433], "mean_family_type_i_error" = 0.5004457438701266, "mean_family_type_ii_error" = 0.3506757988591353, "family_null_probability" = 0.008000000000000004, "false_discovery_rate" = 0.006177073038011817}
+
+[[aggregate]]
+model = {"trial_null_probability" = 0.2, "null_standard_deviation" = 1.0, "alternative_mean" = 1.0, "alternative_standard_deviation" = 1.0}
+trials = 50
+thresholds = [-1.0, 0.0, 0.7, 2.0, 4.0]
+expected = {"n_trials" = 50, "thresholds" = [-1.0, 0.0, 0.7, 2.0, 4.0], "trial_type_i_errors" = [0.8413447460685429, 0.5, 0.24196365222307303, 0.022750131948179195, 3.167124183311986e-05], "trial_type_ii_errors" = [0.022750131948179195, 0.15865525393145707, 0.3820885778110473, 0.8413447460685429, 0.9986501019683699], "family_type_i_errors" = [1.0, 0.9999999999999991, 0.9999990350572983, 0.6835675430863251, 0.0015823339563248145], "family_type_ii_errors" = [8.290509000189871e-66, 6.223589705354836e-33, 1.0209903583708415e-17, 0.000869231501860583, 0.9471079945667636], "mean_family_type_i_error" = 0.7370297824199895, "mean_family_type_ii_error" = 0.18959544521372484, "family_null_probability" = 1.1258999068426267e-35, "false_discovery_rate" = 1.0239598956668602e-35}
+
+[[aggregate]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 1.0, "alternative_mean" = 2.0, "alternative_standard_deviation" = 0.7}
+trials = 1
+thresholds = [-1.0, 0.0, 0.7, 2.0, 4.0]
+expected = {"n_trials" = 1, "thresholds" = [-1.0, 0.0, 0.7, 2.0, 4.0], "trial_type_i_errors" = [0.8413447460685429, 0.5, 0.24196365222307303, 0.022750131948179195, 3.167124183311986e-05], "trial_type_ii_errors" = [9.107648574484005e-06, 0.0021373669800862794, 0.031645416116672626, 0.5, 0.9978626330199137], "family_type_i_errors" = [0.8413447460685429, 0.5, 0.241963652223073, 0.02275013194817921, 3.167124183311998e-05], "family_type_ii_errors" = [9.107648574608503e-06, 0.002137366980086204, 0.03164541611667254, 0.49999999999999983, 0.9978626330199141], "mean_family_type_i_error" = 0.32121804029632567, "mean_family_type_ii_error" = 0.30633090475304947, "family_null_probability" = 0.8, "false_discovery_rate" = 0.6494037751339141}
+
+[[aggregate]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 1.0, "alternative_mean" = 2.0, "alternative_standard_deviation" = 0.7}
+trials = 3
+thresholds = [-1.0, 0.0, 0.7, 2.0, 4.0]
+expected = {"n_trials" = 3, "thresholds" = [-1.0, 0.0, 0.7, 2.0, 4.0], "trial_type_i_errors" = [0.8413447460685429, 0.5, 0.24196365222307303, 0.022750131948179195, 3.167124183311986e-05], "trial_type_ii_errors" = [9.107648574484005e-06, 0.0021373669800862794, 0.031645416116672626, 0.5, 0.9978626330199137], "family_type_i_errors" = [0.9960064109256702, 0.875, 0.5644178326233253, 0.06670946508530941, 9.501071632845058e-05], "family_type_ii_errors" = [1.8039845624382877e-07, 0.00042091514017858695, 0.014458624074760383, 0.42585516253656863, 0.9973172732319927], "mean_family_type_i_error" = 0.5004457438701266, "mean_family_type_ii_error" = 0.2876104310763913, "family_null_probability" = 0.5120000000000001, "false_discovery_rate" = 0.424307190953046}
+
+[[aggregate]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 1.0, "alternative_mean" = 2.0, "alternative_standard_deviation" = 0.7}
+trials = 50
+thresholds = [-1.0, 0.0, 0.7, 2.0, 4.0]
+expected = {"n_trials" = 50, "thresholds" = [-1.0, 0.0, 0.7, 2.0, 4.0], "trial_type_i_errors" = [0.8413447460685429, 0.5, 0.24196365222307303, 0.022750131948179195, 3.167124183311986e-05], "trial_type_ii_errors" = [9.107648574484005e-06, 0.0021373669800862794, 0.031645416116672626, 0.5, 0.9978626330199137], "family_type_i_errors" = [1.0, 0.9999999999999991, 0.9999990350572983, 0.6835675430863251, 0.0015823339563248145], "family_type_ii_errors" = [1.0795505972833084e-48, 6.954107649287412e-22, 9.37290664160154e-12, 0.001851186035667369, 0.9776085440768563], "mean_family_type_i_error" = 0.7370297824199895, "mean_family_type_ii_error" = 0.19589194602437932, "family_null_probability" = 1.4272476927059631e-05, "false_discovery_rate" = 1.3081889972853506e-05}
+
+[[aggregate]]
+model = {"trial_null_probability" = 0.5, "null_standard_deviation" = 0.5, "alternative_mean" = -0.3, "alternative_standard_deviation" = 1.8}
+trials = 1
+thresholds = [-1.0, 0.0, 0.7, 2.0, 4.0]
+expected = {"n_trials" = 1, "thresholds" = [-1.0, 0.0, 0.7, 2.0, 4.0], "trial_type_i_errors" = [0.9772498680518208, 0.5, 0.08075665923377107, 3.167124183311986e-05, 6.22096057427174e-16], "trial_type_ii_errors" = [0.348679170938738, 0.5661838326109037, 0.7107426392460281, 0.8993361040084994, 0.9915502937877492], "family_type_i_errors" = [0.9772498680518208, 0.5, 0.08075665923377107, 3.167124183311998e-05, 6.661338147750939e-16], "family_type_ii_errors" = [0.34867917093873796, 0.5661838326109037, 0.7107426392460281, 0.8993361040084994, 0.9915502937877491], "mean_family_type_i_error" = 0.3116076397054851, "mean_family_type_ii_error" = 0.7032984081183836, "family_null_probability" = 0.5, "false_discovery_rate" = 0.5122520315736278}
+
+[[aggregate]]
+model = {"trial_null_probability" = 0.5, "null_standard_deviation" = 0.5, "alternative_mean" = -0.3, "alternative_standard_deviation" = 1.8}
+trials = 3
+thresholds = [-1.0, 0.0, 0.7, 2.0, 4.0]
+expected = {"n_trials" = 3, "thresholds" = [-1.0, 0.0, 0.7, 2.0, 4.0], "trial_type_i_errors" = [0.9772498680518208, 0.5, 0.08075665923377107, 3.167124183311986e-05, 6.22096057427174e-16], "trial_type_ii_errors" = [0.348679170938738, 0.5661838326109037, 0.7107426392460281, 0.8993361040084994, 0.9915502937877492], "family_type_i_errors" = [0.9999882252482495, 0.875, 0.2232317293679829, 9.501071632845058e-05, 1.99840144432528e-15], "family_type_ii_errors" = [0.0073186443557604584, 0.15528318599314062, 0.5076952830304081, 0.835937824997332, 0.985575901053604], "mean_family_type_i_error" = 0.4196629930665126, "mean_family_type_ii_error" = 0.4983621678860491, "family_null_probability" = 0.12500000000000003, "false_discovery_rate" = 0.10675384075771943}
+
+[[aggregate]]
+model = {"trial_null_probability" = 0.5, "null_standard_deviation" = 0.5, "alternative_mean" = -0.3, "alternative_standard_deviation" = 1.8}
+trials = 50
+thresholds = [-1.0, 0.0, 0.7, 2.0, 4.0]
+expected = {"n_trials" = 50, "thresholds" = [-1.0, 0.0, 0.7, 2.0, 4.0], "trial_type_i_errors" = [0.9772498680518208, 0.5, 0.08075665923377107, 3.167124183311986e-05, 6.22096057427174e-16], "trial_type_ii_errors" = [0.348679170938738, 0.5661838326109037, 0.7107426392460281, 0.8993361040084994, 0.9915502937877492], "family_type_i_errors" = [1.0, 0.9999999999999991, 0.9851568997525498, 0.0015823339563248145, 3.3306690738754153e-14], "family_type_ii_errors" = [2.7689070535660514e-37, 2.1882898764053227e-14, 3.611550260057229e-05, 0.07554910237159067, 0.8092153935107804], "mean_family_type_i_error" = 0.5973478467417814, "mean_family_type_ii_error" = 0.1769601222769987, "family_null_probability" = 8.881784197001244e-16, "false_discovery_rate" = 6.446242531992437e-16}
+
+[[aggregate]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 2.0, "alternative_mean" = 0.0, "alternative_standard_deviation" = 2.0}
+trials = 1
+thresholds = [-1.0, 0.0, 0.7, 2.0, 4.0]
+expected = {"n_trials" = 1, "thresholds" = [-1.0, 0.0, 0.7, 2.0, 4.0], "trial_type_i_errors" = [0.6914624612740131, 0.5, 0.3631693488243809, 0.15865525393145707, 0.022750131948179195], "trial_type_ii_errors" = [0.3085375387259869, 0.5, 0.6368306511756191, 0.8413447460685429, 0.9772498680518208], "family_type_i_errors" = [0.6914624612740132, 0.5, 0.3631693488243809, 0.15865525393145705, 0.02275013194817921], "family_type_ii_errors" = [0.3085375387259868, 0.5000000000000001, 0.636830651175619, 0.8413447460685431, 0.9772498680518208], "mean_family_type_i_error" = 0.34720743919560604, "mean_family_type_ii_error" = 0.652792560804394, "family_null_probability" = 0.8, "false_discovery_rate" = 0.8}
+
+[[aggregate]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 2.0, "alternative_mean" = 0.0, "alternative_standard_deviation" = 2.0}
+trials = 3
+thresholds = [-1.0, 0.0, 0.7, 2.0, 4.0]
+expected = {"n_trials" = 3, "thresholds" = [-1.0, 0.0, 0.7, 2.0, 4.0], "trial_type_i_errors" = [0.6914624612740131, 0.5, 0.3631693488243809, 0.15865525393145707, 0.022750131948179195], "trial_type_ii_errors" = [0.3085375387259869, 0.5, 0.6368306511756191, 0.8413447460685429, 0.9772498680518208], "family_type_i_errors" = [0.9706286416357304, 0.875, 0.7417312417086019, 0.40444488206853557, 0.06670946508530941], "family_type_ii_errors" = [0.02937135836426963, 0.12500000000000003, 0.25826875829139806, 0.5955551179314647, 0.9332905349146904], "mean_family_type_i_error" = 0.6117028460996353, "mean_family_type_ii_error" = 0.38829715390036457, "family_null_probability" = 0.5120000000000001, "false_discovery_rate" = 0.5120000000000001}
+
+[[aggregate]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 2.0, "alternative_mean" = 0.0, "alternative_standard_deviation" = 2.0}
+trials = 50
+thresholds = [-1.0, 0.0, 0.7, 2.0, 4.0]
+expected = {"n_trials" = 50, "thresholds" = [-1.0, 0.0, 0.7, 2.0, 4.0], "trial_type_i_errors" = [0.6914624612740131, 0.5, 0.3631693488243809, 0.15865525393145707, 0.022750131948179195], "trial_type_ii_errors" = [0.3085375387259869, 0.5, 0.6368306511756191, 0.8413447460685429, 0.9772498680518208], "family_type_i_errors" = [1.0, 0.9999999999999991, 0.9999999998410729, 0.9998227038307536, 0.6835675430863251], "family_type_ii_errors" = [2.920118910322559e-26, 8.881784197001244e-16, 1.5892708176695259e-10, 0.00017729616924645506, 0.3164324569136749], "mean_family_type_i_error" = 0.9366780493516302, "mean_family_type_ii_error" = 0.06332195064836986, "family_null_probability" = 1.4272476927059631e-05, "false_discovery_rate" = 1.4272476927059631e-05}
+
+[[witness]]
+observable = 1e-08
+target = 1e-08
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 1e-08, "trial_null_probability" = 0.0001, "observable_cdf_at_threshold" = 1e-08, "latent_trial_cdf_at_threshold" = 0.0001, "family_null_probability" = 1e-08, "family_type_i_error" = 0.99999999, "family_type_ii_error" = 1e-08, "family_false_discovery_rate" = 1.0000000000000018e-08, "reconstructed_observable_cdf_at_threshold" = 1e-08}
+
+[[witness]]
+observable = 1e-08
+target = 0.1
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 0.1, "trial_null_probability" = 0.31622776601683794, "observable_cdf_at_threshold" = 1e-08, "latent_trial_cdf_at_threshold" = 0.0001, "family_null_probability" = 0.1, "family_type_i_error" = 0.99999999, "family_type_ii_error" = 1e-08, "family_false_discovery_rate" = 0.10000000000000002, "reconstructed_observable_cdf_at_threshold" = 1e-08}
+
+[[witness]]
+observable = 1e-08
+target = 0.7
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 0.7, "trial_null_probability" = 0.8366600265340756, "observable_cdf_at_threshold" = 1e-08, "latent_trial_cdf_at_threshold" = 0.0001, "family_null_probability" = 0.7000000000000001, "family_type_i_error" = 0.99999999, "family_type_ii_error" = 1e-08, "family_false_discovery_rate" = 0.7000000000000001, "reconstructed_observable_cdf_at_threshold" = 1e-08}
+
+[[witness]]
+observable = 1e-08
+target = 0.99999999
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 0.99999999, "trial_null_probability" = 0.9999999949999999, "observable_cdf_at_threshold" = 1e-08, "latent_trial_cdf_at_threshold" = 0.0001, "family_null_probability" = 0.9999999899999998, "family_type_i_error" = 0.99999999, "family_type_ii_error" = 1e-08, "family_false_discovery_rate" = 0.9999999899999998, "reconstructed_observable_cdf_at_threshold" = 1e-08}
+
+[[witness]]
+observable = 0.2
+target = 1e-08
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 1e-08, "trial_null_probability" = 0.0001, "observable_cdf_at_threshold" = 0.2, "latent_trial_cdf_at_threshold" = 0.4472135954999579, "family_null_probability" = 1e-08, "family_type_i_error" = 0.8, "family_type_ii_error" = 0.2, "family_false_discovery_rate" = 1.0000000000000018e-08, "reconstructed_observable_cdf_at_threshold" = 0.19999999999999998}
+
+[[witness]]
+observable = 0.2
+target = 0.1
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 0.1, "trial_null_probability" = 0.31622776601683794, "observable_cdf_at_threshold" = 0.2, "latent_trial_cdf_at_threshold" = 0.4472135954999579, "family_null_probability" = 0.1, "family_type_i_error" = 0.8, "family_type_ii_error" = 0.2, "family_false_discovery_rate" = 0.10000000000000002, "reconstructed_observable_cdf_at_threshold" = 0.19999999999999998}
+
+[[witness]]
+observable = 0.2
+target = 0.7
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 0.7, "trial_null_probability" = 0.8366600265340756, "observable_cdf_at_threshold" = 0.2, "latent_trial_cdf_at_threshold" = 0.4472135954999579, "family_null_probability" = 0.7000000000000001, "family_type_i_error" = 0.8, "family_type_ii_error" = 0.2, "family_false_discovery_rate" = 0.7000000000000001, "reconstructed_observable_cdf_at_threshold" = 0.19999999999999998}
+
+[[witness]]
+observable = 0.2
+target = 0.99999999
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 0.99999999, "trial_null_probability" = 0.9999999949999999, "observable_cdf_at_threshold" = 0.2, "latent_trial_cdf_at_threshold" = 0.4472135954999579, "family_null_probability" = 0.9999999899999998, "family_type_i_error" = 0.8, "family_type_ii_error" = 0.2, "family_false_discovery_rate" = 0.9999999899999998, "reconstructed_observable_cdf_at_threshold" = 0.19999999999999998}
+
+[[witness]]
+observable = 0.8
+target = 1e-08
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 1e-08, "trial_null_probability" = 0.0001, "observable_cdf_at_threshold" = 0.8, "latent_trial_cdf_at_threshold" = 0.8944271909999159, "family_null_probability" = 1e-08, "family_type_i_error" = 0.19999999999999996, "family_type_ii_error" = 0.8, "family_false_discovery_rate" = 1.0000000000000018e-08, "reconstructed_observable_cdf_at_threshold" = 0.7999999999999999}
+
+[[witness]]
+observable = 0.8
+target = 0.1
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 0.1, "trial_null_probability" = 0.31622776601683794, "observable_cdf_at_threshold" = 0.8, "latent_trial_cdf_at_threshold" = 0.8944271909999159, "family_null_probability" = 0.1, "family_type_i_error" = 0.19999999999999996, "family_type_ii_error" = 0.8, "family_false_discovery_rate" = 0.10000000000000002, "reconstructed_observable_cdf_at_threshold" = 0.7999999999999999}
+
+[[witness]]
+observable = 0.8
+target = 0.7
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 0.7, "trial_null_probability" = 0.8366600265340756, "observable_cdf_at_threshold" = 0.8, "latent_trial_cdf_at_threshold" = 0.8944271909999159, "family_null_probability" = 0.7000000000000001, "family_type_i_error" = 0.19999999999999996, "family_type_ii_error" = 0.8, "family_false_discovery_rate" = 0.7, "reconstructed_observable_cdf_at_threshold" = 0.7999999999999999}
+
+[[witness]]
+observable = 0.8
+target = 0.99999999
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 0.99999999, "trial_null_probability" = 0.9999999949999999, "observable_cdf_at_threshold" = 0.8, "latent_trial_cdf_at_threshold" = 0.8944271909999159, "family_null_probability" = 0.9999999899999998, "family_type_i_error" = 0.19999999999999996, "family_type_ii_error" = 0.8, "family_false_discovery_rate" = 0.9999999899999998, "reconstructed_observable_cdf_at_threshold" = 0.7999999999999999}
+
+[[witness]]
+observable = 0.99999999
+target = 1e-08
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 1e-08, "trial_null_probability" = 0.0001, "observable_cdf_at_threshold" = 0.99999999, "latent_trial_cdf_at_threshold" = 0.9999999949999999, "family_null_probability" = 1e-08, "family_type_i_error" = 1.0000000050247593e-08, "family_type_ii_error" = 0.99999999, "family_false_discovery_rate" = 9.999999999999982e-09, "reconstructed_observable_cdf_at_threshold" = 0.9999999899999998}
+
+[[witness]]
+observable = 0.99999999
+target = 0.1
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 0.1, "trial_null_probability" = 0.31622776601683794, "observable_cdf_at_threshold" = 0.99999999, "latent_trial_cdf_at_threshold" = 0.9999999949999999, "family_null_probability" = 0.1, "family_type_i_error" = 1.0000000050247593e-08, "family_type_ii_error" = 0.99999999, "family_false_discovery_rate" = 0.0999999999999999, "reconstructed_observable_cdf_at_threshold" = 0.9999999899999998}
+
+[[witness]]
+observable = 0.99999999
+target = 0.7
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 0.7, "trial_null_probability" = 0.8366600265340756, "observable_cdf_at_threshold" = 0.99999999, "latent_trial_cdf_at_threshold" = 0.9999999949999999, "family_null_probability" = 0.7000000000000001, "family_type_i_error" = 1.0000000050247593e-08, "family_type_ii_error" = 0.99999999, "family_false_discovery_rate" = 0.7000000000000006, "reconstructed_observable_cdf_at_threshold" = 0.9999999899999998}
+
+[[witness]]
+observable = 0.99999999
+target = 0.99999999
+expected = {"n_trials" = 2, "target_false_discovery_rate" = 0.99999999, "trial_null_probability" = 0.9999999949999999, "observable_cdf_at_threshold" = 0.99999999, "latent_trial_cdf_at_threshold" = 0.9999999949999999, "family_null_probability" = 0.9999999899999998, "family_type_i_error" = 1.0000000050247593e-08, "family_type_ii_error" = 0.99999999, "family_false_discovery_rate" = 0.9999999899999992, "reconstructed_observable_cdf_at_threshold" = 0.9999999899999998}
+
+[[selection]]
+model = {"trial_null_probability" = 0.2, "null_standard_deviation" = 1.0, "alternative_mean" = 1.0, "alternative_standard_deviation" = 1.0}
+threshold = -2.0
+trials = 1
+expected = {"joint_null_and_selection_probability" = 0.19544997361036417, "selection_probability" = 0.99437005518506, "conditional_null_probability" = 0.19655657628787845, "quadrature_absolute_error" = 2.710474408645365e-12}
+independent_joint = 0.19544997361036417
+
+[[selection]]
+model = {"trial_null_probability" = 0.2, "null_standard_deviation" = 1.0, "alternative_mean" = 1.0, "alternative_standard_deviation" = 1.0}
+threshold = -2.0
+trials = 4
+expected = {"joint_null_and_selection_probability" = 0.07102758166738454, "selection_probability" = 0.999999998995346, "conditional_null_probability" = 0.07102758173874268, "quadrature_absolute_error" = 2.2852102848520958e-12}
+independent_joint = 0.07102758166673258
+
+[[selection]]
+model = {"trial_null_probability" = 0.2, "null_standard_deviation" = 1.0, "alternative_mean" = 1.0, "alternative_standard_deviation" = 1.0}
+threshold = -2.0
+trials = 30
+expected = {"joint_null_and_selection_probability" = 0.023521691976437477, "selection_probability" = 1.0, "conditional_null_probability" = 0.023521691976437477, "quadrature_absolute_error" = 1.8621823157098927e-12}
+independent_joint = 0.02352169193512988
+
+[[selection]]
+model = {"trial_null_probability" = 0.2, "null_standard_deviation" = 1.0, "alternative_mean" = 1.0, "alternative_standard_deviation" = 1.0}
+threshold = 0.0
+trials = 1
+expected = {"joint_null_and_selection_probability" = 0.1, "selection_probability" = 0.7730757968548343, "conditional_null_probability" = 0.12935342227351826, "quadrature_absolute_error" = 2.4850969138277515e-12}
+independent_joint = 0.1
+
+[[selection]]
+model = {"trial_null_probability" = 0.2, "null_standard_deviation" = 1.0, "alternative_mean" = 1.0, "alternative_standard_deviation" = 1.0}
+threshold = 0.0
+trials = 4
+expected = {"joint_null_and_selection_probability" = 0.07014255306485133, "selection_probability" = 0.9973483067915488, "conditional_null_probability" = 0.07032904411348391, "quadrature_absolute_error" = 3.008141275231635e-12}
+independent_joint = 0.07014255306465096
+
+[[selection]]
+model = {"trial_null_probability" = 0.2, "null_standard_deviation" = 1.0, "alternative_mean" = 1.0, "alternative_standard_deviation" = 1.0}
+threshold = 0.0
+trials = 30
+expected = {"joint_null_and_selection_probability" = 0.02352169197643745, "selection_probability" = 1.0, "conditional_null_probability" = 0.02352169197643745, "quadrature_absolute_error" = 1.3836079556130744e-12}
+independent_joint = 0.023521691964292952
+
+[[selection]]
+model = {"trial_null_probability" = 0.2, "null_standard_deviation" = 1.0, "alternative_mean" = 1.0, "alternative_standard_deviation" = 1.0}
+threshold = 2.0
+trials = 1
+expected = {"joint_null_and_selection_probability" = 0.004550026389635842, "selection_probability" = 0.1314742295348014, "conditional_null_probability" = 0.03460774332532935, "quadrature_absolute_error" = 3.779235114158127e-14}
+independent_joint = 0.004550026389635842
+
+[[selection]]
+model = {"trial_null_probability" = 0.2, "null_standard_deviation" = 1.0, "alternative_mean" = 1.0, "alternative_standard_deviation" = 1.0}
+threshold = 2.0
+trials = 4
+expected = {"joint_null_and_selection_probability" = 0.01429981241482731, "selection_probability" = 0.4309756693666416, "conditional_null_probability" = 0.033180092128732463, "quadrature_absolute_error" = 3.0254705209075016e-13}
+independent_joint = 0.014299812414826564
+
+[[selection]]
+model = {"trial_null_probability" = 0.2, "null_standard_deviation" = 1.0, "alternative_mean" = 1.0, "alternative_standard_deviation" = 1.0}
+threshold = 2.0
+trials = 30
+expected = {"joint_null_and_selection_probability" = 0.0226527008770539, "selection_probability" = 0.9854292712188051, "conditional_null_probability" = 0.022987647656372574, "quadrature_absolute_error" = 2.6953962080014823e-13}
+independent_joint = 0.02265270087700237
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 1.0, "alternative_mean" = 2.0, "alternative_standard_deviation" = 0.7}
+threshold = -2.0
+trials = 1
+expected = {"joint_null_and_selection_probability" = 0.7817998944414567, "selection_probability" = 0.9817998933397989, "conditional_null_probability" = 0.7962925029274549, "quadrature_absolute_error" = 1.084189763458146e-11}
+independent_joint = 0.7817998944414567
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 1.0, "alternative_mean" = 2.0, "alternative_standard_deviation" = 0.7}
+threshold = -2.0
+trials = 4
+expected = {"joint_null_and_selection_probability" = 0.4688119687123874, "selection_probability" = 0.9999998902774904, "conditional_null_probability" = 0.46881202015161877, "quadrature_absolute_error" = 1.9247078046593848e-11}
+independent_joint = 0.46881196871225833
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 1.0, "alternative_mean" = 2.0, "alternative_standard_deviation" = 0.7}
+threshold = -2.0
+trials = 30
+expected = {"joint_null_and_selection_probability" = 0.10714442164960833, "selection_probability" = 1.0, "conditional_null_probability" = 0.10714442164960833, "quadrature_absolute_error" = 2.064783362823433e-12}
+independent_joint = 0.10714442166023068
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 1.0, "alternative_mean" = 2.0, "alternative_standard_deviation" = 0.7}
+threshold = 0.0
+trials = 1
+expected = {"joint_null_and_selection_probability" = 0.4, "selection_probability" = 0.5995725266039827, "conditional_null_probability" = 0.6671419757433278, "quadrature_absolute_error" = 9.940387655311006e-12}
+independent_joint = 0.4
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 1.0, "alternative_mean" = 2.0, "alternative_standard_deviation" = 0.7}
+threshold = 0.0
+trials = 4
+expected = {"joint_null_and_selection_probability" = 0.44317285683995067, "selection_probability" = 0.9742903912614401, "conditional_null_probability" = 0.45486731760349475, "quadrature_absolute_error" = 7.694475210792195e-12}
+independent_joint = 0.443172856839875
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 1.0, "alternative_mean" = 2.0, "alternative_standard_deviation" = 0.7}
+threshold = 0.0
+trials = 30
+expected = {"joint_null_and_selection_probability" = 0.107144421648424, "selection_probability" = 0.9999999999988095, "conditional_null_probability" = 0.10714442164855155, "quadrature_absolute_error" = 1.3247610666241467e-11}
+independent_joint = 0.1071444216499267
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 1.0, "alternative_mean" = 2.0, "alternative_standard_deviation" = 0.7}
+threshold = 2.0
+trials = 1
+expected = {"joint_null_and_selection_probability" = 0.01820010555854337, "selection_probability" = 0.11820010555854332, "conditional_null_probability" = 0.15397706687773674, "quadrature_absolute_error" = 1.5116940456632507e-13}
+independent_joint = 0.01820010555854337
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 1.0, "alternative_mean" = 2.0, "alternative_standard_deviation" = 0.7}
+threshold = 2.0
+trials = 4
+expected = {"joint_null_and_selection_probability" = 0.05820058594359309, "selection_probability" = 0.395383256234873, "conditional_null_probability" = 0.14720043154538562, "quadrature_absolute_error" = 4.0016251767888534e-13}
+independent_joint = 0.058200585943592224
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 1.0, "alternative_mean" = 2.0, "alternative_standard_deviation" = 0.7}
+threshold = 2.0
+trials = 30
+expected = {"joint_null_and_selection_probability" = 0.09897680773746044, "selection_probability" = 0.977033158403825, "conditional_null_probability" = 0.10130342751023767, "quadrature_absolute_error" = 2.6114362681852215e-12}
+independent_joint = 0.09897680773741019
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 2.0, "alternative_mean" = 0.0, "alternative_standard_deviation" = 2.0}
+threshold = -2.0
+trials = 1
+expected = {"joint_null_and_selection_probability" = 0.6730757968548345, "selection_probability" = 0.8413447460685429, "conditional_null_probability" = 0.8000000000000003, "quadrature_absolute_error" = 4.807952605631328e-11}
+independent_joint = 0.6730757968548344
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 2.0, "alternative_mean" = 0.0, "alternative_standard_deviation" = 2.0}
+threshold = -2.0
+trials = 4
+expected = {"joint_null_and_selection_probability" = 0.7994931168890522, "selection_probability" = 0.9993663961113143, "conditional_null_probability" = 0.8000000000000008, "quadrature_absolute_error" = 7.830502625910594e-11}
+independent_joint = 0.7994931168888896
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 2.0, "alternative_mean" = 0.0, "alternative_standard_deviation" = 2.0}
+threshold = -2.0
+trials = 30
+expected = {"joint_null_and_selection_probability" = 0.8000000000000005, "selection_probability" = 1.0, "conditional_null_probability" = 0.8000000000000005, "quadrature_absolute_error" = 5.260952450368444e-11}
+independent_joint = 0.7999999999972506
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 2.0, "alternative_mean" = 0.0, "alternative_standard_deviation" = 2.0}
+threshold = 0.0
+trials = 1
+expected = {"joint_null_and_selection_probability" = 0.4, "selection_probability" = 0.5, "conditional_null_probability" = 0.8, "quadrature_absolute_error" = 3.352788969159358e-11}
+independent_joint = 0.4
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 2.0, "alternative_mean" = 0.0, "alternative_standard_deviation" = 2.0}
+threshold = 0.0
+trials = 4
+expected = {"joint_null_and_selection_probability" = 0.7500000000000001, "selection_probability" = 0.9375, "conditional_null_probability" = 0.8000000000000002, "quadrature_absolute_error" = 2.5635176864707506e-13}
+independent_joint = 0.749999999999956
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 2.0, "alternative_mean" = 0.0, "alternative_standard_deviation" = 2.0}
+threshold = 0.0
+trials = 30
+expected = {"joint_null_and_selection_probability" = 0.7999999992549423, "selection_probability" = 0.9999999990686774, "conditional_null_probability" = 0.8000000000000003, "quadrature_absolute_error" = 7.492254263964359e-12}
+independent_joint = 0.7999999992534081
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 2.0, "alternative_mean" = 0.0, "alternative_standard_deviation" = 2.0}
+threshold = 2.0
+trials = 1
+expected = {"joint_null_and_selection_probability" = 0.12692420314516567, "selection_probability" = 0.15865525393145696, "conditional_null_probability" = 0.8000000000000006, "quadrature_absolute_error" = 5.62589514459447e-12}
+independent_joint = 0.12692420314516567
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 2.0, "alternative_mean" = 0.0, "alternative_standard_deviation" = 2.0}
+threshold = 2.0
+trials = 4
+expected = {"joint_null_and_selection_probability" = 0.39914626442730483, "selection_probability" = 0.4989328305341308, "conditional_null_probability" = 0.8000000000000004, "quadrature_absolute_error" = 2.526737050534621e-11}
+independent_joint = 0.39914626442730317
+
+[[selection]]
+model = {"trial_null_probability" = 0.8, "null_standard_deviation" = 2.0, "alternative_mean" = 0.0, "alternative_standard_deviation" = 2.0}
+threshold = 2.0
+trials = 30
+expected = {"joint_null_and_selection_probability" = 0.7955093459604752, "selection_probability" = 0.9943866824505936, "conditional_null_probability" = 0.8000000000000003, "quadrature_absolute_error" = 4.957133815983086e-11}
+independent_joint = 0.7955093459601454

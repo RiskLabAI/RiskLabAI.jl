@@ -54,12 +54,14 @@ function construct_bars_from_data(run_bars::AbstractRunBarsType{T}; data) where 
 
     for tick_data in eachrow(data)
         tick_counter += 1
+        run_bars.tick_counter = tick_counter
         (date_time, price, volume) = tick_data
         price = Float64(price)
         volume = Float64(volume)
 
         signed_tick = tick_rule(run_bars, price)
         update_base_fields(run_bars, price, signed_tick, volume)
+        run_bars.close_price = price
 
         imbalance = imbalance_at_tick(T, price, signed_tick, volume)
         if imbalance > 0
@@ -93,6 +95,23 @@ function construct_bars_from_data(run_bars::AbstractRunBarsType{T}; data) where 
             end
         end
 
+        if run_bars.analyse_thresholds !== nothing
+            snapshot = _information_bar_snapshot(run_bars, date_time)
+            merge!(snapshot, Dict(
+                CUMULATIVE_BUY_THETA => run_bars.cumulative_buy_theta,
+                CUMULATIVE_SELL_THETA => run_bars.cumulative_sell_theta,
+                EXPECTED_BUY_IMBALANCE => run_bars.expected_buy_imbalance,
+                EXPECTED_SELL_IMBALANCE => run_bars.expected_sell_imbalance,
+                EXPECTED_BUY_TICKS_PROPORTION => run_bars.expected_buy_ticks_proportion,
+                BUY_TICKS_NUMBER => run_bars.buy_ticks_number,
+                PREVIOUS_BARS_N_TICKS_LIST => run_bars.previous_bars_number_of_ticks,
+                PREVIOUS_TICK_IMBALANCES_BUY_LIST => run_bars.previous_tick_imbalances_buy,
+                PREVIOUS_TICK_IMBALANCES_SELL_LIST => run_bars.previous_tick_imbalances_sell,
+                PREVIOUS_BARS_BUY_TICKS_PROPORTIONS_LIST => run_bars.previous_bars_buy_ticks_proportions,
+            ))
+            push!(run_bars.analyse_thresholds, snapshot)
+        end
+
         threshold = calculate_run_threshold(run_bars)
 
         if bar_construction_condition(run_bars, threshold)
@@ -116,7 +135,7 @@ function construct_bars_from_data(run_bars::AbstractRunBarsType{T}; data) where 
             run_bars.expected_ticks_number = expected_number_of_ticks(run_bars)
 
             window =
-                isnothing(run_bars.window_size_for_expected_n_ticks_estimation) ?
+                (isnothing(run_bars.window_size_for_expected_n_ticks_estimation) || iszero(run_bars.window_size_for_expected_n_ticks_estimation)) ?
                 run_bars.expected_imbalance_window :
                 run_bars.window_size_for_expected_n_ticks_estimation
             proportions = run_bars.previous_bars_buy_ticks_proportions

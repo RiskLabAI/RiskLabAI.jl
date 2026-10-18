@@ -20,6 +20,7 @@ using Statistics: mean
 
 # pandas-compatible debiased exponentially-weighted std (adjust=true).
 function _ewm_std(x::AbstractVector{<:Real}, span::Integer)
+    span >= 1 || throw(ArgumentError("span must be at least one"))
     alpha = 2 / (span + 1)
     n = length(x)
     out = fill(NaN, n)
@@ -28,6 +29,7 @@ function _ewm_std(x::AbstractVector{<:Real}, span::Integer)
         sum_w2 = 0.0
         weighted_mean = 0.0
         for i = 1:t
+            isfinite(x[i]) || continue
             w = (1 - alpha)^(t - i)
             weighted_mean += w * x[i]
             sum_w += w
@@ -36,6 +38,7 @@ function _ewm_std(x::AbstractVector{<:Real}, span::Integer)
         m = weighted_mean / sum_w
         ssd = 0.0
         for i = 1:t
+            isfinite(x[i]) || continue
             w = (1 - alpha)^(t - i)
             ssd += w * (x[i] - m)^2
         end
@@ -62,6 +65,7 @@ function symmetric_cusum_filter(
     shift_neg = 0.0
     for i = 2:length(close)
         delta = close[i] - close[i-1]
+        isnan(delta) && continue
         shift_pos = max(0.0, shift_pos + delta)
         shift_neg = min(0.0, shift_neg + delta)
         if shift_neg < -threshold
@@ -92,6 +96,7 @@ function cusum_filter_events_dynamic_threshold(
     shift_neg = 0.0
     for i = 2:length(close)
         delta = close[i] - close[i-1]
+        isnan(delta) && continue
         thr = threshold[i]
         shift_pos = max(0.0, shift_pos + delta)
         shift_neg = min(0.0, shift_neg + delta)
@@ -179,7 +184,7 @@ function triple_barrier(
         vfill = ismissing(vbar) ? close_index[end] : vbar
         end_pos = searchsortedlast(close_index, vfill)
         segment = close[start_pos:end_pos]
-        side = events.side[r]
+        side = "side" in names(events) ? events.side[r] : 1.0
         width = events.base_width[r]
         profit_taking = ptsl[1] > 0 ? ptsl[1] * width : Inf
         stop_loss = ptsl[2] > 0 ? -ptsl[2] * width : -Inf
@@ -235,7 +240,7 @@ function meta_events(
         sides = fill(1.0, length(starts))
         ptsl_final = (ptsl[1], ptsl[1])
     else
-        sides = [get(side, t, 1.0) for t in starts]
+        sides = [get(side, t, NaN) for t in starts]
         ptsl_final = (ptsl[1], ptsl[2])
     end
 
@@ -263,12 +268,15 @@ function meta_labeling(
     close_index::AbstractVector,
     close::AbstractVector{<:Real},
 )
-    price = Dict(t => p for (t, p) in zip(close_index, close))
+    function price(timestamp)
+        position = searchsortedfirst(close_index, timestamp)
+        return position <= length(close) ? close[position] : NaN
+    end
     valid = .!ismissing.(events.end_time)
     sub = events[valid, :]
     starts = sub.event_start
     ends = sub.end_time
-    returns = [log(price[ends[i]]) - log(price[starts[i]]) for i in eachindex(starts)]
+    returns = [log(price(ends[i])) - log(price(starts[i])) for i in eachindex(starts)]
 
     has_side = "side" in names(sub)
     if has_side

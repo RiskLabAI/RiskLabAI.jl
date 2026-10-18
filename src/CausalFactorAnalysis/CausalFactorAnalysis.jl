@@ -5,6 +5,9 @@ using Random
 using Statistics
 
 include("TreatmentEffects.jl")
+include("BoundsTransport.jl")
+include("Interference.jl")
+include("PolicyEvaluation.jl")
 include("SpecificationDiagnostics.jl")
 include("FactorMirage.jl")
 include("Optimizer.jl")
@@ -101,6 +104,11 @@ export BackdoorAdjustmentEvidence,
     max_selection_family_errors,
     max_selection_null_probability,
     maximum_mixture_cdf,
-    single_trial_false_discovery_rate
+    single_trial_false_discovery_rate,
+    manski_ate_bounds,
+    transported_ate,
+    exposure_mean_contrast,
+    evaluate_policy,
+    select_policy
 
 end

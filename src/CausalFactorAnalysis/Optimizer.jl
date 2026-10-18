@@ -5,7 +5,7 @@ const _FEASIBILITY_ATOL = 1.0e-12
 
 function _real_matrix(name::AbstractString, values)
     values isa AbstractMatrix || throw(ArgumentError("$name must be a numeric matrix"))
-    all(value -> value isa Real, values) ||
+    all(value -> value isa Real && !(value isa Bool), values) ||
         throw(ArgumentError("$name must be real-valued"))
     result = try
         Matrix{Float64}(values)
@@ -18,7 +18,7 @@ end
 
 function _real_vector(name::AbstractString, values)
     values isa AbstractVector || throw(ArgumentError("$name must be a numeric vector"))
-    all(value -> value isa Real, values) ||
+    all(value -> value isa Real && !(value isa Bool), values) ||
         throw(ArgumentError("$name must be real-valued"))
     result = try
         Vector{Float64}(values)
@@ -82,16 +82,23 @@ function minimum_variance_factor_weights(covariance, factor_exposures, target_ex
     whitened_exposures = lower \ scaled_exposures
     all(isfinite, whitened_exposures) ||
         throw(ArgumentError("factor_exposures produce non-finite whitened values"))
-    rank(whitened_exposures) == n_factors ||
+    singular_values = svdvals(whitened_exposures)
+    count(
+        >(maximum(singular_values) * max(size(whitened_exposures)...) * eps(Float64)),
+        singular_values,
+    ) == n_factors ||
         throw(ArgumentError("factor_exposures must have full column rank"))
     if n_factors == n_assets
         weights = transpose(scaled_exposures) \ scaled_targets
     else
         factorization = qr(whitened_exposures)
-        orthonormal_basis = Matrix(factorization.Q)[:, 1:n_factors]
-        triangular_factor = Matrix(factorization.R)[1:n_factors, 1:n_factors]
-        transformed_targets = transpose(triangular_factor) \ scaled_targets
-        whitened_weights = orthonormal_basis * transformed_targets
+        transformed_targets = lu(Matrix(transpose(factorization.R))) \ scaled_targets
+        whitened_weights =
+            factorization.Q * vcat(transformed_targets, zeros(n_assets - n_factors))
+        if !all(isfinite, whitened_weights)
+            orthonormal_basis = Matrix(factorization.Q)[:, 1:n_factors]
+            whitened_weights = orthonormal_basis * transformed_targets
+        end
         weights = transpose(lower) \ whitened_weights
     end
     all(isfinite, weights) ||
@@ -105,5 +112,5 @@ function minimum_variance_factor_weights(covariance, factor_exposures, target_ex
     all(isfinite, achieved_exposures) && all(residuals .<= tolerances) || throw(
         ArgumentError("factor constraints could not be resolved to numerical precision"),
     )
-    return Vector{Float64}(weights)
+    return copy(weights)
 end

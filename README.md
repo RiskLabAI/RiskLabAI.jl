@@ -34,8 +34,7 @@ not to every Julia module.
   Ornstein-Uhlenbeck trading rules
 - **Validation** - K-fold, purged, combinatorial-purged, and walk-forward
   validation, plus grid and random search
-- **Optional capability** - a Deep-BSDE PDE solver using Lux, Optimisers, and
-  Zygote through a Julia package extension
+- **PDE methods** - a native Deep-BSDE solver using Lux, Optimisers, and Zygote
 
 ## Compatibility
 
@@ -59,15 +58,8 @@ using Pkg
 Pkg.add("RiskLabAI")
 ```
 
-To enable the optional Deep-BSDE solver, add its three weak dependencies to
-the active environment:
-
-```julia
-using Pkg
-Pkg.add(["Lux", "Optimisers", "Zygote"])
-```
-
-The base package does not require this automatic-differentiation stack.
+The Deep-BSDE solver and its numerical dependencies are installed with the
+package.
 
 ## Causal-factor quick start
 

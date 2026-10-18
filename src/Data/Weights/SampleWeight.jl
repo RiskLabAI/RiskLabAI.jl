@@ -1,14 +1,16 @@
+using Random
+
 """
 Sample-weighting techniques — native Julia port mirroring the Python
 `RiskLabAI.data.weights.sample_weights` API (López de Prado, AFML Ch. 4):
-label concurrency, average uniqueness, absolute-return sample weights, and
-time decay.
+label concurrency, average uniqueness, sequential bootstrap, absolute-return
+sample weights, and time decay.
 
 Representation note (deliberate divergence): the Python API uses pandas Series
 whose *index* carries event start times. The Julia port passes event starts and
 ends as parallel vectors (`event_start`, `event_end`) and the bar/price index as
-a sorted vector. The numerics match the Python implementation exactly (verified
-against reference values in `test/runtests.jl`).
+a sorted vector. Shared Python 3.2.0 fixtures check concurrency, return weights
+and sequential-bootstrap choices in `test/sample_weight_regressions.jl`.
 
 Reference: De Prado, M. (2018), Advances in Financial Machine Learning, Ch. 4.
 """
@@ -19,7 +21,9 @@ Reference: De Prado, M. (2018), Advances in Financial Machine Learning, Ch. 4.
 
 Count concurrent events at each timestamp over the affected span. Mirrors
 Python's `expand_label_for_meta_labeling`. `event_start[i] → event_end[i]` define
-event `i`; `molecule` is the subset of start times to process.
+event `i`; `molecule` is the subset of start times to process. All events that
+overlap the selected span contribute, including events outside `molecule`.
+Endpoints are inclusive; missing or NaN ends use the last close timestamp.
 """
 function expand_label_for_meta_labeling(
     close_index::AbstractVector,
@@ -29,25 +33,29 @@ function expand_label_for_meta_labeling(
 )
     last_label = close_index[end]
     m_first = molecule[1]
+    length(event_start) == length(event_end) ||
+        throw(DimensionMismatch("event starts and ends must have equal lengths"))
+    filled_end = [
+        ismissing(value) || (value isa AbstractFloat && isnan(value)) ? last_label : value for
+        value in event_end
+    ]
+    end_of = Dict(zip(event_start, filled_end))
+    max_end = maximum(end_of[start] for start in molecule)
     keep = [
-        (event_start[i] in molecule) && (event_end[i] > m_first) for
+        (filled_end[i] >= m_first) && (event_start[i] <= max_end) for
         i in eachindex(event_start)
     ]
     starts = event_start[keep]
-    ends = event_end[keep]
+    ends = filled_end[keep]
     isempty(starts) && return (index = empty(close_index), concurrency = Float64[])
 
-    first_start = starts[1]
-    max_end = maximum(ends)
-    span = [t for t in close_index if t >= first_start && t <= max_end]
+    span = [t for t in close_index if t >= m_first && t <= max_end]
     concurrency = zeros(Float64, length(span))
     for (s, e) in zip(starts, ends)
-        capped = min(e, span[end])
-        concurrency[(span .>= s) .& (span .<= capped)] .+= 1.0
+        concurrency[(span .>= s) .& (span .<= e)] .+= 1.0
     end
 
-    keepmask = (span .>= m_first) .& (span .<= max_end)
-    return (index = span[keepmask], concurrency = concurrency[keepmask])
+    return (index = span, concurrency = concurrency)
 end
 
 """
@@ -59,7 +67,7 @@ Average uniqueness of each event (column) given a T×N indicator matrix:
 """
 function calculate_average_uniqueness(index_matrix::AbstractMatrix{<:Real})
     n_periods, n_events = size(index_matrix)
-    concurrency = vec(sum(index_matrix; dims = 2))
+    concurrency = vec(sum(value -> isnan(value) ? zero(value) : value, index_matrix; dims = 2))
     result = zeros(Float64, n_events)
     for j = 1:n_events
         total = 0.0
@@ -75,6 +83,81 @@ function calculate_average_uniqueness(index_matrix::AbstractMatrix{<:Real})
         result[j] = duration > 0 ? total / duration : 0.0
     end
     return result
+end
+
+"""
+    sequential_bootstrap(indicator_matrix; sample_length=nothing, random_state=nothing)
+
+Draw one-based event-column positions with replacement using average added
+uniqueness. Rows are observation intervals and columns are events. The matrix
+must contain finite real zeros and ones, and every event must be active in at
+least one row. The default draw count is the number of event columns.
+
+For candidate event `j`, average `1 / (c_t + 1)` over its active rows, where
+`c_t` counts all previous selections, including repeats. Normalize these scores
+to obtain the next draw probabilities. The first draw is uniform.
+
+`random_state` accepts a nonnegative integer seed, an `AbstractRNG`, or `nothing`
+for a fresh `Xoshiro` generator. A supplied generator advances in place. Zero
+draws consume no random numbers. Julia and NumPy seeds do not imply identical
+streams; parity fixtures supply identical uniform draws explicitly.
+"""
+function sequential_bootstrap(
+    indicator_matrix::AbstractMatrix;
+    sample_length = nothing,
+    random_state = nothing,
+)
+    eltype(indicator_matrix) <: Real ||
+        throw(ArgumentError("indicator_matrix must contain real binary values"))
+    all(value -> isfinite(value) && (value == 0 || value == 1), indicator_matrix) ||
+        throw(ArgumentError("indicator_matrix must contain only finite zeros and ones"))
+    event_count = size(indicator_matrix, 2)
+    durations = vec(sum(indicator_matrix; dims = 1))
+    any(iszero, durations) &&
+        throw(ArgumentError("each event must contain at least one active interval"))
+    draw_count = isnothing(sample_length) ? event_count : sample_length
+    draw_count isa Integer && !(draw_count isa Bool) && draw_count >= 0 ||
+        throw(ArgumentError("sample_length must be a nonnegative integer"))
+    event_count == 0 && draw_count > 0 &&
+        throw(ArgumentError("cannot draw from an indicator matrix with no events"))
+    generator = if isnothing(random_state)
+        Xoshiro()
+    elseif random_state isa AbstractRNG
+        random_state
+    elseif random_state isa Integer && !(random_state isa Bool) && random_state >= 0
+        Xoshiro(random_state)
+    else
+        throw(ArgumentError("random_state must be a nonnegative seed or AbstractRNG"))
+    end
+    selected = Vector{Int}(undef, draw_count)
+    concurrency = zeros(Int, size(indicator_matrix, 1))
+    scores = zeros(Float64, event_count)
+    for draw in eachindex(selected)
+        for event in 1:event_count
+            total = 0.0
+            for time in axes(indicator_matrix, 1)
+                if indicator_matrix[time, event] == 1
+                    total += 1.0 / (concurrency[time] + 1)
+                end
+            end
+            scores[event] = total / durations[event]
+        end
+        threshold = rand(generator) * sum(scores)
+        cumulative = 0.0
+        chosen = event_count
+        for event in 1:event_count
+            cumulative += scores[event]
+            if threshold < cumulative
+                chosen = event
+                break
+            end
+        end
+        selected[draw] = chosen
+        for time in axes(indicator_matrix, 1)
+            concurrency[time] += indicator_matrix[time, chosen] == 1
+        end
+    end
+    return selected
 end
 
 """
@@ -140,7 +223,16 @@ recent observation keeps weight 1, the oldest gets `clf_last_weight`
 function calculate_time_decay(weight::AbstractVector{<:Real}; clf_last_weight::Real = 1.0)
     (clf_last_weight < 0 || clf_last_weight > 1) &&
         throw(ArgumentError("clf_last_weight must be between 0 and 1"))
-    cumulative = cumsum(weight)
+    cumulative = Vector{Float64}(undef, length(weight))
+    running = 0.0
+    for (index, value) in enumerate(weight)
+        if isnan(value)
+            cumulative[index] = NaN
+        else
+            running += value
+            cumulative[index] = running
+        end
+    end
     if clf_last_weight == 1.0 || isempty(cumulative) || cumulative[end] == 0
         slope = 0.0
         const_term = 1.0

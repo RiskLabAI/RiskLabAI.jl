@@ -1,18 +1,11 @@
 """
-Deep BSDE solver — native Julia port mirroring the Python
-`RiskLabAI.pde.solver.FBSDESolver` (`"DeepBSDE"` method) on the **Lux.jl**
-backend (Han, Jentzen & E, 2018). A separate feed-forward subnetwork per time
-step predicts the BSDE control `Z_t`; the initial value `Y_0` and gradient `Z_0`
-are trainable scalars/vectors. Training minimises the terminal-condition MSE by
-Adam (`Optimisers.jl`) with reverse-mode gradients (`Zygote.jl`).
-
-Parity note: this is a **behavioural** port — a trained network is not
-numerically identical to the PyTorch one. It is validated structurally (the
-training loss is finite and decreases). The per-step subnetwork is the plain MLP
-of the Python `DeepBSDE` module (ReLU between bias-free linear layers; the
-commented-out batch-norm is omitted). The PyTorch set-transformer architectures
-(`ISAB`/`MAB`/`SAB`/`PMA`/`DeepTimeSetTransformer`) are research scaffolding and
-are not ported.
+Deep BSDE convenience interface. The public wrapper delegates to the native
+`FBSDESolver` and `solve_pde` contract, retaining the public terminal MSE,
+bias-free ReLU networks and separate Adam schedules for network weights,
+initial value and initial gradient. Shared weights and supplied paths validate
+the deterministic objective, gradients and finite-step updates. Julia and
+Python random seeds do not imply the same initial weights or Brownian paths.
+The earlier internal Lux helpers remain available for compatibility.
 
 Reference: Han, J., Jentzen, A., E, W. (2018), PNAS.
 """
@@ -21,9 +14,6 @@ using Random: AbstractRNG, default_rng
 using Lux
 using Zygote
 using Optimisers
-
-import RiskLabAI.Pde: Equation, pde_driver, pde_hamiltonian, pde_sample,
-    pde_terminal, solve_deep_bsde
 
 _act(x) = max(x, zero(x))
 
@@ -65,8 +55,10 @@ end
         -> (losses, y0_estimates)
 
 Train the Deep BSDE solver for equation `eq` (any `Pde.Equation`). Returns the
-per-iteration validation loss and the running `Y_0` estimate. Behavioural.
-Mirrors Python's `FBSDESolver(..., "DeepBSDE").solve`.
+per-iteration validation loss and running `Y_0` estimate. The network learning
+rate is supplied; initial value and gradient rates remain 0.1 and 0.001, with
+public Adam betas `(0.9,0.99)`. Use `FBSDESolver` and `solve_pde` directly for
+explicit parameter trees and supplied training/validation batches.
 """
 function solve_deep_bsde(
     eq::Equation;
@@ -79,31 +71,6 @@ function solve_deep_bsde(
 )
     dim = eq.dim
     sizes = vcat(dim, collect(hidden_sizes), dim)
-    n_nets = eq.num_time_interval - 1
-
-    models = [_build_subnet(sizes) for _ = 1:n_nets]
-    net_params = []
-    net_states = []
-    for model in models
-        ps, st = Lux.setup(rng, model)
-        push!(net_params, Lux.f64(ps))
-        push!(net_states, Lux.f64(st))
-    end
-    states = Tuple(net_states)
-
-    θ = (y0 = [Float64(init_y)], z0 = zeros(1, dim), nets = Tuple(net_params))
-
-    dw_val, x_val = pde_sample(eq, 128; rng = rng)
-    opt_state = Optimisers.setup(Optimisers.Adam(learning_rate), θ)
-
-    losses = Float64[]
-    y0_estimates = Float64[]
-    for _ = 1:iterations
-        dw_train, x_train = pde_sample(eq, batch_size; rng = rng)
-        gradient = Zygote.gradient(p -> _bsde_loss(p, eq, x_train, dw_train, models, states), θ)[1]
-        opt_state, θ = Optimisers.update(opt_state, θ, gradient)
-        push!(losses, _bsde_loss(θ, eq, x_val, dw_val, models, states))
-        push!(y0_estimates, θ.y0[1])
-    end
-    return losses, y0_estimates
+    model = FBSDESolver(eq, sizes, learning_rate, "DeepBSDE"; seed = rand(rng, UInt32))
+    return solve_pde(model; iterations, batch_size, init_y, rng)
 end

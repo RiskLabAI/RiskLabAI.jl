@@ -4,29 +4,24 @@
 PDE submodule, mirroring the Python `RiskLabAI.pde` sub-package: financial PDEs
 solved by the Deep BSDE method (Han, Jentzen & E, 2018).
 
-The base module wires the **equations** — the forward-SDE sampler and the BSDE
-generator functions. The neural Deep-BSDE solver is supplied only by the
-optional extension because it requires a deep-learning backend.
+The module provides forward-SDE samplers, generator and terminal functions,
+native neural components and fixed-coordinate constrained neural SDEs.
 """
 module Pde
 
 include("Equations.jl")
+include("EquationContracts.jl")
 
-"""
-    solve_deep_bsde(args...; kwargs...)
-
-Solve a PDE with the optional neural Deep-BSDE backend. The base package keeps
-the PDE equations available without loading a deep-learning stack. Installing
-and loading the `deep_bsde` extension adds the equation-specific method.
-"""
-function solve_deep_bsde(args...; kwargs...)
-    throw(
-        ArgumentError(
-            "solve_deep_bsde requires the optional deep_bsde extension " *
-            "(Lux, Optimisers, and Zygote).",
-        ),
-    )
-end
+# Neural Deep-BSDE solver (Lux.jl backend).
+include("DeepBSDESolver.jl")
+include("NeuralSDEGeometry.jl")
+include("NeuralSDEModels.jl")
+include("NeuralSDETraining.jl")
+include("NetworkPrimitives.jl")
+include("SetNetworks.jl")
+include("TimeDependentNetworks.jl")
+include("NeuralPDESolvers.jl")
+include("NeuralPDETraining.jl")
 
 export
     Equation,
@@ -38,7 +33,36 @@ export
     pde_driver,
     pde_hamiltonian,
     pde_terminal,
+    pde_terminal_for_sample,
     pde_sigma,
-    solve_deep_bsde
+    solve_deep_bsde,
+    normalized_call_grid_constraints,
+    normalized_call_grid_witness,
+    affine_price_state_interval,
+    IntervalNeuralSDE,
+    PolytopeNeuralSDE,
+    negative_log_likelihood,
+    fit_interval_neural_sde,
+    fit_polytope_neural_sde,
+    simulate_interval_neural_sde,
+    simulate_polytope_neural_sde,
+    hjm_drift_residual,
+    Net1,
+    TimeNet,
+    FBSNNNetwork,
+    DeepBSDE,
+    TimeNetForSet,
+    MAB,
+    SAB,
+    ISAB,
+    PMA,
+    DeepTimeSetTransformer,
+    TimeDependentNetwork,
+    TimeDependentNetworkMonteCarlo,
+    initialize_weights,
+    FBSDESolver,
+    FBSNNSolver,
+    compute_pde_loss,
+    solve_pde
 
 end # module Pde

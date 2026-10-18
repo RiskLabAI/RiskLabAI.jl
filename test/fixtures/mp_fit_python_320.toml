@@ -1,0 +1,2963 @@
+reference = "RiskLabAI Python 3.2.0"
+contract = "Local bounded scalar MP fitting with reference fallback and spectral reconstruction"
+
+[[fit]]
+eigenvalues = [1.400375411433935, 1.2029171088299346, 0.39670747973612963]
+q = 0.5
+bandwidth = 0.05
+cutoff = 5.828368840474942
+variance = 0.99999
+objective = 0.005629078306935432
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.005629078306935432, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [1.3362690367878058, 1.1468514462745465, 0.5168795169376476]
+q = 0.5
+bandwidth = 0.3
+cutoff = 3.589912650789738
+variance = 0.6159316354060218
+objective = 0.03054258017495582
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.6159316354060218, "objective" = 0.03054258017495582, "iterations" = 8, "evaluations" = 40, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [2.464431877435501, 0.32382801877343864, 0.21174010379106067]
+q = 1.0
+bandwidth = 0.05
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221947.0416017
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221947.0416017, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [1.140601026589677, 1.0312840195037147, 0.8281149539066083]
+q = 1.0
+bandwidth = 0.3
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221246.4009553
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221246.4009553, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [1.3230797012594575, 0.9765746588419907, 0.7003456398985515]
+q = 5.0
+bandwidth = 0.05
+cutoff = 2.094406246728006
+variance = 0.99999
+objective = 0.21581393977068983
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.21581393977068983, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [1.5438973911795708, 1.1078535364919484, 0.34824907232848096]
+q = 5.0
+bandwidth = 0.3
+cutoff = 2.0788453023985163
+variance = 0.9925603102039752
+objective = 0.2151552232806374
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.9925603102039752, "objective" = 0.2151552232806374, "iterations" = 4, "evaluations" = 12, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [1.837276866475848, 1.2983194542852565, 0.9525694689715443, 0.559641207787588, 0.35219300247976365]
+q = 0.5
+bandwidth = 0.05
+cutoff = 5.828368840474942
+variance = 0.99999
+objective = 0.022692781043557268
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.022692781043557268, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [1.816888175705777, 1.274271602640724, 1.0492252349808777, 0.6776806184347024, 0.1819343682379193]
+q = 0.5
+bandwidth = 0.3
+cutoff = 2.930065829908844
+variance = 0.5027198191204011
+objective = 0.25918641427623684
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5027198191204011, "objective" = 0.25918641427623684, "iterations" = 3, "evaluations" = 10, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [1.6146020297626633, 1.2791412269803462, 0.9318563719079985, 0.696407939279467, 0.4779924320695247]
+q = 1.0
+bandwidth = 0.05
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221968.7774856
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221968.7774856, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [1.7416582319200364, 1.2894265463221828, 0.9806475707559654, 0.659554108684653, 0.3287135423171626]
+q = 1.0
+bandwidth = 0.3
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013211085.9896253
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013211085.9896253, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [1.838916792505921, 1.3448231945166744, 1.0452634242429444, 0.4910296302117912, 0.27996695852266873]
+q = 5.0
+bandwidth = 0.05
+cutoff = 0.8258541056014228
+variance = 0.39431024823887334
+objective = 1.20385130244789
+factors = 3
+optimizer = {"success" = true, "fitted" = 0.39431024823887334, "objective" = 1.20385130244789, "iterations" = 4, "evaluations" = 26, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [1.5434783879949936, 1.403449882767329, 1.0452033726381522, 0.739448123318904, 0.26842023328062065]
+q = 5.0
+bandwidth = 0.3
+cutoff = 2.094406246728006
+variance = 0.99999
+objective = 0.23800451393647734
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.23800451393647734, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [2.2883020942636785, 1.7749948414453713, 1.281554535317447, 1.1161813874898994, 0.9868448554615605, 0.6909724866031071, 0.3887121485821251, 0.3224298046872557, 0.15000784614955573]
+q = 0.5
+bandwidth = 0.05
+cutoff = 2.933466681745187
+variance = 0.5033033130482747
+objective = 0.5948006479766261
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5033033130482747, "objective" = 0.5948006479766261, "iterations" = 5, "evaluations" = 18, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [2.130168811596396, 2.00450237250617, 1.5148279017685535, 1.0311669848777139, 0.8250531880363651, 0.7374743879314993, 0.4700728822176215, 0.25012490255052783, 0.03660856851515151]
+q = 0.5
+bandwidth = 0.3
+cutoff = 4.572061176535583
+variance = 0.784441681894527
+objective = 0.3294696566087766
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.784441681894527, "objective" = 0.3294696566087766, "iterations" = 4, "evaluations" = 16, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [2.127915875444752, 2.0038192774614845, 1.6016927160914465, 1.220158304426262, 0.7256684133412096, 0.6502779982222798, 0.3127153071599388, 0.2763860804491552, 0.08136602740347146]
+q = 1.0
+bandwidth = 0.05
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013206954.1273683
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013206954.1273683, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [2.248488673288386, 1.5675961807499414, 1.5094581799802687, 1.1002328141901476, 0.8476969445940433, 0.7334054166380265, 0.5145971899660668, 0.3306254670596255, 0.14789913353349535]
+q = 1.0
+bandwidth = 0.3
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013205694.6713874
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013205694.6713874, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [2.0152796596564078, 1.8226191409683155, 1.5405488781167593, 1.218636049288744, 0.8721629169079886, 0.6687755585412523, 0.48450746339894435, 0.3229906840099992, 0.05447964911158911]
+q = 5.0
+bandwidth = 0.05
+cutoff = 2.094406246728006
+variance = 0.99999
+objective = 1.9267060121972188
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1.9267060121972188, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [2.222655538620832, 2.0786831374660824, 1.3799922656938173, 1.081205323314282, 0.8138122870056023, 0.6671392552806676, 0.39729852895270845, 0.31461010637311787, 0.04460355729288985]
+q = 5.0
+bandwidth = 0.3
+cutoff = 2.094406246728006
+variance = 0.99999
+objective = 0.7405992612222205
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.7405992612222205, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "preserved_diagnostic"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 0.5
+bandwidth = 0.01
+cutoff = 2.914213562373095
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 0.5
+bandwidth = 0.01
+cutoff = 2.914213562373095
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 0.5
+bandwidth = 0.01
+cutoff = 2.914213562373095
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 0.5
+bandwidth = 0.1
+cutoff = 2.914213562373095
+variance = 0.5
+objective = 8.018189952307036e-36
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 8.018189952307036e-36, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 0.5
+bandwidth = 0.1
+cutoff = 2.914213562373095
+variance = 0.5
+objective = 8.018189952307036e-36
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 8.018189952307036e-36, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 0.5
+bandwidth = 0.1
+cutoff = 2.914213562373095
+variance = 0.5
+objective = 8.018189952307036e-36
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 8.018189952307036e-36, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 0.5
+bandwidth = 0.4
+cutoff = 5.82842712474619e-05
+variance = 1e-05
+objective = 0.0019202994221399169
+factors = 1
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.0019202994221399169, "iterations" = 2, "evaluations" = 6, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 0.5
+bandwidth = 0.4
+cutoff = 5.82842712474619e-05
+variance = 1e-05
+objective = 0.0019202994221399169
+factors = 1
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.0019202994221399169, "iterations" = 2, "evaluations" = 6, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 0.5
+bandwidth = 0.4
+cutoff = 5.82842712474619e-05
+variance = 1e-05
+objective = 0.0019202994221399169
+factors = 1
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.0019202994221399169, "iterations" = 2, "evaluations" = 6, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.0
+bandwidth = 0.01
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221968.6177332
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221968.6177332, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.0
+bandwidth = 0.01
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221968.6177332
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221968.6177332, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.0
+bandwidth = 0.01
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221968.6177332
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221968.6177332, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.0
+bandwidth = 0.1
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221968.6177332
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221968.6177332, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.0
+bandwidth = 0.1
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221968.6177332
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221968.6177332, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.0
+bandwidth = 0.1
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221968.6177332
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221968.6177332, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.0
+bandwidth = 0.4
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013219178.8900357
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013219178.8900357, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.0
+bandwidth = 0.4
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013219178.8900357
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013219178.8900357, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.0
+bandwidth = 0.4
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013219178.8900357
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013219178.8900357, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.001
+bandwidth = 0.01
+cutoff = 1.999000874188273
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.001
+bandwidth = 0.01
+cutoff = 1.999000874188273
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.001
+bandwidth = 0.01
+cutoff = 1.999000874188273
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.001
+bandwidth = 0.1
+cutoff = 1.999000874188273
+variance = 0.5
+objective = 5.920832599809193e-43
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 5.920832599809193e-43, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.001
+bandwidth = 0.1
+cutoff = 1.999000874188273
+variance = 0.5
+objective = 5.920832599809193e-43
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 5.920832599809193e-43, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.001
+bandwidth = 0.1
+cutoff = 1.999000874188273
+variance = 0.5
+objective = 5.920832599809193e-43
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 5.920832599809193e-43, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.001
+bandwidth = 0.4
+cutoff = 1.999000874188273
+variance = 0.5
+objective = 0.0019202612346156962
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0019202612346156962, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.001
+bandwidth = 0.4
+cutoff = 1.999000874188273
+variance = 0.5
+objective = 0.0019202612346156962
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0019202612346156962, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 1.001
+bandwidth = 0.4
+cutoff = 1.999000874188273
+variance = 0.5
+objective = 0.0019202612346156962
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0019202612346156962, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 2.0
+bandwidth = 0.01
+cutoff = 1.4571067811865475
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 2.0
+bandwidth = 0.01
+cutoff = 1.4571067811865475
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 2.0
+bandwidth = 0.01
+cutoff = 1.4571067811865475
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 2.0
+bandwidth = 0.1
+cutoff = 1.4571067811865475
+variance = 0.5
+objective = 2.6189479387091806e-39
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 2.6189479387091806e-39, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 2.0
+bandwidth = 0.1
+cutoff = 1.4571067811865475
+variance = 0.5
+objective = 2.6189479387091806e-39
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 2.6189479387091806e-39, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 2.0
+bandwidth = 0.1
+cutoff = 1.4571067811865475
+variance = 0.5
+objective = 2.6189479387091806e-39
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 2.6189479387091806e-39, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 2.0
+bandwidth = 0.4
+cutoff = 2.914213562373095e-05
+variance = 1e-05
+objective = 0.0019202788303209982
+factors = 1
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.0019202788303209982, "iterations" = 2, "evaluations" = 6, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 2.0
+bandwidth = 0.4
+cutoff = 2.914213562373095e-05
+variance = 1e-05
+objective = 0.0019202788303209982
+factors = 1
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.0019202788303209982, "iterations" = 2, "evaluations" = 6, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 2.0
+bandwidth = 0.4
+cutoff = 2.914213562373095e-05
+variance = 1e-05
+objective = 0.0019202788303209982
+factors = 1
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.0019202788303209982, "iterations" = 2, "evaluations" = 6, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 10.0
+bandwidth = 0.01
+cutoff = 0.866227766016838
+variance = 0.5
+objective = 0.0
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 10.0
+bandwidth = 0.01
+cutoff = 0.866227766016838
+variance = 0.5
+objective = 0.0
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 10.0
+bandwidth = 0.01
+cutoff = 0.866227766016838
+variance = 0.5
+objective = 0.0
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 10.0
+bandwidth = 0.1
+cutoff = 0.866227766016838
+variance = 0.5
+objective = 5.060278406911269e-25
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 5.060278406911269e-25, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 10.0
+bandwidth = 0.1
+cutoff = 0.866227766016838
+variance = 0.5
+objective = 5.060278406911269e-25
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 5.060278406911269e-25, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 10.0
+bandwidth = 0.1
+cutoff = 0.866227766016838
+variance = 0.5
+objective = 5.060278406911269e-25
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 5.060278406911269e-25, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 10.0
+bandwidth = 0.4
+cutoff = 1.732455532033676e-05
+variance = 1e-05
+objective = 0.0019203704674868982
+factors = 1
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.0019203704674868982, "iterations" = 4, "evaluations" = 10, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 10.0
+bandwidth = 0.4
+cutoff = 1.732455532033676e-05
+variance = 1e-05
+objective = 0.0019203704674868982
+factors = 1
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.0019203704674868982, "iterations" = 4, "evaluations" = 10, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0]
+q = 10.0
+bandwidth = 0.4
+cutoff = 1.732455532033676e-05
+variance = 1e-05
+objective = 0.0019203704674868982
+factors = 1
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.0019203704674868982, "iterations" = 4, "evaluations" = 10, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0]
+q = 0.5
+bandwidth = 0.01
+cutoff = 2.914213562373095
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.3652034176694068, 0.6347965823305933]
+q = 0.5
+bandwidth = 0.01
+cutoff = 2.914213562373095
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.4972182516376658, 0.5027817483623345]
+q = 0.5
+bandwidth = 0.01
+cutoff = 2.914213562373095
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0]
+q = 0.5
+bandwidth = 0.1
+cutoff = 2.914213562373095
+variance = 0.5
+objective = 8.018189952307036e-36
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 8.018189952307036e-36, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.1024338267495082, 0.8975661732504918]
+q = 0.5
+bandwidth = 0.1
+cutoff = 2.914213562373095
+variance = 0.5
+objective = 9.5575608477998e-29
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 9.5575608477998e-29, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.6962729277936752, 0.30372707220632456]
+q = 0.5
+bandwidth = 0.1
+cutoff = 5.82842712474619e-05
+variance = 1e-05
+objective = 0.0007856149021746432
+factors = 2
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.0007856149021746432, "iterations" = 2, "evaluations" = 6, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0]
+q = 0.5
+bandwidth = 0.4
+cutoff = 5.82842712474619e-05
+variance = 1e-05
+objective = 0.0038419571404466513
+factors = 2
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.0038419571404466513, "iterations" = 2, "evaluations" = 6, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.188844593517225, 0.811155406482775]
+q = 0.5
+bandwidth = 0.4
+cutoff = 5.82842712474619e-05
+variance = 1e-05
+objective = 0.009753736363267627
+factors = 2
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.009753736363267627, "iterations" = 2, "evaluations" = 6, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.3104550513131217, 0.6895449486868782]
+q = 0.5
+bandwidth = 0.4
+cutoff = 2.319160289380033
+variance = 0.3979049990233901
+objective = 0.0239320989692134
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.3979049990233901, "objective" = 0.0239320989692134, "iterations" = 7, "evaluations" = 26, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0]
+q = 1.0
+bandwidth = 0.01
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221968.6177332
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221968.6177332, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.92346908621574, 0.0765309137842598]
+q = 1.0
+bandwidth = 0.01
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221968.617733
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221968.617733, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.7282960769827989, 0.271703923017201]
+q = 1.0
+bandwidth = 0.01
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221968.6177332
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221968.6177332, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0]
+q = 1.0
+bandwidth = 0.1
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221968.6177332
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221968.6177332, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.2902670912812721, 0.7097329087187282]
+q = 1.0
+bandwidth = 0.1
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221968.6177319
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221968.6177319, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.3561455858326423, 0.6438544141673576]
+q = 1.0
+bandwidth = 0.1
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221968.6176069
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221968.6176069, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0]
+q = 1.0
+bandwidth = 0.4
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013219178.8900357
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013219178.8900357, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.4107216420745567, 0.5892783579254435]
+q = 1.0
+bandwidth = 0.4
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013211179.7235284
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013211179.7235284, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.4812735787680573, 0.5187264212319427]
+q = 1.0
+bandwidth = 0.4
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013208241.616214
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013208241.616214, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0]
+q = 1.001
+bandwidth = 0.01
+cutoff = 1.999000874188273
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.200240020800784, 0.799759979199216]
+q = 1.001
+bandwidth = 0.01
+cutoff = 1.999000874188273
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.1922877195020758, 0.807712280497924]
+q = 1.001
+bandwidth = 0.01
+cutoff = 1.999000874188273
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0]
+q = 1.001
+bandwidth = 0.1
+cutoff = 1.999000874188273
+variance = 0.5
+objective = 1.315038738475797e-42
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 1.315038738475797e-42, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.271612130637449, 0.7283878693625507]
+q = 1.001
+bandwidth = 0.1
+cutoff = 1.999000874188273
+variance = 0.5
+objective = 7.799737152279809e-23
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 7.799737152279809e-23, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0525426076849964, 0.9474573923150038]
+q = 1.001
+bandwidth = 0.1
+cutoff = 1.999000874188273
+variance = 0.5
+objective = 9.084424194550998e-39
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 9.084424194550998e-39, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0]
+q = 1.001
+bandwidth = 0.4
+cutoff = 2.6013500437988575
+variance = 0.6506625578278394
+objective = 0.0019203710948671269
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.6506625578278394, "objective" = 0.0019203710948671269, "iterations" = 7, "evaluations" = 18, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.6720206909907795, 0.3279793090092205]
+q = 1.001
+bandwidth = 0.4
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 0.12701443453209302
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.12701443453209302, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.3683323895780772, 0.6316676104219229]
+q = 1.001
+bandwidth = 0.4
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 0.02095365875164459
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.02095365875164459, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0]
+q = 2.0
+bandwidth = 0.01
+cutoff = 1.4571067811865475
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.728862820672408, 0.27113717932759224]
+q = 2.0
+bandwidth = 0.01
+cutoff = 1.4571067811865475
+variance = 0.5
+objective = 2.252801748916044e-224
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 2.252801748916044e-224, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.0894088555594312, 0.9105911444405689]
+q = 2.0
+bandwidth = 0.01
+cutoff = 1.4571067811865475
+variance = 0.5
+objective = 0.0
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 0.0, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0]
+q = 2.0
+bandwidth = 0.1
+cutoff = 1.4571067811865475
+variance = 0.5
+objective = 1.3408623112567178e-08
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 1.3408623112567178e-08, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.8734463955864076, 0.12655360441359234]
+q = 2.0
+bandwidth = 0.1
+cutoff = 2.914213562373095e-05
+variance = 1e-05
+objective = 1.6047117450825614
+factors = 2
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 1.6047117450825614, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.7924305945609322, 0.2075694054390677]
+q = 2.0
+bandwidth = 0.1
+cutoff = 2.914213562373095e-05
+variance = 1e-05
+objective = 0.10712734302953777
+factors = 2
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.10712734302953777, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0]
+q = 2.0
+bandwidth = 0.4
+cutoff = 2.216573862306505
+variance = 0.7606079015367393
+objective = 0.004322490755361888
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.7606079015367393, "objective" = 0.004322490755361888, "iterations" = 7, "evaluations" = 28, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.7053624141085135, 0.29463758589148664]
+q = 2.0
+bandwidth = 0.4
+cutoff = 2.914213562373095e-05
+variance = 1e-05
+objective = 0.28919276219195245
+factors = 2
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.28919276219195245, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.434082272467886, 0.5659177275321138]
+q = 2.0
+bandwidth = 0.4
+cutoff = 2.388521199974487
+variance = 0.8196108997686061
+objective = 0.0551020216003068
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.8196108997686061, "objective" = 0.0551020216003068, "iterations" = 7, "evaluations" = 24, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0]
+q = 10.0
+bandwidth = 0.01
+cutoff = 0.866227766016838
+variance = 0.5
+objective = 3.053350253866697e-75
+factors = 2
+optimizer = {"success" = true, "fitted" = 0.5, "objective" = 3.053350253866697e-75, "iterations" = 0, "evaluations" = 2, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.1055287671605836, 0.8944712328394165]
+q = 10.0
+bandwidth = 0.01
+cutoff = 1.732455532033676e-05
+variance = 1e-05
+objective = 0.0
+factors = 2
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.0, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.746015262433958, 0.253984737566042]
+q = 10.0
+bandwidth = 0.01
+cutoff = 1.732455532033676e-05
+variance = 1e-05
+objective = 5.88198198412047e-278
+factors = 2
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 5.88198198412047e-278, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0]
+q = 10.0
+bandwidth = 0.1
+cutoff = 1.732455532033676e-05
+variance = 1e-05
+objective = 1.186745859818043e-42
+factors = 2
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 1.186745859818043e-42, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.5975040756459598, 0.40249592435404025]
+q = 10.0
+bandwidth = 0.1
+cutoff = 1.732455532033676e-05
+variance = 1e-05
+objective = 7.336268116556122e-07
+factors = 2
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 7.336268116556122e-07, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.3339072067223035, 0.6660927932776967]
+q = 10.0
+bandwidth = 0.1
+cutoff = 0.9999721781390782
+variance = 0.5771993333446439
+objective = 0.000229531470936681
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.5771993333446439, "objective" = 0.000229531470936681, "iterations" = 5, "evaluations" = 18, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0]
+q = 10.0
+bandwidth = 0.4
+cutoff = 1.732455532033676e-05
+variance = 1e-05
+objective = 0.003841044592870583
+factors = 2
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.003841044592870583, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.0412850218923537, 0.9587149781076462]
+q = 10.0
+bandwidth = 0.4
+cutoff = 1.732455532033676e-05
+variance = 1e-05
+objective = 0.00405903121670936
+factors = 2
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.00405903121670936, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.2425945527942135, 0.7574054472057866]
+q = 10.0
+bandwidth = 0.4
+cutoff = 1.732455532033676e-05
+variance = 1e-05
+objective = 0.015152589205373029
+factors = 2
+optimizer = {"success" = true, "fitted" = 1e-05, "objective" = 0.015152589205373029, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0]
+q = 0.5
+bandwidth = 0.01
+cutoff = 5.828368840474942
+variance = 0.99999
+objective = 0.02268858729483045
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.02268858729483045, "iterations" = 3, "evaluations" = 8, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.486634374595169, 1.4084809004628192, 0.6873697488074576, 0.2761092099553405, 0.14140576617921427]
+q = 0.5
+bandwidth = 0.01
+cutoff = 3.697779376054621
+variance = 0.6344386396039305
+objective = 0.057956986420635875
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.6344386396039305, "objective" = 0.057956986420635875, "iterations" = 4, "evaluations" = 30, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [2.336468817649375, 2.21064043622358, 0.17005236458566597, 0.14450850020194345, 0.13832988133943508]
+q = 0.5
+bandwidth = 0.01
+cutoff = 3.586010125753544
+variance = 0.615262067964812
+objective = 0.0616358477832411
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.615262067964812, "objective" = 0.0616358477832411, "iterations" = 9, "evaluations" = 42, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0]
+q = 0.5
+bandwidth = 0.1
+cutoff = 2.8168432405558352
+variance = 0.48329389392142397
+objective = 0.03243703945390194
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.48329389392142397, "objective" = 0.03243703945390194, "iterations" = 7, "evaluations" = 20, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.493960309390565, 1.0649190169639728, 0.5898969501485564, 0.446616661064213, 0.4046070624326924]
+q = 0.5
+bandwidth = 0.1
+cutoff = 2.7598537357281363
+variance = 0.4735160407188448
+objective = 0.03453894566777299
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.4735160407188448, "objective" = 0.03453894566777299, "iterations" = 4, "evaluations" = 26, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [3.271167961197504, 1.0082951263956093, 0.3922245183160951, 0.1872758428690373, 0.14103655122175413]
+q = 0.5
+bandwidth = 0.1
+cutoff = 1.6668705416624763
+variance = 0.2859897715089066
+objective = 0.7751236564308068
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.2859897715089066, "objective" = 0.7751236564308068, "iterations" = 7, "evaluations" = 38, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0]
+q = 0.5
+bandwidth = 0.4
+cutoff = 2.8391888625565977
+variance = 0.4871277965374296
+objective = 0.49480639656584724
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.4871277965374296, "objective" = 0.49480639656584724, "iterations" = 3, "evaluations" = 12, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.002158222263521, 1.1095287729985914, 0.892516380886128, 0.7441022209380856, 0.2516944029136743]
+q = 0.5
+bandwidth = 0.4
+cutoff = 2.8674934752612313
+variance = 0.4919841003221091
+objective = 0.2463410648895418
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.4919841003221091, "objective" = 0.2463410648895418, "iterations" = 3, "evaluations" = 10, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [2.276675494058635, 1.1002001365526322, 1.0522160383929582, 0.3347749409849765, 0.23613339001079828]
+q = 0.5
+bandwidth = 0.4
+cutoff = 2.9572745763166584
+variance = 0.5073881019736416
+objective = 0.22453184244676833
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.5073881019736416, "objective" = 0.22453184244676833, "iterations" = 3, "evaluations" = 10, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.0
+bandwidth = 0.01
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013223538.2802898
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013223538.2802898, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.1900424815806483, 1.0055030294722385, 0.8110449139821451, 0.7720985441978857, 0.22131103076708197]
+q = 1.0
+bandwidth = 0.01
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013222011.9254155
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013222011.9254155, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [2.1947382042260815, 1.100699304331811, 0.7715589133135191, 0.7375652269018903, 0.1954383512266983]
+q = 1.0
+bandwidth = 0.01
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221968.7275001
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221968.7275001, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.0
+bandwidth = 0.1
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221982.4434881
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221982.4434881, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.7312303785418508, 1.4994848883221132, 1.015499612183479, 0.4094476960468687, 0.3443374249056884]
+q = 1.0
+bandwidth = 0.1
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221822.0301496
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221822.0301496, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [2.929563467055159, 0.901594733891809, 0.5999614838379691, 0.30639911319748403, 0.262481202017579]
+q = 1.0
+bandwidth = 0.1
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013219883.3044044
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013219883.3044044, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.0
+bandwidth = 0.4
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013219179.4326141
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013219179.4326141, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.0763853870863818, 1.2756325514962081, 0.665956835425599, 0.640980672027724, 0.3410445539640869]
+q = 1.0
+bandwidth = 0.4
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013206368.4566981
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013206368.4566981, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [3.6736823875102815, 0.4682445018560034, 0.45366660765550204, 0.2452393085795141, 0.15916719439869859]
+q = 1.0
+bandwidth = 0.4
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013186638.7057943
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013186638.7057943, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.001
+bandwidth = 0.01
+cutoff = 1.9381088063269174
+variance = 0.4847693743790678
+objective = 0.360024659971284
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.4847693743790678, "objective" = 0.360024659971284, "iterations" = 5, "evaluations" = 52, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.389298601496876, 1.244047048743528, 1.144865118016973, 0.7071616837366215, 0.5146275480060016]
+q = 1.001
+bandwidth = 0.01
+cutoff = 1.4627219504279332
+variance = 0.3658632593199579
+objective = 0.6320769898710488
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.3658632593199579, "objective" = 0.6320769898710488, "iterations" = 8, "evaluations" = 50, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [2.564833560935959, 1.1163879950020548, 0.46742366810853697, 0.44562172221278595, 0.4057330537406626]
+q = 1.001
+bandwidth = 0.01
+cutoff = 1.9619041900114882
+variance = 0.49072119360831984
+objective = 0.1405377161195557
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.49072119360831984, "objective" = 0.1405377161195557, "iterations" = 4, "evaluations" = 30, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.001
+bandwidth = 0.1
+cutoff = 1.6165953307991794
+variance = 0.4043508313761054
+objective = 0.5600556693041174
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.4043508313761054, "objective" = 0.5600556693041174, "iterations" = 5, "evaluations" = 28, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [1.3468956781099097, 1.2844264312661346, 0.9197938174620444, 0.7652212287008304, 0.6836628444610804]
+q = 1.001
+bandwidth = 0.1
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 0.17618141339205165
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.17618141339205165, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [2.2823031057820176, 1.22919799703378, 1.095894964664735, 0.2125995854480104, 0.18000434707145682]
+q = 1.001
+bandwidth = 0.1
+cutoff = 1.9024887725031188
+variance = 0.4758599150877449
+objective = 0.3621591109987819
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.4758599150877449, "objective" = 0.3621591109987819, "iterations" = 4, "evaluations" = 16, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.001
+bandwidth = 0.4
+cutoff = 2.92238864636347
+variance = 0.7309623232531486
+objective = 0.2763031275250507
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.7309623232531486, "objective" = 0.2763031275250507, "iterations" = 4, "evaluations" = 16, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.5539710913733287, 1.573516807756512, 0.4718648706188125, 0.34436968195352097, 0.05627754829782564]
+q = 1.001
+bandwidth = 0.4
+cutoff = 2.1067351489449866
+variance = 0.5269470304260024
+objective = 0.2373523712961526
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.5269470304260024, "objective" = 0.2373523712961526, "iterations" = 4, "evaluations" = 12, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [2.8822479306804385, 0.736944177140087, 0.7289459437153313, 0.44092767796037136, 0.21093427050377198]
+q = 1.001
+bandwidth = 0.4
+cutoff = 1.7609654735596847
+variance = 0.44046140657010807
+objective = 0.1611033720890807
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.44046140657010807, "objective" = 0.1611033720890807, "iterations" = 5, "evaluations" = 14, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0]
+q = 2.0
+bandwidth = 0.01
+cutoff = 2.914184420237471
+variance = 0.99999
+objective = 0.3630173967172873
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.3630173967172873, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.4779534810821455, 1.4454024094744566, 0.7096973630908768, 0.236492521331817, 0.13045422502070353]
+q = 2.0
+bandwidth = 0.01
+cutoff = 2.914184420237471
+variance = 0.99999
+objective = 0.3630159092138248
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.3630159092138248, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [3.2727445412923863, 0.8585287727360992, 0.42887820805957605, 0.3341348995656671, 0.10571357834627104]
+q = 2.0
+bandwidth = 0.01
+cutoff = 2.627430877747512
+variance = 0.9015917404515643
+objective = 0.4669322091108647
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.9015917404515643, "objective" = 0.4669322091108647, "iterations" = 7, "evaluations" = 26, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0]
+q = 2.0
+bandwidth = 0.1
+cutoff = 2.914184420237471
+variance = 0.99999
+objective = 0.12185963807397096
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.12185963807397096, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.018647312728227, 1.0256534606638645, 0.9611208947809285, 0.6511930018080778, 0.3433853300189023]
+q = 2.0
+bandwidth = 0.1
+cutoff = 2.8989440450149284
+variance = 0.9947603300062429
+objective = 0.09390552899196991
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.9947603300062429, "objective" = 0.09390552899196991, "iterations" = 5, "evaluations" = 14, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [2.3449488342112117, 2.1125534342888495, 0.24416250185221253, 0.15605347599185604, 0.14228175365587006]
+q = 2.0
+bandwidth = 0.1
+cutoff = 1.142802337846815
+variance = 0.3921477659023079
+objective = 1.6399692957855656
+factors = 2
+optimizer = {"success" = true, "fitted" = 0.3921477659023079, "objective" = 1.6399692957855656, "iterations" = 5, "evaluations" = 18, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0]
+q = 2.0
+bandwidth = 0.4
+cutoff = 2.755509187665259
+variance = 0.9455412682320371
+objective = 0.1888573516852008
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.9455412682320371, "objective" = 0.1888573516852008, "iterations" = 5, "evaluations" = 12, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.2611822451014736, 0.8783102574517225, 0.861889977064045, 0.5015551736390977, 0.4970623467436612]
+q = 2.0
+bandwidth = 0.4
+cutoff = 2.506290138918283
+variance = 0.860022810708961
+objective = 0.13368295899173382
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.860022810708961, "objective" = 0.13368295899173382, "iterations" = 5, "evaluations" = 14, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [2.1841752075370113, 1.953080588802512, 0.5415953809114384, 0.20576216114123552, 0.11538666160780262]
+q = 2.0
+bandwidth = 0.4
+cutoff = 2.914184420237471
+variance = 0.99999
+objective = 0.34290755266025796
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.34290755266025796, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0]
+q = 10.0
+bandwidth = 0.01
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 2.453323041461206
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 2.453323041461206, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.040911035098285, 1.2926153281538995, 0.7720609641674261, 0.5082510887817105, 0.3861615837986785]
+q = 10.0
+bandwidth = 0.01
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 9.686832213072353
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 9.686832213072353, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [2.2151822332913254, 1.515861496183836, 0.8443251804481288, 0.31353739556425725, 0.11109369451245306]
+q = 10.0
+bandwidth = 0.01
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 2.4533228486845577
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 2.4533228486845577, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0]
+q = 10.0
+bandwidth = 0.1
+cutoff = 0.8267378930843039
+variance = 0.4772058374934575
+objective = 11.510235116203463
+factors = 5
+optimizer = {"success" = true, "fitted" = 0.4772058374934575, "objective" = 11.510235116203463, "iterations" = 6, "evaluations" = 18, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.6715157904933453, 1.3282889569241634, 0.49994275342072536, 0.29731103291475086, 0.20294146624701437]
+q = 10.0
+bandwidth = 0.1
+cutoff = 0.7638800288534877
+variance = 0.4409233107165484
+objective = 5.760680771822315
+factors = 2
+optimizer = {"success" = true, "fitted" = 0.4409233107165484, "objective" = 5.760680771822315, "iterations" = 4, "evaluations" = 18, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [2.3599854141678867, 1.0945729901581776, 0.7212768512352309, 0.6319518110448653, 0.1922129333938395]
+q = 10.0
+bandwidth = 0.1
+cutoff = 1.6825638680795145
+variance = 0.9712017636056752
+objective = 0.4596295084741215
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.9712017636056752, "objective" = 0.4596295084741215, "iterations" = 4, "evaluations" = 10, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0]
+q = 10.0
+bandwidth = 0.4
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 0.2705242161054616
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.2705242161054616, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.7791762540333234, 0.8321421306137552, 0.6043690915076413, 0.5139985384541086, 0.2703139853911716]
+q = 10.0
+bandwidth = 0.4
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 1.2994281543528956
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1.2994281543528956, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [1.9655204146377916, 1.702096838334897, 0.968060469328636, 0.2924650273783561, 0.07185725032031945]
+q = 10.0
+bandwidth = 0.4
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 1.3729296679695109
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1.3729296679695109, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 0.5
+bandwidth = 0.01
+cutoff = 5.828368840474942
+variance = 0.99999
+objective = 0.09845567131093173
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.09845567131093173, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.4375359567476815, 2.139017650792988, 1.9372468753197576, 1.0438875197573956, 0.8895188915993366, 0.8572813437378674, 0.7878514022518868, 0.5938033707440674, 0.575504570253726, 0.41527752714882815, 0.21418283299384236, 0.10889205865262122]
+q = 0.5
+bandwidth = 0.01
+cutoff = 5.828368840474942
+variance = 0.99999
+objective = 0.09845581511048132
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.09845581511048132, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [6.6768271154146746, 1.0132510839825986, 0.8861288976928575, 0.5951228123437521, 0.4886208616112093, 0.4441539007526734, 0.41128479703769816, 0.4062065623962437, 0.3841137051234807, 0.3046333847597128, 0.22992804966231645, 0.15972882922278056]
+q = 0.5
+bandwidth = 0.01
+cutoff = 5.828368840474942
+variance = 0.99999
+objective = 2.8173962151678555
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 2.8173962151678555, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 0.5
+bandwidth = 0.1
+cutoff = 5.828368840474942
+variance = 0.99999
+objective = 0.2230529604559682
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.2230529604559682, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [3.8125464367397632, 1.5854192090203485, 1.2053194469845618, 1.1956649590943953, 1.134789458735225, 0.7825609095279995, 0.7133915994969466, 0.4442570994209096, 0.438894075319837, 0.4247856330816377, 0.2233785372615953, 0.03899263531678077]
+q = 0.5
+bandwidth = 0.1
+cutoff = 2.77889617541002
+variance = 0.47678320684691283
+objective = 0.6784049871817213
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.47678320684691283, "objective" = 0.6784049871817213, "iterations" = 5, "evaluations" = 18, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [7.102798073730219, 0.9807092758379694, 0.7666209575927445, 0.7618520323802394, 0.5326486433454842, 0.4754331190113182, 0.39286551082977184, 0.3250639904823072, 0.2520698698995277, 0.17113276601494223, 0.1377718672169539, 0.10103389365852063]
+q = 0.5
+bandwidth = 0.1
+cutoff = 2.9819629479044396
+variance = 0.5116239568722917
+objective = 1.8584601287699756
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.5116239568722917, "objective" = 1.8584601287699756, "iterations" = 3, "evaluations" = 14, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 0.5
+bandwidth = 0.4
+cutoff = 5.828368840474942
+variance = 0.99999
+objective = 0.8842162630547805
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.8842162630547805, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [3.4295877543182627, 2.3217300393910056, 1.2962912065619017, 1.2247849434506324, 0.9010711556264056, 0.7725580765850357, 0.6574629428048899, 0.3809148980241234, 0.3557403249020683, 0.27291772073764964, 0.24342938532994962, 0.1435115522680769]
+q = 0.5
+bandwidth = 0.4
+cutoff = 2.432949515641566
+variance = 0.41742814374598763
+objective = 0.3954586046910939
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.41742814374598763, "objective" = 0.3954586046910939, "iterations" = 6, "evaluations" = 14, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [5.1347964793318726, 3.027781329200281, 0.6405359363882622, 0.5223441377753016, 0.5153016305902207, 0.4809997212830159, 0.40081967439233573, 0.37992826933786805, 0.2794124678073122, 0.2785266028710572, 0.25802107005539043, 0.08153268096708183]
+q = 0.5
+bandwidth = 0.4
+cutoff = 1.5604325784308233
+variance = 0.2677279041210926
+objective = 0.6768388443194757
+factors = 2
+optimizer = {"success" = true, "fitted" = 0.2677279041210926, "objective" = 0.6768388443194757, "iterations" = 5, "evaluations" = 22, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.0
+bandwidth = 0.01
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221969.1805495
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221969.1805495, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.091071104949383, 1.848007538406895, 1.788916308566489, 1.5691367995915702, 0.7862581432197627, 0.7361362970766615, 0.7252356871188336, 0.7210394017605531, 0.6185315896830532, 0.4740234569088685, 0.44041267108550197, 0.20123100163242727]
+q = 1.0
+bandwidth = 0.01
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013222031.469844
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013222031.469844, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [5.924794279841471, 0.8098256343113815, 0.7902237371941034, 0.7550922082477834, 0.7417355221146286, 0.641183235189247, 0.5895162328161602, 0.5607104371676841, 0.4884779143091718, 0.3306649759975201, 0.21439920398801368, 0.15337661882283266]
+q = 1.0
+bandwidth = 0.01
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221969.8596107
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221969.8596107, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.0
+bandwidth = 0.1
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221974.7186219
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221974.7186219, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [3.04353910118076, 1.4540147569901232, 1.3975659822263933, 1.1323208220004886, 0.9756154825091248, 0.9706875230482872, 0.8660084644715265, 0.6712873295400312, 0.4730641240751956, 0.4690764897392347, 0.3135453582900245, 0.23327456592881102]
+q = 1.0
+bandwidth = 0.1
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013220420.2840431
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013220420.2840431, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [6.692193361187966, 0.956024987867565, 0.9261403533696405, 0.6319294828192025, 0.609412541770274, 0.5185400909868982, 0.48782999418373085, 0.38783279249613656, 0.27617454189892193, 0.2672818664933214, 0.12345948628547491, 0.12318050064086684]
+q = 1.0
+bandwidth = 0.1
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013201107.509337
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013201107.509337, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.0
+bandwidth = 0.4
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013219179.8011788
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013219179.8011788, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [3.230063285551592, 2.0311868237676176, 1.2853428735461654, 0.9859161412706102, 0.9507625186641904, 0.8314417572771325, 0.8167623389218677, 0.6493884266003169, 0.487470157075616, 0.29640466796860976, 0.28733370900555827, 0.1479273003507245]
+q = 1.0
+bandwidth = 0.4
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013203118.3149118
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013203118.3149118, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [6.546439272764338, 0.9901433621962854, 0.7730365097597289, 0.7656796217613745, 0.7085410011728566, 0.571579330574147, 0.4927891405064547, 0.3269848283822385, 0.2584775096671668, 0.24625425521834363, 0.1849975516742197, 0.13507761632284485]
+q = 1.0
+bandwidth = 0.4
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013192359.2245187
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013192359.2245187, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.001
+bandwidth = 0.01
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 0.5639419586976404
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.5639419586976404, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.1761381661760124, 2.1696256587780187, 1.3073829657549771, 1.3039519428908652, 1.209579181650681, 1.0617803253881017, 0.8320639483771227, 0.6592810923962465, 0.6300425502799019, 0.43721257924722556, 0.12696613489599115, 0.08597545416485688]
+q = 1.001
+bandwidth = 0.01
+cutoff = 2.5039959198316963
+variance = 0.6263118621317474
+objective = 1.0310003037629756
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.6263118621317474, "objective" = 1.0310003037629756, "iterations" = 5, "evaluations" = 34, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [5.979007455050727, 1.0194662217950847, 0.9524463895997278, 0.9228931683664694, 0.7827879138339112, 0.5292105459994004, 0.4485499150918316, 0.3304306517313588, 0.31097179921077, 0.3020658574517526, 0.30103892624684475, 0.12113115562212307]
+q = 1.001
+bandwidth = 0.01
+cutoff = 1.993574372325799
+variance = 0.4986426964758889
+objective = 2.4808674454844946
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.4986426964758889, "objective" = 2.4808674454844946, "iterations" = 4, "evaluations" = 18, "message" = "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.001
+bandwidth = 0.1
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 6.163365831584953
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 6.163365831584953, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.556699937274838, 1.6199141458562847, 1.3738280799661113, 1.3499215384603924, 1.3486719956838904, 1.2924141171451087, 0.9042918648121434, 0.53956789149419, 0.34085398861800814, 0.2696689098901339, 0.22268936824179178, 0.1814781625571074]
+q = 1.001
+bandwidth = 0.1
+cutoff = 1.9865035868852834
+variance = 0.49687411659885733
+objective = 1.1685735624016722
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.49687411659885733, "objective" = 1.1685735624016722, "iterations" = 4, "evaluations" = 14, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [5.7327331836698265, 2.2176468197745374, 1.0748214925546398, 0.6409532362397653, 0.5057190297055176, 0.4971938457403407, 0.446377413364792, 0.3724444519897752, 0.17068487113698275, 0.16961688969719485, 0.11656751478643344, 0.0552412513401933]
+q = 1.001
+bandwidth = 0.1
+cutoff = 3.726938332161117
+variance = 0.9322002757188641
+objective = 0.6123310938218458
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.9322002757188641, "objective" = 0.6123310938218458, "iterations" = 3, "evaluations" = 16, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.001
+bandwidth = 0.4
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 0.9132628261537113
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.9132628261537113, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [3.0846484153851663, 1.5260873363654368, 1.20216786629901, 1.1441149831443451, 1.0207000422552042, 0.9699548912413019, 0.8342017000359645, 0.773975764327099, 0.5428017650724777, 0.4191032614249003, 0.26748876388798776, 0.21475521056110647]
+q = 1.001
+bandwidth = 0.4
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 0.2752433545594532
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.2752433545594532, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [3.880204673784332, 2.178594025884182, 1.6970174778890297, 1.3029378117760866, 0.879472548983332, 0.8286970784460133, 0.6394029997054165, 0.15376783684347353, 0.13928142783066072, 0.13030009579426058, 0.1148587477063426, 0.05546527535687125]
+q = 1.001
+bandwidth = 0.4
+cutoff = 3.4428897755688745
+variance = 0.8611526438093521
+objective = 0.21169664893219212
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.8611526438093521, "objective" = 0.21169664893219212, "iterations" = 3, "evaluations" = 24, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 2.0
+bandwidth = 0.01
+cutoff = 2.914184420237471
+variance = 0.99999
+objective = 1.5752907409749082
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1.5752907409749082, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.647757144003182, 2.010584146768064, 1.5541390199773026, 1.2863707924525891, 1.0880730292970069, 0.7820161764881924, 0.6440219921787813, 0.5083087063908669, 0.5074712906251075, 0.5015350775418022, 0.31083003850955226, 0.15889258576755377]
+q = 2.0
+bandwidth = 0.01
+cutoff = 1.4396164790183317
+variance = 0.4939982771358825
+objective = 2.5939740229028545
+factors = 3
+optimizer = {"success" = true, "fitted" = 0.4939982771358825, "objective" = 2.5939740229028545, "iterations" = 11, "evaluations" = 30, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [6.085341392449386, 1.2818395883145, 1.1639295103691114, 0.6457750840202345, 0.5404335170534542, 0.49719271050958175, 0.41897892228044314, 0.3624303859375885, 0.34109600680507174, 0.3065904203098359, 0.20617931657591768, 0.15021314537487282]
+q = 2.0
+bandwidth = 0.01
+cutoff = 2.122997326600068
+variance = 0.7284975109618509
+objective = 1.9079197710768148
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.7284975109618509, "objective" = 1.9079197710768148, "iterations" = 8, "evaluations" = 32, "message" = "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 2.0
+bandwidth = 0.1
+cutoff = 2.914184420237471
+variance = 0.99999
+objective = 4.99088333885387
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 4.99088333885387, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [3.9444179214788626, 1.320183946636234, 1.240118597235627, 1.017627370109432, 0.9567462869179434, 0.9523463889470408, 0.765225404319408, 0.6237336755276374, 0.48661416747488406, 0.3287406342968984, 0.24196227332557016, 0.1222833337304623]
+q = 2.0
+bandwidth = 0.1
+cutoff = 2.914184420237471
+variance = 0.99999
+objective = 0.506953424129565
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.506953424129565, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [7.071564897028745, 0.8449251669690797, 0.8291766421966569, 0.6782807710244675, 0.6359463859891837, 0.4878195138282877, 0.3549458258535698, 0.337746983952655, 0.3236727995245972, 0.2531567315997205, 0.12916582681601338, 0.053598455217022306]
+q = 2.0
+bandwidth = 0.1
+cutoff = 1.63807276880674
+variance = 0.5620977096382836
+objective = 1.0658462005893579
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.5620977096382836, "objective" = 1.0658462005893579, "iterations" = 4, "evaluations" = 12, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 2.0
+bandwidth = 0.4
+cutoff = 2.914184420237471
+variance = 0.99999
+objective = 0.9774163438286193
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.9774163438286193, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [3.796002463757682, 1.9026814461480488, 1.1278863276933455, 1.0802869601021832, 0.8463479830859999, 0.7397547127490511, 0.5733717590944272, 0.5195251191701798, 0.5027193136527013, 0.4629597382890465, 0.24539511578741416, 0.20306906046992187]
+q = 2.0
+bandwidth = 0.4
+cutoff = 2.914184420237471
+variance = 0.99999
+objective = 0.2602115661156072
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.2602115661156072, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [4.970669530530483, 1.8392609453294446, 0.9591774278199767, 0.9234360771900582, 0.8270287015765561, 0.7926562502625949, 0.44810319829510625, 0.43824392770313925, 0.271263565977324, 0.2228689105394192, 0.164269004764209, 0.1430224600116883]
+q = 2.0
+bandwidth = 0.4
+cutoff = 2.9125855583570233
+variance = 0.9994413573400757
+objective = 0.3397558581561711
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.9994413573400757, "objective" = 0.3397558581561711, "iterations" = 3, "evaluations" = 10, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 10.0
+bandwidth = 0.01
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 7.591392943208379
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 7.591392943208379, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.9175118343040243, 1.8280706285675303, 1.5677125902257065, 1.4439502820569912, 1.1762377564172322, 0.5981069411827887, 0.5958237411343089, 0.5405296579923563, 0.39118778960348277, 0.34572431778616974, 0.311394511136306, 0.2837499495931031]
+q = 10.0
+bandwidth = 0.01
+cutoff = 1.720265261129789
+variance = 0.9929635879949096
+objective = 6.6042887262091385
+factors = 2
+optimizer = {"success" = true, "fitted" = 0.9929635879949096, "objective" = 6.6042887262091385, "iterations" = 8, "evaluations" = 26, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [6.575426923898098, 1.4264546197281276, 0.6394314128796761, 0.5836398812581239, 0.540718454725318, 0.5098731547954165, 0.4919112018526246, 0.4519012134303311, 0.36828800464859274, 0.1908229507020448, 0.15352171884262, 0.06801046323902495]
+q = 10.0
+bandwidth = 0.01
+cutoff = 0.8597199911681078
+variance = 0.49624361218605656
+objective = 17.95011623254616
+factors = 2
+optimizer = {"success" = true, "fitted" = 0.49624361218605656, "objective" = 17.95011623254616, "iterations" = 6, "evaluations" = 36, "message" = "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 10.0
+bandwidth = 0.1
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 14.935960814179632
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 14.935960814179632, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [3.499402204953069, 1.7719664056021238, 1.349433766669712, 0.9961867800134843, 0.8604004596514516, 0.8253393893365584, 0.6876340132572458, 0.5883055236591235, 0.5257174117537114, 0.36797657473240836, 0.35229452390830857, 0.17534294646280116]
+q = 10.0
+bandwidth = 0.1
+cutoff = 1.6057498509043828
+variance = 0.926863530528511
+objective = 2.4078727978647683
+factors = 2
+optimizer = {"success" = true, "fitted" = 0.926863530528511, "objective" = 2.4078727978647683, "iterations" = 4, "evaluations" = 18, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [6.355267508560217, 1.2550338102611005, 0.9285769975984336, 0.9102568762112508, 0.7581805915892538, 0.4549464674091257, 0.3727592502299916, 0.2909700182805736, 0.2798238129433151, 0.2052267400434306, 0.09704264776809651, 0.09191527910521066]
+q = 10.0
+bandwidth = 0.1
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 3.4393472956874565
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 3.4393472956874565, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 10.0
+bandwidth = 0.4
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 0.5691060986083605
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.5691060986083605, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.5084043591847167, 2.210149364341708, 1.882709395742769, 1.2535438039435374, 0.9406691654642336, 0.8403887709586492, 0.7776198810398766, 0.5593615462853155, 0.3464053182480273, 0.30669083150622845, 0.2090526409379956, 0.16500492234694655]
+q = 10.0
+bandwidth = 0.4
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 2.711446030746745
+factors = 3
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 2.711446030746745, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [4.094846204710127, 2.8801422439919686, 0.9758777758292294, 0.9245126075104891, 0.8876698115635775, 0.6500162893750483, 0.5285856396107904, 0.4180685905964017, 0.20505763483734743, 0.17301939935398963, 0.15708728985119735, 0.10511651276983244]
+q = 10.0
+bandwidth = 0.4
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 2.9470904708802275
+factors = 2
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 2.9470904708802275, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 0.5
+bandwidth = 0.01
+cutoff = 5.828368840474942
+variance = 0.99999
+objective = 0.41515133021487477
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.41515133021487477, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.687890990422236, 2.3003779213998587, 2.263522873448332, 1.9057110817973264, 1.8269019721037714, 1.5315786084776861, 1.497180065216151, 1.4755479097838264, 1.4529790084879208, 1.3918231219078667, 1.369367931412387, 1.3677755987152391, 1.3314721076906084, 1.3154834629388752, 1.1857904203860783, 1.16826305943002, 1.131666834037961, 1.026358218930977, 1.0119611779376674, 0.9764284961396142, 0.9624700561643572, 0.8733882148890454, 0.8282117962341838, 0.6941207962492464, 0.6283975190597235, 0.5872960574241711, 0.5708545231683763, 0.5648917273991497, 0.5475468099723922, 0.48413654754684726, 0.46214580727829446, 0.43184013301952634, 0.37192619403714394, 0.2981604102293444, 0.2815998460029794, 0.25548454448323454, 0.24785407123208916, 0.2383904342331939, 0.22706823997150713, 0.2261354107407949]
+q = 0.5
+bandwidth = 0.01
+cutoff = 5.828368840474942
+variance = 0.99999
+objective = 4.8444903631626595
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 4.8444903631626595, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [17.797674754195597, 2.4035532097206085, 1.7639387596400427, 1.2941715793431237, 1.1533935290612762, 1.0061876049938352, 0.9301728233339248, 0.893901190536288, 0.8363992381757499, 0.816110989485253, 0.8053816327040145, 0.7964413542456654, 0.755499848337064, 0.6709163611261981, 0.6593379280864392, 0.5802344529165877, 0.5613306628797553, 0.5525989097661657, 0.5507568170826385, 0.4712650403062404, 0.42398394598213457, 0.3785444392104722, 0.3349794984313861, 0.33312668316558763, 0.3284975165150723, 0.29624209827933395, 0.2938161936623735, 0.24577408751946686, 0.23321031326447578, 0.2322197790742198, 0.22535889099530348, 0.2182066516611233, 0.20250561211468687, 0.2016931262118886, 0.18415689493708703, 0.17920633550137977, 0.1424700032064336, 0.1270216291419296, 0.0673737570795704, 0.05234585810960306]
+q = 0.5
+bandwidth = 0.01
+cutoff = 5.73008245234635
+variance = 0.9831267217904655
+objective = 1.6612020722652159
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.9831267217904655, "objective" = 1.6612020722652159, "iterations" = 7, "evaluations" = 26, "message" = "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 0.5
+bandwidth = 0.1
+cutoff = 5.828368840474942
+variance = 0.99999
+objective = 17.58028098626814
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 17.58028098626814, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [4.421618625396016, 2.350073942526842, 2.195269682397106, 2.1608700781776853, 2.021222017297665, 1.923472044399323, 1.7219413880346803, 1.6009678463416046, 1.5967162494474803, 1.48714796233736, 1.1130293846360615, 1.1121493492906125, 1.0583680547216632, 1.0074059288725818, 0.9563952867770283, 0.8944420729268308, 0.8494784245183857, 0.8360717327895592, 0.8316997134619053, 0.8059527472255609, 0.7897923092756636, 0.774868693918188, 0.7420463002205996, 0.7276033120496816, 0.7250643208447093, 0.7110172594447489, 0.5289952593129892, 0.5190409311252603, 0.4927749719682224, 0.4899108091090914, 0.34633579357371924, 0.335355066129412, 0.31889053484328794, 0.3083895223182572, 0.2832645219048495, 0.23286880492144815, 0.22959579918551515, 0.20372723488787817, 0.2023167941436119, 0.09384922924690833]
+q = 0.5
+bandwidth = 0.1
+cutoff = 5.828368840474942
+variance = 0.99999
+objective = 2.1998237756145915
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 2.1998237756145915, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [16.055602661107066, 2.7697219066452985, 2.2737005630420675, 1.852643130890855, 1.621744071614556, 1.2153948790528504, 1.0780579536771249, 0.8721777005838778, 0.8342598922032732, 0.814132249117355, 0.7882708287744589, 0.6568392951158712, 0.6399098026595477, 0.6297251038818459, 0.6235831360029486, 0.6084644235235241, 0.5967211731871345, 0.5214706537486236, 0.49624399556340587, 0.4516358172984711, 0.39344469180475244, 0.38559215884541553, 0.32437672478492363, 0.30021546805241417, 0.29408194124003456, 0.2852708300594532, 0.2673470692567486, 0.2518813382880815, 0.2506141067988241, 0.2479684789215746, 0.2472885128598498, 0.23012194441339773, 0.20686023350816254, 0.17556638105884767, 0.14763153162161763, 0.14667310632008926, 0.14409472810635746, 0.1344856028159048, 0.08408507440662195, 0.08210083914677783]
+q = 0.5
+bandwidth = 0.1
+cutoff = 5.828368840474942
+variance = 0.99999
+objective = 3.889167691630213
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 3.889167691630213, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 0.5
+bandwidth = 0.4
+cutoff = 5.828368840474942
+variance = 0.99999
+objective = 3.110443330410995
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 3.110443330410995, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [2.38025057812255, 2.3505078697535446, 2.286923627644237, 2.225582607108533, 2.132205809833572, 2.127419319845864, 1.8737592904973897, 1.7984020113934656, 1.559334930620312, 1.520664185672183, 1.1569424141655336, 1.153753599522133, 1.0504285871184458, 1.01691221634954, 0.9735483733869095, 0.875690018426001, 0.866382649530847, 0.838128584483512, 0.8181272784703297, 0.7904817303494787, 0.7366410075373323, 0.6729152111695106, 0.6707721807659123, 0.6695632041058858, 0.6638391477829745, 0.6251078173483963, 0.6230764642208493, 0.5799337048849749, 0.5727546947036574, 0.5676427907451764, 0.511236388090919, 0.5099196979140843, 0.49160702729886196, 0.4805380988572655, 0.46957668062675606, 0.36117374803913826, 0.3551419865328227, 0.2867290184810679, 0.18318889628424798, 0.17319655231578807]
+q = 0.5
+bandwidth = 0.4
+cutoff = 5.828368840474942
+variance = 0.99999
+objective = 1.190028826143593
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1.190028826143593, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [19.042312971248638, 2.2343469954949033, 1.5499559984878601, 1.421374723728129, 1.159219810365737, 0.8514466643152552, 0.844011177299064, 0.8004952134921335, 0.7654386323789077, 0.7271427414162261, 0.6342176378232548, 0.6134023472815134, 0.5942083097433879, 0.5678162720727329, 0.51458807227566, 0.5145507993984404, 0.5068706963802305, 0.4907874536043377, 0.48547213353678376, 0.4823436430476284, 0.41565103101203277, 0.38976339703444945, 0.3876224724192901, 0.38227943534127845, 0.38004833200285715, 0.37060593208063225, 0.3436727554828553, 0.3167244893288117, 0.3129343803703999, 0.28426957955032606, 0.2556752302290697, 0.2333426895912367, 0.19990752360864553, 0.1926137196321765, 0.17421360782158324, 0.17227254822387147, 0.16539709661005164, 0.09750116657851697, 0.09223854242833263, 0.033263777262758545]
+q = 0.5
+bandwidth = 0.4
+cutoff = 2.1535225739814945
+variance = 0.3694860599419906
+objective = 1.8558390482509222
+factors = 2
+optimizer = {"success" = true, "fitted" = 0.3694860599419906, "objective" = 1.8558390482509222, "iterations" = 2, "evaluations" = 16, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.0
+bandwidth = 0.01
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221973.254439
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221973.254439, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [4.165173868304123, 2.5159264671951242, 2.4494524162441804, 2.3140818585498124, 2.09723353410567, 1.9111746183614053, 1.884404423945503, 1.8492167967920397, 1.644556998774111, 1.6177255563160322, 1.4990790037322923, 1.2881662886164287, 1.27462850052585, 1.1613569202679457, 0.9648493587137756, 0.9340100225424548, 0.8236475525362645, 0.7922339221855093, 0.7790670955021661, 0.7126633480791268, 0.7117693642525894, 0.6887687844479736, 0.5896951673469961, 0.5303655737523948, 0.5296828601786292, 0.5043623215291796, 0.4678271918767275, 0.40956078330132156, 0.3690735331202198, 0.3604082823048817, 0.335675143720849, 0.3216343366541548, 0.3071114494344345, 0.29264403208705214, 0.26055525664587736, 0.22399381737123653, 0.1436805750156621, 0.11164091281048596, 0.10184892829914208, 0.06105313456037551]
+q = 1.0
+bandwidth = 0.01
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221975.9408767
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221975.9408767, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [18.962561397424906, 1.4974299311258579, 1.4133263057857037, 1.4000618251520938, 1.314786806060116, 0.9275211532421099, 0.8836551674296609, 0.8444849728557592, 0.771729046094041, 0.7618133081409013, 0.7373293709398905, 0.72033170312269, 0.7039608006353545, 0.662421419915189, 0.6493793264572854, 0.5650063580826832, 0.5565287581252033, 0.4913831203253144, 0.4420899512803984, 0.4415375879768024, 0.41052687300136514, 0.40830857118420244, 0.40499834068280455, 0.3816226983249876, 0.3765561309756528, 0.348505036592181, 0.3445851786985634, 0.31860634443751235, 0.2983290117466601, 0.2903796419098043, 0.2810750544264548, 0.2651651825140345, 0.22409572927720242, 0.1955032596113419, 0.18381563289009542, 0.1438393881990221, 0.10641732354276713, 0.10525504777545787, 0.08885934238358228, 0.0762179016543503]
+q = 1.0
+bandwidth = 0.01
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221979.6094059
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221979.6094059, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.0
+bandwidth = 0.1
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013221993.9364727
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013221993.9364727, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [5.233147053423074, 2.4330629444151888, 2.3015375158795877, 2.264021629223463, 2.1478368370475134, 2.0199161874055833, 1.9370839662634598, 1.5791590155420516, 1.5615478845748294, 1.3917419057792726, 1.3210195224012105, 1.2236315830158155, 1.2202650718977135, 1.1996221885620002, 1.1918752343749017, 1.0878275829794763, 0.9384087651288673, 0.9287653869297917, 0.9257144232417077, 0.7908078265396932, 0.6448730887771246, 0.5439996356933932, 0.49813978617066834, 0.4356636397653326, 0.4164638367059595, 0.41155791694109267, 0.37024300497428897, 0.3697732613567362, 0.34612353261340484, 0.31722846171286084, 0.2807979821746139, 0.26844448605965116, 0.24660449201275997, 0.2008941589159358, 0.19518612556362194, 0.19303335367343766, 0.18650061352343364, 0.1855283849028047, 0.10242222191858608, 0.08952949191909355]
+q = 1.0
+bandwidth = 0.1
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013208259.9430798
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013208259.9430798, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [18.470861646259774, 1.7736102373919878, 1.6240730953485196, 1.4669495840431905, 1.3459308976819366, 1.1862696865405582, 0.9888743334185842, 0.9507146521626406, 0.9129312233145218, 0.8599238280788262, 0.7239107972441235, 0.6847099024175373, 0.637071611277276, 0.6353151078412578, 0.6125336410885182, 0.5975018143981717, 0.5672688199959868, 0.5384045087766178, 0.5285623413627418, 0.5262053896102264, 0.4264412954479361, 0.3724001480951652, 0.34391042700993896, 0.34248845902759445, 0.34107787691851726, 0.33724813564977696, 0.3274073152778266, 0.2545857172913907, 0.218923267102842, 0.2136349283541893, 0.19308044534090996, 0.187612444799851, 0.16804265177489416, 0.12180586858333027, 0.12073747225870572, 0.11359431135546447, 0.0954479120717397, 0.08791195780644556, 0.061733985562690205, 0.04029226201779525]
+q = 1.0
+bandwidth = 0.1
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013187898.604636
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013187898.604636, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.0
+bandwidth = 0.4
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013219183.1597222
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013219183.1597222, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [3.2626243128462704, 2.1310943544088587, 2.10460940594433, 2.0918039233769705, 1.9393748929989807, 1.7404279189497578, 1.6878898994274232, 1.6189892855766215, 1.4793562406150913, 1.2248037749006566, 1.1990695255603896, 1.1907986570533666, 1.1754808911768229, 1.1426279360927922, 1.0465185242122697, 1.0061396128133022, 0.9929132168941999, 0.9726219813975238, 0.8426871639549026, 0.7630051311198154, 0.7617615636464082, 0.7537465218131709, 0.7138928033019558, 0.7009374297883516, 0.6979424167912868, 0.6309116426734294, 0.6234364313240865, 0.594079657755987, 0.5171235502553304, 0.503091812625711, 0.501907822627099, 0.500683091609002, 0.4791468485174094, 0.40253240480975583, 0.3896274914467649, 0.3716562978278735, 0.3634974018543087, 0.3379782931796075, 0.299812182343713, 0.24339768648840604]
+q = 1.0
+bandwidth = 0.4
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013206884.8388038
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013206884.8388038, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [17.1057459367647, 2.543092227580253, 2.0515611400277423, 1.3651530881773717, 1.3570723217334868, 1.1360866151723517, 1.1274488742015274, 1.1050447756416892, 1.080387121908998, 1.0335820474688433, 0.962029904682873, 0.7700432765755361, 0.7361645864755915, 0.5910059360562243, 0.5819770066341591, 0.5039953015542369, 0.4921366198420181, 0.46809676966571767, 0.4172316576836617, 0.40346152493433995, 0.39355129356058677, 0.3658226562205717, 0.3590774508346574, 0.3305463879396897, 0.2904122775258355, 0.28711608058842253, 0.26079902092339297, 0.2391749071134313, 0.22004820442030157, 0.2128699444681407, 0.1829351938019389, 0.1653891248634976, 0.1536397660707852, 0.15088958278333425, 0.1402727438359785, 0.11936214965260294, 0.11884268921756182, 0.08067290195589137, 0.0641155503611095, 0.03314534108094899]
+q = 1.0
+bandwidth = 0.4
+cutoff = 3.99996
+variance = 0.99999
+objective = 1013188832.3827583
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1013188832.3827583, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.001
+bandwidth = 0.01
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 5.192476123425437
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 5.192476123425437, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [4.903629590662674, 2.5940849764812217, 2.4956312365643476, 2.3592319252625926, 2.3499871200265248, 2.291459272596536, 1.6828280147769945, 1.634401301589511, 1.525700768985558, 1.2683227848025578, 1.1970323285356763, 1.164935717542432, 1.100557152153038, 1.0980069106606196, 1.0384451109064248, 1.0064960783129504, 0.9740539969509127, 0.886461647302637, 0.7325187759780738, 0.7321611399521141, 0.716873327719753, 0.6839823133827405, 0.6829237344640202, 0.6397783283695896, 0.6151377432492335, 0.47046339373380897, 0.36435567014380826, 0.3309880617719307, 0.30291058037884466, 0.28482393879586976, 0.2831269268349308, 0.27378142358601115, 0.2376681842189617, 0.2124784891196122, 0.21175672137919413, 0.1577931604046966, 0.15356160286855405, 0.13809022096915857, 0.11861838767357322, 0.08494194089231143]
+q = 1.001
+bandwidth = 0.01
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 7.684813536818309
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 7.684813536818309, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [18.167118239124203, 1.968977688524961, 1.5618293676879857, 1.3150855816527993, 1.2798375118824046, 1.07956425109632, 1.0395985594985853, 0.9208599775137677, 0.8853817319753012, 0.8026136120916377, 0.7111315913853361, 0.6961574586858952, 0.6902874939990318, 0.6229611418088677, 0.6058212469603327, 0.5819961881303889, 0.5814880330383247, 0.5059241609504908, 0.489244154034667, 0.4347702312434431, 0.4264707915762148, 0.3904769778773091, 0.359468342840038, 0.3587424799381651, 0.350615874861659, 0.33514803607073623, 0.325500961011759, 0.3105897945144502, 0.30362534553246023, 0.30129604793227477, 0.29732506049671154, 0.24212781788394352, 0.193407824355667, 0.18468716629411697, 0.14793519877758224, 0.1390822193245962, 0.13154213456462713, 0.11234655427016534, 0.0869042803688575, 0.06205887022393025]
+q = 1.001
+bandwidth = 0.01
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 11.317960190319573
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 11.317960190319573, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.001
+bandwidth = 0.1
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 25.332751182719676
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 25.332751182719676, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [8.538903974522846, 3.9410897066290644, 2.9775776415006865, 1.6851380725802905, 1.5700937656213032, 1.3009297869303418, 1.2419809661059937, 1.1539202052951487, 1.0702880307823885, 1.0559417707210634, 1.0068402152378422, 0.9950837058469176, 0.9487258895629005, 0.891036704746112, 0.835564063251757, 0.8140852747373908, 0.7565333786568558, 0.728481101047327, 0.717899662006122, 0.7164456977049427, 0.6834651272820751, 0.6685363804588522, 0.5899283303426559, 0.49954138222780037, 0.491729788934553, 0.46751813137072246, 0.3985062607776259, 0.3839284946953169, 0.3660905646233347, 0.35154055927660666, 0.3198071947431932, 0.29234771176767954, 0.2867244329963191, 0.27654666690739593, 0.2443327870515364, 0.23241453872110274, 0.2060148225707015, 0.11924213154628759, 0.08852361597205663, 0.08670146424689254]
+q = 1.001
+bandwidth = 0.1
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 1.663661145881318
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1.663661145881318, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [17.1108178554638, 2.8972773877253477, 2.3051891116987377, 1.704026049957789, 1.5788540919822223, 1.4015676966484878, 0.9713344239619237, 0.8676757878587087, 0.778985680034092, 0.7022942395744322, 0.6717937036348137, 0.6581599150479126, 0.5953272979917885, 0.5913973607013521, 0.5781180094393512, 0.5686921939910886, 0.5288936304875177, 0.5000875954128357, 0.4951896622837074, 0.49098457172488774, 0.48663506711270926, 0.3930679247451299, 0.36131809838937584, 0.31312467887611534, 0.2964408604313787, 0.26224790924898644, 0.2316026301763464, 0.22694064211088355, 0.17505384706711255, 0.17341941204025804, 0.1567686019794608, 0.1525277611737524, 0.13537515937397812, 0.1279750471023772, 0.11693979558032694, 0.11459025818661843, 0.11040740596415805, 0.07905843386026673, 0.05969930810904879, 0.03014089285092103]
+q = 1.001
+bandwidth = 0.1
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 2.070575692475436
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 2.070575692475436, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 1.001
+bandwidth = 0.4
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 4.274601498472679
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 4.274601498472679, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [6.5927294943699515, 2.598725809858861, 2.4407944834740007, 2.225874012552734, 1.877721193809605, 1.8019603619872668, 1.7966632430999445, 1.5020485265685692, 1.495154757409511, 1.481418081410853, 1.4451875112664019, 1.1660295687033653, 1.1468911765124041, 0.9827105235465834, 0.9413722142050387, 0.8972397065063332, 0.7990109898024137, 0.7641646505513883, 0.7186323784893991, 0.6787021945270618, 0.6426262032113349, 0.5553495392662979, 0.5144507645848126, 0.47979303978133603, 0.47527916161309086, 0.42574472823782344, 0.4252344456409112, 0.4167969060815165, 0.40468053527455167, 0.3769087965391094, 0.3683031773867343, 0.3446758707090043, 0.29383300784524885, 0.20099807597747787, 0.16242210933276352, 0.16078388814819858, 0.14336317166734733, 0.10513038915520583, 0.1046954247535574, 0.04589988614199147]
+q = 1.001
+bandwidth = 0.4
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 0.6899549286352784
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.6899549286352784, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [15.979627371675017, 3.379458155465311, 2.428954773647843, 1.8454872231738075, 1.5190485738477852, 1.226337124281674, 0.915335760440575, 0.913741365267365, 0.8861337090654696, 0.7853203517019586, 0.7695217630032503, 0.7547121479793891, 0.7530977149588801, 0.7487728643843329, 0.6037347377949331, 0.5939657058729712, 0.5510994765583682, 0.4979363780247652, 0.48860834810149006, 0.4708180165585223, 0.3250536899175878, 0.30742590439395623, 0.3005618920953981, 0.2946663592163309, 0.2890989012551314, 0.2326371263059361, 0.2290302797696349, 0.22671908327005816, 0.2178007480164582, 0.21723051251720735, 0.21259527901816969, 0.2001158030883563, 0.1999502064463548, 0.1622958166767648, 0.1469211298967234, 0.1170033947557566, 0.06301489130371689, 0.053096392036615495, 0.047255971862672906, 0.04581505635347007]
+q = 1.001
+bandwidth = 0.4
+cutoff = 3.9979617683590623
+variance = 0.99999
+objective = 0.8507537993360255
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.8507537993360255, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 2.0
+bandwidth = 0.01
+cutoff = 0.9700921465531938
+variance = 0.3328829976905436
+objective = 60.42714956988678
+factors = 40
+optimizer = {"success" = true, "fitted" = 0.3328829976905436, "objective" = 60.42714956988678, "iterations" = 6, "evaluations" = 16, "message" = "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [4.728059424081932, 3.353109727690059, 2.2826753090115437, 2.140235587271293, 2.0919887641438644, 2.0305428617865586, 1.9813953232134065, 1.9177816464364315, 1.4578062476338376, 1.2453594849084475, 1.2072158445876984, 1.1443529843582163, 1.0754093008048777, 1.0671065976606227, 1.0659679987031074, 0.9396319059146468, 0.9282064845556252, 0.8935095631755585, 0.8548475636675102, 0.808965872364398, 0.6156733866390821, 0.612509423211846, 0.5816740022562081, 0.44389367447458133, 0.44222191643983094, 0.4327056289289714, 0.4103818625290752, 0.38780246000142515, 0.3600185487245693, 0.32978467235985565, 0.3068204485130402, 0.2942246258763256, 0.2531132881363303, 0.24790597848460383, 0.24241105519972514, 0.2365843953441385, 0.22056365916983348, 0.15738567139060622, 0.1329525226633729, 0.07720428768693807]
+q = 2.0
+bandwidth = 0.01
+cutoff = 1.449317940813263
+variance = 0.4973272925245253
+objective = 15.649162776387655
+factors = 9
+optimizer = {"success" = true, "fitted" = 0.4973272925245253, "objective" = 15.649162776387655, "iterations" = 5, "evaluations" = 20, "message" = "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [18.08178340502969, 2.960748431049854, 1.9507992841532718, 1.8308133952382923, 1.3609155531843926, 0.8310750849737631, 0.830561131205661, 0.8255025526598184, 0.8251684532337229, 0.7206652579886279, 0.6750620148197869, 0.6729163468361818, 0.5841312069310975, 0.5369750249929802, 0.49122621813170714, 0.4500457937609177, 0.41411098650534633, 0.40710941137354084, 0.38586179553631955, 0.3711791741777307, 0.3676037287103166, 0.35868053586914656, 0.3546126916998918, 0.34135043735256865, 0.30650594016627736, 0.29072630784535736, 0.29037136358540255, 0.26928326424377735, 0.258857927179235, 0.2577204221568869, 0.25091168569368827, 0.23027715043020083, 0.2057610066628258, 0.1853764881822768, 0.17988523630689804, 0.1702963757838412, 0.1646986184533199, 0.11479894133046173, 0.10773652784523198, 0.08789482871968943]
+q = 2.0
+bandwidth = 0.01
+cutoff = 2.9042108085940113
+variance = 0.9965675975473334
+objective = 9.242712425341562
+factors = 2
+optimizer = {"success" = true, "fitted" = 0.9965675975473334, "objective" = 9.242712425341562, "iterations" = 6, "evaluations" = 16, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 2.0
+bandwidth = 0.1
+cutoff = 2.914184420237471
+variance = 0.99999
+objective = 33.91213426334691
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 33.91213426334691, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [6.226825840366802, 3.8287818506752633, 3.299864156995548, 1.956615525424711, 1.5864245755113695, 1.5585896520144904, 1.3911066351243035, 1.3066631766503607, 1.2503066699672205, 1.2303086599914834, 1.1933594344599543, 1.1800756505227519, 1.118642388580862, 1.042878215581533, 1.0019661961645403, 0.9756735266706796, 0.960103674894892, 0.799853942927066, 0.7540637381755227, 0.6189258927626277, 0.6088301876800959, 0.5403732961364434, 0.5348408325700535, 0.4806417708758793, 0.45734330562727193, 0.416083669091134, 0.40281260196203766, 0.4002664932953082, 0.38092175115709903, 0.36343539807469605, 0.3450841242747241, 0.2826275209203596, 0.2750803414499422, 0.2142200260438338, 0.20594873309486428, 0.19239010584357522, 0.18573608848174372, 0.17471413282105475, 0.13531442646289074, 0.12230579067501156]
+q = 2.0
+bandwidth = 0.1
+cutoff = 2.523061359682489
+variance = 0.8657777838450234
+objective = 0.9665381309033063
+factors = 3
+optimizer = {"success" = true, "fitted" = 0.8657777838450234, "objective" = 0.9665381309033063, "iterations" = 7, "evaluations" = 20, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [17.51629411188861, 2.6829123796201433, 1.5594985874148362, 1.553624248933557, 1.4587724714009123, 1.3230447497287274, 1.2992113436542463, 1.2058421081432635, 0.7549716038781664, 0.7513166615189022, 0.6775275795401174, 0.6673397804658793, 0.6551190007859709, 0.5986449633129137, 0.5475840947398365, 0.5269115522947188, 0.5038467258315866, 0.5034331525542745, 0.4980863763355101, 0.45258167687801454, 0.4269215719413608, 0.38317310772196134, 0.3727127527344775, 0.3721687071451776, 0.30641414050091575, 0.30127369311297425, 0.25499267481858745, 0.2352616454688286, 0.2129865449050138, 0.18087056815623273, 0.1696963227385651, 0.16908256622718326, 0.15274439068749973, 0.1459670126249795, 0.13118595049540785, 0.12148976797011715, 0.11524789650946317, 0.10836201303212888, 0.07806509239650507, 0.02482041189243468]
+q = 2.0
+bandwidth = 0.1
+cutoff = 1.8958720644794567
+variance = 0.6505604424322338
+objective = 2.1702642548596014
+factors = 2
+optimizer = {"success" = true, "fitted" = 0.6505604424322338, "objective" = 2.1702642548596014, "iterations" = 6, "evaluations" = 26, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 2.0
+bandwidth = 0.4
+cutoff = 2.914184420237471
+variance = 0.99999
+objective = 4.321665311037254
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 4.321665311037254, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [5.683027381174149, 2.9732520201509325, 2.569098251729624, 2.4816307343773896, 2.0045642894179316, 1.721583445836859, 1.683243844381421, 1.6350381587190905, 1.2673689645128954, 1.0208170880022474, 0.9545465349029139, 0.9405003067098217, 0.8940521743909075, 0.8441760547077592, 0.8385281115767883, 0.7944786628168862, 0.7786147145171054, 0.7256337740217046, 0.6658567859077326, 0.639149329227619, 0.6338586833511688, 0.6296950683814015, 0.6278835928464831, 0.6248133446981697, 0.6162017309183121, 0.6027400738581925, 0.5577942936086556, 0.5354258511481587, 0.5083948094821461, 0.48473464522209025, 0.4806582000589493, 0.40744475963775656, 0.3796531975104745, 0.3723770843489272, 0.33006557945348114, 0.3178286552378717, 0.2852913241529662, 0.20829155866206284, 0.15192712086179633, 0.12975979947915836]
+q = 2.0
+bandwidth = 0.4
+cutoff = 2.914184420237471
+variance = 0.99999
+objective = 0.781826323972828
+factors = 2
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 0.781826323972828, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [14.680184763734323, 3.1327987631361047, 3.022087610815285, 2.680163077602646, 1.902046167610032, 1.5358661177006123, 1.012558033963017, 1.010240954899895, 0.8712967273926218, 0.8452548365605127, 0.6655210058068773, 0.646081980322388, 0.5963459103762362, 0.5570622782070661, 0.5217807756133106, 0.49415905795041193, 0.4250861780250682, 0.4052165161839453, 0.37687360113911816, 0.3589231901054829, 0.34215383584069564, 0.3186865366499567, 0.3171907732291319, 0.2883019339843218, 0.284645722481931, 0.24906790387395378, 0.23532519742356103, 0.23042749285652384, 0.21994096178101558, 0.2178886186842909, 0.21485603195196243, 0.2115371562729857, 0.18681714392513554, 0.18471362905357144, 0.17138904344851022, 0.13969078817257843, 0.13296139046619543, 0.10930738926198354, 0.10745603995668816, 0.09809486354005396]
+q = 2.0
+bandwidth = 0.4
+cutoff = 2.914184420237471
+variance = 0.99999
+objective = 1.0905115000318144
+factors = 3
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1.0905115000318144, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 10.0
+bandwidth = 0.01
+cutoff = 0.9707595634926003
+variance = 0.5603373625140355
+objective = 87.66416451925346
+factors = 40
+optimizer = {"success" = true, "fitted" = 0.5603373625140355, "objective" = 87.66416451925346, "iterations" = 8, "evaluations" = 70, "message" = "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [6.7237989641848595, 3.27874023996019, 2.5649720959145843, 2.5408695200704563, 2.404549288782618, 2.163132480934997, 1.8571685063787415, 1.5994330265491659, 1.3637269936219856, 1.0383740571699644, 0.9783337171215643, 0.9166397322259282, 0.8953800365704963, 0.8926795433955664, 0.701359106489777, 0.695212566804928, 0.6590843662161973, 0.6508162404031684, 0.6503328363846913, 0.583609139829708, 0.5670981626978756, 0.5558161454021371, 0.5342522403991785, 0.5095682819872341, 0.4936354591765985, 0.4364102057229605, 0.39875693396299305, 0.38571839638392064, 0.3824316720024906, 0.3822504573280313, 0.3763524709566648, 0.2962354269557949, 0.27718568249901027, 0.24607529698209674, 0.22137619865353422, 0.21483890870966338, 0.19759998958149108, 0.1646706956658687, 0.12547844881257222, 0.07603646711029571]
+q = 10.0
+bandwidth = 0.01
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 20.45075931693671
+factors = 7
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 20.45075931693671, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [15.41341827604031, 4.167908546599143, 1.57123341013026, 1.5448727510280127, 1.524501215640609, 1.3526574880557092, 1.2712741362042315, 1.2108698003289018, 0.803607847435448, 0.7172804257668648, 0.683089190017912, 0.6794100850987187, 0.6444288416908522, 0.5856148866482764, 0.5731633697883642, 0.5520891992081935, 0.550705998846111, 0.5200260690871594, 0.4839379978854709, 0.42922769836862007, 0.3919223744267815, 0.386000043375047, 0.3721613027756327, 0.33665834350003543, 0.33181443897741536, 0.33103450543527874, 0.3080467944518794, 0.3066045121495612, 0.30265413044229555, 0.2813600544581129, 0.21196302137712988, 0.20399813144434129, 0.17468446275110436, 0.1640283239038613, 0.15818143597125017, 0.12904619196561948, 0.10333272787225287, 0.09667793865569678, 0.07022290090108153, 0.060291131296453325]
+q = 10.0
+bandwidth = 0.01
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 18.83715688778543
+factors = 2
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 18.83715688778543, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 10.0
+bandwidth = 0.1
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 53.50386226207158
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 53.50386226207158, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [5.426531272606765, 3.5579207596563696, 2.5666444705476077, 1.9584759331420003, 1.7961138987266738, 1.7596687921286491, 1.59313483611798, 1.4335160055157485, 1.3903786845582862, 1.247385728034271, 1.2156512940348878, 1.1570166958596924, 1.0845357427318865, 0.9709444930218945, 0.8704423330595162, 0.8545276474940863, 0.7968123883208367, 0.7791790648737936, 0.7787471643626716, 0.7354835398134235, 0.7222936243190441, 0.6959747978467777, 0.6493796855707482, 0.6263555762807589, 0.6104420862364016, 0.4914427213637227, 0.4548532739493537, 0.45283472382579504, 0.4026581223060367, 0.37271341094901334, 0.33687005490196137, 0.3366979024042218, 0.3153542717605224, 0.29151365519970385, 0.2802898277568175, 0.2396580270659485, 0.23033008725561605, 0.217903043249552, 0.21359642158507822, 0.08572794156588939]
+q = 10.0
+bandwidth = 0.1
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 7.134178457896846
+factors = 6
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 7.134178457896846, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [19.14798914079979, 1.5276057721923082, 1.491228350543134, 1.3112818904202812, 1.3022904121838068, 1.0649870578315803, 0.968282499656471, 0.8222037164427907, 0.7545585508413493, 0.7483646618831159, 0.7468917162064316, 0.7075673684082323, 0.7059756292606887, 0.7037509851750825, 0.6654218485774968, 0.6599868164613126, 0.5680668505842043, 0.5433038429451809, 0.5063660225689908, 0.5063066207908733, 0.4681673610924074, 0.3953711006951744, 0.3763449878939444, 0.3656330294296235, 0.3298169250859569, 0.28493267485372237, 0.24834913775955492, 0.24276243848270423, 0.2244819111923144, 0.21258447288484492, 0.21056142148919538, 0.18428919276567698, 0.16480486351925092, 0.1479516892261727, 0.14714351451380453, 0.14040636044765267, 0.13414023022250074, 0.1241981837772461, 0.0909661787538691, 0.05466457214126527]
+q = 10.0
+bandwidth = 0.1
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 9.850077094024043
+factors = 1
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 9.850077094024043, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[fit]]
+eigenvalues = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+q = 10.0
+bandwidth = 0.4
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 1.5187027023180932
+factors = 0
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 1.5187027023180932, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "constant"
+
+[[fit]]
+eigenvalues = [5.716887360821738, 3.4472655701760146, 2.920200678504249, 2.4245249280266417, 2.0303916396665485, 1.9393209111565681, 1.9165151577865556, 1.4984910446330242, 1.4966061687095562, 1.3521496515732139, 1.2975294162091677, 1.2786567495294816, 1.2461032412579136, 0.9601919681153199, 0.8309772021461811, 0.795355600793024, 0.7014246519127744, 0.6410184704866871, 0.6080231676654643, 0.569184144540987, 0.5408181762280048, 0.5300646977498008, 0.5253046604260476, 0.5139803854976652, 0.4795702651792831, 0.4258952799637199, 0.32265514698425857, 0.3187892090233432, 0.3168844407381565, 0.3037947325924721, 0.2687137027614176, 0.26639660026405404, 0.2473569511678317, 0.2187097679748165, 0.21807297526816416, 0.2114236995265324, 0.20320071296683972, 0.15622841432027776, 0.13730179350022714, 0.12402066415598301]
+q = 10.0
+bandwidth = 0.4
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 9.5063149622654
+factors = 7
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 9.5063149622654, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "lognormal"
+
+[[fit]]
+eigenvalues = [18.67489261906412, 1.7606842220950543, 1.4165469365033385, 1.2668136149163083, 1.2598575362754938, 1.0716179511503698, 1.0681496194314615, 0.9848883806569788, 0.8567866408481276, 0.7780765820416842, 0.7739121667672169, 0.726907859557994, 0.693266194693186, 0.6449985843269023, 0.5377921356848256, 0.5184033563774936, 0.4855356067729919, 0.48341868132346294, 0.4753532220825965, 0.4623406404762419, 0.4344896358135168, 0.43114630940104426, 0.40179529828916855, 0.39779384615052793, 0.3850626897889665, 0.33989927026109923, 0.3194799658357322, 0.264361147570049, 0.23136577421243235, 0.22823012119977998, 0.22405814585630326, 0.21287129809220348, 0.19171196186841308, 0.18723288524892776, 0.18195286118253262, 0.175472320371274, 0.14245017479008326, 0.12260404564010119, 0.11233247334023398, 0.07544722404176372]
+q = 10.0
+bandwidth = 0.4
+cutoff = 1.7324382074783558
+variance = 0.99999
+objective = 8.431067718515147
+factors = 2
+optimizer = {"success" = true, "fitted" = 0.99999, "objective" = 8.431067718515147, "iterations" = 1, "evaluations" = 4, "message" = "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"}
+origin = "factor"
+
+[[covariance]]
+covariance = [[3.42578963572403, 0.18344870719376624, 0.13000073104437776], [0.18344870719376624, 0.2140118152842484, 0.024226529248077656], [0.13000073104437776, 0.024226529248077656, 1.2060360934080512]]
+q = 1.5
+bandwidth = 0.03
+variance = 0.99999
+cutoff = 3.2996268319238333
+factors = 0
+output = [[3.42578963572403, -1.391529936112973e-17, -3.460767991909493e-16], [-1.391529936112973e-17, 0.21401181528424837, -1.3034626007785625e-16], [-3.460767991909493e-16, -1.3034626007785625e-16, 1.2060360934080512]]
+mu = [0.39544765118849934, 0.3922076806963004, 0.19990277838031828]
+portfolio = [0.05460826338122373, 0.866978644255474, 0.07841309236330235]
+minimum = [0.05038287061516854, 0.8065027425809274, 0.14311438680390406]
+
+[[covariance]]
+covariance = [[2.748841818676355, 2.377529091493623, 1.0988974702527299], [2.377529091493623, 2.795232676073167, 1.133785076310796], [1.0988974702527299, 1.133785076310796, 0.6277031765535938]]
+q = 1.5
+bandwidth = 0.03
+variance = 0.99999
+cutoff = 3.2996268319238333
+factors = 0
+output = [[2.748841818676355, -5.747747572905226e-16, -1.228238654021955e-16], [-6.816394945623484e-16, 2.795232676073167, -4.062392960459983e-16], [-1.0262033336780132e-16, -3.99359316029793e-16, 0.6277031765535938]]
+mu = [0.17726334517300357, 0.31451725485052295, 0.13754746983185273]
+portfolio = [0.16278978504841243, 0.2840432479991889, 0.5531669669523986]
+minimum = [0.15716820464839285, 0.15455977500617815, 0.6882720203454291]
+
+[[covariance]]
+covariance = [[0.24561682705198373, 0.01894423568238993, -0.0733799871066228], [0.01894423568238993, 3.971770073695176, -0.26864808161619547], [-0.0733799871066228, -0.26864808161619547, 1.4044624174223515]]
+q = 1.5
+bandwidth = 0.2
+variance = 0.4349879809997627
+cutoff = 1.4353123667948595
+factors = 0
+output = [[0.24561682705198376, -2.1346808309929637e-16, -5.1858161684162946e-17], [-1.2487910473273342e-16, 3.971770073695176, -6.0613762965680204e-18], [-3.313872545625042e-17, -7.707068183449701e-17, 1.4044624174223515]]
+mu = [0.12450526244126267, 0.2099299110218004, 0.2354497380672128]
+portfolio = [0.6968695463714586, 0.07266279801744928, 0.2304676556110921]
+minimum = [0.8085879760388764, 0.05000360277207142, 0.14140842118905222]
+
+[[covariance]]
+covariance = [[5.69135539440063, 1.5158489668874728, 2.9179691127033927], [1.5158489668874728, 0.7391376194885315, 1.025484917071975], [2.9179691127033927, 1.025484917071975, 2.6983559904575274]]
+q = 1.5
+bandwidth = 0.2
+variance = 0.6175267874016599
+cutoff = 2.037628333425576
+factors = 1
+output = [[5.69135539440063, 1.5112277462651498, 2.8893994007423363], [1.51122774626515, 0.7391376194885316, 1.0389865033992067], [2.8893994007423363, 1.0389865033992067, 2.6983559904575274]]
+mu = [0.10467751297667538, 0.14840065263696683, 0.2188801750487094]
+portfolio = [-0.3517760881859539, 1.1040390073231188, 0.24773708086283525]
+minimum = [-0.2092882725107409, 1.2638432192162887, -0.054554946705547794]
+
+[[covariance]]
+covariance = [[2.8017770907881205, 0.1695349677812622, -0.2756835268366654], [0.1695349677812622, 1.0871479793554581, -0.15444783802335205], [-0.2756835268366654, -0.15444783802335205, 2.2520648462084276]]
+q = 5.0
+bandwidth = 0.03
+variance = 0.6928981129320055
+cutoff = 1.4512246483173226
+factors = 0
+output = [[2.8017770907881205, -6.791601467746913e-17, -7.712081932842285e-17], [-6.791601467746913e-17, 1.0871479793554581, -7.586168364116308e-19], [-7.712081932842285e-17, -7.586168364116308e-19, 2.2520648462084276]]
+mu = [0.22962443083816336, 0.25154011659527886, 0.1867381140592277]
+portfolio = [0.20683003776928963, 0.5839123934725929, 0.20925756875811746]
+minimum = [0.20741407745257082, 0.534543614621904, 0.25804230792552524]
+
+[[covariance]]
+covariance = [[3.0953273568384807, 5.349587145014088, 5.817715453975413], [5.349587145014088, 14.432654471826707, 12.172745208937817], [5.817715453975413, 12.172745208937817, 15.371625661841756]]
+q = 5.0
+bandwidth = 0.03
+variance = 0.31976526429259705
+cutoff = 0.6697250642716897
+factors = 1
+output = [[3.0953273568384807, 5.47536367083184, 5.668521642912916], [5.47536367083184, 14.432654471826709, 12.216250634640659], [5.668521642912916, 12.216250634640659, 15.371625661841755]]
+mu = [0.25754109042537165, 0.3387395058337296, 0.2154256774149425]
+portfolio = [1.4115078804722185, -0.009286959547261643, -0.4022209209249568]
+minimum = [1.4487789906184656, -0.211517048000843, -0.23726194261762254]
+
+[[covariance]]
+covariance = [[4.5407852010384975, -0.46098104059217176, -0.5369619722798787], [-0.46098104059217176, 2.1691107474908415, 0.028187925952764877], [-0.5369619722798787, 0.028187925952764877, 0.9971332544329433]]
+q = 5.0
+bandwidth = 0.2
+variance = 0.99999
+cutoff = 2.094406246728006
+factors = 0
+output = [[4.5407852010384975, 3.2697833026544745e-16, 9.277181145390909e-17], [3.2697833026544745e-16, 2.1691107474908415, 1.4131547448186144e-16], [9.277181145390909e-17, 1.4131547448186144e-16, 0.9971332544329433]]
+mu = [0.24781067410997196, 0.3967840736173156, 0.12319085496896974]
+portfolio = [0.15115714320210774, 0.5066547636022111, 0.34218809319568116]
+minimum = [0.13076638056154566, 0.27374445787708307, 0.5954891615613713]
+
+[[covariance]]
+covariance = [[3.7952285544658126, 2.992633023216487, 4.510890505570976], [2.992633023216487, 4.176563429782019, 4.368488735331904], [4.510890505570976, 4.368488735331904, 9.050652335415723]]
+q = 5.0
+bandwidth = 0.2
+variance = 0.3343045127551018
+cutoff = 0.7001764615882633
+factors = 1
+output = [[3.795228554465812, 2.9645019888439803, 4.373436527230821], [2.9645019888439803, 4.176563429782018, 4.557212170943029], [4.3734365272308215, 4.557212170943029, 9.050652335415723]]
+mu = [0.32512797162252444, 0.21575503758864395, 0.15526428821597346]
+portfolio = [1.4425094341740483, 0.16057829567453455, -0.6030877298485826]
+minimum = [0.7320578711279919, 0.5435246557088932, -0.275582526836885]
+
+[[covariance]]
+covariance = [[0.7843742464888452, 0.12883865049543905, 0.031989581102054125, -0.01120436965344406, -0.050143477576154255, 0.13254993533994228], [0.12883865049543905, 1.8513433739563352, 0.17621815422174075, 0.021057125575062688, 0.062351362987448845, 0.026884561932426512], [0.031989581102054125, 0.17621815422174075, 0.5245669600114644, -0.014705232795252588, 0.05779110589167978, -0.14143379575731393], [-0.01120436965344406, 0.021057125575062688, -0.014705232795252588, 0.8173692172683618, 0.022586299777004434, 1.588621573396672e-05], [-0.050143477576154255, 0.062351362987448845, 0.05779110589167978, 0.022586299777004434, 0.9887985132166477, -0.08279558794109049], [0.13254993533994228, 0.026884561932426512, -0.14143379575731393, 1.588621573396672e-05, -0.08279558794109049, 0.621751126122182]]
+q = 1.5
+bandwidth = 0.03
+variance = 0.33838651167457395
+cutoff = 1.1165603790863226
+factors = 2
+output = [[0.7843742464888454, 0.13702183731278192, 0.00422914096857788, -0.007604805281034566, -0.051547367890566534, 0.0920518576268412], [0.13702183731278186, 1.851343373956335, 0.13604446638239234, -0.008387098468094007, 0.046292504217951835, -0.011388672004965333], [0.004229140968577855, 0.13604446638239234, 0.5245669600114644, -0.0008031006598058203, 0.07827990347255813, -0.08193082189039584], [-0.007604805281034566, -0.00838709846809402, -0.0008031006598058262, 0.8173692172683616, 0.002470453804959663, -0.004717705824798836], [-0.05154736789056651, 0.04629250421795184, 0.07827990347255809, 0.0024704538049596823, 0.9887985132166478, -0.09835881155310455], [0.0920518576268412, -0.011388672004965319, -0.08193082189039586, -0.004717705824798843, -0.09835881155310461, 0.621751126122182]]
+mu = [0.11620508395827185, 0.28089051809114307, 0.3193292559587374, 0.30663886331179013, 0.12674460064829213, 0.23714713170004129]
+portfolio = [0.04600861890593486, 0.05556545650219418, 0.35422704101730307, 0.21069856675462437, 0.06865192931808856, 0.2648483875018549]
+minimum = [0.14182981799095631, 0.04068791587168483, 0.25858819584354914, 0.1649145485981599, 0.14337351472260515, 0.2506060069730445]
+
+[[covariance]]
+covariance = [[10.567632576859907, 5.960236826623695, 6.332435837357906, 4.798153132546883, 5.6044252552566505, 10.87576813349738], [5.960236826623695, 5.558255418090452, 4.460304609596495, 3.328285237247632, 3.9853454902092333, 7.975057703809701], [6.332435837357906, 4.460304609596495, 5.739039968578403, 3.148640179562641, 3.8948280921622995, 8.282969135999714], [4.798153132546883, 3.328285237247632, 3.148640179562641, 2.917536107467894, 2.92046435135554, 5.993192751407881], [5.6044252552566505, 3.9853454902092333, 3.8948280921622995, 2.92046435135554, 3.94379094260935, 7.238936700218494], [10.87576813349738, 7.975057703809701, 8.282969135999714, 5.993192751407881, 7.238936700218494, 16.533857414685766]]
+q = 1.5
+bandwidth = 0.03
+variance = 0.7837539285652017
+cutoff = 2.58612135353299
+factors = 1
+output = [[10.567632576859907, 6.3666721965253315, 6.46099170479689, 4.6295732150606, 5.401492548751712, 11.049007799549402], [6.366672196525333, 5.558255418090451, 4.67464442325618, 3.3495800026753866, 3.908077610057196, 7.99415709732773], [6.46099170479689, 4.67464442325618, 5.739039968578403, 3.399202588700942, 3.9659740977495974, 8.112587093908523], [4.629573215060601, 3.349580002675386, 3.399202588700942, 2.917536107467894, 2.8417878080440686, 5.813011009892002], [5.401492548751712, 3.9080776100571963, 3.965974097749597, 2.8417878080440695, 3.9437909426093496, 6.782252747099563], [11.049007799549402, 7.994157097327728, 8.112587093908523, 5.813011009892002, 6.782252747099562, 16.533857414685762]]
+mu = [0.28405027256958276, 0.3710046888587868, 0.11800900092725158, 0.24634830517661152, 0.16594986323236977, 0.3090765613292289]
+portfolio = [-0.13547711422896397, 1.2647478805374308, -0.9339485384108328, 1.4120349878443625, -0.34546805906221206, -0.2618891566797844]
+minimum = [-0.2540475896925652, 0.09128289676985485, 0.06642898869500333, 0.9746019607203857, 0.4768549135448463, -0.355121170037525]
+
+[[covariance]]
+covariance = [[0.14793951034010694, -0.01428457944604406, 0.07570484506822608, 0.058003365216786416, 0.002418047518276935, -0.028161398922751244], [-0.01428457944604406, 0.2569400684315647, -0.08498123199088485, 0.11514738501766397, 0.0012639276220008419, 0.06729562484894831], [0.07570484506822608, -0.08498123199088485, 1.861052126693284, -0.5018717948023566, 0.0335842906076211, -0.07167562879996327], [0.058003365216786416, 0.11514738501766397, -0.5018717948023566, 2.1022426793727402, -0.034147458080629925, 0.08363798667426314], [0.002418047518276935, 0.0012639276220008419, 0.0335842906076211, -0.034147458080629925, 0.3027384161178869, 0.0531996616518241], [-0.028161398922751244, 0.06729562484894831, -0.07167562879996327, 0.08363798667426314, 0.0531996616518241, 0.40425308344644423]]
+q = 1.5
+bandwidth = 0.2
+variance = 0.92380379941828
+cutoff = 3.0482382863766033
+factors = 0
+output = [[0.14793951034010697, -8.936930005375129e-18, -1.3679932317885657e-17, 3.3509560826824744e-17, 4.6497463128402164e-17, -2.117145728248303e-17], [-1.077898360654904e-17, 0.2569400684315647, -2.2470046569293576e-16, -1.0445607010757862e-16, 3.219923074202349e-17, 3.453747116960625e-17], [-3.0780608601845444e-17, -2.386031266503219e-16, 1.8610521266932842, 4.309022769603882e-16, -6.414834842793115e-19, -2.0879642956960243e-16], [4.4139951431307967e-17, -7.914328895808288e-17, 4.461671143290543e-16, 2.1022426793727402, 2.4265129048499287e-18, -2.683231116899712e-16], [5.556314337243003e-17, 3.573685539155086e-17, 4.3518976618581874e-17, -6.7642827425713175e-18, 0.3027384161178868, 2.737987292435412e-17], [-2.5365372725907272e-17, 2.9646499637616116e-17, -2.1306122565577352e-16, -2.582837728716588e-16, 2.988283070528639e-17, 0.4042530834464442]]
+mu = [0.3963585181316378, 0.29736121090797757, 0.1807278257393845, 0.18945977591194796, 0.3589641606610806, 0.3889294864386035]
+portfolio = [0.43411915150363684, 0.1875242371964448, 0.01573516903246247, 0.014602899517913385, 0.19212703576445514, 0.15589150698508733]
+minimum = [0.3875566767567421, 0.22314520790167286, 0.03080781250888675, 0.027273228514958597, 0.18938774181240742, 0.14182933250533225]
+
+[[covariance]]
+covariance = [[1.8645633319926211, 1.1921905085375295, 2.0740666154484018, 4.130939365500476, 4.12820297292606, 4.216114781513932], [1.1921905085375295, 1.2435350522321342, 1.648080029229973, 3.4075343320707283, 3.325768572893248, 3.2772776879613286], [2.0740666154484018, 1.648080029229973, 4.032871236705994, 5.847681815219592, 5.322559402510912, 6.16247867136294], [4.130939365500476, 3.4075343320707283, 5.847681815219592, 14.224895518949996, 10.438128712739955, 11.083119842805672], [4.12820297292606, 3.325768572893248, 5.322559402510912, 10.438128712739955, 13.520610697999663, 10.773898215487938], [4.216114781513932, 3.2772776879613286, 6.16247867136294, 11.083119842805672, 10.773898215487938, 14.49688322026246]]
+q = 1.5
+bandwidth = 0.2
+variance = 0.7757165736717948
+cutoff = 2.55960081646364
+factors = 1
+output = [[1.864563331992621, 1.1924236781563393, 2.1347703187530693, 4.032330544311196, 3.9254565301451683, 4.074581703640914], [1.1924236781563395, 1.243535052232134, 1.7384072776514226, 3.2836472863371955, 3.1966165821972914, 3.318053668242904], [2.134770318753069, 1.7384072776514221, 4.0328712367059945, 5.87864271109152, 5.722833523953182, 5.940239712403632], [4.032330544311196, 3.2836472863371955, 5.87864271109152, 14.224895518949996, 10.809760757833434, 11.220415527815005], [3.925456530145168, 3.196616582197292, 5.722833523953183, 10.809760757833434, 13.520610697999663, 10.923026503058537], [4.074581703640914, 3.3180536682429045, 5.940239712403633, 11.220415527815007, 10.923026503058537, 14.49688322026246]]
+mu = [0.2797281975355379, 0.33706526623506083, 0.35688291049144183, 0.3112486376602859, 0.36121244773365635, 0.2012870326209902]
+portfolio = [0.3012308563554228, 0.9696615839935531, 0.10687055789175902, -0.11713846345064875, -0.08921782696450735, -0.17140670782557885]
+minimum = [0.44984363414848333, 0.8787383677090861, 0.036442313511936386, -0.1221114145770963, -0.11935046066305864, -0.12356244012935073]
+
+[[covariance]]
+covariance = [[0.0742032775410069, 0.0005975543274077776, -0.021403937493013052, 0.0038410432704538756, -0.06198480888451324, -0.037427781449339365], [0.0005975543274077776, 0.28260132883233186, 0.01954029788264574, 0.031574078920819135, -0.058651846416135314, 0.02237850536281589], [-0.021403937493013052, 0.01954029788264574, 0.2952297205469359, 0.06271881835363463, 0.13296116571016742, -0.0805121146432606], [0.0038410432704538756, 0.031574078920819135, 0.06271881835363463, 1.1482481649901497, -0.2960606616926554, -0.003280578565168862], [-0.06198480888451324, -0.058651846416135314, 0.13296116571016742, -0.2960606616926554, 2.1432607659884932, 0.08628892452038409], [-0.037427781449339365, 0.02237850536281589, -0.0805121146432606, -0.003280578565168862, 0.08628892452038409, 0.862592926898067]]
+q = 5.0
+bandwidth = 0.03
+variance = 0.99999
+cutoff = 2.094406246728006
+factors = 0
+output = [[0.0742032775410069, -2.6777664337465205e-17, 1.8262235914209228e-17, -1.669290553757508e-17, -1.0280545034310539e-16, 7.127568610244662e-17], [-2.3373210342616697e-17, 0.28260132883233186, -5.895137237471977e-17, 2.662112242563359e-16, 2.968852512631642e-16, -3.663091322363581e-17], [1.4388270897711056e-17, -4.796855097337568e-17, 0.29522972054693597, 1.1831329659558521e-16, -1.5728270425319122e-16, -1.460607431501259e-16], [-1.86704323957534e-17, 3.2880263874999537e-16, 1.0902273316481817e-16, 1.1482481649901497, -4.04070624853057e-16, -3.2565001766558326e-16], [-1.3695398530797202e-16, 2.8070194618681757e-16, -1.5977778275074302e-16, -4.203844739307992e-16, 2.1432607659884932, -2.2638137106090545e-16], [7.464385673701916e-17, -1.8548726590751253e-17, -1.2040402260146382e-16, -3.1141593522339316e-16, -1.806816944994489e-16, 0.862592926898067]]
+mu = [0.10906837096220268, 0.357162006335233, 0.22645789776291142, 0.22384532296823378, 0.20990295848319046, 0.11061195503731784]
+portfolio = [0.3747856767684891, 0.32225398839519187, 0.19558459396590702, 0.049707224192094064, 0.02497185432025132, 0.03269666235806657]
+minimum = [0.5885187096646475, 0.15452870420588374, 0.14791877006969015, 0.038031863218083765, 0.020375503459179, 0.05062644938251573]
+
+[[covariance]]
+covariance = [[6.624068265186783, 1.4657471152144383, 6.063489454521096, 9.775222580971706, 1.580512315018472, 5.199523931826325], [1.4657471152144383, 0.4875819444244248, 1.7141816913756636, 2.588308742580971, 0.45888825359200847, 1.3689280354718691], [6.063489454521096, 1.7141816913756636, 8.454526746540935, 10.996113574054913, 1.8189855233971446, 5.666852382452811], [9.775222580971706, 2.588308742580971, 10.996113574054913, 19.53022519410199, 2.724232845554825, 8.862838219578256], [1.580512315018472, 0.45888825359200847, 1.8189855233971446, 2.724232845554825, 0.6570463496983951, 1.4319792727383682], [5.199523931826325, 1.3689280354718691, 5.666852382452811, 8.862838219578256, 1.4319792727383682, 5.597500973276583]]
+q = 5.0
+bandwidth = 0.03
+variance = 0.99999
+cutoff = 2.094406246728006
+factors = 1
+output = [[6.624068265186783, 1.4700302110327907, 6.114607643206131, 9.31272089656851, 1.6867675448499382, 4.974563119718746], [1.4700302110327905, 0.48758194442442476, 1.661291070746225, 2.530193427375647, 0.4582815487429091, 1.3515498906678816], [6.114607643206131, 1.661291070746225, 8.454526746540935, 10.524368787598982, 1.9062273956363116, 5.62178738207435], [9.31272089656851, 2.530193427375647, 10.524368787598984, 19.53022519410199, 2.903238398407767, 8.562141658799494], [1.6867675448499382, 0.45828154874290905, 1.9062273956363116, 2.9032383984077668, 0.6570463496983951, 1.550818802031554], [4.974563119718747, 1.3515498906678818, 5.62178738207435, 8.562141658799492, 1.5508188020315543, 5.597500973276583]]
+mu = [0.11442558896945729, 0.1072897148292667, 0.2969715828582687, 0.18968798809177298, 0.2587836363914576, 0.13312134270055567]
+portfolio = [-0.11686881180762225, 0.26488106865583844, -0.015602267415436992, -0.07139586001312936, 1.0441819668300787, -0.10519609624972867]
+minimum = [-0.06880626298792229, 0.7998978898805875, -0.07187897492151464, -0.06740773761856422, 0.4730911868774002, -0.06489610122998653]
+
+[[covariance]]
+covariance = [[1.737415667347653, 0.016668685970225063, 0.1432044147221152, 0.23858086038455412, -0.09177012686141559, -0.12160861349688262], [0.016668685970225063, 0.22802648130734532, -0.015033052680706468, 0.17911598349468133, -0.0523762824539086, -0.010555502622123906], [0.1432044147221152, -0.015033052680706468, 0.5743512194413914, -0.10106096582095099, 0.024725447069480027, -0.0020103997006204145], [0.23858086038455412, 0.17911598349468133, -0.10106096582095099, 1.2161765873659394, -0.21454359243334023, 0.02605997085939907], [-0.09177012686141559, -0.0523762824539086, 0.024725447069480027, -0.21454359243334023, 0.43686898377609185, 0.0765893115989935], [-0.12160861349688262, -0.010555502622123906, -0.0020103997006204145, 0.02605997085939907, 0.0765893115989935, 0.28760557381303614]]
+q = 5.0
+bandwidth = 0.2
+variance = 0.9927933288543618
+cutoff = 2.0793333429958962
+factors = 0
+output = [[1.7374156673476528, 1.2204242147614997e-16, -1.433253518392595e-16, 4.876887275912719e-16, -2.330010947197756e-16, -4.111889974765689e-16], [1.3868521154435557e-16, 0.22802648130734532, 7.932773576137191e-17, 2.995016398239677e-16, -8.223837122420707e-17, -1.5543310131927804e-16], [-1.6434241916977686e-16, 7.626036950076501e-17, 0.5743512194413913, 9.860867315501852e-17, -6.629818326417404e-17, -1.8406893744623893e-16], [4.897204976365576e-16, 2.988534005596736e-16, 8.546971054220731e-17, 1.2161765873659394, -5.048531932985646e-16, -2.438849364031783e-16], [-2.4273567628206105e-16, -8.179967917100003e-17, -7.124011145472065e-17, -5.07776714527583e-16, 0.4368689837760919, 1.0838535974043847e-16], [-3.90676109140347e-16, -1.4377462126467003e-16, -1.8440130054507097e-16, -2.6344742073306486e-16, 1.0110132027460595e-16, 0.2876055738130361]]
+mu = [0.3023039746551752, 0.19275829461753713, 0.1153174578563949, 0.10206986859989764, 0.3709792681665772, 0.18045673604586143]
+portfolio = [0.06257381664592244, 0.3040047092255221, 0.07220545914132392, 0.03018237694266963, 0.30538728382385705, 0.22564635422070475]
+minimum = [0.043307119357912864, 0.3299724981447093, 0.1310042794952411, 0.061868044872576244, 0.17223119624966682, 0.26161686187989375]
+
+[[covariance]]
+covariance = [[10.504321703446767, 9.355201177268663, 12.312684437446247, 9.301578502965253, 4.099739054236956, 8.991256752537254], [9.355201177268663, 13.058834262596198, 13.1946639166854, 10.064601203087122, 4.3324205025391365, 10.445190202184156], [12.312684437446247, 13.1946639166854, 20.885497041614872, 12.148333497136317, 5.941452310643556, 13.42843317193187], [9.301578502965253, 10.064601203087122, 12.148333497136317, 12.66861027569644, 4.693557907442001, 10.600309646978143], [4.099739054236956, 4.3324205025391365, 5.941452310643556, 4.693557907442001, 2.640737453464653, 5.1008655091885], [8.991256752537254, 10.445190202184156, 13.42843317193187, 10.600309646978143, 5.1008655091885, 12.796703157893115]]
+q = 5.0
+bandwidth = 0.2
+variance = 0.4179230008914727
+cutoff = 0.8753092968113824
+factors = 1
+output = [[10.504321703446767, 9.34093020521995, 11.849657559988945, 9.221743851171523, 4.21506332213157, 9.31874180405729], [9.340930205219946, 13.058834262596196, 13.176532366417954, 10.25435593515081, 4.687048381727213, 10.36221531076612], [11.849657559988943, 13.176532366417954, 20.885497041614876, 13.008405336534269, 5.9458658902654795, 13.145232894132478], [9.221743851171523, 10.254355935150812, 13.008405336534269, 12.66861027569644, 4.627243609012557, 10.229997786855618], [4.21506332213157, 4.687048381727213, 5.94586589026548, 4.627243609012557, 2.640737453464653, 4.675914789303577], [9.31874180405729, 10.36221531076612, 13.145232894132482, 10.22999778685562, 4.675914789303578, 12.796703157893116]]
+mu = [0.36093008512085833, 0.2882221913689846, 0.28639957833541824, 0.3269860338060482, 0.2827340359179098, 0.33361324702078377]
+portfolio = [0.11672490318343637, -0.13972438610473173, -0.22214403917052417, -0.049525252402034266, 1.3390572506161038, -0.044388476122249956]
+minimum = [-0.01967279105285952, -0.08241808348967244, -0.1671795515504779, -0.07762300226706276, 1.4347297108235033, -0.08783628246343055]
+
+[[covariance]]
+covariance = [[1.2306120904208728, -0.4860189108502399, 0.05339449596740188, -0.31653980676869825, 0.06680404655984716, 0.041935793203972026, 0.12241826489073611, -0.1703348388617121, -0.08773218965760961, -0.3101807352388818], [-0.4860189108502399, 4.30667556913103, -0.008971109304413813, -1.217690599856183, -0.6652758429782063, -0.031870402777202614, -0.2186506908757558, -0.16710610439546367, -0.09153549027834543, -0.3294168301407097], [0.05339449596740188, -0.008971109304413813, 1.0727157266452336, 0.01712762328720597, 0.13025826052327866, 0.04529156407397573, 0.04934677184341641, -0.018458668894101898, -0.018438008455567048, -0.05366907340452937], [-0.31653980676869825, -1.217690599856183, 0.01712762328720597, 4.563993055814928, 0.5796481561253118, -0.22031478593576664, -0.004948049745587303, 0.20736929625110306, -0.030726219928799436, -0.3657939211373163], [0.06680404655984716, -0.6652758429782063, 0.13025826052327866, 0.5796481561253118, 2.678389687042058, 0.0600317425715664, 0.05385461824744763, 0.018824102442368436, -0.009990214732743743, 0.618827011797546], [0.041935793203972026, -0.031870402777202614, 0.04529156407397573, -0.22031478593576664, 0.0600317425715664, 0.24688660201568136, -0.029585026446682622, -0.05895378906175262, 0.020258655802176995, 0.02447347763643371], [0.12241826489073611, -0.2186506908757558, 0.04934677184341641, -0.004948049745587303, 0.05385461824744763, -0.029585026446682622, 0.2960628175505883, 0.05219103001264271, 0.07568467562084674, -0.07738483630491319], [-0.1703348388617121, -0.16710610439546367, -0.018458668894101898, 0.20736929625110306, 0.018824102442368436, -0.05895378906175262, 0.05219103001264271, 1.0611836124352443, 0.047639506204486, 0.20734368159891678], [-0.08773218965760961, -0.09153549027834543, -0.018438008455567048, -0.030726219928799436, -0.009990214732743743, 0.020258655802176995, 0.07568467562084674, 0.047639506204486, 0.22183485471785683, -0.06830173848981075], [-0.3101807352388818, -0.3294168301407097, -0.05366907340452937, -0.3657939211373163, 0.618827011797546, 0.02447347763643371, -0.07738483630491319, 0.20734368159891678, -0.06830173848981075, 3.558084579203639]]
+q = 1.5
+bandwidth = 0.03
+variance = 0.9916457104103852
+cutoff = 3.272093514767426
+factors = 0
+output = [[1.2306120904208728, -7.967090903335662e-16, -5.235221640834447e-17, -1.3669108185222785e-15, 4.09755635263817e-16, -1.3349455772054218e-16, -6.26815855046466e-17, -2.3096354097543737e-16, -4.830028736185901e-16, -1.1021730398063675e-15], [-7.967090903335662e-16, 4.30667556913103, -1.5264399789154625e-16, -1.3695000179328307e-16, 1.4885123169534442e-15, 2.683013794267291e-16, 9.893640847733135e-16, 1.0581392784053114e-15, -2.0978917352923072e-16, -1.5641163715745399e-15], [-5.235221640834447e-17, -1.5264399789154625e-16, 1.0727157266452336, -7.771292916829722e-16, 9.703282573313326e-17, 2.243355736633152e-17, -8.902672031937323e-17, -1.2228236822097484e-16, -3.1186941136801624e-18, 4.937212208587535e-16], [-1.3669108185222785e-15, -1.3695000179328307e-16, -7.771292916829722e-16, 4.563993055814928, -4.861852700362367e-16, 1.67935282169449e-16, 2.0869696212165205e-16, -4.817032659645742e-16, -7.279077833367305e-16, -6.71757745843197e-17], [4.09755635263817e-16, 1.4885123169534442e-15, 9.703282573313326e-17, -4.861852700362367e-16, 2.6783896870420576, 1.0480890082014745e-16, -1.0944255497070428e-15, -6.026809826914904e-16, -3.559769479346041e-16, -5.787396080687294e-16], [-1.3349455772054218e-16, 2.683013794267291e-16, 2.243355736633152e-17, 1.67935282169449e-16, 1.0480890082014745e-16, 0.24688660201568136, 1.3112620938177229e-16, -1.2432649771216442e-16, -1.447173963194882e-17, 3.0569542729838983e-16], [-6.26815855046466e-17, 9.893640847733135e-16, -8.902672031937323e-17, 2.0869696212165205e-16, -1.0944255497070428e-15, 1.3112620938177229e-16, 0.2960628175505883, -6.086323570578428e-18, 3.376347752258274e-18, 2.6692924098779947e-16], [-2.3096354097543737e-16, 1.0581392784053114e-15, -1.2228236822097484e-16, -4.817032659645742e-16, -6.026809826914904e-16, -1.2432649771216442e-16, -6.086323570578428e-18, 1.0611836124352443, -1.4505430409645824e-17, -2.6502558141363287e-16], [-4.830028736185901e-16, -2.0978917352923072e-16, -3.1186941136801624e-18, -7.279077833367305e-16, -3.559769479346041e-16, -1.447173963194882e-17, 3.376347752258274e-18, -1.4505430409645824e-17, 0.22183485471785683, -5.27970213140987e-16], [-1.1021730398063675e-15, -1.5641163715745399e-15, 4.937212208587535e-16, -6.71757745843197e-17, -5.787396080687294e-16, 3.0569542729838983e-16, 2.6692924098779947e-16, -2.6502558141363287e-16, -5.27970213140987e-16, 3.5580845792036384]]
+mu = [0.18817150383333447, 0.19869797674406361, 0.3518342580223236, 0.3751262871921104, 0.12538605507625328, 0.19571501067066854, 0.3614641234644188, 0.34368656007511245, 0.2558307876721987, 0.21446080469692833]
+portfolio = [0.03634571653205926, 0.01096659601170155, 0.07796039549371074, 0.01953678425777481, 0.011127459739005061, 0.18842875144187748, 0.2902029933049636, 0.07698259943271651, 0.2741218040789194, 0.014326899707271377]
+minimum = [0.051663311350627586, 0.014762545856707741, 0.05926779481278755, 0.013930234950348347, 0.023737208923274185, 0.25751699387568117, 0.21474326328869872, 0.059911870890429604, 0.2865983150399057, 0.01786846101153948]
+
+[[covariance]]
+covariance = [[8.967301113665945, 8.177244205643474, 8.378107205742042, 5.61005369111527, 5.971487089129082, 9.122540105140459, 9.478160741703588, 6.174258107892565, 6.418602253941526, 3.9024402666198177], [8.177244205643474, 11.0776659145957, 10.162496214752892, 6.59894825532786, 7.049131651119858, 10.847800300802357, 11.38200133821214, 6.3443050287999805, 8.363923797917346, 4.667838403775506], [8.378107205742042, 10.162496214752892, 13.731290464676126, 7.1227590428813565, 7.412724774136316, 11.701345925858304, 11.892716376181466, 7.3448338549118635, 9.108011954824027, 4.586413851632406], [5.61005369111527, 6.59894825532786, 7.1227590428813565, 5.395733646994911, 4.953986532220219, 7.228968479871901, 7.186950160504857, 4.23640912135649, 5.503340516596252, 3.109329773262437], [5.971487089129082, 7.049131651119858, 7.412724774136316, 4.953986532220219, 6.7770545104838265, 8.271329172610114, 7.676969672472386, 4.927315402209722, 6.1631804075828756, 3.3516163583627545], [9.122540105140459, 10.847800300802357, 11.701345925858304, 7.228968479871901, 8.271329172610114, 15.490570020824716, 12.93464592473611, 8.020096186199698, 9.904775942924491, 5.184290191972125], [9.478160741703588, 11.38200133821214, 11.892716376181466, 7.186950160504857, 7.676969672472386, 12.93464592473611, 15.214803102296532, 8.001700919803008, 9.58818016385911, 5.266661406877589], [6.174258107892565, 6.3443050287999805, 7.3448338549118635, 4.23640912135649, 4.927315402209722, 8.020096186199698, 8.001700919803008, 6.8779334065861235, 6.138739932944726, 3.3582548052812107], [6.418602253941526, 8.363923797917346, 9.108011954824027, 5.503340516596252, 6.1631804075828756, 9.904775942924491, 9.58818016385911, 6.138739932944726, 10.001734846196765, 3.661790127250638], [3.9024402666198177, 4.667838403775506, 4.586413851632406, 3.109329773262437, 3.3516163583627545, 5.184290191972125, 5.266661406877589, 3.3582548052812107, 3.661790127250638, 2.6707878205855717]]
+q = 1.5
+bandwidth = 0.03
+variance = 0.99999
+cutoff = 3.2996268319238333
+factors = 1
+output = [[8.967301113665945, 7.8922035557778045, 8.718024970890788, 5.474694290082401, 6.107669975547995, 9.291853279998012, 9.224565672038212, 6.112848188065805, 7.3722876898015635, 3.850651527762074], [7.8922035557778045, 11.077665914595702, 9.79128513853371, 6.148673927808447, 6.85957409646433, 10.43575640510975, 10.360185142349653, 6.865389789289147, 8.279876593055162, 4.3246982204498705], [8.718024970890788, 9.79128513853371, 13.731290464676126, 6.792056548168477, 7.577343620194797, 11.52772914267718, 11.444250282664509, 7.583767853289075, 9.14626319303482, 4.777224359582953], [5.474694290082401, 6.148673927808447, 6.792056548168479, 5.395733646994912, 4.758375892473965, 7.239115869219947, 7.186693303354406, 4.76241014476813, 5.7436168221232125, 2.999973389750341], [6.107669975547995, 6.85957409646433, 7.577343620194797, 4.758375892473965, 6.777054510483827, 8.076091248426986, 8.017607666584222, 5.313032639126173, 6.407684914769246, 3.3468256726614984], [9.291853279998016, 10.435756405109752, 11.527729142677181, 7.239115869219947, 8.076091248426986, 15.490570020824714, 12.197521213939472, 8.082938330369043, 9.748278530250879, 5.091665598927699], [9.224565672038214, 10.360185142349652, 11.444250282664509, 7.186693303354406, 8.017607666584222, 12.19752121393947, 15.214803102296532, 8.024405164901621, 9.677685686793215, 5.054793944978905], [6.112848188065805, 6.865389789289147, 7.583767853289073, 4.76241014476813, 5.313032639126173, 8.082938330369041, 8.024405164901621, 6.877933406586123, 6.413117486333965, 3.3496631826550787], [7.3722876898015635, 8.279876593055162, 9.14626319303482, 5.7436168221232125, 6.407684914769247, 9.748278530250879, 9.677685686793218, 6.413117486333964, 10.001734846196765, 4.039799433377277], [3.850651527762074, 4.3246982204498705, 4.777224359582953, 2.999973389750341, 3.346825672661499, 5.091665598927698, 5.054793944978906, 3.349663182655079, 4.039799433377277, 2.6707878205855717]]
+mu = [0.1367313024122935, 0.35530345609856684, 0.3553197608469856, 0.3642234175850204, 0.3346511280521558, 0.13132296799548002, 0.3251538645306318, 0.1958615786089725, 0.3895285400016779, 0.34382971062676326]
+portfolio = [-0.3604026164405852, 0.016990520712563486, -0.037744246908137075, 0.44798601988925807, 0.1856198239559129, -0.3515620236900696, -0.10423299888009124, -0.18873329681842566, 0.11918549670363149, 1.2728933214759428]
+minimum = [-0.021479850331301936, -0.10540181015380432, -0.14279519106727903, 0.267385251529809, 0.11033956511914805, -0.16961288555032597, -0.17019007771137487, 0.10310768979027603, -0.052111437441290286, 1.1807587458161433]
+
+[[covariance]]
+covariance = [[0.289469050216365, 0.022657795092887748, 0.09957783116450818, 0.01826961109480996, -0.0036614862617287292, 0.05987122493177297, -0.02432435887409886, -0.16509472967211924, -0.07093030999725723, 0.0009285099766790678], [0.022657795092887748, 0.7135331818617177, 0.06812470257660092, 0.042397820046696504, -0.05649924790554705, -0.03496954021370972, -0.0001275743973040914, -0.07970356134088506, 0.0941841462817949, -0.018413046166561465], [0.09957783116450818, 0.06812470257660092, 1.21312342001472, -0.08603873577469032, 0.007067888267787248, 0.23076889926305935, -0.1532290849207165, -0.2884635413439862, -0.1652879737704702, 0.0387549492997634], [0.01826961109480996, 0.042397820046696504, -0.08603873577469032, 0.44979533433145064, -0.07959931342491142, -0.05123497478927389, 0.01561589505010214, 0.07343415484365133, 0.0818796412203312, 0.02994657734718876], [-0.0036614862617287292, -0.05649924790554705, 0.007067888267787248, -0.07959931342491142, 0.2538232591997131, 0.08245348115895404, 0.10235179693209585, 0.025537661667263612, 0.08410421413609027, -0.027384927136729832], [0.05987122493177297, -0.03496954021370972, 0.23076889926305935, -0.05123497478927389, 0.08245348115895404, 1.7549363285519275, -0.05747119647893714, -0.4577022598973698, -0.548572390912738, 0.12722545144630598], [-0.02432435887409886, -0.0001275743973040914, -0.1532290849207165, 0.01561589505010214, 0.10235179693209585, -0.05747119647893714, 0.5394051582524484, -0.024604471462231256, -0.06465780120866252, -0.06924966469396826], [-0.16509472967211924, -0.07970356134088506, -0.2884635413439862, 0.07343415484365133, 0.025537661667263612, -0.4577022598973698, -0.024604471462231256, 1.4689704109721926, 0.010919266661249432, -0.013750047803298176], [-0.07093030999725723, 0.0941841462817949, -0.1652879737704702, 0.0818796412203312, 0.08410421413609027, -0.548572390912738, -0.06465780120866252, 0.010919266661249432, 1.8566203823380119, -0.04240816557253928], [0.0009285099766790678, -0.018413046166561465, 0.0387549492997634, 0.02994657734718876, -0.027384927136729832, 0.12722545144630598, -0.06924966469396826, -0.013750047803298176, -0.04240816557253928, 0.12231272350195026]]
+q = 1.5
+bandwidth = 0.2
+variance = 0.99999
+cutoff = 3.2996268319238333
+factors = 0
+output = [[0.289469050216365, -1.6823454716768248e-16, -6.652168882827847e-17, 5.670154715429811e-17, 9.015912001488641e-18, -1.1580987218839242e-16, -1.1253715996209715e-17, -9.335268225723566e-17, -7.049604277635687e-17, -7.729039431332836e-18], [-1.6823454716768248e-16, 0.7135331818617177, -2.492012634342728e-16, -1.6397408110940794e-16, 5.902093429069334e-17, 1.9609783996329745e-16, -1.0891938398734197e-16, 5.489968408869867e-16, -2.803851237704178e-16, 9.453609966993158e-17], [-6.652168882827847e-17, -2.492012634342728e-16, 1.21312342001472, -7.298724139080716e-17, 1.4786004010719904e-17, -8.182740761690663e-16, 3.861690844711951e-17, 3.487006469212912e-16, -9.557322408918e-17, -3.314733492541e-17], [5.670154715429811e-17, -1.6397408110940794e-16, -7.298724139080716e-17, 0.4497953343314507, 1.1689059262774784e-16, -4.312082160911354e-17, 6.225680425533318e-18, -7.382867173283675e-17, 6.930618781648603e-17, 9.770579127880622e-17], [9.015912001488641e-18, 5.902093429069334e-17, 1.4786004010719904e-17, 1.1689059262774784e-16, 0.2538232591997131, 1.578277173035615e-16, 5.60088161876678e-18, -9.188485288074499e-17, 2.756177269015435e-16, 2.4843060012472357e-17], [-1.1580987218839242e-16, 1.9609783996329745e-16, -8.182740761690663e-16, -4.312082160911354e-17, 1.578277173035615e-16, 1.7549363285519277, 2.722791587086908e-16, 4.087409684223015e-17, 3.932281510065115e-16, -6.907060504954522e-17], [-1.1253715996209715e-17, -1.0891938398734197e-16, 3.861690844711951e-17, 6.225680425533318e-18, 5.60088161876678e-18, 2.722791587086908e-16, 0.5394051582524483, -5.135236157652299e-16, -2.377368396995009e-16, -4.965787653529683e-17], [-9.335268225723566e-17, 5.489968408869867e-16, 3.487006469212912e-16, -7.382867173283675e-17, -9.188485288074499e-17, 4.087409684223015e-17, -5.135236157652299e-16, 1.4689704109721928, -4.340573119030506e-16, 2.5002560903439343e-18], [-7.049604277635687e-17, -2.803851237704178e-16, -9.557322408918e-17, 6.930618781648603e-17, 2.756177269015435e-16, 3.932281510065115e-16, -2.377368396995009e-16, -4.340573119030506e-16, 1.856620382338012, 2.405999901449605e-16], [-7.729039431332836e-18, 9.453609966993158e-17, -3.314733492541e-17, 9.770579127880622e-17, 2.4843060012472357e-17, -6.907060504954522e-17, -4.965787653529683e-17, 2.5002560903439343e-18, 2.405999901449605e-16, 0.12231272350195027]]
+mu = [0.18796663004392336, 0.3818230978073869, 0.11252120556741206, 0.23390706377085269, 0.34008358430452673, 0.3415640583642302, 0.33877467990867316, 0.3945380319093682, 0.229683803757263, 0.3924991743695222]
+portfolio = [0.08588089932433475, 0.07077273630526161, 0.01226725389704192, 0.06877749524880176, 0.17720346812559673, 0.025741198599070703, 0.08306418588534342, 0.03552170394539315, 0.01636157933155388, 0.4244094793376021]
+minimum = [0.14599647748611574, 0.059228446198639526, 0.03483690198012009, 0.09395709214204215, 0.16649956275121597, 0.024081478618493555, 0.07834827128787293, 0.02876944379354204, 0.02276257552425529, 0.3455197502177027]
+
+[[covariance]]
+covariance = [[1.2246648739221961, 1.4065351258077168, 2.632313351453916, 2.47710683916445, 2.050289955989103, 3.5318290386868187, 2.5796907739496437, 2.5799545050443187, 2.1721332206816037, 3.7684818505821007], [1.4065351258077168, 2.6512908305924068, 4.085858562086063, 3.1170696309901733, 2.7618113859351587, 5.1342375347126925, 3.848065176461546, 3.8494444532605767, 3.4066419439246522, 4.995118371398748], [2.632313351453916, 4.085858562086063, 10.215231423518315, 6.45469063625381, 5.479970146686338, 10.130167310413386, 6.962647304993021, 7.122432738711056, 6.603914120922027, 9.587156133538565], [2.47710683916445, 3.1170696309901733, 6.45469063625381, 7.526025784724623, 5.064771533014973, 9.514959530157112, 6.09570069337488, 6.314054675826195, 5.228704484325331, 9.77480903109182], [2.050289955989103, 2.7618113859351587, 5.479970146686338, 5.064771533014973, 5.140609035044845, 7.457421335393694, 5.231238421666584, 5.229355646622854, 4.448852380939468, 7.62117775688312], [3.5318290386868187, 5.1342375347126925, 10.130167310413386, 9.514959530157112, 7.457421335393694, 18.52654795615343, 9.74490132938433, 10.143315796401163, 8.625815349291326, 14.49203140206992], [2.5796907739496437, 3.848065176461546, 6.962647304993021, 6.09570069337488, 5.231238421666584, 9.74490132938433, 8.598980444374627, 7.217111310707317, 5.771520537731758, 9.914055340508163], [2.5799545050443187, 3.8494444532605767, 7.122432738711056, 6.314054675826195, 5.229355646622854, 10.143315796401163, 7.217111310707317, 8.901189084921203, 5.90417527444706, 9.852603334934184], [2.1721332206816037, 3.4066419439246522, 6.603914120922027, 5.228704484325331, 4.448852380939468, 8.625815349291326, 5.771520537731758, 5.90417527444706, 6.099505670712033, 8.563056653023011], [3.7684818505821007, 4.995118371398748, 9.587156133538565, 9.77480903109182, 7.62117775688312, 14.49203140206992, 9.914055340508163, 9.852603334934184, 8.563056653023011, 17.65092052964268]]
+q = 1.5
+bandwidth = 0.2
+variance = 0.34217376553169854
+cutoff = 1.129057028499092
+factors = 1
+output = [[1.2246648739221961, 1.4064139659506585, 2.7506479389094625, 2.37630996678488, 1.9658349611200394, 3.721629644430225, 2.5447809558538506, 2.5877051604521113, 2.1540260361243666, 3.649485680087335], [1.406413965950659, 2.651290830592407, 4.028825621399627, 3.48053938242852, 2.8793238664863683, 5.451005435026846, 3.7272958748252543, 3.7901662017825575, 3.154964021655324, 5.345337440274595], [2.7506479389094625, 4.028825621399626, 10.215231423518315, 6.807198101235364, 5.631347846755819, 10.661012495496582, 7.289801554881258, 7.412762602944215, 6.1704416292778665, 10.454348270730078], [2.37630996678488, 3.48053938242852, 6.807198101235364, 7.526025784724624, 4.864973021587002, 9.21014641339767, 6.297726381376219, 6.4039535578552895, 5.330701081626119, 9.031607295343465], [1.9658349611200394, 2.8793238664863674, 5.631347846755819, 4.864973021587002, 5.140609035044844, 7.61921974387381, 5.209880389816215, 5.29775827622939, 4.409895468190699, 7.471520813555657], [3.7216296444302244, 5.451005435026845, 10.661012495496584, 9.21014641339767, 7.61921974387381, 18.526547956153433, 9.863109409565416, 10.029475840946214, 8.348614216274921, 14.144744548069028], [2.544780955853851, 3.727295874825254, 7.289801554881258, 6.29772638137622, 5.209880389816216, 9.863109409565418, 8.598980444374627, 6.857968566386917, 5.708626729460548, 9.671912573357218], [2.587705160452112, 3.7901662017825575, 7.412762602944216, 6.4039535578552895, 5.297758276229393, 10.029475840946215, 6.857968566386918, 8.901189084921203, 5.804917241674102, 9.835053983701501], [2.1540260361243666, 3.154964021655324, 6.170441629277867, 5.330701081626119, 4.409895468190699, 8.34861421627492, 5.708626729460548, 5.804917241674102, 6.099505670712032, 8.186775940068987], [3.649485680087336, 5.345337440274595, 10.45434827073008, 9.031607295343465, 7.4715208135556574, 14.144744548069031, 9.671912573357218, 9.835053983701501, 8.186775940068989, 17.650920529642676]]
+mu = [0.10450012315311022, 0.3126353807244159, 0.10567616890985362, 0.2826213250260904, 0.14018744614686623, 0.3623542260730983, 0.1786730247065035, 0.15854126002504032, 0.2550899096536118, 0.28080216630721044]
+portfolio = [0.22413254921997486, 1.4187131804902662, -0.31813320139313006, 0.1579365606933764, -0.2027596753564703, 0.006974594162884439, -0.16504276857748926, -0.21808682027292525, 0.18176398557264134, -0.08549840453912812]
+minimum = [1.0840763429555202, 0.2991604074301886, -0.0658510104359448, -0.03750982039574757, 0.0351925951857003, -0.09572781200402407, -0.055618772532312316, -0.05899759833970583, -0.005542525887339056, -0.09918180597633532]
+
+[[covariance]]
+covariance = [[0.24329659485764088, -0.26948802484370743, 0.030918312583103534, 0.0683129825000829, 0.024363613631721574, -0.030220044674294268, -0.013483676627953045, 0.034037611670834245, 0.044967011023401754, -0.01882814398768687], [-0.26948802484370743, 4.400750527463678, -0.06597363013744938, 0.006432864261055852, -0.20677467131317553, -0.0712978105799083, -0.029301977491446227, -0.03280710443392011, -0.8955819949825337, -0.26964509030438466], [0.030918312583103534, -0.06597363013744938, 0.7072567841098653, 0.13661653959613157, 0.020604968652805325, -0.1583784415658202, 0.020573541215144348, -0.02884572013469159, -0.21662481460213448, 0.022131178539276816], [0.0683129825000829, 0.006432864261055852, 0.13661653959613157, 1.6394496597459651, -0.1446217063586266, -0.2684835896324357, 0.08068167186641018, 0.06668791904584301, 0.1401461732181878, 0.013626775707520895], [0.024363613631721574, -0.20677467131317553, 0.020604968652805325, -0.1446217063586266, 1.3693140747749035, 0.17161996937882554, 0.15290206015870192, -0.006260361007458337, -0.47915104106718476, -0.11644117929427958], [-0.030220044674294268, -0.0712978105799083, -0.1583784415658202, -0.2684835896324357, 0.17161996937882554, 1.586327675079771, 0.2166365574924272, 0.009881073106347638, 0.029977912653319023, 0.01120283102375118], [-0.013483676627953045, -0.029301977491446227, 0.020573541215144348, 0.08068167186641018, 0.15290206015870192, 0.2166365574924272, 0.21448812092893715, -0.01525051204886443, -0.03569534695748361, -0.02285204408330306], [0.034037611670834245, -0.03280710443392011, -0.02884572013469159, 0.06668791904584301, -0.006260361007458337, 0.009881073106347638, -0.01525051204886443, 0.1557135421767904, 0.00301776030210792, 0.03223468479842535], [0.044967011023401754, -0.8955819949825337, -0.21662481460213448, 0.1401461732181878, -0.47915104106718476, 0.029977912653319023, -0.03569534695748361, 0.00301776030210792, 2.1684661462424017, 0.10718517314841526], [-0.01882814398768687, -0.26964509030438466, 0.022131178539276816, 0.013626775707520895, -0.11644117929427958, 0.01120283102375118, -0.02285204408330306, 0.03223468479842535, 0.10718517314841526, 0.1712662286932858]]
+q = 5.0
+bandwidth = 0.03
+variance = 0.4740355007974158
+cutoff = 0.9928328423693698
+factors = 6
+output = [[0.2432965948576409, -0.2650085115428505, 0.013998942586158638, 0.08054070270405822, 0.06692774758458132, -0.0713219422745305, -0.010602231242513237, 0.03330863225815315, 0.0593016969374254, -0.011361987506106333], [-0.2650085115428505, 4.4007505274636785, -0.11087324815422245, 0.034656397804521254, -0.05947657722460357, -0.1628833048820475, -0.023677985121104576, -0.04633985693789295, -0.805543866369734, -0.21939112218569254], [0.01399894258615865, -0.11087324815422245, 0.7072567841098651, 0.16872184822463257, 0.06731028653488678, -0.19868351161445177, 0.01690965212551714, -0.02930825963806424, -0.2177645992951855, 0.02381913175227979], [0.08054070270405828, 0.03465639780452122, 0.16872184822463263, 1.6394496597459653, -0.17540424391113146, -0.1986746783626438, 0.0652375221519284, 0.06534047335681761, 0.14398326556601962, 0.007154218414245855], [0.06692774758458135, -0.059476577224603464, 0.06731028653488677, -0.17540424391113144, 1.3693140747749033, 0.28323547496414897, 0.14239268671536426, -0.015017387277107068, -0.4675044514270161, -0.10957436277007734], [-0.07132194227453048, -0.1628833048820475, -0.19868351161445177, -0.19867467836264377, 0.2832354749641491, 1.586327675079771, 0.1973836845449136, 0.010424224625557671, 0.047604710831016556, 0.011170812458556912], [-0.010602231242513232, -0.02367798512110453, 0.016909652125517143, 0.06523752215192838, 0.14239268671536426, 0.19738368454491353, 0.21448812092893715, -0.014101550215823525, -0.03911191710442743, -0.020408236420554234], [0.03330863225815315, -0.04633985693789296, -0.02930825963806423, 0.06534047335681761, -0.015017387277107084, 0.010424224625557659, -0.014101550215823523, 0.1557135421767904, -0.004349644196295678, 0.02929426903808677], [0.05930169693742538, -0.805543866369734, -0.21776459929518557, 0.1439832655660196, -0.4675044514270161, 0.04760471083101657, -0.0391119171044274, -0.004349644196295655, 2.1684661462424017, 0.11663055160820306], [-0.011361987506106333, -0.21939112218569254, 0.023819131752279787, 0.007154218414245857, -0.10957436277007733, 0.011170812458556905, -0.02040823642055424, 0.029294269038086768, 0.11663055160820304, 0.1712662286932858]]
+mu = [0.28662239556963903, 0.13234816405440186, 0.22424294784983445, 0.30634188279061736, 0.2364085645988547, 0.10383975786164282, 0.13073060925819982, 0.3219616103687354, 0.1494247473851134, 0.17249228322925053]
+portfolio = [0.19788045803658627, 0.037713835297483775, 0.06769539644435875, -0.0024733397850025345, 0.030574610173419597, 0.0061414915351131515, 0.131436392745428, 0.3171218041642488, 0.026772522412757432, 0.18713682897560652]
+minimum = [0.17947832652469153, 0.04318007096589535, 0.061464970601769336, -0.009492496055649032, 0.026460645165534945, 0.008388307933185984, 0.2014742470026641, 0.19878480852344815, 0.0305038896900791, 0.25975722964838044]
+
+[[covariance]]
+covariance = [[16.665371360829138, 14.173160686055285, 13.390396658242452, 14.6238816791989, 5.293494174293552, 12.396814308601423, 15.928820298377286, 4.250424866693483, 5.4377213385946055, 11.573444979408556], [14.173160686055285, 16.499548981604622, 12.625214164476038, 14.745497450049447, 5.327983440373302, 12.255332168346134, 15.622313974970307, 4.330922433603003, 4.874267335474813, 11.62496189064579], [13.390396658242452, 12.625214164476038, 15.117730674633426, 13.129674449134694, 5.26012091655025, 11.992256622294432, 14.87921765522494, 4.260562638808467, 4.712518395684666, 11.05725544912095], [14.6238816791989, 14.745497450049447, 13.129674449134694, 20.218115579081516, 5.713219311079884, 13.528524950357127, 16.397190117765955, 4.6513560926724935, 5.380777919168158, 11.62639750720907], [5.293494174293552, 5.327983440373302, 5.26012091655025, 5.713219311079884, 2.6880088921919167, 4.716318366338316, 6.213523306466056, 1.865806917792002, 1.9007035339849083, 4.285893230087029], [12.396814308601423, 12.255332168346134, 11.992256622294432, 13.528524950357127, 4.716318366338316, 14.350643054796823, 13.99680300686081, 4.14465121514269, 4.49267019507991, 9.892080502942632], [15.928820298377286, 15.622313974970307, 14.87921765522494, 16.397190117765955, 6.213523306466056, 13.99680300686081, 19.91384682132786, 5.1610915762261635, 5.585963849696515, 13.111870585581423], [4.250424866693483, 4.330922433603003, 4.260562638808467, 4.6513560926724935, 1.865806917792002, 4.14465121514269, 5.1610915762261635, 1.88006150121095, 1.5974961120996782, 3.651035886304621], [5.4377213385946055, 4.874267335474813, 4.712518395684666, 5.380777919168158, 1.9007035339849083, 4.49267019507991, 5.585963849696515, 1.5974961120996782, 2.2960287219835482, 4.0298800982128355], [11.573444979408556, 11.62496189064579, 11.05725544912095, 11.62639750720907, 4.285893230087029, 9.892080502942632, 13.111870585581423, 3.651035886304621, 4.0298800982128355, 11.339411126125372]]
+q = 5.0
+bandwidth = 0.03
+variance = 0.99999
+cutoff = 2.094406246728006
+factors = 1
+output = [[16.665371360829138, 13.481133724304383, 12.902863764651242, 14.81878803401773, 5.419401313738483, 12.515090867211661, 14.904943529849843, 4.526669425309364, 5.0115324179418765, 11.168692610344825], [13.481133724304385, 16.499548981604622, 12.8083761739261, 14.710270141839645, 5.3797150717810425, 12.423442934991469, 14.795794721514119, 4.493520653392665, 4.974832997359791, 11.086904344146719], [12.902863764651245, 12.808376173926101, 15.117730674633425, 14.079276673829423, 5.1489534992661365, 11.890542365077327, 14.161132697412908, 4.30077217540277, 4.761438743174926, 10.611334272750607], [14.81878803401773, 14.710270141839645, 14.079276673829423, 20.218115579081513, 5.91351283671413, 13.65614875360589, 16.26389517801994, 4.939386512356746, 5.468456674352568, 12.186993229890092], [5.419401313738484, 5.379715071781043, 5.1489534992661365, 5.913512836714131, 2.6880088921919167, 4.994210749624613, 5.947893626113852, 1.8063904883907507, 1.9998775349965865, 4.4569236680472075], [12.51509086721166, 12.423442934991467, 11.890542365077327, 13.65614875360589, 4.994210749624613, 14.350643054796825, 13.735544738238586, 4.171520025019504, 4.6183420685839485, 10.292429267497637], [14.904943529849842, 14.795794721514119, 14.161132697412906, 16.26389517801994, 5.947893626113852, 13.735544738238586, 19.91384682132786, 4.968103792953624, 5.5002499353894185, 12.257847637282481], [4.526669425309365, 4.493520653392665, 4.30077217540277, 4.939386512356746, 1.8063904883907507, 4.171520025019505, 4.968103792953624, 1.88006150121095, 1.6704399559934409, 3.722739640620848], [5.011532417941877, 4.974832997359791, 4.761438743174925, 5.468456674352568, 1.9998775349965865, 4.618342068583948, 5.5002499353894185, 1.6704399559934406, 2.2960287219835482, 4.121491683977703], [11.168692610344827, 11.086904344146719, 10.611334272750607, 12.186993229890094, 4.4569236680472075, 10.292429267497639, 12.257847637282483, 3.7227396406208486, 4.1214916839777045, 11.339411126125372]]
+mu = [0.14602352514575265, 0.3017329263754366, 0.11150238618753706, 0.13300693730526753, 0.34688122207216965, 0.16574016449624862, 0.27617078276531726, 0.3851331171800173, 0.34978875387170133, 0.3478051253483021]
+portfolio = [-0.1010264946789264, -0.04507860388554036, -0.11383348867000737, -0.09100674711635104, 0.3549162110046415, -0.09001815248048015, -0.06109228390401821, 0.6962761329729539, 0.4559945845846133, -0.005131157826885141]
+minimum = [-0.07534830748722586, -0.07290563472259998, -0.06896567959669236, -0.07333683532296255, 0.3661659628005443, -0.06281298123051027, -0.0847638795371586, 0.6433669930002175, 0.4782181618511298, -0.04961779975474189]
+
+[[covariance]]
+covariance = [[1.3821087055742525, 0.04042324744795795, -0.10536155371725095, -0.1417631533861241, 0.012716463990877077, -0.05339508487310581, -0.5449101615305576, 0.1403655913666169, -0.48973123070784813, -0.07900016982895994], [0.04042324744795795, 2.1564114431348047, -0.10176728830601962, 0.022868494542502296, -0.08154966217014377, -0.5232579764680405, 0.11313939029501081, -0.18202698278169194, -0.29421233946242187, 0.4586190611869666], [-0.10536155371725095, -0.10176728830601962, 2.4078862422147562, 0.06426257028866568, -0.0713940342274901, 0.15556700241468002, 0.1823599554945151, 0.42567909849390817, -0.8052835533187652, -0.22130501691349838], [-0.1417631533861241, 0.022868494542502296, 0.06426257028866568, 0.19168116431866433, -0.01266506927069934, 0.012288960205448337, -0.06258871428589571, 0.003569929041004924, -0.11550480604796469, 0.02303491719432261], [0.012716463990877077, -0.08154966217014377, -0.0713940342274901, -0.01266506927069934, 0.275150222004043, -0.017249963228047536, 0.030279255073713665, 0.05250631303209593, -0.036334931495905234, -0.012213070453145868], [-0.05339508487310581, -0.5232579764680405, 0.15556700241468002, 0.012288960205448337, -0.017249963228047536, 1.5472173307303052, -0.4871358501718017, 0.2848591928772807, 0.09153013632920802, -0.1754187815017291], [-0.5449101615305576, 0.11313939029501081, 0.1823599554945151, -0.06258871428589571, 0.030279255073713665, -0.4871358501718017, 3.7973947854313543, -0.552141501453427, -0.09968770283092906, -0.09591932722591878], [0.1403655913666169, -0.18202698278169194, 0.42567909849390817, 0.003569929041004924, 0.05250631303209593, 0.2848591928772807, -0.552141501453427, 3.0541675306360623, -0.7493682261535775, -0.16801020935436337], [-0.48973123070784813, -0.29421233946242187, -0.8052835533187652, -0.11550480604796469, -0.036334931495905234, 0.09153013632920802, -0.09968770283092906, -0.7493682261535775, 3.201292605391219, 0.03829579556789835], [-0.07900016982895994, 0.4586190611869666, -0.22130501691349838, 0.02303491719432261, -0.012213070453145868, -0.1754187815017291, -0.09591932722591878, -0.16801020935436337, 0.03829579556789835, 0.6306843609855574]]
+q = 5.0
+bandwidth = 0.2
+variance = 0.99999
+cutoff = 2.094406246728006
+factors = 0
+output = [[1.3821087055742525, 1.0122759421006407e-16, -4.9450020711077535e-17, 3.411174401122747e-17, -7.546881942004954e-17, -1.395819638712581e-16, -4.399343261078624e-16, 1.727748511230793e-16, 5.337203084465131e-16, 1.7042328875417297e-16], [1.625957976879906e-16, 2.1564114431348047, 2.8890278682972566e-16, -2.407971733108614e-17, 6.91914772596371e-17, 8.10713458669625e-16, -3.4725911254153284e-16, 7.956888820947126e-16, 5.496362873994178e-16, -8.818122756841248e-16], [-6.565269279038023e-17, 3.1196466538766803e-16, 2.4078862422147567, -4.712234758692141e-16, 8.603493932046431e-17, -8.727742412305796e-16, 9.407294604418176e-16, -2.170332511711338e-15, 7.886217013721028e-16, 2.235267054385547e-16], [2.378294904380601e-17, -3.8367483078504944e-17, -4.814342383211384e-16, 0.19168116431866436, -2.2038509039893453e-17, 2.0747884735672024e-16, -5.543713259769726e-16, 3.202040325170481e-16, 9.047020134419323e-18, 1.4433317341485655e-16], [-7.666209866933621e-17, 8.917609248106613e-17, 8.756309040790827e-17, -2.4297148344388705e-17, 0.275150222004043, -1.383556131489237e-16, 2.497478581491971e-16, 8.533543201568677e-17, 1.336586529192457e-16, 1.2697585111492148e-16], [-1.457865799795078e-16, 7.805411565865733e-16, -8.391002753672587e-16, 1.9656384092314096e-16, -1.4064973727938662e-16, 1.5472173307303052, -5.606031534732197e-16, -4.680917387076682e-16, 8.028418840088768e-17, 5.368748528096881e-16], [-4.846691881327243e-16, -3.8357502180981857e-16, 1.1059209789136615e-15, -5.775902970596575e-16, 2.456844022277475e-16, -5.621514561448388e-16, 3.7973947854313543, 1.234958286621358e-16, -7.35296040181871e-16, -8.131399514309852e-16], [6.874586115227523e-17, 8.405871339171192e-16, -2.1893100737926753e-15, 3.2099490217579993e-16, 6.451799002234353e-17, -4.909969120128196e-16, 1.2609568800608418e-16, 3.0541675306360627, 1.832958996222728e-15, 5.256857845093719e-16], [5.196696083776866e-16, 4.770233361870288e-16, 7.654778052161283e-16, 1.9534022604080175e-17, 1.3794725406573983e-16, 8.601054069957705e-17, -6.905032098772249e-16, 2.0242332432033334e-15, 3.201292605391219, 4.314414343651865e-16], [1.6171716742984234e-16, -8.654496468344706e-16, 2.403554922268679e-16, 1.5422998945180391e-16, 1.3917818177413125e-16, 5.675126159800751e-16, -8.339381996931492e-16, 4.676780941104727e-16, 4.2293715010743343e-16, 0.6306843609855574]]
+mu = [0.24924614653727784, 0.2568884041138022, 0.3023210014496331, 0.25907047711208386, 0.1567830220991296, 0.15865604871334343, 0.12580668580579207, 0.38004359939874555, 0.37452024623239, 0.15029271282762907]
+portfolio = [0.06088789943088132, 0.04022143994249695, 0.042391334995314604, 0.45633442006113517, 0.19238619506393106, 0.03462183275767777, 0.011185688307672855, 0.042013156160416606, 0.03949977940780408, 0.0804582538726695]
+minimum = [0.05324404393573599, 0.034125703087802814, 0.03056168325288997, 0.3839138650118956, 0.26745047162810354, 0.04756219774814939, 0.019378827012109003, 0.024094636559846085, 0.022987294732018236, 0.1166812770314496]
+
+[[covariance]]
+covariance = [[4.792828223865103, 7.300675889683945, 5.0887322120618395, 2.7785796444902227, 2.579038437990841, 5.79623595719831, 3.7813687348754095, 6.167046720027104, 2.465270720133318, 3.6336921144308683], [7.300675889683945, 15.764188549304977, 9.645327895985504, 5.025317149675012, 4.641354424113779, 10.36479322849045, 6.375138777880976, 10.300740445741239, 4.316129537779902, 6.149613986963692], [5.0887322120618395, 9.645327895985504, 9.945986619612007, 3.853705441812623, 3.4665484626213026, 7.640281818988643, 4.69584906994795, 8.78286061576833, 3.2756625924568863, 4.838241636301504], [2.7785796444902227, 5.025317149675012, 3.853705441812623, 2.385683399649726, 1.836901138942551, 4.120953665242045, 2.692631011395708, 4.219015020751453, 1.7314405112018942, 2.4648827872389774], [2.579038437990841, 4.641354424113779, 3.4665484626213026, 1.836901138942551, 2.0024619692565437, 3.91018717107346, 2.344896663438193, 3.9540802175600285, 1.6321367834661287, 2.380263956261324], [5.79623595719831, 10.36479322849045, 7.640281818988643, 4.120953665242045, 3.91018717107346, 10.21852220851633, 5.239282856036769, 9.182854648400653, 3.561922206224251, 5.2021817257011165], [3.7813687348754095, 6.375138777880976, 4.69584906994795, 2.692631011395708, 2.344896663438193, 5.239282856036769, 4.030277257910559, 5.557056008458327, 2.248077693654057, 3.3376740429656366], [6.167046720027104, 10.300740445741239, 8.78286061576833, 4.219015020751453, 3.9540802175600285, 9.182854648400653, 5.557056008458327, 12.062500301285986, 3.9903682918924734, 5.676941867630386], [2.465270720133318, 4.316129537779902, 3.2756625924568863, 1.7314405112018942, 1.6321367834661287, 3.561922206224251, 2.248077693654057, 3.9903682918924734, 1.915898036193594, 2.1731971379773674], [3.6336921144308683, 6.149613986963692, 4.838241636301504, 2.4648827872389774, 2.380263956261324, 5.2021817257011165, 3.3376740429656366, 5.676941867630386, 2.1731971379773674, 3.6338527412367996]]
+q = 5.0
+bandwidth = 0.2
+variance = 0.99999
+cutoff = 2.094406246728006
+factors = 1
+output = [[4.792828223865103, 7.08358679246691, 5.586419237637923, 2.7677202478588296, 2.540024923056313, 5.727700322148036, 3.596156598404354, 6.202783070629171, 2.471983170212892, 3.4308353733939816], [7.083586792466911, 15.764188549304977, 10.085323467154653, 4.996645038415021, 4.585580113834963, 10.340382276109594, 6.492245030429485, 11.198062838251403, 4.462742378694223, 6.193785863780755], [5.586419237637924, 10.085323467154653, 9.94598661961201, 3.940567792002549, 3.616384427010914, 8.15486732416693, 5.120061855107129, 8.831270865546918, 3.5195093400242112, 4.884684202645951], [2.76772024785883, 4.996645038415021, 3.940567792002549, 2.3856833996497264, 1.7916915965139009, 4.040225133773256, 2.536669423446538, 4.375340651883275, 1.7436960687239824, 2.4200545639277373], [2.5400249230563134, 4.585580113834962, 3.6163844270109147, 1.7916915965139013, 2.0024619692565433, 3.7078431400289538, 2.3279822308969647, 4.015389312284221, 1.6002453558016307, 2.2209610643590456], [5.727700322148037, 10.340382276109594, 8.154867324166931, 4.040225133773257, 3.7078431400289538, 10.21852220851633, 5.249548716167389, 9.054614562539946, 3.6085180726936086, 5.008218340039304], [3.596156598404354, 6.492245030429484, 5.120061855107128, 2.5366694234465386, 2.327982230896964, 5.249548716167389, 4.030277257910559, 5.684971292784862, 2.265620641394144, 3.1444273297852465], [6.202783070629171, 11.198062838251403, 8.831270865546918, 4.375340651883275, 4.01538931228422, 9.054614562539946, 5.684971292784861, 12.062500301285986, 3.9078257507315195, 5.423623825689293], [2.471983170212892, 4.462742378694223, 3.5195093400242112, 1.7436960687239826, 1.6002453558016307, 3.608518072693608, 2.2656206413941447, 3.9078257507315204, 1.915898036193594, 2.1614663395458162], [3.4308353733939816, 6.193785863780754, 4.884684202645952, 2.4200545639277373, 2.2209610643590456, 5.008218340039304, 3.144427329785247, 5.423623825689293, 2.1614663395458162, 3.6338527412368]]
+mu = [0.16139983444997225, 0.3981745064178339, 0.3426984969709993, 0.38034093372885247, 0.13844595144635385, 0.17022815181061013, 0.1347751746424775, 0.33601082453051234, 0.16507061523424305, 0.38598783121824487]
+portfolio = [-0.35648149717668454, -0.06419032997389666, -0.025970838039429667, 1.6163970550985312, -0.23295023912894094, -0.36488396884835494, -0.4484552817569371, -0.09345429155245252, 0.06529814355245431, 0.904691247825711]
+minimum = [-0.012839993358618462, -0.15834292846371342, -0.12711331464313694, 0.36261199371735375, 0.5313129819265663, -0.14741651291071056, 0.04974760558035425, -0.15197462243923263, 0.5584260656891835, 0.09558872490195408]

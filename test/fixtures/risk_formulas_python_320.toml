@@ -1,0 +1,4335 @@
+reference = "RiskLabAI 3.2.0 multiple-testing and binary strategy formulas"
+
+[[adjustment]]
+values = []
+holm = []
+bhy = []
+
+[[adjustment]]
+values = [0.02]
+holm = [0.02]
+bhy = [0.02]
+
+[[adjustment]]
+values = [0.02, 0.02, 0.02, 0.02]
+holm = [0.08, 0.08, 0.08, 0.08]
+bhy = [0.041666666666666664, 0.041666666666666664, 0.041666666666666664, 0.041666666666666664]
+
+[[adjustment]]
+values = [1.0, 0.0, 0.0001, 0.05, 1.0]
+holm = [1.0, 0.0, 0.0004, 0.15000000000000002, 1.0]
+bhy = [1.0, 0.0, 0.0005708333333333333, 0.19027777777777777, 1.0]
+
+[[adjustment]]
+values = [0.9752894816394936, 0.7812592805872466, 0.4668496665234234, 0.15733824094585058, 0.4999467373763222, 0.3874884287057674, 0.7755362365217268, 0.34790861292398434, 0.24715284010377014, 0.6077330063135159, 0.7378606340945031, 0.17451007282926956, 0.44906739896662295, 0.34660899838241765, 0.4752987847684643, 0.039144245696473456, 0.7950988841079832, 0.3745753058674205, 0.8057381163267177]
+holm = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.7437406682329957, 1.0, 1.0, 1.0]
+bhy = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+[[adjustment]]
+values = [0.0, 0.0, 0.0]
+holm = [0.0, 0.0, 0.0]
+bhy = [0.0, 0.0, 0.0]
+
+[[adjustment]]
+values = [0.0, 0.0, 0.001]
+holm = [0.0, 0.0, 0.001]
+bhy = [0.0, 0.0, 0.0018333333333333333]
+
+[[adjustment]]
+values = [0.0, 0.0, 0.05]
+holm = [0.0, 0.0, 0.05]
+bhy = [0.0, 0.0, 0.09166666666666667]
+
+[[adjustment]]
+values = [0.0, 0.0, 0.3]
+holm = [0.0, 0.0, 0.3]
+bhy = [0.0, 0.0, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.0, 0.0, 1.0]
+holm = [0.0, 0.0, 1.0]
+bhy = [0.0, 0.0, 1.0]
+
+[[adjustment]]
+values = [0.0, 0.001, 0.0]
+holm = [0.0, 0.001, 0.0]
+bhy = [0.0, 0.0018333333333333333, 0.0]
+
+[[adjustment]]
+values = [0.0, 0.001, 0.001]
+holm = [0.0, 0.002, 0.002]
+bhy = [0.0, 0.0018333333333333333, 0.0018333333333333333]
+
+[[adjustment]]
+values = [0.0, 0.001, 0.05]
+holm = [0.0, 0.002, 0.05]
+bhy = [0.0, 0.00275, 0.09166666666666667]
+
+[[adjustment]]
+values = [0.0, 0.001, 0.3]
+holm = [0.0, 0.002, 0.3]
+bhy = [0.0, 0.00275, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.0, 0.001, 1.0]
+holm = [0.0, 0.002, 1.0]
+bhy = [0.0, 0.00275, 1.0]
+
+[[adjustment]]
+values = [0.0, 0.05, 0.0]
+holm = [0.0, 0.05, 0.0]
+bhy = [0.0, 0.09166666666666667, 0.0]
+
+[[adjustment]]
+values = [0.0, 0.05, 0.001]
+holm = [0.0, 0.05, 0.002]
+bhy = [0.0, 0.09166666666666667, 0.00275]
+
+[[adjustment]]
+values = [0.0, 0.05, 0.05]
+holm = [0.0, 0.1, 0.1]
+bhy = [0.0, 0.09166666666666667, 0.09166666666666667]
+
+[[adjustment]]
+values = [0.0, 0.05, 0.3]
+holm = [0.0, 0.1, 0.3]
+bhy = [0.0, 0.1375, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.0, 0.05, 1.0]
+holm = [0.0, 0.1, 1.0]
+bhy = [0.0, 0.1375, 1.0]
+
+[[adjustment]]
+values = [0.0, 0.3, 0.0]
+holm = [0.0, 0.3, 0.0]
+bhy = [0.0, 0.5499999999999999, 0.0]
+
+[[adjustment]]
+values = [0.0, 0.3, 0.001]
+holm = [0.0, 0.3, 0.002]
+bhy = [0.0, 0.5499999999999999, 0.00275]
+
+[[adjustment]]
+values = [0.0, 0.3, 0.05]
+holm = [0.0, 0.3, 0.1]
+bhy = [0.0, 0.5499999999999999, 0.1375]
+
+[[adjustment]]
+values = [0.0, 0.3, 0.3]
+holm = [0.0, 0.6, 0.6]
+bhy = [0.0, 0.5499999999999999, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.0, 0.3, 1.0]
+holm = [0.0, 0.6, 1.0]
+bhy = [0.0, 0.825, 1.0]
+
+[[adjustment]]
+values = [0.0, 1.0, 0.0]
+holm = [0.0, 1.0, 0.0]
+bhy = [0.0, 1.0, 0.0]
+
+[[adjustment]]
+values = [0.0, 1.0, 0.001]
+holm = [0.0, 1.0, 0.002]
+bhy = [0.0, 1.0, 0.00275]
+
+[[adjustment]]
+values = [0.0, 1.0, 0.05]
+holm = [0.0, 1.0, 0.1]
+bhy = [0.0, 1.0, 0.1375]
+
+[[adjustment]]
+values = [0.0, 1.0, 0.3]
+holm = [0.0, 1.0, 0.6]
+bhy = [0.0, 1.0, 0.825]
+
+[[adjustment]]
+values = [0.0, 1.0, 1.0]
+holm = [0.0, 1.0, 1.0]
+bhy = [0.0, 1.0, 1.0]
+
+[[adjustment]]
+values = [0.001, 0.0, 0.0]
+holm = [0.001, 0.0, 0.0]
+bhy = [0.0018333333333333333, 0.0, 0.0]
+
+[[adjustment]]
+values = [0.001, 0.0, 0.001]
+holm = [0.002, 0.0, 0.002]
+bhy = [0.0018333333333333333, 0.0, 0.0018333333333333333]
+
+[[adjustment]]
+values = [0.001, 0.0, 0.05]
+holm = [0.002, 0.0, 0.05]
+bhy = [0.00275, 0.0, 0.09166666666666667]
+
+[[adjustment]]
+values = [0.001, 0.0, 0.3]
+holm = [0.002, 0.0, 0.3]
+bhy = [0.00275, 0.0, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.001, 0.0, 1.0]
+holm = [0.002, 0.0, 1.0]
+bhy = [0.00275, 0.0, 1.0]
+
+[[adjustment]]
+values = [0.001, 0.001, 0.0]
+holm = [0.002, 0.002, 0.0]
+bhy = [0.0018333333333333333, 0.0018333333333333333, 0.0]
+
+[[adjustment]]
+values = [0.001, 0.001, 0.001]
+holm = [0.003, 0.003, 0.003]
+bhy = [0.0018333333333333333, 0.0018333333333333333, 0.0018333333333333333]
+
+[[adjustment]]
+values = [0.001, 0.001, 0.05]
+holm = [0.003, 0.003, 0.05]
+bhy = [0.00275, 0.00275, 0.09166666666666667]
+
+[[adjustment]]
+values = [0.001, 0.001, 0.3]
+holm = [0.003, 0.003, 0.3]
+bhy = [0.00275, 0.00275, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.001, 0.001, 1.0]
+holm = [0.003, 0.003, 1.0]
+bhy = [0.00275, 0.00275, 1.0]
+
+[[adjustment]]
+values = [0.001, 0.05, 0.0]
+holm = [0.002, 0.05, 0.0]
+bhy = [0.00275, 0.09166666666666667, 0.0]
+
+[[adjustment]]
+values = [0.001, 0.05, 0.001]
+holm = [0.003, 0.05, 0.003]
+bhy = [0.00275, 0.09166666666666667, 0.00275]
+
+[[adjustment]]
+values = [0.001, 0.05, 0.05]
+holm = [0.003, 0.1, 0.1]
+bhy = [0.0055, 0.09166666666666667, 0.09166666666666667]
+
+[[adjustment]]
+values = [0.001, 0.05, 0.3]
+holm = [0.003, 0.1, 0.3]
+bhy = [0.0055, 0.1375, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.001, 0.05, 1.0]
+holm = [0.003, 0.1, 1.0]
+bhy = [0.0055, 0.1375, 1.0]
+
+[[adjustment]]
+values = [0.001, 0.3, 0.0]
+holm = [0.002, 0.3, 0.0]
+bhy = [0.00275, 0.5499999999999999, 0.0]
+
+[[adjustment]]
+values = [0.001, 0.3, 0.001]
+holm = [0.003, 0.3, 0.003]
+bhy = [0.00275, 0.5499999999999999, 0.00275]
+
+[[adjustment]]
+values = [0.001, 0.3, 0.05]
+holm = [0.003, 0.3, 0.1]
+bhy = [0.0055, 0.5499999999999999, 0.1375]
+
+[[adjustment]]
+values = [0.001, 0.3, 0.3]
+holm = [0.003, 0.6, 0.6]
+bhy = [0.0055, 0.5499999999999999, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.001, 0.3, 1.0]
+holm = [0.003, 0.6, 1.0]
+bhy = [0.0055, 0.825, 1.0]
+
+[[adjustment]]
+values = [0.001, 1.0, 0.0]
+holm = [0.002, 1.0, 0.0]
+bhy = [0.00275, 1.0, 0.0]
+
+[[adjustment]]
+values = [0.001, 1.0, 0.001]
+holm = [0.003, 1.0, 0.003]
+bhy = [0.00275, 1.0, 0.00275]
+
+[[adjustment]]
+values = [0.001, 1.0, 0.05]
+holm = [0.003, 1.0, 0.1]
+bhy = [0.0055, 1.0, 0.1375]
+
+[[adjustment]]
+values = [0.001, 1.0, 0.3]
+holm = [0.003, 1.0, 0.6]
+bhy = [0.0055, 1.0, 0.825]
+
+[[adjustment]]
+values = [0.001, 1.0, 1.0]
+holm = [0.003, 1.0, 1.0]
+bhy = [0.0055, 1.0, 1.0]
+
+[[adjustment]]
+values = [0.05, 0.0, 0.0]
+holm = [0.05, 0.0, 0.0]
+bhy = [0.09166666666666667, 0.0, 0.0]
+
+[[adjustment]]
+values = [0.05, 0.0, 0.001]
+holm = [0.05, 0.0, 0.002]
+bhy = [0.09166666666666667, 0.0, 0.00275]
+
+[[adjustment]]
+values = [0.05, 0.0, 0.05]
+holm = [0.1, 0.0, 0.1]
+bhy = [0.09166666666666667, 0.0, 0.09166666666666667]
+
+[[adjustment]]
+values = [0.05, 0.0, 0.3]
+holm = [0.1, 0.0, 0.3]
+bhy = [0.1375, 0.0, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.05, 0.0, 1.0]
+holm = [0.1, 0.0, 1.0]
+bhy = [0.1375, 0.0, 1.0]
+
+[[adjustment]]
+values = [0.05, 0.001, 0.0]
+holm = [0.05, 0.002, 0.0]
+bhy = [0.09166666666666667, 0.00275, 0.0]
+
+[[adjustment]]
+values = [0.05, 0.001, 0.001]
+holm = [0.05, 0.003, 0.003]
+bhy = [0.09166666666666667, 0.00275, 0.00275]
+
+[[adjustment]]
+values = [0.05, 0.001, 0.05]
+holm = [0.1, 0.003, 0.1]
+bhy = [0.09166666666666667, 0.0055, 0.09166666666666667]
+
+[[adjustment]]
+values = [0.05, 0.001, 0.3]
+holm = [0.1, 0.003, 0.3]
+bhy = [0.1375, 0.0055, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.05, 0.001, 1.0]
+holm = [0.1, 0.003, 1.0]
+bhy = [0.1375, 0.0055, 1.0]
+
+[[adjustment]]
+values = [0.05, 0.05, 0.0]
+holm = [0.1, 0.1, 0.0]
+bhy = [0.09166666666666667, 0.09166666666666667, 0.0]
+
+[[adjustment]]
+values = [0.05, 0.05, 0.001]
+holm = [0.1, 0.1, 0.003]
+bhy = [0.09166666666666667, 0.09166666666666667, 0.0055]
+
+[[adjustment]]
+values = [0.05, 0.05, 0.05]
+holm = [0.15000000000000002, 0.15000000000000002, 0.15000000000000002]
+bhy = [0.09166666666666667, 0.09166666666666667, 0.09166666666666667]
+
+[[adjustment]]
+values = [0.05, 0.05, 0.3]
+holm = [0.15000000000000002, 0.15000000000000002, 0.3]
+bhy = [0.1375, 0.1375, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.05, 0.05, 1.0]
+holm = [0.15000000000000002, 0.15000000000000002, 1.0]
+bhy = [0.1375, 0.1375, 1.0]
+
+[[adjustment]]
+values = [0.05, 0.3, 0.0]
+holm = [0.1, 0.3, 0.0]
+bhy = [0.1375, 0.5499999999999999, 0.0]
+
+[[adjustment]]
+values = [0.05, 0.3, 0.001]
+holm = [0.1, 0.3, 0.003]
+bhy = [0.1375, 0.5499999999999999, 0.0055]
+
+[[adjustment]]
+values = [0.05, 0.3, 0.05]
+holm = [0.15000000000000002, 0.3, 0.15000000000000002]
+bhy = [0.1375, 0.5499999999999999, 0.1375]
+
+[[adjustment]]
+values = [0.05, 0.3, 0.3]
+holm = [0.15000000000000002, 0.6, 0.6]
+bhy = [0.275, 0.5499999999999999, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.05, 0.3, 1.0]
+holm = [0.15000000000000002, 0.6, 1.0]
+bhy = [0.275, 0.825, 1.0]
+
+[[adjustment]]
+values = [0.05, 1.0, 0.0]
+holm = [0.1, 1.0, 0.0]
+bhy = [0.1375, 1.0, 0.0]
+
+[[adjustment]]
+values = [0.05, 1.0, 0.001]
+holm = [0.1, 1.0, 0.003]
+bhy = [0.1375, 1.0, 0.0055]
+
+[[adjustment]]
+values = [0.05, 1.0, 0.05]
+holm = [0.15000000000000002, 1.0, 0.15000000000000002]
+bhy = [0.1375, 1.0, 0.1375]
+
+[[adjustment]]
+values = [0.05, 1.0, 0.3]
+holm = [0.15000000000000002, 1.0, 0.6]
+bhy = [0.275, 1.0, 0.825]
+
+[[adjustment]]
+values = [0.05, 1.0, 1.0]
+holm = [0.15000000000000002, 1.0, 1.0]
+bhy = [0.275, 1.0, 1.0]
+
+[[adjustment]]
+values = [0.3, 0.0, 0.0]
+holm = [0.3, 0.0, 0.0]
+bhy = [0.5499999999999999, 0.0, 0.0]
+
+[[adjustment]]
+values = [0.3, 0.0, 0.001]
+holm = [0.3, 0.0, 0.002]
+bhy = [0.5499999999999999, 0.0, 0.00275]
+
+[[adjustment]]
+values = [0.3, 0.0, 0.05]
+holm = [0.3, 0.0, 0.1]
+bhy = [0.5499999999999999, 0.0, 0.1375]
+
+[[adjustment]]
+values = [0.3, 0.0, 0.3]
+holm = [0.6, 0.0, 0.6]
+bhy = [0.5499999999999999, 0.0, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.3, 0.0, 1.0]
+holm = [0.6, 0.0, 1.0]
+bhy = [0.825, 0.0, 1.0]
+
+[[adjustment]]
+values = [0.3, 0.001, 0.0]
+holm = [0.3, 0.002, 0.0]
+bhy = [0.5499999999999999, 0.00275, 0.0]
+
+[[adjustment]]
+values = [0.3, 0.001, 0.001]
+holm = [0.3, 0.003, 0.003]
+bhy = [0.5499999999999999, 0.00275, 0.00275]
+
+[[adjustment]]
+values = [0.3, 0.001, 0.05]
+holm = [0.3, 0.003, 0.1]
+bhy = [0.5499999999999999, 0.0055, 0.1375]
+
+[[adjustment]]
+values = [0.3, 0.001, 0.3]
+holm = [0.6, 0.003, 0.6]
+bhy = [0.5499999999999999, 0.0055, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.3, 0.001, 1.0]
+holm = [0.6, 0.003, 1.0]
+bhy = [0.825, 0.0055, 1.0]
+
+[[adjustment]]
+values = [0.3, 0.05, 0.0]
+holm = [0.3, 0.1, 0.0]
+bhy = [0.5499999999999999, 0.1375, 0.0]
+
+[[adjustment]]
+values = [0.3, 0.05, 0.001]
+holm = [0.3, 0.1, 0.003]
+bhy = [0.5499999999999999, 0.1375, 0.0055]
+
+[[adjustment]]
+values = [0.3, 0.05, 0.05]
+holm = [0.3, 0.15000000000000002, 0.15000000000000002]
+bhy = [0.5499999999999999, 0.1375, 0.1375]
+
+[[adjustment]]
+values = [0.3, 0.05, 0.3]
+holm = [0.6, 0.15000000000000002, 0.6]
+bhy = [0.5499999999999999, 0.275, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.3, 0.05, 1.0]
+holm = [0.6, 0.15000000000000002, 1.0]
+bhy = [0.825, 0.275, 1.0]
+
+[[adjustment]]
+values = [0.3, 0.3, 0.0]
+holm = [0.6, 0.6, 0.0]
+bhy = [0.5499999999999999, 0.5499999999999999, 0.0]
+
+[[adjustment]]
+values = [0.3, 0.3, 0.001]
+holm = [0.6, 0.6, 0.003]
+bhy = [0.5499999999999999, 0.5499999999999999, 0.0055]
+
+[[adjustment]]
+values = [0.3, 0.3, 0.05]
+holm = [0.6, 0.6, 0.15000000000000002]
+bhy = [0.5499999999999999, 0.5499999999999999, 0.275]
+
+[[adjustment]]
+values = [0.3, 0.3, 0.3]
+holm = [0.8999999999999999, 0.8999999999999999, 0.8999999999999999]
+bhy = [0.5499999999999999, 0.5499999999999999, 0.5499999999999999]
+
+[[adjustment]]
+values = [0.3, 0.3, 1.0]
+holm = [0.8999999999999999, 0.8999999999999999, 1.0]
+bhy = [0.825, 0.825, 1.0]
+
+[[adjustment]]
+values = [0.3, 1.0, 0.0]
+holm = [0.6, 1.0, 0.0]
+bhy = [0.825, 1.0, 0.0]
+
+[[adjustment]]
+values = [0.3, 1.0, 0.001]
+holm = [0.6, 1.0, 0.003]
+bhy = [0.825, 1.0, 0.0055]
+
+[[adjustment]]
+values = [0.3, 1.0, 0.05]
+holm = [0.6, 1.0, 0.15000000000000002]
+bhy = [0.825, 1.0, 0.275]
+
+[[adjustment]]
+values = [0.3, 1.0, 0.3]
+holm = [0.8999999999999999, 1.0, 0.8999999999999999]
+bhy = [0.825, 1.0, 0.825]
+
+[[adjustment]]
+values = [0.3, 1.0, 1.0]
+holm = [0.8999999999999999, 1.0, 1.0]
+bhy = [1.0, 1.0, 1.0]
+
+[[adjustment]]
+values = [1.0, 0.0, 0.0]
+holm = [1.0, 0.0, 0.0]
+bhy = [1.0, 0.0, 0.0]
+
+[[adjustment]]
+values = [1.0, 0.0, 0.001]
+holm = [1.0, 0.0, 0.002]
+bhy = [1.0, 0.0, 0.00275]
+
+[[adjustment]]
+values = [1.0, 0.0, 0.05]
+holm = [1.0, 0.0, 0.1]
+bhy = [1.0, 0.0, 0.1375]
+
+[[adjustment]]
+values = [1.0, 0.0, 0.3]
+holm = [1.0, 0.0, 0.6]
+bhy = [1.0, 0.0, 0.825]
+
+[[adjustment]]
+values = [1.0, 0.0, 1.0]
+holm = [1.0, 0.0, 1.0]
+bhy = [1.0, 0.0, 1.0]
+
+[[adjustment]]
+values = [1.0, 0.001, 0.0]
+holm = [1.0, 0.002, 0.0]
+bhy = [1.0, 0.00275, 0.0]
+
+[[adjustment]]
+values = [1.0, 0.001, 0.001]
+holm = [1.0, 0.003, 0.003]
+bhy = [1.0, 0.00275, 0.00275]
+
+[[adjustment]]
+values = [1.0, 0.001, 0.05]
+holm = [1.0, 0.003, 0.1]
+bhy = [1.0, 0.0055, 0.1375]
+
+[[adjustment]]
+values = [1.0, 0.001, 0.3]
+holm = [1.0, 0.003, 0.6]
+bhy = [1.0, 0.0055, 0.825]
+
+[[adjustment]]
+values = [1.0, 0.001, 1.0]
+holm = [1.0, 0.003, 1.0]
+bhy = [1.0, 0.0055, 1.0]
+
+[[adjustment]]
+values = [1.0, 0.05, 0.0]
+holm = [1.0, 0.1, 0.0]
+bhy = [1.0, 0.1375, 0.0]
+
+[[adjustment]]
+values = [1.0, 0.05, 0.001]
+holm = [1.0, 0.1, 0.003]
+bhy = [1.0, 0.1375, 0.0055]
+
+[[adjustment]]
+values = [1.0, 0.05, 0.05]
+holm = [1.0, 0.15000000000000002, 0.15000000000000002]
+bhy = [1.0, 0.1375, 0.1375]
+
+[[adjustment]]
+values = [1.0, 0.05, 0.3]
+holm = [1.0, 0.15000000000000002, 0.6]
+bhy = [1.0, 0.275, 0.825]
+
+[[adjustment]]
+values = [1.0, 0.05, 1.0]
+holm = [1.0, 0.15000000000000002, 1.0]
+bhy = [1.0, 0.275, 1.0]
+
+[[adjustment]]
+values = [1.0, 0.3, 0.0]
+holm = [1.0, 0.6, 0.0]
+bhy = [1.0, 0.825, 0.0]
+
+[[adjustment]]
+values = [1.0, 0.3, 0.001]
+holm = [1.0, 0.6, 0.003]
+bhy = [1.0, 0.825, 0.0055]
+
+[[adjustment]]
+values = [1.0, 0.3, 0.05]
+holm = [1.0, 0.6, 0.15000000000000002]
+bhy = [1.0, 0.825, 0.275]
+
+[[adjustment]]
+values = [1.0, 0.3, 0.3]
+holm = [1.0, 0.8999999999999999, 0.8999999999999999]
+bhy = [1.0, 0.825, 0.825]
+
+[[adjustment]]
+values = [1.0, 0.3, 1.0]
+holm = [1.0, 0.8999999999999999, 1.0]
+bhy = [1.0, 1.0, 1.0]
+
+[[adjustment]]
+values = [1.0, 1.0, 0.0]
+holm = [1.0, 1.0, 0.0]
+bhy = [1.0, 1.0, 0.0]
+
+[[adjustment]]
+values = [1.0, 1.0, 0.001]
+holm = [1.0, 1.0, 0.003]
+bhy = [1.0, 1.0, 0.0055]
+
+[[adjustment]]
+values = [1.0, 1.0, 0.05]
+holm = [1.0, 1.0, 0.15000000000000002]
+bhy = [1.0, 1.0, 0.275]
+
+[[adjustment]]
+values = [1.0, 1.0, 0.3]
+holm = [1.0, 1.0, 0.8999999999999999]
+bhy = [1.0, 1.0, 1.0]
+
+[[adjustment]]
+values = [1.0, 1.0, 1.0]
+holm = [1.0, 1.0, 1.0]
+bhy = [1.0, 1.0, 1.0]
+
+[[haircut]]
+values = []
+count = 1
+method = "holm"
+level = 0.01
+output = {"p_values" = [], "adjusted_p_values" = [], "significant" = [], "haircut_sharpe_ratios" = []}
+
+[[haircut]]
+values = []
+count = 1
+method = "holm"
+level = 0.05
+output = {"p_values" = [], "adjusted_p_values" = [], "significant" = [], "haircut_sharpe_ratios" = []}
+
+[[haircut]]
+values = []
+count = 1
+method = "bhy"
+level = 0.01
+output = {"p_values" = [], "adjusted_p_values" = [], "significant" = [], "haircut_sharpe_ratios" = []}
+
+[[haircut]]
+values = []
+count = 1
+method = "bhy"
+level = 0.05
+output = {"p_values" = [], "adjusted_p_values" = [], "significant" = [], "haircut_sharpe_ratios" = []}
+
+[[haircut]]
+values = []
+count = 63
+method = "holm"
+level = 0.01
+output = {"p_values" = [], "adjusted_p_values" = [], "significant" = [], "haircut_sharpe_ratios" = []}
+
+[[haircut]]
+values = []
+count = 63
+method = "holm"
+level = 0.05
+output = {"p_values" = [], "adjusted_p_values" = [], "significant" = [], "haircut_sharpe_ratios" = []}
+
+[[haircut]]
+values = []
+count = 63
+method = "bhy"
+level = 0.01
+output = {"p_values" = [], "adjusted_p_values" = [], "significant" = [], "haircut_sharpe_ratios" = []}
+
+[[haircut]]
+values = []
+count = 63
+method = "bhy"
+level = 0.05
+output = {"p_values" = [], "adjusted_p_values" = [], "significant" = [], "haircut_sharpe_ratios" = []}
+
+[[haircut]]
+values = []
+count = 252
+method = "holm"
+level = 0.01
+output = {"p_values" = [], "adjusted_p_values" = [], "significant" = [], "haircut_sharpe_ratios" = []}
+
+[[haircut]]
+values = []
+count = 252
+method = "holm"
+level = 0.05
+output = {"p_values" = [], "adjusted_p_values" = [], "significant" = [], "haircut_sharpe_ratios" = []}
+
+[[haircut]]
+values = []
+count = 252
+method = "bhy"
+level = 0.01
+output = {"p_values" = [], "adjusted_p_values" = [], "significant" = [], "haircut_sharpe_ratios" = []}
+
+[[haircut]]
+values = []
+count = 252
+method = "bhy"
+level = 0.05
+output = {"p_values" = [], "adjusted_p_values" = [], "significant" = [], "haircut_sharpe_ratios" = []}
+
+[[haircut]]
+values = [-0.2, 0.0, 0.05, 0.2, 1.0]
+count = 1
+method = "holm"
+level = 0.01
+output = {"p_values" = [0.579259709439103, 0.5, 0.4800611941616275, 0.42074029056089696, 0.15865525393145707], "adjusted_p_values" = [1.0, 1.0, 1.0, 1.0, 0.7932762696572854], "significant" = [false, false, false, false, false], "haircut_sharpe_ratios" = [-inf, -inf, -inf, -inf, -0.8178419151906307]}
+
+[[haircut]]
+values = [-0.2, 0.0, 0.05, 0.2, 1.0]
+count = 1
+method = "holm"
+level = 0.05
+output = {"p_values" = [0.579259709439103, 0.5, 0.4800611941616275, 0.42074029056089696, 0.15865525393145707], "adjusted_p_values" = [1.0, 1.0, 1.0, 1.0, 0.7932762696572854], "significant" = [false, false, false, false, false], "haircut_sharpe_ratios" = [-inf, -inf, -inf, -inf, -0.8178419151906307]}
+
+[[haircut]]
+values = [-0.2, 0.0, 0.05, 0.2, 1.0]
+count = 1
+method = "bhy"
+level = 0.01
+output = {"p_values" = [0.579259709439103, 0.5, 0.4800611941616275, 0.42074029056089696, 0.15865525393145707], "adjusted_p_values" = [1.0, 1.0, 1.0, 1.0, 1.0], "significant" = [false, false, false, false, false], "haircut_sharpe_ratios" = [-inf, -inf, -inf, -inf, -inf]}
+
+[[haircut]]
+values = [-0.2, 0.0, 0.05, 0.2, 1.0]
+count = 1
+method = "bhy"
+level = 0.05
+output = {"p_values" = [0.579259709439103, 0.5, 0.4800611941616275, 0.42074029056089696, 0.15865525393145707], "adjusted_p_values" = [1.0, 1.0, 1.0, 1.0, 1.0], "significant" = [false, false, false, false, false], "haircut_sharpe_ratios" = [-inf, -inf, -inf, -inf, -inf]}
+
+[[haircut]]
+values = [-0.2, 0.0, 0.05, 0.2, 1.0]
+count = 63
+method = "holm"
+level = 0.01
+output = {"p_values" = [0.9437947076723182, 0.5, 0.34573435688968057, 0.056205292327681795, 1.033532909039118e-15], "adjusted_p_values" = [1.0, 1.0, 1.0, 0.22482116931072718, 5.16766454519559e-15], "significant" = [false, false, false, false, true], "haircut_sharpe_ratios" = [-inf, -inf, -inf, 0.095248488113592, 0.9745261229411329]}
+
+[[haircut]]
+values = [-0.2, 0.0, 0.05, 0.2, 1.0]
+count = 63
+method = "holm"
+level = 0.05
+output = {"p_values" = [0.9437947076723182, 0.5, 0.34573435688968057, 0.056205292327681795, 1.033532909039118e-15], "adjusted_p_values" = [1.0, 1.0, 1.0, 0.22482116931072718, 5.16766454519559e-15], "significant" = [false, false, false, false, true], "haircut_sharpe_ratios" = [-inf, -inf, -inf, 0.095248488113592, 0.9745261229411329]}
+
+[[haircut]]
+values = [-0.2, 0.0, 0.05, 0.2, 1.0]
+count = 63
+method = "bhy"
+level = 0.01
+output = {"p_values" = [0.9437947076723182, 0.5, 0.34573435688968057, 0.056205292327681795, 1.033532909039118e-15], "adjusted_p_values" = [1.0, 1.0, 1.0, 0.32083854370385023, 1.179950071152993e-14], "significant" = [false, false, false, false, true], "haircut_sharpe_ratios" = [-inf, -inf, -inf, 0.05862924843425613, 0.9612043269023018]}
+
+[[haircut]]
+values = [-0.2, 0.0, 0.05, 0.2, 1.0]
+count = 63
+method = "bhy"
+level = 0.05
+output = {"p_values" = [0.9437947076723182, 0.5, 0.34573435688968057, 0.056205292327681795, 1.033532909039118e-15], "adjusted_p_values" = [1.0, 1.0, 1.0, 0.32083854370385023, 1.179950071152993e-14], "significant" = [false, false, false, false, true], "haircut_sharpe_ratios" = [-inf, -inf, -inf, 0.05862924843425613, 0.9612043269023018]}
+
+[[haircut]]
+values = [-0.2, 0.0, 0.05, 0.2, 1.0]
+count = 252
+method = "holm"
+level = 0.01
+output = {"p_values" = [0.9992505633314241, 0.5, 0.21367765694890378, 0.0007494366685758365, 4.757715365331578e-57], "adjusted_p_values" = [1.0, 1.0, 0.6410329708467113, 0.002997746674303346, 2.378857682665789e-56], "significant" = [false, false, false, true, true], "haircut_sharpe_ratios" = [-inf, -inf, -0.022754799862450888, 0.17310947708278418, 0.993618184658989]}
+
+[[haircut]]
+values = [-0.2, 0.0, 0.05, 0.2, 1.0]
+count = 252
+method = "holm"
+level = 0.05
+output = {"p_values" = [0.9992505633314241, 0.5, 0.21367765694890378, 0.0007494366685758365, 4.757715365331578e-57], "adjusted_p_values" = [1.0, 1.0, 0.6410329708467113, 0.002997746674303346, 2.378857682665789e-56], "significant" = [false, false, false, true, true], "haircut_sharpe_ratios" = [-inf, -inf, -0.022754799862450888, 0.17310947708278418, 0.993618184658989]}
+
+[[haircut]]
+values = [-0.2, 0.0, 0.05, 0.2, 1.0]
+count = 252
+method = "bhy"
+level = 0.01
+output = {"p_values" = [0.9992505633314241, 0.5, 0.21367765694890378, 0.0007494366685758365, 4.757715365331578e-57], "adjusted_p_values" = [1.0, 1.0, 0.8131621944999949, 0.004278034316453733, 5.431725042086884e-56], "significant" = [false, false, false, true, true], "haircut_sharpe_ratios" = [-inf, -inf, -0.05604013007935097, 0.16563037086723761, 0.9903285005972426]}
+
+[[haircut]]
+values = [-0.2, 0.0, 0.05, 0.2, 1.0]
+count = 252
+method = "bhy"
+level = 0.05
+output = {"p_values" = [0.9992505633314241, 0.5, 0.21367765694890378, 0.0007494366685758365, 4.757715365331578e-57], "adjusted_p_values" = [1.0, 1.0, 0.8131621944999949, 0.004278034316453733, 5.431725042086884e-56], "significant" = [false, false, false, true, true], "haircut_sharpe_ratios" = [-inf, -inf, -0.05604013007935097, 0.16563037086723761, 0.9903285005972426]}
+
+[[haircut]]
+values = [0.0, 0.0, 0.0]
+count = 1
+method = "holm"
+level = 0.01
+output = {"p_values" = [0.5, 0.5, 0.5], "adjusted_p_values" = [1.0, 1.0, 1.0], "significant" = [false, false, false], "haircut_sharpe_ratios" = [-inf, -inf, -inf]}
+
+[[haircut]]
+values = [0.0, 0.0, 0.0]
+count = 1
+method = "holm"
+level = 0.05
+output = {"p_values" = [0.5, 0.5, 0.5], "adjusted_p_values" = [1.0, 1.0, 1.0], "significant" = [false, false, false], "haircut_sharpe_ratios" = [-inf, -inf, -inf]}
+
+[[haircut]]
+values = [0.0, 0.0, 0.0]
+count = 1
+method = "bhy"
+level = 0.01
+output = {"p_values" = [0.5, 0.5, 0.5], "adjusted_p_values" = [0.9166666666666666, 0.9166666666666666, 0.9166666666666666], "significant" = [false, false, false], "haircut_sharpe_ratios" = [-1.382994127100638, -1.382994127100638, -1.382994127100638]}
+
+[[haircut]]
+values = [0.0, 0.0, 0.0]
+count = 1
+method = "bhy"
+level = 0.05
+output = {"p_values" = [0.5, 0.5, 0.5], "adjusted_p_values" = [0.9166666666666666, 0.9166666666666666, 0.9166666666666666], "significant" = [false, false, false], "haircut_sharpe_ratios" = [-1.382994127100638, -1.382994127100638, -1.382994127100638]}
+
+[[haircut]]
+values = [0.0, 0.0, 0.0]
+count = 63
+method = "holm"
+level = 0.01
+output = {"p_values" = [0.5, 0.5, 0.5], "adjusted_p_values" = [1.0, 1.0, 1.0], "significant" = [false, false, false], "haircut_sharpe_ratios" = [-inf, -inf, -inf]}
+
+[[haircut]]
+values = [0.0, 0.0, 0.0]
+count = 63
+method = "holm"
+level = 0.05
+output = {"p_values" = [0.5, 0.5, 0.5], "adjusted_p_values" = [1.0, 1.0, 1.0], "significant" = [false, false, false], "haircut_sharpe_ratios" = [-inf, -inf, -inf]}
+
+[[haircut]]
+values = [0.0, 0.0, 0.0]
+count = 63
+method = "bhy"
+level = 0.01
+output = {"p_values" = [0.5, 0.5, 0.5], "adjusted_p_values" = [0.9166666666666666, 0.9166666666666666, 0.9166666666666666], "significant" = [false, false, false], "haircut_sharpe_ratios" = [-0.17424088214148295, -0.17424088214148295, -0.17424088214148295]}
+
+[[haircut]]
+values = [0.0, 0.0, 0.0]
+count = 63
+method = "bhy"
+level = 0.05
+output = {"p_values" = [0.5, 0.5, 0.5], "adjusted_p_values" = [0.9166666666666666, 0.9166666666666666, 0.9166666666666666], "significant" = [false, false, false], "haircut_sharpe_ratios" = [-0.17424088214148295, -0.17424088214148295, -0.17424088214148295]}
+
+[[haircut]]
+values = [0.0, 0.0, 0.0]
+count = 252
+method = "holm"
+level = 0.01
+output = {"p_values" = [0.5, 0.5, 0.5], "adjusted_p_values" = [1.0, 1.0, 1.0], "significant" = [false, false, false], "haircut_sharpe_ratios" = [-inf, -inf, -inf]}
+
+[[haircut]]
+values = [0.0, 0.0, 0.0]
+count = 252
+method = "holm"
+level = 0.05
+output = {"p_values" = [0.5, 0.5, 0.5], "adjusted_p_values" = [1.0, 1.0, 1.0], "significant" = [false, false, false], "haircut_sharpe_ratios" = [-inf, -inf, -inf]}
+
+[[haircut]]
+values = [0.0, 0.0, 0.0]
+count = 252
+method = "bhy"
+level = 0.01
+output = {"p_values" = [0.5, 0.5, 0.5], "adjusted_p_values" = [0.9166666666666666, 0.9166666666666666, 0.9166666666666666], "significant" = [false, false, false], "haircut_sharpe_ratios" = [-0.08712044107074148, -0.08712044107074148, -0.08712044107074148]}
+
+[[haircut]]
+values = [0.0, 0.0, 0.0]
+count = 252
+method = "bhy"
+level = 0.05
+output = {"p_values" = [0.5, 0.5, 0.5], "adjusted_p_values" = [0.9166666666666666, 0.9166666666666666, 0.9166666666666666], "significant" = [false, false, false], "haircut_sharpe_ratios" = [-0.08712044107074148, -0.08712044107074148, -0.08712044107074148]}
+
+[[haircut]]
+values = [10.0, 20.0, -20.0, 100.0]
+count = 1
+method = "holm"
+level = 0.01
+output = {"p_values" = [7.61985302416047e-24, 2.7536241186061556e-89, 1.0, 0.0], "adjusted_p_values" = [1.523970604832094e-23, 8.260872355818466e-89, 1.0, 0.0], "significant" = [true, true, false, true], "haircut_sharpe_ratios" = [9.931125958057219, 19.945130801126535, -inf, 37.0470962993612]}
+
+[[haircut]]
+values = [10.0, 20.0, -20.0, 100.0]
+count = 1
+method = "holm"
+level = 0.05
+output = {"p_values" = [7.61985302416047e-24, 2.7536241186061556e-89, 1.0, 0.0], "adjusted_p_values" = [1.523970604832094e-23, 8.260872355818466e-89, 1.0, 0.0], "significant" = [true, true, false, true], "haircut_sharpe_ratios" = [9.931125958057219, 19.945130801126535, -inf, 37.0470962993612]}
+
+[[haircut]]
+values = [10.0, 20.0, -20.0, 100.0]
+count = 1
+method = "bhy"
+level = 0.01
+output = {"p_values" = [7.61985302416047e-24, 2.7536241186061556e-89, 1.0, 0.0], "adjusted_p_values" = [2.1166258400445745e-23, 1.1473433827525647e-88, 1.0, 0.0], "significant" = [true, true, false, true], "haircut_sharpe_ratios" = [9.898320260424738, 19.928694767862456, -inf, 37.0470962993612]}
+
+[[haircut]]
+values = [10.0, 20.0, -20.0, 100.0]
+count = 1
+method = "bhy"
+level = 0.05
+output = {"p_values" = [7.61985302416047e-24, 2.7536241186061556e-89, 1.0, 0.0], "adjusted_p_values" = [2.1166258400445745e-23, 1.1473433827525647e-88, 1.0, 0.0], "significant" = [true, true, false, true], "haircut_sharpe_ratios" = [9.898320260424738, 19.928694767862456, -inf, 37.0470962993612]}
+
+[[haircut]]
+values = [10.0, 20.0, -20.0, 100.0]
+count = 63
+method = "holm"
+level = 0.01
+output = {"p_values" = [0.0, 0.0, 1.0, 0.0], "adjusted_p_values" = [0.0, 0.0, 1.0, 0.0], "significant" = [true, true, false, true], "haircut_sharpe_ratios" = [4.66749540977005, 4.66749540977005, -inf, 4.66749540977005]}
+
+[[haircut]]
+values = [10.0, 20.0, -20.0, 100.0]
+count = 63
+method = "holm"
+level = 0.05
+output = {"p_values" = [0.0, 0.0, 1.0, 0.0], "adjusted_p_values" = [0.0, 0.0, 1.0, 0.0], "significant" = [true, true, false, true], "haircut_sharpe_ratios" = [4.66749540977005, 4.66749540977005, -inf, 4.66749540977005]}
+
+[[haircut]]
+values = [10.0, 20.0, -20.0, 100.0]
+count = 63
+method = "bhy"
+level = 0.01
+output = {"p_values" = [0.0, 0.0, 1.0, 0.0], "adjusted_p_values" = [0.0, 0.0, 1.0, 0.0], "significant" = [true, true, false, true], "haircut_sharpe_ratios" = [4.66749540977005, 4.66749540977005, -inf, 4.66749540977005]}
+
+[[haircut]]
+values = [10.0, 20.0, -20.0, 100.0]
+count = 63
+method = "bhy"
+level = 0.05
+output = {"p_values" = [0.0, 0.0, 1.0, 0.0], "adjusted_p_values" = [0.0, 0.0, 1.0, 0.0], "significant" = [true, true, false, true], "haircut_sharpe_ratios" = [4.66749540977005, 4.66749540977005, -inf, 4.66749540977005]}
+
+[[haircut]]
+values = [10.0, 20.0, -20.0, 100.0]
+count = 252
+method = "holm"
+level = 0.01
+output = {"p_values" = [0.0, 0.0, 1.0, 0.0], "adjusted_p_values" = [0.0, 0.0, 1.0, 0.0], "significant" = [true, true, false, true], "haircut_sharpe_ratios" = [2.333747704885025, 2.333747704885025, -inf, 2.333747704885025]}
+
+[[haircut]]
+values = [10.0, 20.0, -20.0, 100.0]
+count = 252
+method = "holm"
+level = 0.05
+output = {"p_values" = [0.0, 0.0, 1.0, 0.0], "adjusted_p_values" = [0.0, 0.0, 1.0, 0.0], "significant" = [true, true, false, true], "haircut_sharpe_ratios" = [2.333747704885025, 2.333747704885025, -inf, 2.333747704885025]}
+
+[[haircut]]
+values = [10.0, 20.0, -20.0, 100.0]
+count = 252
+method = "bhy"
+level = 0.01
+output = {"p_values" = [0.0, 0.0, 1.0, 0.0], "adjusted_p_values" = [0.0, 0.0, 1.0, 0.0], "significant" = [true, true, false, true], "haircut_sharpe_ratios" = [2.333747704885025, 2.333747704885025, -inf, 2.333747704885025]}
+
+[[haircut]]
+values = [10.0, 20.0, -20.0, 100.0]
+count = 252
+method = "bhy"
+level = 0.05
+output = {"p_values" = [0.0, 0.0, 1.0, 0.0], "adjusted_p_values" = [0.0, 0.0, 1.0, 0.0], "significant" = [true, true, false, true], "haircut_sharpe_ratios" = [2.333747704885025, 2.333747704885025, -inf, 2.333747704885025]}
+
+[[maximum]]
+trials = 0
+mean = -0.1
+std = 0.0
+output = 0.0
+
+[[maximum]]
+trials = 0
+mean = -0.1
+std = 0.1
+output = 0.0
+
+[[maximum]]
+trials = 0
+mean = -0.1
+std = 0.5
+output = 0.0
+
+[[maximum]]
+trials = 0
+mean = 0.0
+std = 0.0
+output = 0.0
+
+[[maximum]]
+trials = 0
+mean = 0.0
+std = 0.1
+output = 0.0
+
+[[maximum]]
+trials = 0
+mean = 0.0
+std = 0.5
+output = 0.0
+
+[[maximum]]
+trials = 0
+mean = 0.2
+std = 0.0
+output = 0.0
+
+[[maximum]]
+trials = 0
+mean = 0.2
+std = 0.1
+output = 0.0
+
+[[maximum]]
+trials = 0
+mean = 0.2
+std = 0.5
+output = 0.0
+
+[[maximum]]
+trials = 1
+mean = -0.1
+std = 0.0
+output = -0.1
+
+[[maximum]]
+trials = 1
+mean = -0.1
+std = 0.1
+output = -0.1
+
+[[maximum]]
+trials = 1
+mean = -0.1
+std = 0.5
+output = -0.1
+
+[[maximum]]
+trials = 1
+mean = 0.0
+std = 0.0
+output = 0.0
+
+[[maximum]]
+trials = 1
+mean = 0.0
+std = 0.1
+output = 0.0
+
+[[maximum]]
+trials = 1
+mean = 0.0
+std = 0.5
+output = 0.0
+
+[[maximum]]
+trials = 1
+mean = 0.2
+std = 0.0
+output = 0.2
+
+[[maximum]]
+trials = 1
+mean = 0.2
+std = 0.1
+output = 0.2
+
+[[maximum]]
+trials = 1
+mean = 0.2
+std = 0.5
+output = 0.2
+
+[[maximum]]
+trials = 2
+mean = -0.1
+std = 0.0
+output = -0.1
+
+[[maximum]]
+trials = 2
+mean = -0.1
+std = 0.1
+output = -0.04802446557207865
+
+[[maximum]]
+trials = 2
+mean = -0.1
+std = 0.5
+output = 0.15987767213960677
+
+[[maximum]]
+trials = 2
+mean = 0.0
+std = 0.0
+output = 0.0
+
+[[maximum]]
+trials = 2
+mean = 0.0
+std = 0.1
+output = 0.051975534427921355
+
+[[maximum]]
+trials = 2
+mean = 0.0
+std = 0.5
+output = 0.2598776721396068
+
+[[maximum]]
+trials = 2
+mean = 0.2
+std = 0.0
+output = 0.2
+
+[[maximum]]
+trials = 2
+mean = 0.2
+std = 0.1
+output = 0.25197553442792137
+
+[[maximum]]
+trials = 2
+mean = 0.2
+std = 0.5
+output = 0.4598776721396068
+
+[[maximum]]
+trials = 7
+mean = -0.1
+std = 0.0
+output = -0.1
+
+[[maximum]]
+trials = 7
+mean = -0.1
+std = 0.1
+output = 0.03867744613533125
+
+[[maximum]]
+trials = 7
+mean = -0.1
+std = 0.5
+output = 0.5933872306766562
+
+[[maximum]]
+trials = 7
+mean = 0.0
+std = 0.0
+output = 0.0
+
+[[maximum]]
+trials = 7
+mean = 0.0
+std = 0.1
+output = 0.13867744613533126
+
+[[maximum]]
+trials = 7
+mean = 0.0
+std = 0.5
+output = 0.6933872306766562
+
+[[maximum]]
+trials = 7
+mean = 0.2
+std = 0.0
+output = 0.2
+
+[[maximum]]
+trials = 7
+mean = 0.2
+std = 0.1
+output = 0.33867744613533124
+
+[[maximum]]
+trials = 7
+mean = 0.2
+std = 0.5
+output = 0.8933872306766562
+
+[[maximum]]
+trials = 100
+mean = -0.1
+std = 0.0
+output = -0.1
+
+[[maximum]]
+trials = 100
+mean = -0.1
+std = 0.1
+output = 0.15306028932011426
+
+[[maximum]]
+trials = 100
+mean = -0.1
+std = 0.5
+output = 1.1653014466005711
+
+[[maximum]]
+trials = 100
+mean = 0.0
+std = 0.0
+output = 0.0
+
+[[maximum]]
+trials = 100
+mean = 0.0
+std = 0.1
+output = 0.25306028932011426
+
+[[maximum]]
+trials = 100
+mean = 0.0
+std = 0.5
+output = 1.2653014466005712
+
+[[maximum]]
+trials = 100
+mean = 0.2
+std = 0.0
+output = 0.2
+
+[[maximum]]
+trials = 100
+mean = 0.2
+std = 0.1
+output = 0.4530602893201143
+
+[[maximum]]
+trials = 100
+mean = 0.2
+std = 0.5
+output = 1.4653014466005712
+
+[[maximum]]
+trials = 10000
+mean = -0.1
+std = 0.0
+output = -0.1
+
+[[maximum]]
+trials = 10000
+mean = -0.1
+std = 0.1
+output = 0.28606648555100644
+
+[[maximum]]
+trials = 10000
+mean = -0.1
+std = 0.5
+output = 1.8303324277550321
+
+[[maximum]]
+trials = 10000
+mean = 0.0
+std = 0.0
+output = 0.0
+
+[[maximum]]
+trials = 10000
+mean = 0.0
+std = 0.1
+output = 0.3860664855510065
+
+[[maximum]]
+trials = 10000
+mean = 0.0
+std = 0.5
+output = 1.9303324277550322
+
+[[maximum]]
+trials = 10000
+mean = 0.2
+std = 0.0
+output = 0.2
+
+[[maximum]]
+trials = 10000
+mean = 0.2
+std = 0.1
+output = 0.5860664855510065
+
+[[maximum]]
+trials = 10000
+mean = 0.2
+std = 0.5
+output = 2.1303324277550324
+
+[[error_rates]]
+z = -3.0
+count = 1
+theta = -1.0
+alpha = 0.9986501019683699
+beta = 0.022750131948179306
+
+[[error_rates]]
+z = -3.0
+count = 1
+theta = 0.0
+alpha = 0.9986501019683699
+beta = 0.0013498980316301013
+
+[[error_rates]]
+z = -3.0
+count = 1
+theta = 2.0
+alpha = 0.9986501019683699
+beta = 2.866515718791965e-07
+
+[[error_rates]]
+z = -3.0
+count = 2
+theta = -1.0
+alpha = 0.9999981777753042
+beta = 0.0227501319481944
+
+[[error_rates]]
+z = -3.0
+count = 2
+theta = 0.0
+alpha = 0.9999981777753042
+beta = 0.0013498980316313423
+
+[[error_rates]]
+z = -3.0
+count = 2
+theta = 2.0
+alpha = 0.9999981777753042
+beta = 2.866515718796117e-07
+
+[[error_rates]]
+z = -3.0
+count = 10
+theta = -1.0
+alpha = 1.0
+beta = 0.0
+
+[[error_rates]]
+z = -3.0
+count = 10
+theta = 0.0
+alpha = 1.0
+beta = 0.0
+
+[[error_rates]]
+z = -3.0
+count = 10
+theta = 2.0
+alpha = 1.0
+beta = 0.0
+
+[[error_rates]]
+z = -3.0
+count = 100
+theta = -1.0
+alpha = 1.0
+beta = 0.0
+
+[[error_rates]]
+z = -3.0
+count = 100
+theta = 0.0
+alpha = 1.0
+beta = 0.0
+
+[[error_rates]]
+z = -3.0
+count = 100
+theta = 2.0
+alpha = 1.0
+beta = 0.0
+
+[[error_rates]]
+z = 0.0
+count = 1
+theta = -1.0
+alpha = 0.5
+beta = 0.8413447460685429
+
+[[error_rates]]
+z = 0.0
+count = 1
+theta = 0.0
+alpha = 0.5
+beta = 0.5
+
+[[error_rates]]
+z = 0.0
+count = 1
+theta = 2.0
+alpha = 0.5
+beta = 0.022750131948179195
+
+[[error_rates]]
+z = 0.0
+count = 2
+theta = -1.0
+alpha = 0.75
+beta = 0.8413447460685429
+
+[[error_rates]]
+z = 0.0
+count = 2
+theta = 0.0
+alpha = 0.75
+beta = 0.5
+
+[[error_rates]]
+z = 0.0
+count = 2
+theta = 2.0
+alpha = 0.75
+beta = 0.022750131948179195
+
+[[error_rates]]
+z = 0.0
+count = 10
+theta = -1.0
+alpha = 0.9990234375
+beta = 0.8413447460685429
+
+[[error_rates]]
+z = 0.0
+count = 10
+theta = 0.0
+alpha = 0.9990234375
+beta = 0.5
+
+[[error_rates]]
+z = 0.0
+count = 10
+theta = 2.0
+alpha = 0.9990234375
+beta = 0.022750131948179195
+
+[[error_rates]]
+z = 0.0
+count = 100
+theta = -1.0
+alpha = 1.0
+beta = 0.0
+
+[[error_rates]]
+z = 0.0
+count = 100
+theta = 0.0
+alpha = 1.0
+beta = 0.0
+
+[[error_rates]]
+z = 0.0
+count = 100
+theta = 2.0
+alpha = 1.0
+beta = 0.0
+
+[[error_rates]]
+z = 1.0
+count = 1
+theta = -1.0
+alpha = 0.15865525393145707
+beta = 0.9772498680518208
+
+[[error_rates]]
+z = 1.0
+count = 1
+theta = 0.0
+alpha = 0.15865525393145707
+beta = 0.8413447460685429
+
+[[error_rates]]
+z = 1.0
+count = 1
+theta = 2.0
+alpha = 0.15865525393145707
+beta = 0.15865525393145707
+
+[[error_rates]]
+z = 1.0
+count = 2
+theta = -1.0
+alpha = 0.29213901826285904
+beta = 0.9772498680518208
+
+[[error_rates]]
+z = 1.0
+count = 2
+theta = 0.0
+alpha = 0.29213901826285904
+beta = 0.8413447460685429
+
+[[error_rates]]
+z = 1.0
+count = 2
+theta = 2.0
+alpha = 0.29213901826285904
+beta = 0.15865525393145707
+
+[[error_rates]]
+z = 1.0
+count = 10
+theta = -1.0
+alpha = 0.8222785407919723
+beta = 0.9772498680518208
+
+[[error_rates]]
+z = 1.0
+count = 10
+theta = 0.0
+alpha = 0.8222785407919723
+beta = 0.8413447460685429
+
+[[error_rates]]
+z = 1.0
+count = 10
+theta = 2.0
+alpha = 0.8222785407919723
+beta = 0.15865525393145707
+
+[[error_rates]]
+z = 1.0
+count = 100
+theta = -1.0
+alpha = 0.9999999685660683
+beta = 0.9772498680548276
+
+[[error_rates]]
+z = 1.0
+count = 100
+theta = 0.0
+alpha = 0.9999999685660683
+beta = 0.8413447460820185
+
+[[error_rates]]
+z = 1.0
+count = 100
+theta = 2.0
+alpha = 0.9999999685660683
+beta = 0.15865525394493263
+
+[[error_rates]]
+z = 3.0
+count = 1
+theta = -1.0
+alpha = 0.0013498980316301035
+beta = 0.9999683287581669
+
+[[error_rates]]
+z = 3.0
+count = 1
+theta = 0.0
+alpha = 0.0013498980316301035
+beta = 0.9986501019683699
+
+[[error_rates]]
+z = 3.0
+count = 1
+theta = 2.0
+alpha = 0.0013498980316301035
+beta = 0.8413447460685426
+
+[[error_rates]]
+z = 3.0
+count = 2
+theta = -1.0
+alpha = 0.0026979738385644048
+beta = 0.9999683287581669
+
+[[error_rates]]
+z = 3.0
+count = 2
+theta = 0.0
+alpha = 0.0026979738385644048
+beta = 0.9986501019683699
+
+[[error_rates]]
+z = 3.0
+count = 2
+theta = 2.0
+alpha = 0.0026979738385644048
+beta = 0.8413447460685426
+
+[[error_rates]]
+z = 3.0
+count = 10
+theta = -1.0
+alpha = 0.013417274686916336
+beta = 0.9999683287581669
+
+[[error_rates]]
+z = 3.0
+count = 10
+theta = 0.0
+alpha = 0.013417274686916336
+beta = 0.9986501019683699
+
+[[error_rates]]
+z = 3.0
+count = 10
+theta = 2.0
+alpha = 0.013417274686916336
+beta = 0.8413447460685426
+
+[[error_rates]]
+z = 3.0
+count = 100
+theta = -1.0
+alpha = 0.12635485335490848
+beta = 0.9999683287581669
+
+[[error_rates]]
+z = 3.0
+count = 100
+theta = 0.0
+alpha = 0.12635485335490848
+beta = 0.9986501019683699
+
+[[error_rates]]
+z = 3.0
+count = 100
+theta = 2.0
+alpha = 0.12635485335490848
+beta = 0.8413447460685426
+
+[[error_rates]]
+z = 8.0
+count = 1
+theta = -1.0
+alpha = 6.661338147750939e-16
+beta = 1.0
+
+[[error_rates]]
+z = 8.0
+count = 1
+theta = 0.0
+alpha = 6.661338147750939e-16
+beta = 0.9999999999999993
+
+[[error_rates]]
+z = 8.0
+count = 1
+theta = 2.0
+alpha = 6.661338147750939e-16
+beta = 0.9999999989609011
+
+[[error_rates]]
+z = 8.0
+count = 2
+theta = -1.0
+alpha = 1.3322676295501878e-15
+beta = 1.0
+
+[[error_rates]]
+z = 8.0
+count = 2
+theta = 0.0
+alpha = 1.3322676295501878e-15
+beta = 0.9999999999999993
+
+[[error_rates]]
+z = 8.0
+count = 2
+theta = 2.0
+alpha = 1.3322676295501878e-15
+beta = 0.9999999989609011
+
+[[error_rates]]
+z = 8.0
+count = 10
+theta = -1.0
+alpha = 6.661338147750939e-15
+beta = 1.0
+
+[[error_rates]]
+z = 8.0
+count = 10
+theta = 0.0
+alpha = 6.661338147750939e-15
+beta = 0.9999999999999993
+
+[[error_rates]]
+z = 8.0
+count = 10
+theta = 2.0
+alpha = 6.661338147750939e-15
+beta = 0.9999999989609011
+
+[[error_rates]]
+z = 8.0
+count = 100
+theta = -1.0
+alpha = 6.661338147750939e-14
+beta = 1.0
+
+[[error_rates]]
+z = 8.0
+count = 100
+theta = 0.0
+alpha = 6.661338147750939e-14
+beta = 0.9999999999999993
+
+[[error_rates]]
+z = 8.0
+count = 100
+theta = 2.0
+alpha = 6.661338147750939e-14
+beta = 0.9999999989609011
+
+[[z_statistics]]
+observed = -0.3
+true = -0.2
+count = 1
+skew = 0.0
+kurtosis = 1.0
+z = -0.0
+theta = -0.0
+
+[[z_statistics]]
+observed = -0.3
+true = -0.2
+count = 1
+skew = 0.0
+kurtosis = 3.0
+z = -0.0
+theta = -0.0
+
+[[z_statistics]]
+observed = -0.3
+true = -0.2
+count = 1
+skew = 4.0
+kurtosis = 1.0
+z = -0.0
+theta = -0.0
+
+[[z_statistics]]
+observed = -0.3
+true = -0.2
+count = 1
+skew = 4.0
+kurtosis = 3.0
+z = -0.0
+theta = -0.0
+
+[[z_statistics]]
+observed = -0.3
+true = -0.2
+count = 2
+skew = 0.0
+kurtosis = 1.0
+z = -0.09999999999999998
+theta = -0.2
+
+[[z_statistics]]
+observed = -0.3
+true = -0.2
+count = 2
+skew = 0.0
+kurtosis = 3.0
+z = -0.09782319760890368
+theta = -0.1956463952178074
+
+[[z_statistics]]
+observed = -0.3
+true = -0.2
+count = 2
+skew = 4.0
+kurtosis = 1.0
+z = -0.06741998624632418
+theta = -0.13483997249264842
+
+[[z_statistics]]
+observed = -0.3
+true = -0.2
+count = 2
+skew = 4.0
+kurtosis = 3.0
+z = -0.06674086442659997
+theta = -0.13348172885319998
+
+[[z_statistics]]
+observed = -0.3
+true = -0.2
+count = 63
+skew = 0.0
+kurtosis = 1.0
+z = -0.7874007874011809
+theta = -1.5748015748023623
+
+[[z_statistics]]
+observed = -0.3
+true = -0.2
+count = 63
+skew = 0.0
+kurtosis = 3.0
+z = -0.7702606282335209
+theta = -1.5405212564670423
+
+[[z_statistics]]
+observed = -0.3
+true = -0.2
+count = 63
+skew = 4.0
+kurtosis = 1.0
+z = -0.5308655025693246
+theta = -1.0617310051386497
+
+[[z_statistics]]
+observed = -0.3
+true = -0.2
+count = 63
+skew = 4.0
+kurtosis = 3.0
+z = -0.5255180920134029
+theta = -1.051036184026806
+
+[[z_statistics]]
+observed = -0.3
+true = 0.2
+count = 1
+skew = 0.0
+kurtosis = 1.0
+z = -0.0
+theta = 0.0
+
+[[z_statistics]]
+observed = -0.3
+true = 0.2
+count = 1
+skew = 0.0
+kurtosis = 3.0
+z = -0.0
+theta = 0.0
+
+[[z_statistics]]
+observed = -0.3
+true = 0.2
+count = 1
+skew = 4.0
+kurtosis = 1.0
+z = -0.0
+theta = 0.0
+
+[[z_statistics]]
+observed = -0.3
+true = 0.2
+count = 1
+skew = 4.0
+kurtosis = 3.0
+z = -0.0
+theta = 0.0
+
+[[z_statistics]]
+observed = -0.3
+true = 0.2
+count = 2
+skew = 0.0
+kurtosis = 1.0
+z = -0.5
+theta = 0.2
+
+[[z_statistics]]
+observed = -0.3
+true = 0.2
+count = 2
+skew = 0.0
+kurtosis = 3.0
+z = -0.4891159880445185
+theta = 0.1956463952178074
+
+[[z_statistics]]
+observed = -0.3
+true = 0.2
+count = 2
+skew = 4.0
+kurtosis = 1.0
+z = -0.337099931231621
+theta = 0.13483997249264842
+
+[[z_statistics]]
+observed = -0.3
+true = 0.2
+count = 2
+skew = 4.0
+kurtosis = 3.0
+z = -0.33370432213299994
+theta = 0.13348172885319998
+
+[[z_statistics]]
+observed = -0.3
+true = 0.2
+count = 63
+skew = 0.0
+kurtosis = 1.0
+z = -3.9370039370059056
+theta = 1.5748015748023623
+
+[[z_statistics]]
+observed = -0.3
+true = 0.2
+count = 63
+skew = 0.0
+kurtosis = 3.0
+z = -3.8513031411676053
+theta = 1.5405212564670423
+
+[[z_statistics]]
+observed = -0.3
+true = 0.2
+count = 63
+skew = 4.0
+kurtosis = 1.0
+z = -2.654327512846624
+theta = 1.0617310051386497
+
+[[z_statistics]]
+observed = -0.3
+true = 0.2
+count = 63
+skew = 4.0
+kurtosis = 3.0
+z = -2.6275904600670152
+theta = 1.051036184026806
+
+[[z_statistics]]
+observed = 0.0
+true = -0.2
+count = 1
+skew = 0.0
+kurtosis = 1.0
+z = 0.0
+theta = -0.0
+
+[[z_statistics]]
+observed = 0.0
+true = -0.2
+count = 1
+skew = 0.0
+kurtosis = 3.0
+z = 0.0
+theta = -0.0
+
+[[z_statistics]]
+observed = 0.0
+true = -0.2
+count = 1
+skew = 4.0
+kurtosis = 1.0
+z = 0.0
+theta = -0.0
+
+[[z_statistics]]
+observed = 0.0
+true = -0.2
+count = 1
+skew = 4.0
+kurtosis = 3.0
+z = 0.0
+theta = -0.0
+
+[[z_statistics]]
+observed = 0.0
+true = -0.2
+count = 2
+skew = 0.0
+kurtosis = 1.0
+z = 0.2
+theta = -0.2
+
+[[z_statistics]]
+observed = 0.0
+true = -0.2
+count = 2
+skew = 0.0
+kurtosis = 3.0
+z = 0.2
+theta = -0.2
+
+[[z_statistics]]
+observed = 0.0
+true = -0.2
+count = 2
+skew = 4.0
+kurtosis = 1.0
+z = 0.2
+theta = -0.2
+
+[[z_statistics]]
+observed = 0.0
+true = -0.2
+count = 2
+skew = 4.0
+kurtosis = 3.0
+z = 0.2
+theta = -0.2
+
+[[z_statistics]]
+observed = 0.0
+true = -0.2
+count = 63
+skew = 0.0
+kurtosis = 1.0
+z = 1.5748015748023623
+theta = -1.5748015748023623
+
+[[z_statistics]]
+observed = 0.0
+true = -0.2
+count = 63
+skew = 0.0
+kurtosis = 3.0
+z = 1.5748015748023623
+theta = -1.5748015748023623
+
+[[z_statistics]]
+observed = 0.0
+true = -0.2
+count = 63
+skew = 4.0
+kurtosis = 1.0
+z = 1.5748015748023623
+theta = -1.5748015748023623
+
+[[z_statistics]]
+observed = 0.0
+true = -0.2
+count = 63
+skew = 4.0
+kurtosis = 3.0
+z = 1.5748015748023623
+theta = -1.5748015748023623
+
+[[z_statistics]]
+observed = 0.0
+true = 0.2
+count = 1
+skew = 0.0
+kurtosis = 1.0
+z = -0.0
+theta = 0.0
+
+[[z_statistics]]
+observed = 0.0
+true = 0.2
+count = 1
+skew = 0.0
+kurtosis = 3.0
+z = -0.0
+theta = 0.0
+
+[[z_statistics]]
+observed = 0.0
+true = 0.2
+count = 1
+skew = 4.0
+kurtosis = 1.0
+z = -0.0
+theta = 0.0
+
+[[z_statistics]]
+observed = 0.0
+true = 0.2
+count = 1
+skew = 4.0
+kurtosis = 3.0
+z = -0.0
+theta = 0.0
+
+[[z_statistics]]
+observed = 0.0
+true = 0.2
+count = 2
+skew = 0.0
+kurtosis = 1.0
+z = -0.2
+theta = 0.2
+
+[[z_statistics]]
+observed = 0.0
+true = 0.2
+count = 2
+skew = 0.0
+kurtosis = 3.0
+z = -0.2
+theta = 0.2
+
+[[z_statistics]]
+observed = 0.0
+true = 0.2
+count = 2
+skew = 4.0
+kurtosis = 1.0
+z = -0.2
+theta = 0.2
+
+[[z_statistics]]
+observed = 0.0
+true = 0.2
+count = 2
+skew = 4.0
+kurtosis = 3.0
+z = -0.2
+theta = 0.2
+
+[[z_statistics]]
+observed = 0.0
+true = 0.2
+count = 63
+skew = 0.0
+kurtosis = 1.0
+z = -1.5748015748023623
+theta = 1.5748015748023623
+
+[[z_statistics]]
+observed = 0.0
+true = 0.2
+count = 63
+skew = 0.0
+kurtosis = 3.0
+z = -1.5748015748023623
+theta = 1.5748015748023623
+
+[[z_statistics]]
+observed = 0.0
+true = 0.2
+count = 63
+skew = 4.0
+kurtosis = 1.0
+z = -1.5748015748023623
+theta = 1.5748015748023623
+
+[[z_statistics]]
+observed = 0.0
+true = 0.2
+count = 63
+skew = 4.0
+kurtosis = 3.0
+z = -1.5748015748023623
+theta = 1.5748015748023623
+
+[[z_statistics]]
+observed = 1.0
+true = -0.2
+count = 1
+skew = 0.0
+kurtosis = 1.0
+z = 0.0
+theta = -0.0
+
+[[z_statistics]]
+observed = 1.0
+true = -0.2
+count = 1
+skew = 0.0
+kurtosis = 3.0
+z = 0.0
+theta = -0.0
+
+[[z_statistics]]
+observed = 1.0
+true = -0.2
+count = 1
+skew = 4.0
+kurtosis = 1.0
+z = nan
+theta = nan
+
+[[z_statistics]]
+observed = 1.0
+true = -0.2
+count = 1
+skew = 4.0
+kurtosis = 3.0
+z = nan
+theta = nan
+
+[[z_statistics]]
+observed = 1.0
+true = -0.2
+count = 2
+skew = 0.0
+kurtosis = 1.0
+z = 1.2
+theta = -0.2
+
+[[z_statistics]]
+observed = 1.0
+true = -0.2
+count = 2
+skew = 0.0
+kurtosis = 3.0
+z = 0.9797958971132713
+theta = -0.16329931618554522
+
+[[z_statistics]]
+observed = 1.0
+true = -0.2
+count = 2
+skew = 4.0
+kurtosis = 1.0
+z = nan
+theta = nan
+
+[[z_statistics]]
+observed = 1.0
+true = -0.2
+count = 2
+skew = 4.0
+kurtosis = 3.0
+z = nan
+theta = nan
+
+[[z_statistics]]
+observed = 1.0
+true = -0.2
+count = 63
+skew = 0.0
+kurtosis = 1.0
+z = 9.448809448814172
+theta = -1.5748015748023623
+
+[[z_statistics]]
+observed = 1.0
+true = -0.2
+count = 63
+skew = 0.0
+kurtosis = 3.0
+z = 7.714920608794364
+theta = -1.2858201014657276
+
+[[z_statistics]]
+observed = 1.0
+true = -0.2
+count = 63
+skew = 4.0
+kurtosis = 1.0
+z = nan
+theta = nan
+
+[[z_statistics]]
+observed = 1.0
+true = -0.2
+count = 63
+skew = 4.0
+kurtosis = 3.0
+z = nan
+theta = nan
+
+[[z_statistics]]
+observed = 1.0
+true = 0.2
+count = 1
+skew = 0.0
+kurtosis = 1.0
+z = 0.0
+theta = 0.0
+
+[[z_statistics]]
+observed = 1.0
+true = 0.2
+count = 1
+skew = 0.0
+kurtosis = 3.0
+z = 0.0
+theta = 0.0
+
+[[z_statistics]]
+observed = 1.0
+true = 0.2
+count = 1
+skew = 4.0
+kurtosis = 1.0
+z = nan
+theta = nan
+
+[[z_statistics]]
+observed = 1.0
+true = 0.2
+count = 1
+skew = 4.0
+kurtosis = 3.0
+z = nan
+theta = nan
+
+[[z_statistics]]
+observed = 1.0
+true = 0.2
+count = 2
+skew = 0.0
+kurtosis = 1.0
+z = 0.8
+theta = 0.2
+
+[[z_statistics]]
+observed = 1.0
+true = 0.2
+count = 2
+skew = 0.0
+kurtosis = 3.0
+z = 0.6531972647421809
+theta = 0.16329931618554522
+
+[[z_statistics]]
+observed = 1.0
+true = 0.2
+count = 2
+skew = 4.0
+kurtosis = 1.0
+z = nan
+theta = nan
+
+[[z_statistics]]
+observed = 1.0
+true = 0.2
+count = 2
+skew = 4.0
+kurtosis = 3.0
+z = nan
+theta = nan
+
+[[z_statistics]]
+observed = 1.0
+true = 0.2
+count = 63
+skew = 0.0
+kurtosis = 1.0
+z = 6.299206299209449
+theta = 1.5748015748023623
+
+[[z_statistics]]
+observed = 1.0
+true = 0.2
+count = 63
+skew = 0.0
+kurtosis = 3.0
+z = 5.14328040586291
+theta = 1.2858201014657276
+
+[[z_statistics]]
+observed = 1.0
+true = 0.2
+count = 63
+skew = 4.0
+kurtosis = 1.0
+z = nan
+theta = nan
+
+[[z_statistics]]
+observed = 1.0
+true = 0.2
+count = 63
+skew = 4.0
+kurtosis = 3.0
+z = nan
+theta = nan
+
+[[variance]]
+probability = 0.0
+up = 0.0
+down = -1.0
+output = 0.0
+
+[[variance]]
+probability = 0.0
+up = 0.0
+down = -0.25
+output = 0.0
+
+[[variance]]
+probability = 0.0
+up = 0.5
+down = -1.0
+output = 0.0
+
+[[variance]]
+probability = 0.0
+up = 0.5
+down = -0.25
+output = 0.0
+
+[[variance]]
+probability = 0.0
+up = 2.0
+down = -1.0
+output = 0.0
+
+[[variance]]
+probability = 0.0
+up = 2.0
+down = -0.25
+output = 0.0
+
+[[variance]]
+probability = 0.25
+up = 0.0
+down = -1.0
+output = 0.1875
+
+[[variance]]
+probability = 0.25
+up = 0.0
+down = -0.25
+output = 0.01171875
+
+[[variance]]
+probability = 0.25
+up = 0.5
+down = -1.0
+output = 0.421875
+
+[[variance]]
+probability = 0.25
+up = 0.5
+down = -0.25
+output = 0.10546875
+
+[[variance]]
+probability = 0.25
+up = 2.0
+down = -1.0
+output = 1.6875
+
+[[variance]]
+probability = 0.25
+up = 2.0
+down = -0.25
+output = 0.94921875
+
+[[variance]]
+probability = 0.5
+up = 0.0
+down = -1.0
+output = 0.25
+
+[[variance]]
+probability = 0.5
+up = 0.0
+down = -0.25
+output = 0.015625
+
+[[variance]]
+probability = 0.5
+up = 0.5
+down = -1.0
+output = 0.5625
+
+[[variance]]
+probability = 0.5
+up = 0.5
+down = -0.25
+output = 0.140625
+
+[[variance]]
+probability = 0.5
+up = 2.0
+down = -1.0
+output = 2.25
+
+[[variance]]
+probability = 0.5
+up = 2.0
+down = -0.25
+output = 1.265625
+
+[[variance]]
+probability = 0.75
+up = 0.0
+down = -1.0
+output = 0.1875
+
+[[variance]]
+probability = 0.75
+up = 0.0
+down = -0.25
+output = 0.01171875
+
+[[variance]]
+probability = 0.75
+up = 0.5
+down = -1.0
+output = 0.421875
+
+[[variance]]
+probability = 0.75
+up = 0.5
+down = -0.25
+output = 0.10546875
+
+[[variance]]
+probability = 0.75
+up = 2.0
+down = -1.0
+output = 1.6875
+
+[[variance]]
+probability = 0.75
+up = 2.0
+down = -0.25
+output = 0.94921875
+
+[[variance]]
+probability = 1.0
+up = 0.0
+down = -1.0
+output = 0.0
+
+[[variance]]
+probability = 1.0
+up = 0.0
+down = -0.25
+output = 0.0
+
+[[variance]]
+probability = 1.0
+up = 0.5
+down = -1.0
+output = 0.0
+
+[[variance]]
+probability = 1.0
+up = 0.5
+down = -0.25
+output = 0.0
+
+[[variance]]
+probability = 1.0
+up = 2.0
+down = -1.0
+output = 0.0
+
+[[variance]]
+probability = 1.0
+up = 2.0
+down = -0.25
+output = 0.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 0.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 0.0
+probability = 0.25
+output = -0.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 0.0
+probability = 0.5
+output = -0.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 0.0
+probability = 0.75
+output = -0.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 0.0
+probability = 1.0
+output = 0.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 1.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 1.0
+probability = 0.25
+output = -1.7320508075688774
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 1.0
+probability = 0.5
+output = -1.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 1.0
+probability = 0.75
+output = -0.5773502691896258
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 1.0
+probability = 1.0
+output = 0.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 4.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 4.0
+probability = 0.25
+output = -3.464101615137755
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 4.0
+probability = 0.5
+output = -2.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 4.0
+probability = 0.75
+output = -1.1547005383792517
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 4.0
+probability = 1.0
+output = 0.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 64.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 64.0
+probability = 0.25
+output = -13.85640646055102
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 64.0
+probability = 0.5
+output = -8.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 64.0
+probability = 0.75
+output = -4.618802153517007
+
+[[binomial]]
+loss = -0.5
+profit = 0.0
+frequency = 64.0
+probability = 1.0
+output = 0.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 0.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 0.0
+probability = 0.25
+output = -0.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 0.0
+probability = 0.5
+output = 0.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 0.0
+probability = 0.75
+output = 0.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 0.0
+probability = 1.0
+output = inf
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 1.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 1.0
+probability = 0.25
+output = -0.5773502691896258
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 1.0
+probability = 0.5
+output = 0.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 1.0
+probability = 0.75
+output = 0.5773502691896258
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 1.0
+probability = 1.0
+output = inf
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 4.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 4.0
+probability = 0.25
+output = -1.1547005383792517
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 4.0
+probability = 0.5
+output = 0.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 4.0
+probability = 0.75
+output = 1.1547005383792517
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 4.0
+probability = 1.0
+output = inf
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 64.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 64.0
+probability = 0.25
+output = -4.618802153517007
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 64.0
+probability = 0.5
+output = 0.0
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 64.0
+probability = 0.75
+output = 4.618802153517007
+
+[[binomial]]
+loss = -0.5
+profit = 0.5
+frequency = 64.0
+probability = 1.0
+output = inf
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 0.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 0.0
+probability = 0.25
+output = -0.0
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 0.0
+probability = 0.5
+output = -0.0
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 0.0
+probability = 0.75
+output = -0.0
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 0.0
+probability = 1.0
+output = 0.0
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 1.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 1.0
+probability = 0.25
+output = -1.7320508075688774
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 1.0
+probability = 0.5
+output = -1.0
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 1.0
+probability = 0.75
+output = -0.5773502691896258
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 1.0
+probability = 1.0
+output = 0.0
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 4.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 4.0
+probability = 0.25
+output = -3.464101615137755
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 4.0
+probability = 0.5
+output = -2.0
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 4.0
+probability = 0.75
+output = -1.1547005383792517
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 4.0
+probability = 1.0
+output = 0.0
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 64.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 64.0
+probability = 0.25
+output = -13.85640646055102
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 64.0
+probability = 0.5
+output = -8.0
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 64.0
+probability = 0.75
+output = -4.618802153517007
+
+[[binomial]]
+loss = -0.25
+profit = 0.0
+frequency = 64.0
+probability = 1.0
+output = 0.0
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 0.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 0.0
+probability = 0.25
+output = -0.0
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 0.0
+probability = 0.5
+output = 0.0
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 0.0
+probability = 0.75
+output = 0.0
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 0.0
+probability = 1.0
+output = inf
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 1.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 1.0
+probability = 0.25
+output = -0.19245008972987526
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 1.0
+probability = 0.5
+output = 0.3333333333333333
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 1.0
+probability = 0.75
+output = 0.9622504486493763
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 1.0
+probability = 1.0
+output = inf
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 4.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 4.0
+probability = 0.25
+output = -0.3849001794597505
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 4.0
+probability = 0.5
+output = 0.6666666666666666
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 4.0
+probability = 0.75
+output = 1.9245008972987525
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 4.0
+probability = 1.0
+output = inf
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 64.0
+probability = 0.0
+output = -inf
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 64.0
+probability = 0.25
+output = -1.539600717839002
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 64.0
+probability = 0.5
+output = 2.6666666666666665
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 64.0
+probability = 0.75
+output = 7.69800358919501
+
+[[binomial]]
+loss = -0.25
+profit = 0.5
+frequency = 64.0
+probability = 1.0
+output = inf
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 0.0
+probability = 0.0
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 0.0
+probability = 0.25
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 0.0
+probability = 0.5
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 0.0
+probability = 0.75
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 0.0
+probability = 1.0
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 1.0
+probability = 0.0
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 1.0
+probability = 0.25
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 1.0
+probability = 0.5
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 1.0
+probability = 0.75
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 1.0
+probability = 1.0
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 4.0
+probability = 0.0
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 4.0
+probability = 0.25
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 4.0
+probability = 0.5
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 4.0
+probability = 0.75
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 4.0
+probability = 1.0
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 64.0
+probability = 0.0
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 64.0
+probability = 0.25
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 64.0
+probability = 0.5
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 64.0
+probability = 0.75
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.0
+frequency = 64.0
+probability = 1.0
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 0.0
+probability = 0.0
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 0.0
+probability = 0.25
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 0.0
+probability = 0.5
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 0.0
+probability = 0.75
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 0.0
+probability = 1.0
+output = inf
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 1.0
+probability = 0.0
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 1.0
+probability = 0.25
+output = 0.5773502691896258
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 1.0
+probability = 0.5
+output = 1.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 1.0
+probability = 0.75
+output = 1.7320508075688774
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 1.0
+probability = 1.0
+output = inf
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 4.0
+probability = 0.0
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 4.0
+probability = 0.25
+output = 1.1547005383792517
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 4.0
+probability = 0.5
+output = 2.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 4.0
+probability = 0.75
+output = 3.464101615137755
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 4.0
+probability = 1.0
+output = inf
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 64.0
+probability = 0.0
+output = 0.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 64.0
+probability = 0.25
+output = 4.618802153517007
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 64.0
+probability = 0.5
+output = 8.0
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 64.0
+probability = 0.75
+output = 13.85640646055102
+
+[[binomial]]
+loss = 0.0
+profit = 0.5
+frequency = 64.0
+probability = 1.0
+output = inf
+
+[[precision]]
+loss = -0.5
+profit = 0.25
+frequency = 1.0
+target = 0.0
+output = 0.6666666666666666
+
+[[precision]]
+loss = -0.5
+profit = 0.25
+frequency = 1.0
+target = 0.5
+output = 0.8467708079144283
+
+[[precision]]
+loss = -0.5
+profit = 0.25
+frequency = 1.0
+target = 2.0
+output = 0.9755499720473867
+
+[[precision]]
+loss = -0.5
+profit = 0.25
+frequency = 4.0
+target = 0.0
+output = 0.6666666666666666
+
+[[precision]]
+loss = -0.5
+profit = 0.25
+frequency = 4.0
+target = 0.5
+output = 0.7716147050070552
+
+[[precision]]
+loss = -0.5
+profit = 0.25
+frequency = 4.0
+target = 2.0
+output = 0.9269254688014716
+
+[[precision]]
+loss = -0.5
+profit = 0.25
+frequency = 64.0
+target = 0.0
+output = 0.6666666666666666
+
+[[precision]]
+loss = -0.5
+profit = 0.25
+frequency = 64.0
+target = 0.5
+output = 0.6954307145796331
+
+[[precision]]
+loss = -0.5
+profit = 0.25
+frequency = 64.0
+target = 2.0
+output = 0.7716147050070552
+
+[[precision]]
+loss = -0.5
+profit = 0.5
+frequency = 1.0
+target = 0.0
+output = 0.5
+
+[[precision]]
+loss = -0.5
+profit = 0.5
+frequency = 1.0
+target = 0.5
+output = 0.7236067977499789
+
+[[precision]]
+loss = -0.5
+profit = 0.5
+frequency = 1.0
+target = 2.0
+output = 0.947213595499958
+
+[[precision]]
+loss = -0.5
+profit = 0.5
+frequency = 4.0
+target = 0.0
+output = 0.5
+
+[[precision]]
+loss = -0.5
+profit = 0.5
+frequency = 4.0
+target = 0.5
+output = 0.6212678125181665
+
+[[precision]]
+loss = -0.5
+profit = 0.5
+frequency = 4.0
+target = 2.0
+output = 0.8535533905932737
+
+[[precision]]
+loss = -0.5
+profit = 0.5
+frequency = 64.0
+target = 0.0
+output = 0.5
+
+[[precision]]
+loss = -0.5
+profit = 0.5
+frequency = 64.0
+target = 0.5
+output = 0.5311891430775902
+
+[[precision]]
+loss = -0.5
+profit = 0.5
+frequency = 64.0
+target = 2.0
+output = 0.6212678125181665
+
+[[precision]]
+loss = -0.25
+profit = 0.25
+frequency = 1.0
+target = 0.0
+output = 0.5
+
+[[precision]]
+loss = -0.25
+profit = 0.25
+frequency = 1.0
+target = 0.5
+output = 0.7236067977499789
+
+[[precision]]
+loss = -0.25
+profit = 0.25
+frequency = 1.0
+target = 2.0
+output = 0.947213595499958
+
+[[precision]]
+loss = -0.25
+profit = 0.25
+frequency = 4.0
+target = 0.0
+output = 0.5
+
+[[precision]]
+loss = -0.25
+profit = 0.25
+frequency = 4.0
+target = 0.5
+output = 0.6212678125181665
+
+[[precision]]
+loss = -0.25
+profit = 0.25
+frequency = 4.0
+target = 2.0
+output = 0.8535533905932737
+
+[[precision]]
+loss = -0.25
+profit = 0.25
+frequency = 64.0
+target = 0.0
+output = 0.5
+
+[[precision]]
+loss = -0.25
+profit = 0.25
+frequency = 64.0
+target = 0.5
+output = 0.5311891430775902
+
+[[precision]]
+loss = -0.25
+profit = 0.25
+frequency = 64.0
+target = 2.0
+output = 0.6212678125181665
+
+[[precision]]
+loss = -0.25
+profit = 0.5
+frequency = 1.0
+target = 0.0
+output = 0.3333333333333333
+
+[[precision]]
+loss = -0.25
+profit = 0.5
+frequency = 1.0
+target = 0.5
+output = 0.5801041412477617
+
+[[precision]]
+loss = -0.25
+profit = 0.5
+frequency = 1.0
+target = 2.0
+output = 0.90888330538072
+
+[[precision]]
+loss = -0.25
+profit = 0.5
+frequency = 4.0
+target = 0.0
+output = 0.3333333333333333
+
+[[precision]]
+loss = -0.25
+profit = 0.5
+frequency = 4.0
+target = 0.5
+output = 0.4578892148109767
+
+[[precision]]
+loss = -0.25
+profit = 0.5
+frequency = 4.0
+target = 2.0
+output = 0.760258802134805
+
+[[precision]]
+loss = -0.25
+profit = 0.5
+frequency = 64.0
+target = 0.0
+output = 0.3333333333333333
+
+[[precision]]
+loss = -0.25
+profit = 0.5
+frequency = 64.0
+target = 0.5
+output = 0.363394398107519
+
+[[precision]]
+loss = -0.25
+profit = 0.5
+frequency = 64.0
+target = 2.0
+output = 0.4578892148109767
+
+[[frequency]]
+loss = -0.5
+profit = 0.25
+probability = 0.0
+target = 0.0
+output = inf
+
+[[frequency]]
+loss = -0.5
+profit = 0.25
+probability = 0.0
+target = 0.5
+output = inf
+
+[[frequency]]
+loss = -0.5
+profit = 0.25
+probability = 0.0
+target = 2.0
+output = inf
+
+[[frequency]]
+loss = -0.5
+profit = 0.25
+probability = 0.25
+target = 0.0
+output = 0.0
+
+[[frequency]]
+loss = -0.5
+profit = 0.25
+probability = 0.25
+target = 0.5
+output = 0.27
+
+[[frequency]]
+loss = -0.5
+profit = 0.25
+probability = 0.25
+target = 2.0
+output = 4.32
+
+[[frequency]]
+loss = -0.5
+profit = 0.25
+probability = 0.5
+target = 0.0
+output = 0.0
+
+[[frequency]]
+loss = -0.5
+profit = 0.25
+probability = 0.5
+target = 0.5
+output = 2.25
+
+[[frequency]]
+loss = -0.5
+profit = 0.25
+probability = 0.5
+target = 2.0
+output = 36.0
+
+[[frequency]]
+loss = -0.5
+profit = 0.25
+probability = 0.75
+target = 0.0
+output = 0.0
+
+[[frequency]]
+loss = -0.5
+profit = 0.25
+probability = 0.75
+target = 0.5
+output = 6.75
+
+[[frequency]]
+loss = -0.5
+profit = 0.25
+probability = 0.75
+target = 2.0
+output = 108.0
+
+[[frequency]]
+loss = -0.5
+profit = 0.25
+probability = 1.0
+target = 0.0
+output = inf
+
+[[frequency]]
+loss = -0.5
+profit = 0.25
+probability = 1.0
+target = 0.5
+output = inf
+
+[[frequency]]
+loss = -0.5
+profit = 0.25
+probability = 1.0
+target = 2.0
+output = inf
+
+[[frequency]]
+loss = -0.5
+profit = 0.5
+probability = 0.0
+target = 0.0
+output = inf
+
+[[frequency]]
+loss = -0.5
+profit = 0.5
+probability = 0.0
+target = 0.5
+output = inf
+
+[[frequency]]
+loss = -0.5
+profit = 0.5
+probability = 0.0
+target = 2.0
+output = inf
+
+[[frequency]]
+loss = -0.5
+profit = 0.5
+probability = 0.25
+target = 0.0
+output = 0.0
+
+[[frequency]]
+loss = -0.5
+profit = 0.5
+probability = 0.25
+target = 0.5
+output = 0.75
+
+[[frequency]]
+loss = -0.5
+profit = 0.5
+probability = 0.25
+target = 2.0
+output = 12.0
+
+[[frequency]]
+loss = -0.5
+profit = 0.5
+probability = 0.5
+target = 0.0
+output = inf
+
+[[frequency]]
+loss = -0.5
+profit = 0.5
+probability = 0.5
+target = 0.5
+output = inf
+
+[[frequency]]
+loss = -0.5
+profit = 0.5
+probability = 0.5
+target = 2.0
+output = inf
+
+[[frequency]]
+loss = -0.5
+profit = 0.5
+probability = 0.75
+target = 0.0
+output = 0.0
+
+[[frequency]]
+loss = -0.5
+profit = 0.5
+probability = 0.75
+target = 0.5
+output = 0.75
+
+[[frequency]]
+loss = -0.5
+profit = 0.5
+probability = 0.75
+target = 2.0
+output = 12.0
+
+[[frequency]]
+loss = -0.5
+profit = 0.5
+probability = 1.0
+target = 0.0
+output = inf
+
+[[frequency]]
+loss = -0.5
+profit = 0.5
+probability = 1.0
+target = 0.5
+output = inf
+
+[[frequency]]
+loss = -0.5
+profit = 0.5
+probability = 1.0
+target = 2.0
+output = inf
+
+[[frequency]]
+loss = -0.25
+profit = 0.25
+probability = 0.0
+target = 0.0
+output = inf
+
+[[frequency]]
+loss = -0.25
+profit = 0.25
+probability = 0.0
+target = 0.5
+output = inf
+
+[[frequency]]
+loss = -0.25
+profit = 0.25
+probability = 0.0
+target = 2.0
+output = inf
+
+[[frequency]]
+loss = -0.25
+profit = 0.25
+probability = 0.25
+target = 0.0
+output = 0.0
+
+[[frequency]]
+loss = -0.25
+profit = 0.25
+probability = 0.25
+target = 0.5
+output = 0.75
+
+[[frequency]]
+loss = -0.25
+profit = 0.25
+probability = 0.25
+target = 2.0
+output = 12.0
+
+[[frequency]]
+loss = -0.25
+profit = 0.25
+probability = 0.5
+target = 0.0
+output = inf
+
+[[frequency]]
+loss = -0.25
+profit = 0.25
+probability = 0.5
+target = 0.5
+output = inf
+
+[[frequency]]
+loss = -0.25
+profit = 0.25
+probability = 0.5
+target = 2.0
+output = inf
+
+[[frequency]]
+loss = -0.25
+profit = 0.25
+probability = 0.75
+target = 0.0
+output = 0.0
+
+[[frequency]]
+loss = -0.25
+profit = 0.25
+probability = 0.75
+target = 0.5
+output = 0.75
+
+[[frequency]]
+loss = -0.25
+profit = 0.25
+probability = 0.75
+target = 2.0
+output = 12.0
+
+[[frequency]]
+loss = -0.25
+profit = 0.25
+probability = 1.0
+target = 0.0
+output = inf
+
+[[frequency]]
+loss = -0.25
+profit = 0.25
+probability = 1.0
+target = 0.5
+output = inf
+
+[[frequency]]
+loss = -0.25
+profit = 0.25
+probability = 1.0
+target = 2.0
+output = inf
+
+[[frequency]]
+loss = -0.25
+profit = 0.5
+probability = 0.0
+target = 0.0
+output = inf
+
+[[frequency]]
+loss = -0.25
+profit = 0.5
+probability = 0.0
+target = 0.5
+output = inf
+
+[[frequency]]
+loss = -0.25
+profit = 0.5
+probability = 0.0
+target = 2.0
+output = inf
+
+[[frequency]]
+loss = -0.25
+profit = 0.5
+probability = 0.25
+target = 0.0
+output = 0.0
+
+[[frequency]]
+loss = -0.25
+profit = 0.5
+probability = 0.25
+target = 0.5
+output = 6.75
+
+[[frequency]]
+loss = -0.25
+profit = 0.5
+probability = 0.25
+target = 2.0
+output = 108.0
+
+[[frequency]]
+loss = -0.25
+profit = 0.5
+probability = 0.5
+target = 0.0
+output = 0.0
+
+[[frequency]]
+loss = -0.25
+profit = 0.5
+probability = 0.5
+target = 0.5
+output = 2.25
+
+[[frequency]]
+loss = -0.25
+profit = 0.5
+probability = 0.5
+target = 2.0
+output = 36.0
+
+[[frequency]]
+loss = -0.25
+profit = 0.5
+probability = 0.75
+target = 0.0
+output = 0.0
+
+[[frequency]]
+loss = -0.25
+profit = 0.5
+probability = 0.75
+target = 0.5
+output = 0.27
+
+[[frequency]]
+loss = -0.25
+profit = 0.5
+probability = 0.75
+target = 2.0
+output = 4.32
+
+[[frequency]]
+loss = -0.25
+profit = 0.5
+probability = 1.0
+target = 0.0
+output = inf
+
+[[frequency]]
+loss = -0.25
+profit = 0.5
+probability = 1.0
+target = 0.5
+output = inf
+
+[[frequency]]
+loss = -0.25
+profit = 0.5
+probability = 1.0
+target = 2.0
+output = inf
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.01
+sigma2 = 0.02
+probability = 0.0
+count = 0
+normal_draws = [[], []]
+permutation = []
+output = []
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.0
+sigma2 = 0.1
+probability = 0.0
+count = 0
+normal_draws = [[], []]
+permutation = []
+output = []
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.01
+sigma2 = 0.02
+probability = 0.3
+count = 0
+normal_draws = [[], []]
+permutation = []
+output = []
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.0
+sigma2 = 0.1
+probability = 0.3
+count = 0
+normal_draws = [[], []]
+permutation = []
+output = []
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.01
+sigma2 = 0.02
+probability = 1.0
+count = 0
+normal_draws = [[], []]
+permutation = []
+output = []
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.0
+sigma2 = 0.1
+probability = 1.0
+count = 0
+normal_draws = [[], []]
+permutation = []
+output = []
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.01
+sigma2 = 0.02
+probability = 0.0
+count = 1
+normal_draws = [[], [-0.37800691123146096]]
+permutation = [1]
+output = [-0.01756013822462922]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.0
+sigma2 = 0.1
+probability = 0.0
+count = 1
+normal_draws = [[], [0.5114116935640999]]
+permutation = [1]
+output = [0.04114116935640999]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.01
+sigma2 = 0.02
+probability = 0.3
+count = 1
+normal_draws = [[], [-0.6192537597364898]]
+permutation = [1]
+output = [-0.022385075194729796]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.0
+sigma2 = 0.1
+probability = 0.3
+count = 1
+normal_draws = [[], [0.019603084276239916]]
+permutation = [1]
+output = [-0.00803969157237601]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.01
+sigma2 = 0.02
+probability = 1.0
+count = 1
+normal_draws = [[0.23523748517173076], []]
+permutation = [1]
+output = [0.02235237485171731]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.0
+sigma2 = 0.1
+probability = 1.0
+count = 1
+normal_draws = [[0.09506181528105165], []]
+permutation = [1]
+output = [0.02]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.01
+sigma2 = 0.02
+probability = 0.0
+count = 7
+normal_draws = [[], [-0.045275352355619344, 1.5073154155585051, -0.9085469409925019, 0.3883217946782065, 2.2065398723508345, 0.05010215005338349, -0.8350661925343049]]
+permutation = [4, 7, 3, 2, 6, 1, 5]
+output = [-0.00223356410643587, -0.026701323850686097, -0.02817093881985004, 0.020146308311170105, -0.00899795699893233, -0.010905507047112387, 0.03413079744701669]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.0
+sigma2 = 0.1
+probability = 0.0
+count = 7
+normal_draws = [[], [-0.9737101805207862, 0.9052155234883903, -0.40141570696466317, 0.5553121584812865, -0.37116402747865973, 0.6305753715234845, 0.17600756538370882]]
+permutation = [2, 4, 5, 3, 6, 7, 1]
+output = [0.08052155234883904, 0.045531215848128644, -0.04711640274786598, -0.05014157069646632, 0.05305753715234845, 0.007600756538370881, -0.10737101805207862]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.01
+sigma2 = 0.02
+probability = 0.3
+count = 7
+normal_draws = [[0.9973499376119533, -0.337857067007462], [-0.8948763205411392, 1.1642191896240552, 0.4317289738502053, 1.2682647129615043, 0.6887042461901948]]
+permutation = [7, 5, 6, 4, 2, 3, 1]
+output = [0.003774084923803895, -0.001365420522995894, 0.015365294259230089, 0.013284383792481104, 0.01662142932992538, -0.027897526410822784, 0.029973499376119532]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.0
+sigma2 = 0.1
+probability = 0.3
+count = 7
+normal_draws = [[0.644698999660552, -0.6100734525275177], [0.5548490878216829, -0.8453604714752405, -0.9807725432756192, -0.40663108486556926, 0.09596759676451831]]
+permutation = [4, 6, 5, 3, 1, 7, 2]
+output = [-0.09453604714752405, -0.05066310848655693, -0.10807725432756192, 0.045484908782168286, 0.02, -0.0004032403235481683, 0.02]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.01
+sigma2 = 0.02
+probability = 1.0
+count = 7
+normal_draws = [[-0.6782791351453962, 0.2604815695310676, -1.8042743723964831, 0.4584555283907739, -1.2494209113169956, -1.0894799349071937, -0.8958679349918922], []]
+permutation = [4, 5, 3, 6, 2, 7, 1]
+output = [0.02458455528390774, 0.0075057908868300435, 0.001957256276035168, 0.009105200650928062, 0.022604815695310677, 0.011041320650081078, 0.013217208648546037]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.0
+sigma2 = 0.1
+probability = 1.0
+count = 7
+normal_draws = [[1.1564439397110948, 0.15857814569508266, 0.3333833364917277, -0.919620188199495, -0.46171967064066394, 0.09877165724157787, 0.8162767778926145], []]
+permutation = [3, 4, 6, 7, 5, 2, 1]
+output = [0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.01
+sigma2 = 0.02
+probability = 0.0
+count = 19
+normal_draws = [[], [1.7130573608359325, 1.724325309197954, -0.6490736226434173, 1.8175920305893032, 0.4315477633746298, -0.06617309251961902, -2.1043299669326334, 0.20287202014174524, 1.43355513830792, -0.14904497010027348, 0.6855958077963685, -0.6959901771222748, 0.6409157283654283, 1.6696496088005457, 1.088838763032681, -0.6465634484251668, 2.213343630519779, 1.1263153991508033, -0.880885008097484]]
+permutation = [7, 15, 2, 6, 14, 19, 12, 8, 11, 3, 4, 9, 1, 17, 13, 5, 10, 18, 16]
+output = [-0.05208659933865267, 0.011776775260653622, 0.024486506183959082, -0.011323461850392381, 0.023392992176010916, -0.027617700161949685, -0.023919803542445498, -0.005942559597165095, 0.003711916155927371, -0.022981472452868346, 0.02635184061178606, 0.018671102766158396, 0.024261147216718647, 0.03426687261039558, 0.002818314567308567, -0.0013690447325074035, -0.01298089940200547, 0.012526307983016067, -0.022931268968503338]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.0
+sigma2 = 0.1
+probability = 0.0
+count = 19
+normal_draws = [[], [-0.14968637544056326, 0.35183494702903206, 0.23749592012301335, -0.6214709833063072, 2.3060787451082327, 1.1429291337685272, 0.11923232560023916, 0.07155285265445736, -1.6229750035775932, -0.17478311997399607, 0.5042419327111376, -1.6762577139194246, -2.05467909759047, -0.6489322015857052, -0.24346665241641527, 0.5611874388560645, -0.14474964816277022, 0.7709923618228639, -0.10464220830151927]]
+permutation = [17, 9, 13, 10, 5, 3, 15, 1, 19, 6, 4, 8, 7, 2, 11, 12, 18, 14, 16]
+output = [-0.024474964816277023, -0.17229750035775934, -0.21546790975904703, -0.027478311997399606, 0.22060787451082328, 0.013749592012301337, -0.03434666524164153, -0.02496863754405633, -0.020464220830151928, 0.10429291337685273, -0.07214709833063072, -0.0028447147345542637, 0.0019232325600239165, 0.02518349470290321, 0.04042419327111376, -0.17762577139194247, 0.0670992361822864, -0.07489322015857051, 0.046118743885606446]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.01
+sigma2 = 0.02
+probability = 0.3
+count = 19
+normal_draws = [[-0.9751431151473144, 0.05951862861867, -0.3375008835305649, -0.38026472847149695, 0.514153447037877], [1.7869658562867157, -1.5299606599560638, 0.5970349750390697, -0.03607464664724949, 0.549892304342568, -0.7686991928144217, -0.17369099962605847, 1.435604690363596, -1.3058306149421992, -0.8475541941767581, 0.3558999753652948, 0.013156429822287295, -0.6002949542623006, 0.5074018714632934]]
+permutation = [16, 2, 3, 10, 14, 9, 6, 18, 11, 4, 15, 8, 12, 7, 17, 19, 13, 5, 1]
+output = [-0.0028820004926941043, 0.0205951862861867, 0.01662499116469435, 0.0009978460868513596, -0.036116612298843984, -0.01072149293294499, 0.02573931712573431, -0.022005899085246014, -0.025373983856288432, 0.01619735271528503, -0.026951083883535162, 0.0019406995007813926, -0.01347381999252117, -0.04059921319912128, -0.009736871403554254, 0.0001480374292658678, 0.018712093807271922, 0.02514153447037877, 0.010248568848526856]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.0
+sigma2 = 0.1
+probability = 0.3
+count = 19
+normal_draws = [[0.3855867749506492, 0.8042818123201656, -0.49223721840978546, 0.01573312548330054, 1.0421883907886536], [-1.1028650523260914, -1.3277097158187234, 1.479961629531749, -1.0629220295967259, -0.3210228529858646, 0.16094299898283682, 0.10417813399080844, 0.20838163861984654, -0.3061254299786608, -0.9655595307595356, 0.17217437087085746, 0.24430048235470994, -2.199359007090062, -1.245320056683847]]
+permutation = [11, 1, 16, 10, 2, 3, 9, 14, 5, 13, 18, 7, 6, 17, 12, 19, 8, 15, 4]
+output = [0.006094299898283683, 0.02, 0.007217437087085747, -0.042102285298586464, 0.02, 0.02, -0.11629220295967259, -0.04061254299786608, 0.02, 0.010838163861984657, -0.22993590070900624, -0.14277097158187235, -0.12028650523260914, 0.014430048235470996, 0.0004178133990808443, -0.1345320056683847, 0.1379961629531749, -0.10655595307595356, 0.02]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.01
+sigma2 = 0.02
+probability = 1.0
+count = 19
+normal_draws = [[-0.5045679931049948, 0.2805278756738115, -0.17500063098078422, -1.7066705206024544, 1.2583851147561287, -0.7736513476822453, -0.6261931466398599, -0.28797005693449423, 0.47570605370921326, -0.3498941135282855, -1.9227769378464816, -0.2517259224225535, 0.29233060846273456, 1.9588197381017152, -0.5457236569141063, -0.27870454042755644, 0.1459379460610743, 0.635347173792985, 1.594308493120991], []]
+permutation = [18, 1, 2, 6, 13, 4, 5, 17, 14, 16, 9, 3, 11, 15, 12, 19, 7, 8, 10]
+output = [0.026353471737929852, 0.014954320068950052, 0.022805278756738115, 0.012263486523177547, 0.022923306084627344, 0.0029332947939754578, 0.03258385114756129, 0.021459379460610745, 0.039588197381017154, 0.017212954595724438, 0.024757060537092132, 0.01824999369019216, 0.0007722306215351832, 0.014542763430858937, 0.017482740775774466, 0.035943084931209915, 0.013738068533601402, 0.01712029943065506, 0.016501058864717144]
+
+[[mixture]]
+mu1 = 0.02
+mu2 = -0.01
+sigma1 = 0.0
+sigma2 = 0.1
+probability = 1.0
+count = 19
+normal_draws = [[-0.07872277691988445, -0.012911422322856775, -0.6631915866222049, -0.6413555415507207, 0.015052411504842768, -0.26353388305354714, 0.4655011549725122, -1.1743137785325592, -0.6413824733404067, 0.5058004957193809, -1.0600323636243012, -1.000811057651505, 0.2664015779912432, -0.2947664580680895, -2.3115009128589934, 0.00011861456121733657, -0.465772679311222, 0.4296003556215937, 0.44938474288778124], []]
+permutation = [5, 18, 13, 14, 1, 11, 10, 7, 19, 8, 6, 3, 2, 16, 12, 9, 15, 17, 4]
+output = [0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02]

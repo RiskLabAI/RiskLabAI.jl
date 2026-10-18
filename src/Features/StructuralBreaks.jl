@@ -15,7 +15,7 @@ Reference: De Prado, M. (2018), Advances in Financial Machine Learning, Ch. 17.
 """
 
 using LinearAlgebra: inv, SingularException
-using Statistics: quantile, mean
+using Statistics: quantile, mean, var
 using Random: AbstractRNG, default_rng, randn, MersenneTwister
 
 """
@@ -49,9 +49,12 @@ the 1-based position in `log_price` of each retained row. Mirrors Python's
 function prepare_data(log_price::AbstractVector{<:Real}, constant::AbstractString, lags::Integer)
     n = length(log_price)
     delta(k) = log_price[k] - log_price[k-1]          # d[k] = p[k] - p[k-1], k ≥ 2
-    kept = collect((lags+2):n)
+    lags >= 0 || throw(ArgumentError("lags must be nonnegative"))
+    difference_positions = [k for k in 2:n if !isnan(delta(k))]
+    difference_ordinal = Dict(k => ordinal for (ordinal, k) in enumerate(difference_positions))
+    kept = [k for (ordinal, k) in enumerate(difference_positions) if ordinal > lags && !isnan(log_price[k-1])]
     m = length(kept)
-    n_constant = constant == "nc" ? 0 : constant == "c" ? 1 : constant == "ct" ? 2 : 3
+    n_constant = constant == "c" ? 1 : constant == "ct" ? 2 : constant == "ctt" ? 3 : 0
     n_cols = 1 + lags + n_constant
     y = Vector{Float64}(undef, m)
     x = Matrix{Float64}(undef, m, n_cols)
@@ -61,10 +64,10 @@ function prepare_data(log_price::AbstractVector{<:Real}, constant::AbstractStrin
         x[r, col] = log_price[k-1]                    # level_l1
         col += 1
         for i = 1:lags
-            x[r, col] = delta(k - i)                  # delta_l{i}
+            x[r, col] = delta(difference_positions[difference_ordinal[k]-i])                  # delta_l{i}
             col += 1
         end
-        if constant != "nc"
+        if constant in ("c", "ct", "ctt")
             x[r, col] = 1.0
             col += 1                                   # constant
         end
@@ -385,6 +388,9 @@ rather than NumPy's PCG64 stream, so the critical values are reproducible under 
 given `rng` but not bit-identical to the Python reference (the ADF statistics are
 pivotal under the null, so the values depend only on `T`, the window and the
 specification). Mirrors Python's `simulate_psy_critical_values`.
+
+`normal_draws` may supply an `n_simulations × sample_length` matrix of standard
+normal innovations to replay the same null paths across runtimes.
 """
 function simulate_psy_critical_values(
     sample_length::Integer,
@@ -394,14 +400,19 @@ function simulate_psy_critical_values(
     n_simulations::Integer = 2000,
     level::Real = 0.95,
     rng::AbstractRNG = default_rng(),
+    normal_draws = nothing,
 )
+    n_simulations >= 1 || throw(ArgumentError("n_simulations must be positive"))
+    draws = normal_draws === nothing ? nothing : Matrix{Float64}(normal_draws)
+    draws === nothing || size(draws) == (n_simulations, sample_length) || throw(DimensionMismatch("normal_draws must have one row per simulation"))
+    draws === nothing || all(isfinite, draws) || throw(ArgumentError("normal_draws must be finite"))
     nmin =
         min_sample_length === nothing ? psy_minimum_window(sample_length) : min_sample_length
     fast = constant == "c" && lags == 0
     sadf_paths = fill(NaN, n_simulations, sample_length)
     bsadf_paths = fill(NaN, n_simulations, sample_length)
     for s = 1:n_simulations
-        y = cumsum(randn(rng, sample_length))           # random-walk null
+        y = cumsum(draws === nothing ? randn(rng, sample_length) : vec(draws[s, :]))           # random-walk null
         if fast
             sadf, bsadf = _psy_sadf_bsadf_sequences(y, nmin)
         else
@@ -496,6 +507,9 @@ GSADF/BSADF.
 `random_state` seeds Julia's RNG (see the divergence note above; the Python
 reference uses NumPy's PCG64). Mirrors Python's `volatility_robust_sadf`.
 
+`sign_draws` may supply an `n_bootstrap × (length(log_price)-1)` matrix whose
+entries are exactly minus or plus one, replaying the public wild-bootstrap paths.
+
 Reference: Harvey, D. I., Leybourne, S. J., Sollis, R. & Taylor, A. M. R. (2016).
 Tests for explosive financial bubbles in the presence of non-stationary
 volatility. Journal of Empirical Finance, 38, 548–574.
@@ -505,9 +519,14 @@ function volatility_robust_sadf(
     min_length::Union{Integer,Nothing} = nothing,
     n_bootstrap::Integer = 99,
     random_state::Union{Integer,Nothing} = nothing,
+    sign_draws = nothing,
 )
     y = Float64.(log_price)
     length(y) >= 8 || throw(ArgumentError("log_price must be a 1-D series of length >= 8"))
+    n_bootstrap >= 0 || throw(ArgumentError("n_bootstrap must be nonnegative"))
+    draws = sign_draws === nothing ? nothing : Matrix{Float64}(sign_draws)
+    draws === nothing || size(draws) == (n_bootstrap, length(y)-1) || throw(DimensionMismatch("sign_draws must have one row per bootstrap path"))
+    draws === nothing || all(value -> value == -1 || value == 1, draws) || throw(ArgumentError("sign_draws must contain only minus or plus one"))
     nmin = min_length === nothing ? psy_minimum_window(length(y)) : Int(min_length)
     sadf_obs, gsadf_obs = _sup_adf_statistics(y, nmin)
 
@@ -518,8 +537,8 @@ function volatility_robust_sadf(
     ge_sadf = 0
     ge_gsadf = 0
     path = similar(y)
-    for _ = 1:n_bootstrap
-        signs = rand(rng, (-1.0, 1.0), length(residual))     # Rademacher ±1
+    for simulation = 1:n_bootstrap
+        signs = draws === nothing ? rand(rng, (-1.0, 1.0), length(residual)) : vec(draws[simulation, :])     # Rademacher ±1
         path[1] = y0
         path[2:end] = y0 .+ cumsum(signs .* residual)
         sadf_b, gsadf_b = _sup_adf_statistics(path, nmin)
@@ -559,12 +578,13 @@ end
 # and the same 1e-6 ridge `ruptures` adds for truly constant segments. `model="l2"`
 # uses the sum-of-squared-errors cost (b-a)·var. `cum1`/`cum2` are leading-zero
 # prefix sums of `y` and `y.^2`, so each segment cost is O(1).
-function _pelt_segment_cost(model::AbstractString, cum1, cum2, a::Integer, b::Integer)
+function _pelt_segment_cost(model::AbstractString, cum1, cum2, a::Integer, b::Integer, observations = nothing)
     nseg = b - a
     s1 = cum1[b+1] - cum1[a+1]
     s2 = cum2[b+1] - cum2[a+1]
     mu = s1 / nseg
     variance = max(s2 / nseg - mu * mu, 0.0)               # population variance, guarded
+    observations === nothing || (variance = var(view(observations, (a+1):b); corrected = false))
     if model == "normal"
         return nseg * log(variance + 1e-6)
     elseif model == "l2"
@@ -586,6 +606,7 @@ function _pelt_predict(
     penalty::Real,
     min_size::Integer,
     jump::Integer,
+    observations = nothing,
 )
     best_cost = Dict{Int,Float64}(0 => 0.0)
     backptr = Dict{Int,Int}()
@@ -609,7 +630,7 @@ function _pelt_predict(
         empty!(sub_t)
         for t in admissible
             haskey(best_cost, t) || continue
-            push!(sub_costs, best_cost[t] + _pelt_segment_cost(model, cum1, cum2, t, bkp) + penalty)
+            push!(sub_costs, best_cost[t] + (_pelt_segment_cost(model, cum1, cum2, t, bkp, observations) + penalty))
             push!(sub_t, t)
         end
 
@@ -677,6 +698,6 @@ function pelt_change_points(
     cum1 = [0.0; cumsum(x)]
     cum2 = [0.0; cumsum(x .^ 2)]
     penalty = float(penalty_multiplier) * log(n)
-    bkps = _pelt_predict(model, cum1, cum2, n, penalty, eff_min, Int(jump))
+    bkps = _pelt_predict(model, cum1, cum2, n, penalty, eff_min, Int(jump), x)
     return [b for b in bkps if 0 < b < n]
 end

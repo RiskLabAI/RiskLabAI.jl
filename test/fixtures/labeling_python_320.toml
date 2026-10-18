@@ -1,0 +1,3705 @@
+reference = "RiskLabAI 3.2.0 public labeling contracts"
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 97.0, 96.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 97.0, 96.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 97.0, 96.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2, 4]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 97.0, 96.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 97.0, 97.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 97.0, 97.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 97.0, 97.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 97.0, 97.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 97.0, 98.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 97.0, 98.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 97.0, 98.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 97.0, 98.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 98.0, 97.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 98.0, 97.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 98.0, 97.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 98.0, 97.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 98.0, 98.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 98.0, 98.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 98.0, 98.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 98.0, 98.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 98.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 98.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 98.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 98.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 99.0, 98.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 99.0, 98.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 99.0, 98.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 99.0, 98.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 99.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 99.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 99.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2]
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 99.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 99.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 99.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 99.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 98.0, 99.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 98.0, 97.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 98.0, 97.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 98.0, 97.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 98.0, 97.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 98.0, 98.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 3]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 98.0, 98.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 98.0, 98.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 98.0, 98.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 98.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 98.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 98.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 98.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 99.0, 98.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 4]
+dynamic_events = [1, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 99.0, 98.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 99.0, 98.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 99.0, 98.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 99.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1]
+dynamic_events = [1]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 99.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 99.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 99.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 99.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 4]
+dynamic_events = [1, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 99.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 99.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 99.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 100.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 100.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 100.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 100.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 100.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 3]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 100.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 3]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 100.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 100.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 100.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 100.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 100.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 99.0, 100.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 99.0, 98.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 99.0, 98.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 99.0, 98.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 99.0, 98.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 99.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 99.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 99.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 99.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 99.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 99.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 99.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 99.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 100.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 100.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 100.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 100.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 100.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 100.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 100.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 100.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 100.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 100.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 100.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 100.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 101.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 101.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 101.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 101.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 101.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 101.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 101.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 101.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 101.0, 102.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 101.0, 102.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 101.0, 102.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 99.0, 100.0, 101.0, 102.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 98.0, 97.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 98.0, 97.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 98.0, 97.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 98.0, 97.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 98.0, 98.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 98.0, 98.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 98.0, 98.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 98.0, 98.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 98.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 98.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 98.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 98.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 99.0, 98.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 99.0, 98.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 99.0, 98.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 99.0, 98.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 99.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 99.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 99.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 99.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 99.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 99.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 99.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 99.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 100.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 100.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 100.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 100.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 100.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 100.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 3]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 100.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 100.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 100.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 100.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 100.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 99.0, 100.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 99.0, 98.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 99.0, 98.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 99.0, 98.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 99.0, 98.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 99.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 99.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [3]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 99.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 99.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 99.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 99.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 99.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 99.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 100.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 100.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 100.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 100.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 100.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 100.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 100.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 100.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 100.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 100.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 100.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 100.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 101.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 101.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 101.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 101.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 101.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 101.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [3]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 101.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 101.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 101.0, 102.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 101.0, 102.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 101.0, 102.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 100.0, 101.0, 102.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 100.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 100.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 100.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 100.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 100.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 100.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 3]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 100.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 100.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 100.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 100.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 100.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 100.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 101.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 101.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 101.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 101.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 101.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 101.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 101.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 101.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 101.0, 102.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 101.0, 102.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 101.0, 102.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 101.0, 102.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 102.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 102.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 102.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 102.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 102.0, 102.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 102.0, 102.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 102.0, 102.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 102.0, 102.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 102.0, 103.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 102.0, 103.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 102.0, 103.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 100.0, 101.0, 102.0, 103.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 99.0, 98.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 99.0, 98.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 99.0, 98.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 99.0, 98.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 99.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 99.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 99.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 99.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 99.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 99.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 99.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 99.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 100.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 100.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 100.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 100.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 100.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 100.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 100.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 100.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 100.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 100.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 100.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 100.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 101.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 101.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 101.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 101.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 101.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 101.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 101.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 101.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 101.0, 102.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 101.0, 102.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 101.0, 102.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 100.0, 101.0, 102.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 100.0, 99.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 100.0, 99.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 100.0, 99.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 100.0, 99.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 100.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 3]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 100.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 3]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 100.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 100.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 100.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 100.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 100.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 100.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 101.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 4]
+dynamic_events = [1, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 101.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 101.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 101.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 101.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1]
+dynamic_events = [1]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 101.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 101.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 101.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 101.0, 102.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 4]
+dynamic_events = [1, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 101.0, 102.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 101.0, 102.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 101.0, 102.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 102.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 102.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 102.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 102.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 102.0, 102.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 3]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 102.0, 102.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 102.0, 102.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 102.0, 102.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 102.0, 103.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 102.0, 103.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 102.0, 103.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 101.0, 102.0, 103.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 101.0, 100.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 101.0, 100.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 101.0, 100.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 101.0, 100.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 101.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 101.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 101.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2]
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 101.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 101.0, 102.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 101.0, 102.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 101.0, 102.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 101.0, 102.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 102.0, 101.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 102.0, 101.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 102.0, 101.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 102.0, 101.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 102.0, 102.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 102.0, 102.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 102.0, 102.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 102.0, 102.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 102.0, 103.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 102.0, 103.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 102.0, 103.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 102.0, 103.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 103.0, 102.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 103.0, 102.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 103.0, 102.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 103.0, 102.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 103.0, 103.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3]
+dynamic_events = [1, 3]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 103.0, 103.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 103.0, 103.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 103.0, 103.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 103.0, 104.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [1, 2, 3, 4]
+dynamic_events = [1, 3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 103.0, 104.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [1, 2, 3, 4]
+dynamic_events = [3, 4]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 103.0, 104.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [2, 4]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, 102.0, 103.0, 104.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [100.0, 101.0, nan, 104.0, 101.0, 103.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0, 0.5]
+events = [1, 4, 5]
+dynamic_events = [1, 4, 5]
+
+[[cusum]]
+values = [100.0, 101.0, nan, 104.0, 101.0, 103.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5, 1.0]
+events = [1, 4, 5]
+dynamic_events = [4, 5]
+
+[[cusum]]
+values = [100.0, 101.0, nan, 104.0, 101.0, 103.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0, 1.5]
+events = [4, 5]
+dynamic_events = [4, 5]
+
+[[cusum]]
+values = [100.0, 101.0, nan, 104.0, 101.0, 103.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0, 2.5]
+events = [4]
+dynamic_events = [4]
+
+[[cusum]]
+values = [nan, 100.0, 101.0, 103.0, 103.0]
+threshold = 0.0
+dynamic = [0.0, 0.5, nan, 0.5, 0.0]
+events = [2, 3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [nan, 100.0, 101.0, 103.0, 103.0]
+threshold = 0.5
+dynamic = [0.5, 1.0, nan, 1.0, 0.5]
+events = [2, 3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [nan, 100.0, 101.0, 103.0, 103.0]
+threshold = 1.0
+dynamic = [1.0, 1.5, nan, 1.5, 1.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = [nan, 100.0, 101.0, 103.0, 103.0]
+threshold = 2.0
+dynamic = [2.0, 2.5, nan, 2.5, 2.0]
+events = [3]
+dynamic_events = [3]
+
+[[cusum]]
+values = []
+threshold = 0.0
+dynamic = []
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = []
+threshold = 0.5
+dynamic = []
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = []
+threshold = 1.0
+dynamic = []
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = []
+threshold = 2.0
+dynamic = []
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0]
+threshold = 0.0
+dynamic = [0.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0]
+threshold = 0.5
+dynamic = [0.5]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0]
+threshold = 1.0
+dynamic = [1.0]
+events = []
+dynamic_events = []
+
+[[cusum]]
+values = [100.0]
+threshold = 2.0
+dynamic = [2.0]
+events = []
+dynamic_events = []
+
+[[volatility]]
+minutes = []
+prices = []
+span = 1
+output_index = []
+output = []
+
+[[volatility]]
+minutes = []
+prices = []
+span = 1
+output_index = []
+output = []
+
+[[volatility]]
+minutes = []
+prices = []
+span = 2
+output_index = []
+output = []
+
+[[volatility]]
+minutes = []
+prices = []
+span = 2
+output_index = []
+output = []
+
+[[volatility]]
+minutes = []
+prices = []
+span = 5
+output_index = []
+output = []
+
+[[volatility]]
+minutes = []
+prices = []
+span = 5
+output_index = []
+output = []
+
+[[volatility]]
+minutes = []
+prices = []
+span = 100
+output_index = []
+output = []
+
+[[volatility]]
+minutes = []
+prices = []
+span = 100
+output_index = []
+output = []
+
+[[volatility]]
+minutes = [0, 500]
+prices = [100.0, 101.30004283349628]
+span = 1
+output_index = []
+output = []
+
+[[volatility]]
+minutes = [0, 500]
+prices = [100.0, 101.30004283349628]
+span = 1
+output_index = []
+output = []
+
+[[volatility]]
+minutes = [0, 500]
+prices = [100.0, 101.30004283349628]
+span = 2
+output_index = []
+output = []
+
+[[volatility]]
+minutes = [0, 500]
+prices = [100.0, 101.30004283349628]
+span = 2
+output_index = []
+output = []
+
+[[volatility]]
+minutes = [0, 500]
+prices = [100.0, 101.30004283349628]
+span = 5
+output_index = []
+output = []
+
+[[volatility]]
+minutes = [0, 500]
+prices = [100.0, 101.30004283349628]
+span = 5
+output_index = []
+output = []
+
+[[volatility]]
+minutes = [0, 500]
+prices = [100.0, 101.30004283349628]
+span = 100
+output_index = []
+output = []
+
+[[volatility]]
+minutes = [0, 500]
+prices = [100.0, 101.30004283349628]
+span = 100
+output_index = []
+output = []
+
+[[volatility]]
+minutes = [0, 720, 1440, 2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+prices = [100.0, 101.30004283349628, 100.3450528394007, 99.9741886493747, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674, 102.0595239354503, 103.20117057147135, 104.70722424695713]
+span = 1
+output_index = [2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+output = [nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+
+[[volatility]]
+minutes = [0, 720, 1440, 2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+prices = [100.0, 101.30004283349628, 100.3450528394007, nan, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674, 102.0595239354503, 103.20117057147135, 104.70722424695713]
+span = 1
+output_index = [2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+output = [nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+
+[[volatility]]
+minutes = [0, 720, 1440, 2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+prices = [100.0, 101.30004283349628, 100.3450528394007, 99.9741886493747, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674, 102.0595239354503, 103.20117057147135, 104.70722424695713]
+span = 2
+output_index = [2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+output = [nan, 0.0030282782912589607, 0.011369550840235046, 0.006657130443618468, 0.010350411926537384, 0.007549826129836729, 0.009506637170961015, 0.008726051684188515, 0.008377453703144393, 0.009788759383308188]
+
+[[volatility]]
+minutes = [0, 720, 1440, 2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+prices = [100.0, 101.30004283349628, 100.3450528394007, nan, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674, 102.0595239354503, 103.20117057147135, 104.70722424695713]
+span = 2
+output_index = [2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+output = [nan, nan, 0.010971325090113004, 0.010971325090113004, 0.013381749505288648, 0.008367206933874983, 0.009809599236944409, 0.008831639729500865, 0.008386609743862693, 0.009802267414766625]
+
+[[volatility]]
+minutes = [0, 720, 1440, 2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+prices = [100.0, 101.30004283349628, 100.3450528394007, 99.9741886493747, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674, 102.0595239354503, 103.20117057147135, 104.70722424695713]
+span = 5
+output_index = [2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+output = [nan, 0.003028278291258961, 0.010992688993259536, 0.00798836313461427, 0.00952483825481541, 0.007760065951706654, 0.009283369797357572, 0.008163699709274339, 0.008719088778384752, 0.008565513374465537]
+
+[[volatility]]
+minutes = [0, 720, 1440, 2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+prices = [100.0, 101.30004283349628, 100.3450528394007, nan, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674, 102.0595239354503, 103.20117057147135, 104.70722424695713]
+span = 5
+output_index = [2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+output = [nan, nan, 0.010971325090113006, 0.010971325090113004, 0.012004920094013164, 0.008783109403070843, 0.010027841659159717, 0.00858395412192127, 0.008988998997433528, 0.008755585944279451]
+
+[[volatility]]
+minutes = [0, 720, 1440, 2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+prices = [100.0, 101.30004283349628, 100.3450528394007, 99.9741886493747, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674, 102.0595239354503, 103.20117057147135, 104.70722424695713]
+span = 100
+output_index = [2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+output = [nan, 0.0030282782912589607, 0.01045204540116465, 0.008658832447027188, 0.008949367553100022, 0.008068388578408775, 0.008874518051744294, 0.008269513223978741, 0.008381573774942227, 0.00825390520839779]
+
+[[volatility]]
+minutes = [0, 720, 1440, 2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+prices = [100.0, 101.30004283349628, 100.3450528394007, nan, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674, 102.0595239354503, 103.20117057147135, 104.70722424695713]
+span = 100
+output_index = [2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+output = [nan, nan, 0.010971325090113004, 0.010971325090113004, 0.011199786017816979, 0.009175478008186558, 0.00966993400569799, 0.008821474359820539, 0.008991467132367861, 0.008684302257257396]
+
+[[volatility]]
+minutes = [0, 15, 700, 1450, 1460, 2500, 3000, 5900, 9000]
+prices = [100.0, 101.30004283349628, 100.3450528394007, 99.9741886493747, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837]
+span = 1
+output_index = [1450, 1460, 2500, 3000, 5900, 9000]
+output = [nan, nan, nan, nan, nan, nan]
+
+[[volatility]]
+minutes = [0, 15, 700, 1450, 1460, 2500, 3000, 5900, 9000]
+prices = [100.0, 101.30004283349628, 100.3450528394007, nan, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837]
+span = 1
+output_index = [1450, 1460, 2500, 3000, 5900, 9000]
+output = [nan, nan, nan, nan, nan, nan]
+
+[[volatility]]
+minutes = [0, 15, 700, 1450, 1460, 2500, 3000, 5900, 9000]
+prices = [100.0, 101.30004283349628, 100.3450528394007, 99.9741886493747, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837]
+span = 2
+output_index = [1450, 1460, 2500, 3000, 5900, 9000]
+output = [nan, 0.0030282782912589607, 0.011369550840235046, 0.015053826222897112, 0.008833825569961954, 0.011217254013311027]
+
+[[volatility]]
+minutes = [0, 15, 700, 1450, 1460, 2500, 3000, 5900, 9000]
+prices = [100.0, 101.30004283349628, 100.3450528394007, nan, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837]
+span = 2
+output_index = [1450, 1460, 2500, 3000, 5900, 9000]
+output = [nan, nan, 0.010971325090113004, 0.015666910070711474, 0.008937460477836646, 0.011221718589135277]
+
+[[volatility]]
+minutes = [0, 15, 700, 1450, 1460, 2500, 3000, 5900, 9000]
+prices = [100.0, 101.30004283349628, 100.3450528394007, 99.9741886493747, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837]
+span = 5
+output_index = [1450, 1460, 2500, 3000, 5900, 9000]
+output = [nan, 0.003028278291258961, 0.010992688993259536, 0.012523632115501133, 0.009576027582034395, 0.010800803145332803]
+
+[[volatility]]
+minutes = [0, 15, 700, 1450, 1460, 2500, 3000, 5900, 9000]
+prices = [100.0, 101.30004283349628, 100.3450528394007, nan, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837]
+span = 5
+output_index = [1450, 1460, 2500, 3000, 5900, 9000]
+output = [nan, nan, 0.010971325090113006, 0.013956548597528144, 0.010127702644504424, 0.010966565982140696]
+
+[[volatility]]
+minutes = [0, 15, 700, 1450, 1460, 2500, 3000, 5900, 9000]
+prices = [100.0, 101.30004283349628, 100.3450528394007, 99.9741886493747, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837]
+span = 100
+output_index = [1450, 1460, 2500, 3000, 5900, 9000]
+output = [nan, 0.0030282782912589607, 0.01045204540116465, 0.010997748627883884, 0.009479200025196624, 0.010147178188085483]
+
+[[volatility]]
+minutes = [0, 15, 700, 1450, 1460, 2500, 3000, 5900, 9000]
+prices = [100.0, 101.30004283349628, 100.3450528394007, nan, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837]
+span = 100
+output_index = [1450, 1460, 2500, 3000, 5900, 9000]
+output = [nan, nan, 0.010971325090113004, 0.012893687157887343, 0.010522810931778915, 0.010690566986139793]
+
+[[volatility]]
+minutes = [0, 1440, 2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+prices = [100.0, 101.30004283349628, 100.3450528394007, 99.9741886493747, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674]
+span = 1
+output_index = [2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+output = [nan, nan, nan, nan, nan, nan, nan, nan]
+
+[[volatility]]
+minutes = [0, 1440, 2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+prices = [100.0, 101.30004283349628, 100.3450528394007, nan, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674]
+span = 1
+output_index = [2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+output = [nan, nan, nan, nan, nan, nan, nan, nan]
+
+[[volatility]]
+minutes = [0, 1440, 2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+prices = [100.0, 101.30004283349628, 100.3450528394007, 99.9741886493747, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674]
+span = 2
+output_index = [2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+output = [nan, 0.011751679060159673, 0.01638664147522122, 0.014413242765757677, 0.01787556204519255, 0.01228295679254405, 0.018978263161222, 0.01117779149244623]
+
+[[volatility]]
+minutes = [0, 1440, 2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+prices = [100.0, 101.30004283349628, 100.3450528394007, nan, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674]
+span = 2
+output_index = [2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+output = [nan, nan, 0.007107805934950248, 0.007107805934950251, 0.013154491962957092, 0.00560345351739266, 0.019553291044724693, 0.011216963954282169]
+
+[[volatility]]
+minutes = [0, 1440, 2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+prices = [100.0, 101.30004283349628, 100.3450528394007, 99.9741886493747, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674]
+span = 5
+output_index = [2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+output = [nan, 0.011751679060159675, 0.014611918067674921, 0.015962812018146384, 0.01565168750910302, 0.014198768741198086, 0.016285498188315494, 0.013862171554349136]
+
+[[volatility]]
+minutes = [0, 1440, 2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+prices = [100.0, 101.30004283349628, 100.3450528394007, nan, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674]
+span = 5
+output_index = [2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+output = [nan, nan, 0.007107805934950248, 0.007107805934950248, 0.011534008266768333, 0.009317818163719724, 0.016310241494333366, 0.013544833513421714]
+
+[[volatility]]
+minutes = [0, 1440, 2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+prices = [100.0, 101.30004283349628, 100.3450528394007, 99.9741886493747, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674]
+span = 100
+output_index = [2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+output = [nan, 0.011751679060159673, 0.01352381407323039, 0.0155956733154919, 0.01465988820623608, 0.014037914193380744, 0.014817093460587582, 0.014233202959159022]
+
+[[volatility]]
+minutes = [0, 1440, 2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+prices = [100.0, 101.30004283349628, 100.3450528394007, nan, 101.7085448314009, 102.3251058794016, 101.10619894300355, 101.49289691151652, 103.31285421323837, 103.14518839187674]
+span = 100
+output_index = [2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+output = [nan, nan, 0.00710780593495025, 0.00710780593495025, 0.009815227176268463, 0.009926557808515908, 0.01286628088076828, 0.012362786442617176]
+
+[[vertical]]
+minutes = [0, 500]
+events = [505, 0, -5]
+days = -1
+output_events = [505, 0, -5]
+output_barriers = [0, 0, 0]
+
+[[vertical]]
+minutes = [0, 500]
+events = [505, 0, -5]
+days = 0
+output_events = [0, -5]
+output_barriers = [0, 0]
+
+[[vertical]]
+minutes = [0, 500]
+events = [505, 0, -5]
+days = 1
+output_events = []
+output_barriers = []
+
+[[vertical]]
+minutes = [0, 500]
+events = [505, 0, -5]
+days = 3
+output_events = []
+output_barriers = []
+
+[[vertical]]
+minutes = [0, 720, 1440, 2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+events = [8645, 8640, 7200, 5760, 4320, 2880, 1440, 0, -5]
+days = -1
+output_events = [8645, 8640, 7200, 5760, 4320, 2880, 1440, 0, -5]
+output_barriers = [7920, 7200, 5760, 4320, 2880, 1440, 0, 0, 0]
+
+[[vertical]]
+minutes = [0, 720, 1440, 2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+events = [8645, 8640, 7200, 5760, 4320, 2880, 1440, 0, -5]
+days = 0
+output_events = [8640, 7200, 5760, 4320, 2880, 1440, 0, -5]
+output_barriers = [8640, 7200, 5760, 4320, 2880, 1440, 0, 0]
+
+[[vertical]]
+minutes = [0, 720, 1440, 2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+events = [8645, 8640, 7200, 5760, 4320, 2880, 1440, 0, -5]
+days = 1
+output_events = [7200, 5760, 4320, 2880, 1440, 0, -5]
+output_barriers = [8640, 7200, 5760, 4320, 2880, 1440, 1440]
+
+[[vertical]]
+minutes = [0, 720, 1440, 2160, 2880, 3600, 4320, 5040, 5760, 6480, 7200, 7920, 8640]
+events = [8645, 8640, 7200, 5760, 4320, 2880, 1440, 0, -5]
+days = 3
+output_events = [4320, 2880, 1440, 0, -5]
+output_barriers = [8640, 7200, 5760, 4320, 4320]
+
+[[vertical]]
+minutes = [0, 15, 700, 1450, 1460, 2500, 3000, 5900, 9000]
+events = [9005, 9000, 3000, 1460, 700, 0, -5]
+days = -1
+output_events = [9005, 9000, 3000, 1460, 700, 0, -5]
+output_barriers = [9000, 9000, 2500, 700, 0, 0, 0]
+
+[[vertical]]
+minutes = [0, 15, 700, 1450, 1460, 2500, 3000, 5900, 9000]
+events = [9005, 9000, 3000, 1460, 700, 0, -5]
+days = 0
+output_events = [9000, 3000, 1460, 700, 0, -5]
+output_barriers = [9000, 3000, 1460, 700, 0, 0]
+
+[[vertical]]
+minutes = [0, 15, 700, 1450, 1460, 2500, 3000, 5900, 9000]
+events = [9005, 9000, 3000, 1460, 700, 0, -5]
+days = 1
+output_events = [3000, 1460, 700, 0, -5]
+output_barriers = [5900, 3000, 2500, 1450, 1450]
+
+[[vertical]]
+minutes = [0, 15, 700, 1450, 1460, 2500, 3000, 5900, 9000]
+events = [9005, 9000, 3000, 1460, 700, 0, -5]
+days = 3
+output_events = [3000, 1460, 700, 0, -5]
+output_barriers = [9000, 5900, 5900, 5900, 5900]
+
+[[vertical]]
+minutes = [0, 1440, 2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+events = [12965, 11520, 8640, 5760, 2880, 0, -5]
+days = -1
+output_events = [12965, 11520, 8640, 5760, 2880, 0, -5]
+output_barriers = [12960, 10080, 7200, 4320, 1440, 0, 0]
+
+[[vertical]]
+minutes = [0, 1440, 2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+events = [12965, 11520, 8640, 5760, 2880, 0, -5]
+days = 0
+output_events = [11520, 8640, 5760, 2880, 0, -5]
+output_barriers = [11520, 8640, 5760, 2880, 0, 0]
+
+[[vertical]]
+minutes = [0, 1440, 2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+events = [12965, 11520, 8640, 5760, 2880, 0, -5]
+days = 1
+output_events = [11520, 8640, 5760, 2880, 0, -5]
+output_barriers = [12960, 10080, 7200, 4320, 1440, 1440]
+
+[[vertical]]
+minutes = [0, 1440, 2880, 4320, 5760, 7200, 8640, 10080, 11520, 12960]
+events = [12965, 11520, 8640, 5760, 2880, 0, -5]
+days = 3
+output_events = [8640, 5760, 2880, 0, -5]
+output_barriers = [12960, 10080, 7200, 4320, 4320]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [1.0, 1.0]
+output = [20, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [20, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [20, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [20, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [2.0, 0.5]
+output = [20, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [20, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [10, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [20, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 101.0, 99.0, 103.0, 98.0, 102.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [1.0, 1.0]
+output = [10, 100, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [10, 100, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [10, 100, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [10, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [2.0, 0.5]
+output = [10, 70, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [10, 70, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [10, 20, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [10, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [10, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [1.0, 2.0, 4.0, 2.0, 1.0, 0.5]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [1.0, 1.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [2.0, 0.5]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, 100.0, 100.0, 100.0, 100.0, 100.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [0.0, 0.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [1.0, 1.0]
+output = [20, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [20, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [20, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [1.0, 1.0]
+output = [20, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [2.0, 0.5]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [20, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [2.0, 0.5]
+output = [40, -99999, 70]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = false
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, 1.0, 1.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [-1.0, -1.0, -1.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [0.0, 0.0, 0.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 200]
+
+[[triple]]
+minutes = [0, 10, 20, 40, 70, 100]
+prices = [100.0, nan, 102.0, 99.0, 103.0, 101.0]
+starts = [0, 10, 40]
+ends = [40, -99999, 200]
+widths = [0.01, 0.6931471805599453, 0.02]
+sides = [1.0, nan, -1.0]
+with_side = true
+multipliers = [-1.0, 2.0]
+output = [40, -99999, 200]
+
+[[meta]]
+minutes = [0, 10, 30, 60, 100]
+prices = [100.0, 102.0, 99.0, 103.0, 101.0]
+starts = [-5, 0, 5, 30, 60, 95]
+ends = [10, 25, -99999, 65, 105, 100]
+sides = [1.0, -1.0, 1.0, 0.0, 1.0, nan]
+with_side = false
+output_starts = [-5, 0, 30, 60, 95]
+output_ends = [10, 25, 65, 105, 100]
+output_sides = [1.0, -1.0, 0.0, 1.0, nan]
+returns = [0.019802627296178876, -0.010050335853502013, 0.02000066670666989, nan, 0.0]
+labels = [1.0, -1.0, 1.0, nan, 0.0]
+
+[[meta]]
+minutes = [0, 10, 30, 60, 100]
+prices = [100.0, 102.0, nan, 103.0, 101.0]
+starts = [-5, 0, 5, 30, 60, 95]
+ends = [10, 25, -99999, 65, 105, 100]
+sides = [1.0, -1.0, 1.0, 0.0, 1.0, nan]
+with_side = false
+output_starts = [-5, 0, 30, 60, 95]
+output_ends = [10, 25, 65, 105, 100]
+output_sides = [1.0, -1.0, 0.0, 1.0, nan]
+returns = [0.019802627296178876, nan, nan, nan, 0.0]
+labels = [1.0, nan, nan, nan, 0.0]
+
+[[meta]]
+minutes = [0, 10, 30, 60, 100]
+prices = [100.0, 102.0, 99.0, 103.0, 101.0]
+starts = [-5, 0, 5, 30, 60, 95]
+ends = [10, 25, -99999, 65, 105, 100]
+sides = [1.0, -1.0, 1.0, 0.0, 1.0, nan]
+with_side = true
+output_starts = [-5, 0, 30, 60, 95]
+output_ends = [10, 25, 65, 105, 100]
+output_sides = [1.0, -1.0, 0.0, 1.0, nan]
+returns = [0.019802627296178876, 0.010050335853502013, 0.0, nan, nan]
+labels = [1.0, 1.0, 0.0, nan, nan]
+
+[[meta]]
+minutes = [0, 10, 30, 60, 100]
+prices = [100.0, 102.0, nan, 103.0, 101.0]
+starts = [-5, 0, 5, 30, 60, 95]
+ends = [10, 25, -99999, 65, 105, 100]
+sides = [1.0, -1.0, 1.0, 0.0, 1.0, nan]
+with_side = true
+output_starts = [-5, 0, 30, 60, 95]
+output_ends = [10, 25, 65, 105, 100]
+output_sides = [1.0, -1.0, 0.0, 1.0, nan]
+returns = [0.019802627296178876, nan, nan, nan, nan]
+labels = [1.0, nan, nan, nan, nan]

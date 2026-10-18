@@ -20,7 +20,7 @@ Combinatorial Purged Cross-Validation. Bailey, Borwein, López de Prado & Zhu
 (2017), Journal of Computational Finance 20(4).
 """
 
-using ..Backtest: performance_evaluation, sharpe_ratio
+using ..Backtest: performance_evaluation, sharpe_ratio, _first_metric_maximum
 using Statistics: mean, median, quantile
 using Combinatorics: combinations
 
@@ -53,8 +53,9 @@ end
 Observable regime label per period from the cross-configuration volatility: the
 per-period dispersion across configurations (a market-stress proxy), smoothed by a
 trailing (causal) moving average, then split at the observed median (`n_regimes ≤ 2`)
-or the interior quantiles (`n_regimes > 2`). Uses only returns up to each period, so
-it carries no look-ahead. `window` defaults to `max(T ÷ 20, 3)`. Mirrors Python's
+or the interior quantiles (`n_regimes > 2`). The smoothed feature uses each
+period's prefix, while cutoff estimation uses the full supplied sample.
+`window` defaults to `max(T ÷ 20, 3)`. Mirrors Python's
 `estimate_volatility_regimes`.
 """
 function estimate_volatility_regimes(
@@ -72,6 +73,9 @@ function estimate_volatility_regimes(
         cumulative[k+1] = cumulative[k] + dispersion[k]
     end
     smooth = [(cumulative[j+1] - cumulative[max(j - w, 0)+1]) / min(j, w) for j = 1:t_len]
+    if any(isnan, smooth)
+        return n_regimes <= 2 ? zeros(Int, t_len) : [isnan(value) ? 0 : n_regimes - 1 for value in smooth]
+    end
     if n_regimes <= 2
         med = median(smooth)
         return Int.(smooth .> med)
@@ -92,7 +96,8 @@ function _cscv_path_stats(
     P::AbstractMatrix{<:Real},
     ranges::Vector{UnitRange{Int}},
     metric,
-    risk_free_return::Real,
+    risk_free_return::Real;
+    rank_order = nothing,
 )
     n_strategies = size(P, 2)
     all_ids = collect(1:length(ranges))
@@ -102,7 +107,7 @@ function _cscv_path_stats(
         train = reduce(vcat, (P[ranges[i], :] for i in train_ids))
         test = reduce(vcat, (P[ranges[i], :] for i in test_ids))
         is_overfit, _ =
-            performance_evaluation(train, test, n_strategies, metric, risk_free_return)
+            performance_evaluation(train, test, n_strategies, metric, risk_free_return; rank_order = rank_order)
         test_metrics = [metric(view(test, :, j), risk_free_return) for j = 1:n_strategies]
         push!(stats, (is_overfit ? 1.0 : 0.0, test_metrics, test_ids))
     end
@@ -127,7 +132,9 @@ and there is adequate data for selection (it does not help where selection is
 noise-dominated by too little data); it converges to plain CPCV in a stationary
 regime with no over-adaptation.
 
-Mirrors Python's `adaptive_probability_of_backtest_overfitting`.
+Mirrors Python's `adaptive_probability_of_backtest_overfitting` conditional on
+the same ranks. Optional `rank_order(scores)` supplies each path's ascending
+strategy permutation; native default ordering of tied scores can differ.
 """
 function adaptive_probability_of_backtest_overfitting(
     performances::AbstractMatrix{<:Real};
@@ -136,6 +143,7 @@ function adaptive_probability_of_backtest_overfitting(
     risk_free_return::Real = 0.0,
     metric = nothing,
     n_regimes::Integer = 2,
+    rank_order = nothing,
 )
     P = float.(performances)
     isodd(n_partitions) && throw(ArgumentError("Number of partitions must be even."))
@@ -153,7 +161,7 @@ function adaptive_probability_of_backtest_overfitting(
 
     ranges = _array_split_ranges(t_len, n_partitions)
     regime_partitions = [regimes[r] for r in ranges]
-    stats = _cscv_path_stats(P, ranges, chosen_metric, risk_free_return)
+    stats = _cscv_path_stats(P, ranges, chosen_metric, risk_free_return; rank_order = rank_order)
 
     overfit = [s[1] for s in stats]
     test_metrics = [s[2] for s in stats]
@@ -168,6 +176,6 @@ function adaptive_probability_of_backtest_overfitting(
     pbo = sum(weights .* overfit) / wsum
     col_means =
         [sum(weights[k] * test_metrics[k][j] for k = 1:n_paths) / wsum for j = 1:n_configs]
-    selected = argmax(col_means)
+    selected = _first_metric_maximum(col_means)
     return (pbo, selected)
 end
