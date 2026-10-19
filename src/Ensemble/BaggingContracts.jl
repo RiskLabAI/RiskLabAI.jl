@@ -21,7 +21,8 @@ function _bagging_member_prediction(predictions::AbstractMatrix, weights, classe
     size(predictions, 2) == length(weights) || throw(DimensionMismatch("Weights must align with fitted members."))
     signed = ifelse.(predictions .== classes[2], 1.0, -1.0)
     votes = signed * weights
-    return [value > 0 ? classes[2] : classes[1] for value in votes]
+    tolerance = eps(Float64) * max(1.0, sum(abs, weights)) * max(1, length(weights))
+    return [value > tolerance ? classes[2] : classes[1] for value in votes]
 end
 
 """

@@ -81,8 +81,16 @@ Base.@kwdef struct FoldEvidence
     refit_components::Tuple{Vararg{String}}
 end
 
-function FoldEvidence(fold_id, path_id, train_ids::AbstractVector, test_ids::AbstractVector,
-    fit_ids::AbstractVector, prediction_ids::AbstractVector, refit_id, refit_components::AbstractVector)
+function FoldEvidence(
+    fold_id,
+    path_id,
+    train_ids::AbstractVector,
+    test_ids::AbstractVector,
+    fit_ids::AbstractVector,
+    prediction_ids::AbstractVector,
+    refit_id,
+    refit_components::AbstractVector,
+)
     return FoldEvidence(
         String(fold_id),
         String(path_id),
@@ -102,8 +110,12 @@ Base.@kwdef struct ValidationEvidence
     embargo::Real = 0.0
 end
 
-function ValidationEvidence(method_labels::AbstractVector, event_horizons::AbstractVector,
-    folds::AbstractVector, embargo::Real = 0.0)
+function ValidationEvidence(
+    method_labels::AbstractVector,
+    event_horizons::AbstractVector,
+    folds::AbstractVector,
+    embargo::Real = 0.0,
+)
     return ValidationEvidence(
         Tuple(String.(method_labels)),
         Tuple(event_horizons),
@@ -131,9 +143,15 @@ Base.@kwdef struct CausalDiscoveryStage
     assumptions::Tuple{Vararg{String}}
 end
 
-function CausalDiscoveryStage(method_labels::AbstractVector, graph_id, graph_nodes::AbstractVector,
-    directed_edges::AbstractVector, graph_kind, ambiguous_edges::AbstractVector,
-    assumptions::AbstractVector)
+function CausalDiscoveryStage(
+    method_labels::AbstractVector,
+    graph_id,
+    graph_nodes::AbstractVector,
+    directed_edges::AbstractVector,
+    graph_kind,
+    ambiguous_edges::AbstractVector,
+    assumptions::AbstractVector,
+)
     return CausalDiscoveryStage(
         Tuple(String.(method_labels)),
         String(graph_id),
@@ -215,10 +233,18 @@ Base.@kwdef struct MultipleTestingAdjustmentsStage
     selection_bias_evidence_id::Union{Nothing,String} = nothing
 end
 
-function MultipleTestingAdjustmentsStage(method_labels::AbstractVector, trial_family_id,
-    declared_trial_ids::AbstractVector, family_partitions::AbstractVector, alpha::Real,
-    backtests_independent::Bool)
-    partitions = Tuple((String(partition[1]), Tuple(String.(partition[2]))) for partition in family_partitions)
+function MultipleTestingAdjustmentsStage(
+    method_labels::AbstractVector,
+    trial_family_id,
+    declared_trial_ids::AbstractVector,
+    family_partitions::AbstractVector,
+    alpha::Real,
+    backtests_independent::Bool,
+)
+    partitions = Tuple(
+        (String(partition[1]), Tuple(String.(partition[2]))) for
+        partition in family_partitions
+    )
     return MultipleTestingAdjustmentsStage(
         method_labels = Tuple(String.(method_labels)),
         trial_family_id = String(trial_family_id),

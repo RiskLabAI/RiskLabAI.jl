@@ -87,8 +87,9 @@ function _finite_matrix(name::AbstractString, values)
 end
 
 function _real_array(values, name, dimensions)
-    values isa AbstractArray && ndims(values) == dimensions &&
-        all(value -> value isa Real && !(value isa Bool), values) ||
+    values isa AbstractArray &&
+    ndims(values) == dimensions &&
+    all(value -> value isa Real && !(value isa Bool), values) ||
         throw(ArgumentError("$name must be a real numeric array of dimension $dimensions"))
     isempty(values) && throw(ArgumentError("$name cannot be empty"))
     result = Float64.(values)
@@ -101,7 +102,8 @@ function _probabilities(values, name, dimensions; strict_vector = false)
     all(value -> 0 <= value <= 1, result) ||
         throw(ArgumentError("$name must contain probabilities in [0, 1]"))
     totals = sum(result; dims = dimensions)
-    valid = strict_vector ?
+    valid =
+        strict_vector ?
         all(total -> abs(total - 1) <= max(1e-12, 1e-12 * max(abs(total), 1.0)), totals) :
         all(total -> abs(total - 1) <= 2e-12, totals)
     valid || throw(ArgumentError("$name must sum to one along its last dimension"))

@@ -119,7 +119,8 @@ end
 function _specification_ols(outcome, regressors)
     outcome_values = _finite_vector("outcome", outcome)
     regressor_values = Tuple(
-        (String(name), _finite_vector("regressor", values)) for (name, values) in regressors
+        (String(name), _finite_vector("regressor", values)) for
+        (name, values) in regressors
     )
     return _ols_diagnostics(outcome_values, regressor_values)
 end
@@ -127,7 +128,8 @@ end
 function _specification_rng(sample_size, seed, rng)
     n_observations = _sample_size(sample_size)
     random_seed = _random_seed(seed)
-    isnothing(rng) || rng isa AbstractRNG ||
+    isnothing(rng) ||
+        rng isa AbstractRNG ||
         throw(ArgumentError("rng must be an AbstractRNG or nothing"))
     return n_observations, isnothing(rng) ? MersenneTwister(random_seed) : rng
 end
@@ -185,7 +187,11 @@ function collider_specification_experiment(sample_size = 5_000, seed = 0; rng = 
     )
 end
 
-function confounded_mediator_specification_experiment(sample_size = 5_000, seed = 0; rng = nothing)
+function confounded_mediator_specification_experiment(
+    sample_size = 5_000,
+    seed = 0;
+    rng = nothing,
+)
     n_observations, random_state = _specification_rng(sample_size, seed, rng)
     x = randn(random_state, n_observations)
     w = randn(random_state, n_observations)

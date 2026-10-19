@@ -147,16 +147,17 @@ end
 
 function _deep_hedge_positions(parameters, prices, strike, maturity)
     count = size(prices, 2) - 1
-    initial = (previous = zeros(eltype(prices), size(prices, 1)), positions = ())
+    initial = (previous = zeros(eltype(prices), size(prices, 1)),
+        positions = zeros(eltype(prices), size(prices, 1), 0))
     result = foldl(1:count; init = initial) do state, index
         features = vcat(fill(maturity * (count - index + 1) / count, 1, size(prices, 1)),
             permutedims(log.(prices[:, index] ./ strike)), permutedims(state.previous))
         hidden1 = tanh.(parameters.weight1 * features .+ parameters.bias1)
         hidden2 = tanh.(parameters.weight2 * hidden1 .+ parameters.bias2)
         holding = vec(parameters.weight3 * hidden2 .+ parameters.bias3)
-        return (previous = holding, positions = (state.positions..., holding))
+        return (previous = holding, positions = hcat(state.positions, holding))
     end
-    return hcat(result.positions...)
+    return result.positions
 end
 
 function (model::DeepHedge)(prices; strike, maturity)

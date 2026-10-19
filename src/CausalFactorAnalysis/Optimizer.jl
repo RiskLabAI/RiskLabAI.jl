@@ -86,8 +86,7 @@ function minimum_variance_factor_weights(covariance, factor_exposures, target_ex
     count(
         >(maximum(singular_values) * max(size(whitened_exposures)...) * eps(Float64)),
         singular_values,
-    ) == n_factors ||
-        throw(ArgumentError("factor_exposures must have full column rank"))
+    ) == n_factors || throw(ArgumentError("factor_exposures must have full column rank"))
     if n_factors == n_assets
         weights = transpose(scaled_exposures) \ scaled_targets
     else

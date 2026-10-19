@@ -270,7 +270,7 @@ function random_covariance_sub(
 )
     n_columns == 1 && return ones(1, 1)
     rng = _rng(random_state)
-    common = common_draws === nothing ? randn(rng, n_observations) : Float64.(common_draws)
+    common = common_draws === nothing ? randn(rng, n_observations) : Vector{Float64}(common_draws)
     noise = idiosyncratic_draws === nothing ? randn(rng, n_observations, n_columns) : Matrix{Float64}(idiosyncratic_draws)
     length(common) == n_observations || throw(DimensionMismatch("Common draws must match n_observations."))
     size(noise) == (n_observations, n_columns) || throw(DimensionMismatch("Idiosyncratic draws have the wrong shape."))
@@ -297,7 +297,7 @@ function random_block_covariance(
     n_blocks > 0 && block_size_min > 0 && n_columns >= n_blocks * block_size_min || throw(ArgumentError("Requested blocks cannot fit the available columns."))
     rng = _rng(random_state)
     limit = n_columns - (block_size_min - 1) * n_blocks
-    chosen = cuts === nothing ? sort(shuffle(rng, collect(1:(limit-1)))[1:(n_blocks-1)]) : sort(Int.(cuts))
+    chosen = cuts === nothing ? sort(shuffle(rng, collect(1:(limit-1)))[1:(n_blocks-1)]) : sort(Vector{Int}(cuts))
     length(chosen) == n_blocks - 1 && length(unique(chosen)) == length(chosen) && all(cut -> 1 <= cut < limit, chosen) || throw(ArgumentError("Block cuts must be distinct interior positions."))
     block_draws === nothing || length(block_draws) == n_blocks || throw(DimensionMismatch("Supply one primitive record per block."))
     parts = vcat(chosen, limit)

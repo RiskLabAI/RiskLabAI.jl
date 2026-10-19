@@ -38,9 +38,9 @@ end
     C = RiskLabAI.Cluster
     fixtures = TOML.parsefile(joinpath(@__DIR__, "fixtures", "clustering_python_320.toml"))
     for case in fixtures["random"]
-        blocks = [(common = Float64.(row["common"]), noise = clustering_matrix(row["noise"])) for row in case["draws"]]
-        market = (common = Float64.(case["market"]["common"]), noise = clustering_matrix(case["market"]["noise"]))
-        plan = (cuts = Int.(case["cuts"]), blocks = blocks, market = market)
+        blocks = [(common = Vector{Float64}(row["common"]), noise = clustering_matrix(row["noise"])) for row in case["draws"]]
+        market = (common = Vector{Float64}(case["market"]["common"]), noise = clustering_matrix(case["market"]["noise"]))
+        plan = (cuts = Vector{Int}(case["cuts"]), blocks = blocks, market = market)
         actual = C.random_block_correlation(case["columns"], case["blocks"]; block_size_min = case["minimum"], draws = plan)
         @test actual ≈ clustering_matrix(case["output"]) atol = 2e-12 rtol = 2e-11
         @test actual ≈ transpose(actual) atol = 1e-14
