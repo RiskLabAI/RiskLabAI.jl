@@ -124,7 +124,8 @@ function minimum_variance_factor_weights(covariance, factor_exposures, target_ex
         resolved = setprecision(BigFloat, 256) do
             achieved_exposures = transpose(BigFloat.(scaled_exposures)) * BigFloat.(weights)
             residuals = abs.(achieved_exposures - BigFloat.(scaled_targets))
-            all(isfinite, achieved_exposures) && all(residuals .<= BigFloat.(tolerances))
+            all(isfinite, achieved_exposures) &&
+                all(residuals .<= BigFloat.(tolerances))
         end
     end
     resolved || throw(
