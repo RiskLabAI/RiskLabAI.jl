@@ -117,10 +117,9 @@ function minimum_variance_factor_weights(covariance, factor_exposures, target_ex
             exposures_big = BigFloat.(scaled_exposures)
             targets_big = BigFloat.(scaled_targets)
             solved_exposures = covariance_big \ exposures_big
-            Float64.(
-                solved_exposures *
-                ((transpose(exposures_big) * solved_exposures) \ targets_big),
-            )
+            constraint_matrix = transpose(exposures_big) * solved_exposures
+            weights_big = solved_exposures * (constraint_matrix \ targets_big)
+            Float64.(weights_big)
         end
         resolved = setprecision(BigFloat, 256) do
             achieved_exposures = transpose(BigFloat.(scaled_exposures)) * BigFloat.(weights)
