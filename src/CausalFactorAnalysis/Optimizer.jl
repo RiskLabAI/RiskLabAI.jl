@@ -111,6 +111,23 @@ function minimum_variance_factor_weights(covariance, factor_exposures, target_ex
         residuals = abs.(achieved_exposures - BigFloat.(scaled_targets))
         all(isfinite, achieved_exposures) && all(residuals .<= BigFloat.(tolerances))
     end
+    if !resolved
+        weights = setprecision(BigFloat, 256) do
+            covariance_big = BigFloat.(scaled_covariance)
+            exposures_big = BigFloat.(scaled_exposures)
+            targets_big = BigFloat.(scaled_targets)
+            solved_exposures = covariance_big \ exposures_big
+            Float64.(
+                solved_exposures *
+                ((transpose(exposures_big) * solved_exposures) \ targets_big),
+            )
+        end
+        resolved = setprecision(BigFloat, 256) do
+            achieved_exposures = transpose(BigFloat.(scaled_exposures)) * BigFloat.(weights)
+            residuals = abs.(achieved_exposures - BigFloat.(scaled_targets))
+            all(isfinite, achieved_exposures) && all(residuals .<= BigFloat.(tolerances))
+        end
+    end
     resolved || throw(
         ArgumentError("factor constraints could not be resolved to numerical precision"),
     )
