@@ -103,12 +103,15 @@ function minimum_variance_factor_weights(covariance, factor_exposures, target_ex
     all(isfinite, weights) ||
         throw(ArgumentError("the allocation produced non-finite weights"))
 
-    achieved_exposures = transpose(scaled_exposures) * weights
-    residuals = abs.(achieved_exposures - scaled_targets)
     tolerances = map(scaled_targets) do target
         target != 0.0 ? _FEASIBILITY_RTOL * abs(target) : _FEASIBILITY_ATOL
     end
-    all(isfinite, achieved_exposures) && all(residuals .<= tolerances) || throw(
+    resolved = setprecision(BigFloat, 256) do
+        achieved_exposures = transpose(BigFloat.(scaled_exposures)) * BigFloat.(weights)
+        residuals = abs.(achieved_exposures - BigFloat.(scaled_targets))
+        all(isfinite, achieved_exposures) && all(residuals .<= BigFloat.(tolerances))
+    end
+    resolved || throw(
         ArgumentError("factor constraints could not be resolved to numerical precision"),
     )
     return copy(weights)
