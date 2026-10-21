@@ -103,7 +103,8 @@ end
 
 Newey–West (Bartlett-kernel) long-run variance
 `Ω̂ = γ₀ + 2 Σₖ₌₁ᴸ (1 - k/(L+1)) γₖ`, with `γₖ` the lag-`k` autocovariance; `lag=0`
-gives the sample variance. Floored at `1e-12`. Mirrors Python's
+gives the variance with denominator `T`. Lags beyond the track contribute zero
+while the original Bartlett denominator is retained. Floored at `1e-12`. Mirrors Python's
 `newey_west_long_run_variance`.
 """
 function newey_west_long_run_variance(series::AbstractVector{<:Real}, lag::Integer)
@@ -112,7 +113,7 @@ function newey_west_long_run_variance(series::AbstractVector{<:Real}, lag::Integ
     t = length(x)
     t == 0 && return 1e-12
     total = (x' * x) / t
-    for k = 1:lag
+    for k = 1:min(lag, t-1)
         weight = 1.0 - k / (lag + 1.0)
         total += 2.0 * weight * (x[(k+1):end]' * x[1:(end-k)]) / t
     end

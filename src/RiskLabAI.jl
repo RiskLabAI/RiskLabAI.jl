@@ -30,6 +30,7 @@ using .Features: shannon_entropy, probability_mass_function, plug_in_entropy_est
     volatility_robust_sadf, pelt_change_points,
     orthogonal_features, calculate_weighted_tau,
     feature_importance_mdi, feature_importance_mda, feature_importance_sfi,
+    clustered_feature_importance_mdi, clustered_feature_importance_mda,
     get_test_dataset, mdi_plus_importance, conditional_predictive_impact
 
 include("Cluster/Cluster.jl")
@@ -66,9 +67,14 @@ using .Backtest: sharpe_ratio, bet_timing, calculate_holding_period,
     optimal_ou_trading_rule, fit_ornstein_uhlenbeck
 
 include("Validation/Validation.jl")
+include("Components/Components.jl")
+include("ParallelWork.jl")
 using .Validation: KFoldCV, PurgedKFoldCV, CombinatorialPurgedCV, WalkForwardCV,
+    AdaptiveCombinatorialPurgedCV, BaggedCombinatorialPurgedCV, backtest_predictions, filtered_training_indices_with_embargo,
     cv_split, backtest_paths, get_n_splits, cross_val_score,
     grid_search_cv, random_search_cv, leakage_aware_hpo, deflated_sharpe_gate,
+    SampleWeightedPipeline, clone_pipeline, configure_pipeline!, fit_pipeline!,
+    predict_pipeline, predict_pipeline_proba, pipeline_classes, pipeline_parameter_grid, clf_hyper_fit,
     moving_block_bootstrap_indices, bagged_probability_of_backtest_overfitting,
     estimate_volatility_regimes, adaptive_probability_of_backtest_overfitting
 
@@ -108,6 +114,7 @@ export
     # Features — feature importance
     orthogonal_features, calculate_weighted_tau,
     feature_importance_mdi, feature_importance_mda, feature_importance_sfi,
+    clustered_feature_importance_mdi, clustered_feature_importance_mda,
     get_test_dataset, mdi_plus_importance, conditional_predictive_impact,
     # Optimization — HRP, hedging & NCO
     inverse_variance_weights, cluster_variance, quasi_diagonal, recursive_bisection,
@@ -146,8 +153,11 @@ export
     optimal_ou_trading_rule, fit_ornstein_uhlenbeck,
     # Validation — cross-validators, scoring & tuning
     KFoldCV, PurgedKFoldCV, CombinatorialPurgedCV, WalkForwardCV,
+    AdaptiveCombinatorialPurgedCV, BaggedCombinatorialPurgedCV, backtest_predictions, filtered_training_indices_with_embargo,
     cv_split, backtest_paths, get_n_splits, cross_val_score,
     grid_search_cv, random_search_cv,
+    SampleWeightedPipeline, clone_pipeline, configure_pipeline!, fit_pipeline!,
+    predict_pipeline, predict_pipeline_proba, pipeline_classes, pipeline_parameter_grid, clf_hyper_fit,
     # Validation — path-level Bagged / Adaptive CPCV
     moving_block_bootstrap_indices, bagged_probability_of_backtest_overfitting,
     estimate_volatility_regimes, adaptive_probability_of_backtest_overfitting,

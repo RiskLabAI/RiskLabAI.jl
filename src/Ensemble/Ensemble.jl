@@ -9,6 +9,7 @@ majority-vote bagging classifier and an empirical weighted-bagging evaluator
 module Ensemble
 
 include("BaggingAccuracy.jl")
+include("BaggingContracts.jl")
 
 export
     bagging_classifier_accuracy,

@@ -26,12 +26,15 @@ include("Structures/run_bars.jl")
 
 # Fractional differentiation (AFML Ch. 5).
 include("Differentiation/Differentiation.jl")
+include("Differentiation/WaveletHurst.jl")
 
 # Sample weighting: uniqueness, return attribution, time decay (AFML Ch. 4).
 include("Weights/SampleWeight.jl")
 
 # Covariance denoising via Random Matrix Theory (AFML Ch. 2).
 include("Denoise/Denoising.jl")
+include("Denoise/MPVarianceFit.jl")
+include("Denoise/DensityEstimation.jl")
 
 # Labeling: CUSUM filters, volatility, triple barrier, meta-labeling (AFML Ch. 3).
 include("Labeling/Labeling.jl")
@@ -43,6 +46,9 @@ include("Distance/DistanceMetric.jl")
 
 # Synthetic data generators (MLAM Ch. 2; Heston–Merton regime simulator).
 include("SyntheticData/SyntheticData.jl")
+include("TimeGAN.jl")
+include("TimeGANTraining.jl")
+include("TimeGANQuality.jl")
 
 export
     # metric taxonomy
@@ -75,6 +81,7 @@ export
     # sample weights
     expand_label_for_meta_labeling,
     calculate_average_uniqueness,
+    sequential_bootstrap,
     sample_weight_absolute_return_meta_labeling,
     calculate_time_decay,
     # denoising
@@ -83,6 +90,10 @@ export
     cov_to_corr,
     corr_to_cov,
     denoised_corr,
+    denoised_corr2,
+    KernelDensityEstimate,
+    fit_kde,
+    score_samples,
     find_max_eval,
     denoise_cov,
     optimal_portfolio,
@@ -119,6 +130,13 @@ export
     align_params_length,
     heston_merton_log_returns,
     generate_prices_from_regimes,
-    parallel_generate_prices
+    parallel_generate_prices,
+    chronological_timegan_data,
+    TimeGAN,
+    latent_sequence,
+    timegan_losses,
+    sample_timegan,
+    fit_timegan,
+    timegan_quality_report
 
 end # module Data

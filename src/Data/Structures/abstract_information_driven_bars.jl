@@ -48,6 +48,20 @@ function ewma_expected_imbalance(
     return ewma(collect(Float64, last(array, ewma_window)), ewma_window)[end]
 end
 
+function _information_bar_snapshot(bars::AbstractInformationDrivenBarsType, timestamp)
+    return Dict{String,Any}(
+        PREVIOUS_TICK_RULE => bars.previous_tick_rule,
+        CUMULATIVE_TICKS => bars.cumulative_ticks,
+        CUMULATIVE_DOLLAR => bars.cumulative_dollar,
+        CUMULATIVE_VOLUME => bars.cumulative_volume,
+        CUMULATIVE_BUY_VOLUME => bars.cumulative_buy_volume,
+        N_TICKS_ON_BAR_FORMATION => bars.n_ticks_on_bar_formation,
+        EXPECTED_TICKS_NUMBER => bars.expected_ticks_number,
+        EXPECTED_IMBALANCE_WINDOW => bars.expected_imbalance_window,
+        "timestamp" => timestamp,
+    )
+end
+
 # Per-tick imbalance θ_t, dispatched on the metric (AFML p.29).
 imbalance_at_tick(
     ::Type{Tick},

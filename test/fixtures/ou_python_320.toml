@@ -1,0 +1,1911 @@
+reference = "Isolated OU correction: independent 70-digit time-dependent references; all original inputs and unaffected outputs retained"
+
+[[scales]]
+half_life = 0.1
+sigma = 0.1
+theta = 6.931471805599452
+stationary_std = 0.026857913553447927
+
+[[scales]]
+half_life = 0.1
+sigma = 1.0
+theta = 6.931471805599452
+stationary_std = 0.26857913553447926
+
+[[scales]]
+half_life = 0.1
+sigma = 3.0
+theta = 6.931471805599452
+stationary_std = 0.8057374066034377
+
+[[scales]]
+half_life = 1.0
+sigma = 0.1
+theta = 0.6931471805599453
+stationary_std = 0.08493218002880192
+
+[[scales]]
+half_life = 1.0
+sigma = 1.0
+theta = 0.6931471805599453
+stationary_std = 0.8493218002880191
+
+[[scales]]
+half_life = 1.0
+sigma = 3.0
+theta = 0.6931471805599453
+stationary_std = 2.547965400864057
+
+[[scales]]
+half_life = 5.0
+sigma = 0.1
+theta = 0.13862943611198905
+stationary_std = 0.1899141280216511
+
+[[scales]]
+half_life = 5.0
+sigma = 1.0
+theta = 0.13862943611198905
+stationary_std = 1.899141280216511
+
+[[scales]]
+half_life = 5.0
+sigma = 3.0
+theta = 0.13862943611198905
+stationary_std = 5.697423840649533
+
+[[scales]]
+half_life = 100.0
+sigma = 0.1
+theta = 0.006931471805599453
+stationary_std = 0.8493218002880191
+
+[[scales]]
+half_life = 100.0
+sigma = 1.0
+theta = 0.006931471805599453
+stationary_std = 8.493218002880191
+
+[[scales]]
+half_life = 100.0
+sigma = 3.0
+theta = 0.006931471805599453
+stationary_std = 25.47965400864057
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = -0.5
+pt = 0.25
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.5387154934399117, "expected_gain" = -0.0037064786080485967, "std_gain" = 0.2741743714257963, "expected_holding_time" = 0.15357377129248334, "return_rate" = -0.02413484136551823, "time_scaled_sharpe" = -0.03449658600973734}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = -0.5
+pt = 0.25
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.5387154934399117, "expected_gain" = -0.033706478608048596, "std_gain" = 0.2741743714257963, "expected_holding_time" = 0.15357377129248334, "return_rate" = -0.2194806985878729, "time_scaled_sharpe" = -0.3137097394446131}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = -0.5
+pt = 0.25
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.8553545832317144, "expected_gain" = -0.0031294793444997526, "std_gain" = 0.6155502055394483, "expected_holding_time" = 0.7919322931961423, "return_rate" = -0.00395170063323152, "time_scaled_sharpe" = -0.005713004712911952}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = -0.5
+pt = 0.25
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.8553545832317144, "expected_gain" = -0.03312947934449975, "std_gain" = 0.6155502055394483, "expected_holding_time" = 0.7919322931961423, "return_rate" = -0.04183372698541329, "time_scaled_sharpe" = -0.060479348414330114}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = -0.5
+pt = 1.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.21365922496276546, "expected_gain" = -0.022243007548404886, "std_gain" = 0.532855649619405, "expected_holding_time" = 0.6107105101987375, "return_rate" = -0.03642152407229183, "time_scaled_sharpe" = -0.05341536955130873}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = -0.5
+pt = 1.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.21365922496276546, "expected_gain" = -0.052243007548404885, "std_gain" = 0.532855649619405, "expected_holding_time" = 0.6107105101987375, "return_rate" = -0.08554463477532753, "time_scaled_sharpe" = -0.1254587334287883}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = -0.5
+pt = 1.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.5790927739324524, "expected_gain" = -0.05226806516886906, "std_gain" = 1.2342617558475744, "expected_holding_time" = 3.2501525591993774, "return_rate" = -0.01608172669339082, "time_scaled_sharpe" = -0.023489689610128598}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = -0.5
+pt = 1.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.5790927739324524, "expected_gain" = -0.08226806516886906, "std_gain" = 1.2342617558475744, "expected_holding_time" = 3.2501525591993774, "return_rate" = -0.02531206264026404, "time_scaled_sharpe" = -0.03697193131980589}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = -0.5
+pt = 2.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.10303929214908171, "expected_gain" = -0.06300962805711205, "std_gain" = 0.6992234400211522, "expected_holding_time" = 1.2072447761135927, "return_rate" = -0.05219291837398131, "time_scaled_sharpe" = -0.08201499634750661}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = -0.5
+pt = 2.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.10303929214908171, "expected_gain" = -0.09300962805711205, "std_gain" = 0.6992234400211522, "expected_holding_time" = 1.2072447761135927, "return_rate" = -0.07704289129875727, "time_scaled_sharpe" = -0.12106378883037987}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = -0.5
+pt = 2.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.36775884223405736, "expected_gain" = -0.21284405218079916, "std_gain" = 1.6876834369516274, "expected_holding_time" = 6.704491923023419, "return_rate" = -0.031746484987160144, "time_scaled_sharpe" = -0.04870657532534971}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = -0.5
+pt = 2.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.36775884223405736, "expected_gain" = -0.24284405218079916, "std_gain" = 1.6876834369516274, "expected_holding_time" = 6.704491923023419, "return_rate" = -0.03622109698527131, "time_scaled_sharpe" = -0.05557168264119466}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 0.0
+pt = 0.25
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.545686928018814, "expected_gain" = 0.00012781041034770624, "std_gain" = 0.27384958123755027, "expected_holding_time" = 0.15345247147761903, "return_rate" = 0.000832899001995403, "time_scaled_sharpe" = 0.0011914263593660933}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 0.0
+pt = 0.25
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.545686928018814, "expected_gain" = -0.029872189589652293, "std_gain" = 0.27384958123755027, "expected_holding_time" = 0.15345247147761903, "return_rate" = -0.1946673735653023, "time_scaled_sharpe" = -0.2784633426365271}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 0.0
+pt = 0.25
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.8662890814869543, "expected_gain" = 0.016005892602169974, "std_gain" = 0.5955975534278959, "expected_holding_time" = 0.7747225737578455, "return_rate" = 0.020660160352024167, "time_scaled_sharpe" = 0.030531903995091817}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 0.0
+pt = 0.25
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.8662890814869543, "expected_gain" = -0.013994107397830025, "std_gain" = 0.5955975534278959, "expected_holding_time" = 0.7747225737578455, "return_rate" = -0.0180633789073044, "time_scaled_sharpe" = -0.026694340277506636}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 0.0
+pt = 1.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.2252399357730971, "expected_gain" = -0.007188083494973768, "std_gain" = 0.5430623104296483, "expected_holding_time" = 0.6184829651246119, "return_rate" = -0.011622120414465838, "time_scaled_sharpe" = -0.016830599240777924}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 0.0
+pt = 1.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.2252399357730971, "expected_gain" = -0.03718808349497377, "std_gain" = 0.5430623104296483, "expected_holding_time" = 0.6184829651246119, "return_rate" = -0.06012790261326189, "time_scaled_sharpe" = -0.08707435441924445}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 0.0
+pt = 1.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.6106136687037435, "expected_gain" = 0.026534171759358682, "std_gain" = 1.2190278306295412, "expected_holding_time" = 3.223357883121778, "return_rate" = 0.00823184167612827, "time_scaled_sharpe" = 0.012123768967181713}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 0.0
+pt = 1.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.6106136687037435, "expected_gain" = -0.0034658282406413166, "std_gain" = 1.2190278306295412, "expected_holding_time" = 3.223357883121778, "return_rate" = -0.0010752229092492035, "time_scaled_sharpe" = -0.0015835768777916434}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 0.0
+pt = 2.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.11530144253956776, "expected_gain" = -0.03480668215899413, "std_gain" = 0.7345863701477129, "expected_holding_time" = 1.2475417103593969, "return_rate" = -0.02790021517514411, "time_scaled_sharpe" = -0.042422105931065726}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 0.0
+pt = 2.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.11530144253956776, "expected_gain" = -0.06480668215899413, "std_gain" = 0.7345863701477129, "expected_holding_time" = 1.2475417103593969, "return_rate" = -0.0519475073425198, "time_scaled_sharpe" = -0.07898586607684853}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 0.0
+pt = 2.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.4127963336621919, "expected_gain" = -0.0552128321823282, "std_gain" = 1.7231787855795004, "expected_holding_time" = 6.798819055631636, "return_rate" = -0.008120944494999307, "time_scaled_sharpe" = -0.012288332225860487}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 0.0
+pt = 2.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.4127963336621919, "expected_gain" = -0.0852128321823282, "std_gain" = 1.7231787855795004, "expected_holding_time" = 6.798819055631636, "return_rate" = -0.012533475517596567, "time_scaled_sharpe" = -0.018965221496065464}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 1.0
+pt = 0.25
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.5595911921430626, "expected_gain" = 0.007775155678684448, "std_gain" = 0.2730399039888456, "expected_holding_time" = 0.1531498612893349, "return_rate" = 0.050768284170988054, "time_scaled_sharpe" = 0.07276535743810247}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 1.0
+pt = 0.25
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.5595911921430626, "expected_gain" = -0.02222484432131555, "std_gain" = 0.2730399039888456, "expected_holding_time" = 0.1531498612893349, "return_rate" = -0.1451182791431189, "time_scaled_sharpe" = -0.20799567338314218}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 1.0
+pt = 0.25
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.8866441390939919, "expected_gain" = 0.05162724341448577, "std_gain" = 0.5547977770947845, "expected_holding_time" = 0.7389919065131633, "return_rate" = 0.06986171696802791, "time_scaled_sharpe" = 0.10824912227706848}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 1.0
+pt = 0.25
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.8866441390939919, "expected_gain" = 0.02162724341448577, "std_gain" = 0.5547977770947845, "expected_holding_time" = 0.7389919065131633, "return_rate" = 0.029265873176515935, "time_scaled_sharpe" = 0.04534679680832471}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 1.0
+pt = 1.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.24926597025291972, "expected_gain" = 0.024045761328795656, "std_gain" = 0.5623645030514244, "expected_holding_time" = 0.6330478090095469, "return_rate" = 0.037984115870201104, "time_scaled_sharpe" = 0.05374058346403667}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 1.0
+pt = 1.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.24926597025291972, "expected_gain" = -0.005954238671204343, "std_gain" = 0.5623645030514244, "expected_holding_time" = 0.6330478090095469, "return_rate" = -0.009405669819030424, "time_scaled_sharpe" = -0.013307304181359614}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 1.0
+pt = 1.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.671478027500141, "expected_gain" = 0.1786950687503524, "std_gain" = 1.1741893109840214, "expected_holding_time" = 3.1437657574075097, "return_rate" = 0.05684108885316962, "time_scaled_sharpe" = 0.08583202440821852}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 1.0
+pt = 1.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.671478027500141, "expected_gain" = 0.1486950687503524, "std_gain" = 1.1741893109840214, "expected_holding_time" = 3.1437657574075097, "return_rate" = 0.0472983931452237, "time_scaled_sharpe" = 0.07142222143909502}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 1.0
+pt = 2.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.14237797747549916, "expected_gain" = 0.027469348193648102, "std_gain" = 0.8037059952737803, "expected_holding_time" = 1.3246308017420623, "return_rate" = 0.020737361804906148, "time_scaled_sharpe" = 0.029696394344096703}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 1.0
+pt = 2.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.14237797747549916, "expected_gain" = -0.002530651806351897, "std_gain" = 0.8037059952737803, "expected_holding_time" = 1.3246308017420623, "return_rate" = -0.001910458222037273, "time_scaled_sharpe" = -0.002735821522201458}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 1.0
+pt = 2.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.5054323838066684, "expected_gain" = 0.2690133433233395, "std_gain" = 1.7498967091733353, "expected_holding_time" = 6.867837704034254, "return_rate" = 0.0391700204513158, "time_scaled_sharpe" = 0.058661261167540495}
+
+[[metrics]]
+theta = 0.05
+sigma = 0.7
+gap = 1.0
+pt = 2.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.5054323838066684, "expected_gain" = 0.23901334332333948, "std_gain" = 1.7498967091733353, "expected_holding_time" = 6.867837704034254, "return_rate" = 0.03480183336058452, "time_scaled_sharpe" = 0.05211943757884592}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = -0.5
+pt = 0.25
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.543772320696523, "expected_gain" = -0.0009252236169123296, "std_gain" = 0.2739441642782418, "expected_holding_time" = 0.038297719261424584, "return_rate" = -0.024158713227697526, "time_scaled_sharpe" = -0.01725830742891873}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = -0.5
+pt = 0.25
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.543772320696523, "expected_gain" = -0.03092522361691233, "std_gain" = 0.2739441642782418, "expected_holding_time" = 0.038297719261424584, "return_rate" = -0.8074951776060744, "time_scaled_sharpe" = -0.5768519163726649}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = -0.5
+pt = 0.25
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.8566893905920394, "expected_gain" = -0.000793566463931028, "std_gain" = 0.6131813176640178, "expected_holding_time" = 0.1929626439622533, "return_rate" = -0.004112539337332642, "time_scaled_sharpe" = -0.002946169785850453}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = -0.5
+pt = 0.25
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.8566893905920394, "expected_gain" = -0.030793566463931027, "std_gain" = 0.6131813176640178, "expected_holding_time" = 0.1929626439622533, "return_rate" = -0.15958304587676675, "time_scaled_sharpe" = -0.1143232221095441}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = -0.5
+pt = 1.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.22646127507201982, "expected_gain" = -0.00560034240637422, "std_gain" = 0.5441032957816644, "expected_holding_time" = 0.1529884996919006, "return_rate" = -0.03660629666708078, "time_scaled_sharpe" = -0.02631502768799617}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = -0.5
+pt = 1.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.22646127507201982, "expected_gain" = -0.03560034240637422, "std_gain" = 0.5441032957816644, "expected_holding_time" = 0.1529884996919006, "return_rate" = -0.23269946746368436, "time_scaled_sharpe" = -0.1672797711546587}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = -0.5
+pt = 1.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.5948665613910737, "expected_gain" = -0.012833596522315638, "std_gain" = 1.2272946252067838, "expected_holding_time" = 0.7767981309265239, "return_rate" = -0.0165211475303219, "time_scaled_sharpe" = -0.01186439133607788}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = -0.5
+pt = 1.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.5948665613910737, "expected_gain" = -0.04283359652231564, "std_gain" = 1.2272946252067838, "expected_holding_time" = 0.7767981309265239, "return_rate" = -0.05514121985750114, "time_scaled_sharpe" = -0.03959876333876882}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = -0.5
+pt = 2.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.12338964613363707, "expected_gain" = -0.016203813892634755, "std_gain" = 0.7564330458129481, "expected_holding_time" = 0.30536669816184664, "return_rate" = -0.0530634610459244, "time_scaled_sharpe" = -0.038764654409640525}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = -0.5
+pt = 2.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.12338964613363707, "expected_gain" = -0.046203813892634754, "std_gain" = 0.7564330458129481, "expected_holding_time" = 0.30536669816184664, "return_rate" = -0.15130600085326049, "time_scaled_sharpe" = -0.11053415509601233}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = -0.5
+pt = 2.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.41382068251062887, "expected_gain" = -0.05162761121279891, "std_gain" = 1.7238099617283977, "expected_holding_time" = 1.56660760871598, "return_rate" = -0.0329550366828061, "time_scaled_sharpe" = -0.023928337687034982}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = -0.5
+pt = 2.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.41382068251062887, "expected_gain" = -0.0816276112127989, "std_gain" = 1.7238099617283977, "expected_holding_time" = 1.56660760871598, "return_rate" = -0.052104694729334135, "time_scaled_sharpe" = -0.03783272167358474}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 0.0
+pt = 0.25
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.5455125526530525, "expected_gain" = 3.190395917890276e-05, "std_gain" = 0.2738583644590365, "expected_holding_time" = 0.038289722263104314, "return_rate" = 0.0008332251396307092, "time_scaled_sharpe" = 0.0005953569978917509}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 0.0
+pt = 0.25
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.5455125526530525, "expected_gain" = -0.029968096040821096, "std_gain" = 0.2738583644590365, "expected_holding_time" = 0.038289722263104314, "return_rate" = -0.7826668429428105, "time_scaled_sharpe" = -0.5592320248166847}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 0.0
+pt = 0.25
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.8594231991154758, "expected_gain" = 0.003990598452082689, "std_gain" = 0.6082728228836883, "expected_holding_time" = 0.19193148209880248, "return_rate" = 0.020791786779556683, "time_scaled_sharpe" = 0.014974988870797765}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 0.0
+pt = 0.25
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.8594231991154758, "expected_gain" = -0.02600940154791731, "std_gain" = 0.6082728228836883, "expected_holding_time" = 0.19193148209880248, "return_rate" = -0.13551399313703147, "time_scaled_sharpe" = -0.09760202721296277}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 0.0
+pt = 1.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.22939338731167447, "expected_gain" = -0.0017885964948231858, "std_gain" = 0.5465755056496792, "expected_holding_time" = 0.15345156067514115, "return_rate" = -0.01165577259008189, "time_scaled_sharpe" = -0.008353655383818515}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 0.0
+pt = 1.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.22939338731167447, "expected_gain" = -0.031788596494823185, "std_gain" = 0.5465755056496792, "expected_holding_time" = 0.15345156067514115, "return_rate" = -0.20715720553744937, "time_scaled_sharpe" = -0.1484689146052183}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 0.0
+pt = 1.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.6025765427001257, "expected_gain" = 0.00644135675031432, "std_gain" = 1.2234123714218594, "expected_holding_time" = 0.7751591377038438, "return_rate" = 0.008309721755192744, "time_scaled_sharpe" = 0.0059801083062196786}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 0.0
+pt = 1.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.6025765427001257, "expected_gain" = -0.02355864324968568, "std_gain" = 1.2234123714218594, "expected_holding_time" = 0.7751591377038438, "return_rate" = -0.03039200869059058, "time_scaled_sharpe" = -0.021871671394981113}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 0.0
+pt = 2.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.12665832124729076, "expected_gain" = -0.008685861131231265, "std_gain" = 0.7649565947773219, "expected_holding_time" = 0.30765612386218816, "return_rate" = -0.028232368731010118, "time_scaled_sharpe" = -0.02047120024507471}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 0.0
+pt = 2.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.12665832124729076, "expected_gain" = -0.038685861131231264, "std_gain" = 0.7649565947773219, "expected_holding_time" = 0.30765612386218816, "return_rate" = -0.12574383583068088, "time_scaled_sharpe" = -0.09117645307764333}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 0.0
+pt = 2.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.42485315287169223, "expected_gain" = -0.01301396494907725, "std_gain" = 1.730122439089721, "expected_holding_time" = 1.5704321102839374, "return_rate" = -0.008286868858485277, "time_scaled_sharpe" = -0.006002376188310128}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 0.0
+pt = 2.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.42485315287169223, "expected_gain" = -0.04301396494907725, "std_gain" = 1.730122439089721, "expected_holding_time" = 1.5704321102839374, "return_rate" = -0.027389891398298182, "time_scaled_sharpe" = -0.01983914971228303}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 1.0
+pt = 0.25
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.5489907494722234, "expected_gain" = 0.001944912209722871, "std_gain" = 0.27367676500939997, "expected_holding_time" = 0.038272793441057454, "return_rate" = 0.05081709577113294, "time_scaled_sharpe" = 0.03632595112978181}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 1.0
+pt = 0.25
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.5489907494722234, "expected_gain" = -0.028055087790277128, "std_gain" = 0.27367676500939997, "expected_holding_time" = 0.038272793441057454, "return_rate" = -0.7330295300624874, "time_scaled_sharpe" = -0.5239967865472369}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 1.0
+pt = 0.25
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.8648016949159526, "expected_gain" = 0.013402966102917052, "std_gain" = 0.5983867084678585, "expected_holding_time" = 0.1898464331799128, "return_rate" = 0.07059898823706227, "time_scaled_sharpe" = 0.051406467315513626}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 1.0
+pt = 0.25
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.8648016949159526, "expected_gain" = -0.016597033897082947, "std_gain" = 0.5983867084678585, "expected_holding_time" = 0.1898464331799128, "return_rate" = -0.08742346969118196, "time_scaled_sharpe" = -0.06365716916788988}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 1.0
+pt = 1.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.23531054904905144, "expected_gain" = 0.005903713763766888, "std_gain" = 0.5514505832787125, "expected_holding_time" = 0.154362645636316, "return_rate" = 0.038245740991487066, "time_scaled_sharpe" = 0.027248812833660953}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 1.0
+pt = 1.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.23531054904905144, "expected_gain" = -0.02409628623623311, "std_gain" = 0.5514505832787125, "expected_holding_time" = 0.154362645636316, "return_rate" = -0.156101796110728, "time_scaled_sharpe" = -0.1112173150512711}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 1.0
+pt = 1.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.6178895885230677, "expected_gain" = 0.04472397130766936, "std_gain" = 1.214758321945825, "expected_holding_time" = 0.7714989797862335, "return_rate" = 0.057970227413730264, "time_scaled_sharpe" = 0.041916286407987245}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 1.0
+pt = 1.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.6178895885230677, "expected_gain" = 0.014723971307669365, "std_gain" = 1.214758321945825, "expected_holding_time" = 0.7714989797862335, "return_rate" = 0.01908488759343344, "time_scaled_sharpe" = 0.013799628708048262}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 1.0
+pt = 2.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.13334388604309289, "expected_gain" = 0.006690937899113625, "std_gain" = 0.7818758378275437, "expected_holding_time" = 0.31217608151079973, "return_rate" = 0.02143321764669722, "time_scaled_sharpe" = 0.015316142353086374}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 1.0
+pt = 2.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.13334388604309289, "expected_gain" = -0.023309062100886374, "std_gain" = 0.7818758378275437, "expected_holding_time" = 0.31217608151079973, "return_rate" = -0.0746663933638989, "time_scaled_sharpe" = -0.053356482848446414}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 1.0
+pt = 2.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.44706239341818343, "expected_gain" = 0.06471837696364202, "std_gain" = 1.7401639923194057, "expected_holding_time" = 1.5764989431530236, "return_rate" = 0.04105196343119877, "time_scaled_sharpe" = 0.029620378063801807}
+
+[[metrics]]
+theta = 0.05
+sigma = 1.4
+gap = 1.0
+pt = 2.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.44706239341818343, "expected_gain" = 0.03471837696364202, "std_gain" = 1.7401639923194057, "expected_holding_time" = 1.5764989431530236, "return_rate" = 0.02202245495591904, "time_scaled_sharpe" = 0.0158899450151907}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = -0.5
+pt = 0.25
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.5183537508887617, "expected_gain" = -0.014905437011181077, "std_gain" = 0.27481466445236286, "expected_holding_time" = 0.15501178992211506, "return_rate" = -0.0961567956777367, "time_scaled_sharpe" = -0.1377597812687837}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = -0.5
+pt = 0.25
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.5183537508887617, "expected_gain" = -0.044905437011181076, "std_gain" = 0.27481466445236286, "expected_holding_time" = 0.15501178992211506, "return_rate" = -0.289690461827088, "time_scaled_sharpe" = -0.41502729344996736}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = -0.5
+pt = 0.25
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.8504425327039861, "expected_gain" = -0.011725567768024386, "std_gain" = 0.6241149499655877, "expected_holding_time" = 0.8794478886397279, "return_rate" = -0.013332873862669488, "time_scaled_sharpe" = -0.0200338418003867}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = -0.5
+pt = 0.25
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.8504425327039861, "expected_gain" = -0.041725567768024385, "std_gain" = 0.6241149499655877, "expected_holding_time" = 0.8794478886397279, "return_rate" = -0.047445184992783204, "time_scaled_sharpe" = -0.07129065647255665}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = -0.5
+pt = 1.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.16498324859776992, "expected_gain" = -0.08552177682289908, "std_gain" = 0.4825150587422375, "expected_holding_time" = 0.6000681270580464, "return_rate" = -0.1425201122448989, "time_scaled_sharpe" = -0.2288050279601352}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = -0.5
+pt = 1.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.16498324859776992, "expected_gain" = -0.11552177682289907, "std_gain" = 0.4825150587422375, "expected_holding_time" = 0.6000681270580464, "return_rate" = -0.19251443563461298, "time_scaled_sharpe" = -0.3090670511991815}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = -0.5
+pt = 1.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.5107534114777533, "expected_gain" = -0.22311647130561674, "std_gain" = 1.2497108769171126, "expected_holding_time" = 3.9026566891531287, "return_rate" = -0.05717040700139898, "time_scaled_sharpe" = -0.09037366784661935}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = -0.5
+pt = 1.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.5107534114777533, "expected_gain" = -0.25311647130561676, "std_gain" = 1.2497108769171126, "expected_holding_time" = 3.9026566891531287, "return_rate" = -0.06485747824273586, "time_scaled_sharpe" = -0.10252521371651108}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = -0.5
+pt = 2.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.04036215715976302, "expected_gain" = -0.20716703853254503, "std_gain" = 0.4526564399633881, "expected_holding_time" = 1.0797452048970326, "return_rate" = -0.19186659740924808, "time_scaled_sharpe" = -0.4404446228840009}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = -0.5
+pt = 2.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.04036215715976302, "expected_gain" = -0.23716703853254503, "std_gain" = 0.4526564399633881, "expected_holding_time" = 1.0797452048970326, "return_rate" = -0.21965093010546122, "time_scaled_sharpe" = -0.5042257088140595}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = -0.5
+pt = 2.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.18182445859297802, "expected_gain" = -0.8636143949245769, "std_gain" = 1.3499492506819537, "expected_holding_time" = 8.283905503863885, "return_rate" = -0.10425208188598468, "time_scaled_sharpe" = -0.22227205379694556}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = -0.5
+pt = 2.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.18182445859297802, "expected_gain" = -0.893614394924577, "std_gain" = 1.3499492506819537, "expected_holding_time" = 8.283905503863885, "return_rate" = -0.10787356211484618, "time_scaled_sharpe" = -0.22999327944243833}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 0.0
+pt = 0.25
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.5463897495384712, "expected_gain" = 0.0005143622461591668, "std_gain" = 0.27381383697536504, "expected_holding_time" = 0.15463568697693034, "return_rate" = 0.0033262842246484098, "time_scaled_sharpe" = 0.004777039463496344}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 0.0
+pt = 0.25
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.5463897495384712, "expected_gain" = -0.029485637753840832, "std_gain" = 0.27381383697536504, "expected_holding_time" = 0.15463568697693034, "return_rate" = -0.19067809203861102, "time_scaled_sharpe" = -0.27384213403739216}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 0.0
+pt = 0.25
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.8936686884933597, "expected_gain" = 0.06392020486337943, "std_gain" = 0.5394570894250991, "expected_holding_time" = 0.7978556501486566, "return_rate" = 0.0801149993128073, "time_scaled_sharpe" = 0.13265361538561035}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 0.0
+pt = 0.25
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.8936686884933597, "expected_gain" = 0.03392020486337943, "std_gain" = 0.5394570894250991, "expected_holding_time" = 0.7978556501486566, "return_rate" = 0.04251421276149267, "time_scaled_sharpe" = 0.07039460870573197}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 0.0
+pt = 1.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.20828241543670786, "expected_gain" = -0.029232859932279753, "std_gain" = 0.527903815053068, "expected_holding_time" = 0.6370017689144813, "return_rate" = -0.045891332424548556, "time_scaled_sharpe" = -0.06938189956182586}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 0.0
+pt = 1.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.20828241543670786, "expected_gain" = -0.05923285993227975, "std_gain" = 0.527903815053068, "expected_holding_time" = 0.6370017689144813, "return_rate" = -0.09298696302401013, "time_scaled_sharpe" = -0.14058454588779684}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 0.0
+pt = 1.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.6473409263049268, "expected_gain" = 0.11835231576231697, "std_gain" = 1.1944942743573694, "expected_holding_time" = 3.7871348059141736, "return_rate" = 0.031251149438222214, "time_scaled_sharpe" = 0.05091401022836009}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 0.0
+pt = 1.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.6473409263049268, "expected_gain" = 0.08835231576231697, "std_gain" = 1.1944942743573694, "expected_holding_time" = 3.7871348059141736, "return_rate" = 0.023329593555619213, "time_scaled_sharpe" = 0.03800830325496824}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 0.0
+pt = 2.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.07195485697705627, "expected_gain" = -0.13450382895277055, "std_gain" = 0.594350242514743, "expected_holding_time" = 1.2860363434141728, "return_rate" = -0.10458789103555931, "time_scaled_sharpe" = -0.1995563640695416}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 0.0
+pt = 2.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.07195485697705627, "expected_gain" = -0.16450382895277055, "std_gain" = 0.594350242514743, "expected_holding_time" = 1.2860363434141728, "return_rate" = -0.12791538108172387, "time_scaled_sharpe" = -0.2440658101477525}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 0.0
+pt = 2.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.351065191163636, "expected_gain" = -0.271271830927274, "std_gain" = 1.6705614859327171, "expected_holding_time" = 9.600239367741146, "return_rate" = -0.02825677782981176, "time_scaled_sharpe" = -0.05240843643862658}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 0.0
+pt = 2.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.351065191163636, "expected_gain" = -0.30127183092727405, "std_gain" = 1.6705614859327171, "expected_holding_time" = 9.600239367741146, "return_rate" = -0.03138169991256799, "time_scaled_sharpe" = -0.058204294739816385}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 1.0
+pt = 0.25
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.6016955695073217, "expected_gain" = 0.03093256322902696, "std_gain" = 0.2692518307656067, "expected_holding_time" = 0.15291433267031185, "return_rate" = 0.20228687977678655, "time_scaled_sharpe" = 0.2937873876493135}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 1.0
+pt = 0.25
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.6016955695073217, "expected_gain" = 0.0009325632290269614, "std_gain" = 0.2692518307656067, "expected_holding_time" = 0.15291433267031185, "return_rate" = 0.006098599213963512, "time_scaled_sharpe" = 0.00885718111509525}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 1.0
+pt = 0.25
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.9525715500877646, "expected_gain" = 0.16700021265358808, "std_gain" = 0.37196863195257646, "expected_holding_time" = 0.6277480181053996, "return_rate" = 0.26603064898175177, "time_scaled_sharpe" = 0.566654094984078}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 1.0
+pt = 0.25
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.9525715500877646, "expected_gain" = 0.13700021265358808, "std_gain" = 0.37196863195257646, "expected_holding_time" = 0.6277480181053996, "return_rate" = 0.21824077289334495, "time_scaled_sharpe" = 0.46486007580647964}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 1.0
+pt = 1.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.30971689761681576, "expected_gain" = 0.1026319669018605, "std_gain" = 0.6010898902836063, "expected_holding_time" = 0.6942538147422969, "return_rate" = 0.14783061284287916, "time_scaled_sharpe" = 0.2049198791332125}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 1.0
+pt = 1.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.30971689761681576, "expected_gain" = 0.0726319669018605, "std_gain" = 0.6010898902836063, "expected_holding_time" = 0.6942538147422969, "return_rate" = 0.10461875089418274, "time_scaled_sharpe" = 0.145020448579817}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 1.0
+pt = 1.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.8564318362396939, "expected_gain" = 0.6410795905992347, "std_gain" = 0.876628292503442, "expected_holding_time" = 3.08717498749936, "return_rate" = 0.20765897404426523, "time_scaled_sharpe" = 0.4162131950800187}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 1.0
+pt = 1.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.8564318362396939, "expected_gain" = 0.6110795905992347, "std_gain" = 0.876628292503442, "expected_holding_time" = 3.08717498749936, "return_rate" = 0.19794135190704382, "time_scaled_sharpe" = 0.396736056772232}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 1.0
+pt = 2.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.18323374183894758, "expected_gain" = 0.12143760622957944, "std_gain" = 0.8897734758822127, "expected_holding_time" = 1.6832303332912872, "return_rate" = 0.07214556666889882, "time_scaled_sharpe" = 0.10519666410116219}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 1.0
+pt = 2.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.18323374183894758, "expected_gain" = 0.09143760622957944, "std_gain" = 0.8897734758822127, "expected_holding_time" = 1.6832303332912872, "return_rate" = 0.054322693942181845, "time_scaled_sharpe" = 0.07920883363397893}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 1.0
+pt = 2.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.7489119261798577, "expected_gain" = 1.1211917416295019, "std_gain" = 1.517736785255123, "expected_holding_time" = 8.92140149480453, "return_rate" = 0.1256743956969585, "time_scaled_sharpe" = 0.247324356451041}
+
+[[metrics]]
+theta = 0.2
+sigma = 0.7
+gap = 1.0
+pt = 2.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.7489119261798577, "expected_gain" = 1.0911917416295018, "std_gain" = 1.517736785255123, "expected_holding_time" = 8.92140149480453, "return_rate" = 0.12231169533900793, "time_scaled_sharpe" = 0.24070663851927349}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 0.25
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.5387154934399117, "expected_gain" = -0.0037064786080485967, "std_gain" = 0.2741743714257963, "expected_holding_time" = 0.038393442823120835, "return_rate" = -0.09653936546207292, "time_scaled_sharpe" = -0.06899317201947468}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 0.25
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.5387154934399117, "expected_gain" = -0.033706478608048596, "std_gain" = 0.2741743714257963, "expected_holding_time" = 0.038393442823120835, "return_rate" = -0.8779227943514916, "time_scaled_sharpe" = -0.6274194788892262}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 0.25
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.8553545832317144, "expected_gain" = -0.0031294793444997526, "std_gain" = 0.6155502055394483, "expected_holding_time" = 0.19798307329903558, "return_rate" = -0.01580680253292608, "time_scaled_sharpe" = -0.011426009425823905}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 0.25
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.8553545832317144, "expected_gain" = -0.03312947934449975, "std_gain" = 0.6155502055394483, "expected_holding_time" = 0.19798307329903558, "return_rate" = -0.16733490794165315, "time_scaled_sharpe" = -0.12095869682866023}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 1.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.21365922496276546, "expected_gain" = -0.022243007548404886, "std_gain" = 0.532855649619405, "expected_holding_time" = 0.15267762754968436, "return_rate" = -0.14568609628916732, "time_scaled_sharpe" = -0.10683073910261746}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 1.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.21365922496276546, "expected_gain" = -0.052243007548404885, "std_gain" = 0.532855649619405, "expected_holding_time" = 0.15267762754968436, "return_rate" = -0.34217853910131013, "time_scaled_sharpe" = -0.2509174668575766}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 1.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.5790927739324524, "expected_gain" = -0.05226806516886906, "std_gain" = 1.2342617558475744, "expected_holding_time" = 0.8125381397998444, "return_rate" = -0.06432690677356329, "time_scaled_sharpe" = -0.046979379220257196}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 1.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.5790927739324524, "expected_gain" = -0.08226806516886906, "std_gain" = 1.2342617558475744, "expected_holding_time" = 0.8125381397998444, "return_rate" = -0.10124825056105616, "time_scaled_sharpe" = -0.07394386263961178}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 2.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.10303929214908171, "expected_gain" = -0.06300962805711205, "std_gain" = 0.6992234400211522, "expected_holding_time" = 0.3018111940283982, "return_rate" = -0.20877167349592524, "time_scaled_sharpe" = -0.16402999269501323}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 2.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.10303929214908171, "expected_gain" = -0.09300962805711205, "std_gain" = 0.6992234400211522, "expected_holding_time" = 0.3018111940283982, "return_rate" = -0.3081715651950291, "time_scaled_sharpe" = -0.24212757766075974}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 2.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.36775884223405736, "expected_gain" = -0.21284405218079916, "std_gain" = 1.6876834369516274, "expected_holding_time" = 1.6761229807558546, "return_rate" = -0.12698593994864057, "time_scaled_sharpe" = -0.09741315065069941}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 2.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.36775884223405736, "expected_gain" = -0.24284405218079916, "std_gain" = 1.6876834369516274, "expected_holding_time" = 1.6761229807558546, "return_rate" = -0.14488438794108524, "time_scaled_sharpe" = -0.11114336528238931}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 0.25
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.545686928018814, "expected_gain" = 0.00012781041034770624, "std_gain" = 0.27384958123755027, "expected_holding_time" = 0.03836311786940476, "return_rate" = 0.003331596007981612, "time_scaled_sharpe" = 0.0023828527187321866}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 0.25
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.545686928018814, "expected_gain" = -0.029872189589652293, "std_gain" = 0.27384958123755027, "expected_holding_time" = 0.03836311786940476, "return_rate" = -0.7786694942612092, "time_scaled_sharpe" = -0.5569266852730542}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 0.25
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.8662890814869543, "expected_gain" = 0.016005892602169974, "std_gain" = 0.5955975534278959, "expected_holding_time" = 0.19368064343946137, "return_rate" = 0.08264064140809667, "time_scaled_sharpe" = 0.061063807990183634}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 0.25
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.8662890814869543, "expected_gain" = -0.013994107397830025, "std_gain" = 0.5955975534278959, "expected_holding_time" = 0.19368064343946137, "return_rate" = -0.0722535156292176, "time_scaled_sharpe" = -0.05338868055501327}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 1.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.2252399357730971, "expected_gain" = -0.007188083494973768, "std_gain" = 0.5430623104296483, "expected_holding_time" = 0.15462074128115297, "return_rate" = -0.04648848165786335, "time_scaled_sharpe" = -0.03366119848155585}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 1.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.2252399357730971, "expected_gain" = -0.03718808349497377, "std_gain" = 0.5430623104296483, "expected_holding_time" = 0.15462074128115297, "return_rate" = -0.24051161045304756, "time_scaled_sharpe" = -0.1741487088384889}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 1.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.6106136687037435, "expected_gain" = 0.026534171759358682, "std_gain" = 1.2190278306295412, "expected_holding_time" = 0.8058394707804445, "return_rate" = 0.03292736670451308, "time_scaled_sharpe" = 0.024247537934363426}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 1.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.6106136687037435, "expected_gain" = -0.0034658282406413166, "std_gain" = 1.2190278306295412, "expected_holding_time" = 0.8058394707804445, "return_rate" = -0.004300891636996814, "time_scaled_sharpe" = -0.0031671537555832867}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 2.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.11530144253956776, "expected_gain" = -0.03480668215899413, "std_gain" = 0.7345863701477129, "expected_holding_time" = 0.3118854275898492, "return_rate" = -0.11160086070057644, "time_scaled_sharpe" = -0.08484421186213145}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 2.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.11530144253956776, "expected_gain" = -0.06480668215899413, "std_gain" = 0.7345863701477129, "expected_holding_time" = 0.3118854275898492, "return_rate" = -0.2077900293700792, "time_scaled_sharpe" = -0.15797173215369706}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 2.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.4127963336621919, "expected_gain" = -0.0552128321823282, "std_gain" = 1.7231787855795004, "expected_holding_time" = 1.699704763907909, "return_rate" = -0.03248377797999723, "time_scaled_sharpe" = -0.024576664451720975}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 2.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.4127963336621919, "expected_gain" = -0.0852128321823282, "std_gain" = 1.7231787855795004, "expected_holding_time" = 1.699704763907909, "return_rate" = -0.05013390207038627, "time_scaled_sharpe" = -0.03793044299213093}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 0.25
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.5595911921430626, "expected_gain" = 0.007775155678684448, "std_gain" = 0.2730399039888456, "expected_holding_time" = 0.03828746532233372, "return_rate" = 0.20307313668395222, "time_scaled_sharpe" = 0.14553071487620495}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 0.25
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.5595911921430626, "expected_gain" = -0.02222484432131555, "std_gain" = 0.2730399039888456, "expected_holding_time" = 0.03828746532233372, "return_rate" = -0.5804731165724756, "time_scaled_sharpe" = -0.41599134676628435}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 0.25
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.8866441390939919, "expected_gain" = 0.05162724341448577, "std_gain" = 0.5547977770947845, "expected_holding_time" = 0.18474797662829082, "return_rate" = 0.27944686787211165, "time_scaled_sharpe" = 0.21649824455413696}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 0.25
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.8866441390939919, "expected_gain" = 0.02162724341448577, "std_gain" = 0.5547977770947845, "expected_holding_time" = 0.18474797662829082, "return_rate" = 0.11706349270606374, "time_scaled_sharpe" = 0.09069359361664941}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 1.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.24926597025291972, "expected_gain" = 0.024045761328795656, "std_gain" = 0.5623645030514244, "expected_holding_time" = 0.15826195225238673, "return_rate" = 0.15193646348080442, "time_scaled_sharpe" = 0.10748116692807334}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 1.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.24926597025291972, "expected_gain" = -0.005954238671204343, "std_gain" = 0.5623645030514244, "expected_holding_time" = 0.15826195225238673, "return_rate" = -0.037622679276121694, "time_scaled_sharpe" = -0.026614608362719228}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 1.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.671478027500141, "expected_gain" = 0.1786950687503524, "std_gain" = 1.1741893109840214, "expected_holding_time" = 0.7859414393518774, "return_rate" = 0.2273643554126785, "time_scaled_sharpe" = 0.17166404881643704}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 1.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.671478027500141, "expected_gain" = 0.1486950687503524, "std_gain" = 1.1741893109840214, "expected_holding_time" = 0.7859414393518774, "return_rate" = 0.1891935725808948, "time_scaled_sharpe" = 0.14284444287819004}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 2.0
+sl = 0.3
+cost = 0.0
+output = {"hit_probability" = 0.14237797747549916, "expected_gain" = 0.027469348193648102, "std_gain" = 0.8037059952737803, "expected_holding_time" = 0.33115770043551557, "return_rate" = 0.08294944721962459, "time_scaled_sharpe" = 0.05939278868819341}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 2.0
+sl = 0.3
+cost = 0.03
+output = {"hit_probability" = 0.14237797747549916, "expected_gain" = -0.002530651806351897, "std_gain" = 0.8037059952737803, "expected_holding_time" = 0.33115770043551557, "return_rate" = -0.007641832888149092, "time_scaled_sharpe" = -0.005471643044402916}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 2.0
+sl = 1.5
+cost = 0.0
+output = {"hit_probability" = 0.5054323838066684, "expected_gain" = 0.2690133433233395, "std_gain" = 1.7498967091733353, "expected_holding_time" = 1.7169594260085634, "return_rate" = 0.1566800818052632, "time_scaled_sharpe" = 0.11732252233508099}
+
+[[metrics]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 2.0
+sl = 1.5
+cost = 0.03
+output = {"hit_probability" = 0.5054323838066684, "expected_gain" = 0.23901334332333948, "std_gain" = 1.7498967091733353, "expected_holding_time" = 1.7169594260085634, "return_rate" = 0.13920733344233807, "time_scaled_sharpe" = 0.10423887515769184}
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 0.25
+sl = 0.3
+time = 0.038393442823120835
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 0.25
+sl = 1.5
+time = 0.19798307329903558
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 1.0
+sl = 0.3
+time = 0.15267762754968436
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 1.0
+sl = 1.5
+time = 0.8125381397998444
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 2.0
+sl = 0.3
+time = 0.3018111940283982
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = -0.5
+pt = 2.0
+sl = 1.5
+time = 1.6761229807558546
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 0.25
+sl = 0.3
+time = 0.03836311786940476
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 0.25
+sl = 1.5
+time = 0.19368064343946137
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 1.0
+sl = 0.3
+time = 0.15462074128115297
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 1.0
+sl = 1.5
+time = 0.8058394707804445
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 2.0
+sl = 0.3
+time = 0.3118854275898492
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = 0.0
+pt = 2.0
+sl = 1.5
+time = 1.699704763907909
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 0.25
+sl = 0.3
+time = 0.03828746532233372
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 0.25
+sl = 1.5
+time = 0.18474797662829082
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 1.0
+sl = 0.3
+time = 0.15826195225238673
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 1.0
+sl = 1.5
+time = 0.7859414393518774
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 2.0
+sl = 0.3
+time = 0.33115770043551557
+
+[[boundary]]
+theta = 0.2
+sigma = 1.4
+gap = 1.0
+pt = 2.0
+sl = 1.5
+time = 1.7169594260085634
+
+[[fit]]
+values = [0.0, 0.0, 0.0, 0.0, 0.0]
+dt = 0.1
+output = {"theta" = 138.15510557964274, "sigma" = 0.0, "mu" = 0.0, "rho" = 1e-06, "half_life" = 0.005017166594399687, "stationary_std" = 0.0, "r2" = 0.0}
+
+[[fit]]
+values = [0.0, 0.0, 0.0, 0.0, 0.0]
+dt = 1.0
+output = {"theta" = 13.815510557964274, "sigma" = 0.0, "mu" = 0.0, "rho" = 1e-06, "half_life" = 0.050171665943996864, "stationary_std" = 0.0, "r2" = 0.0}
+
+[[fit]]
+values = [0.0, 0.0, 0.0, 0.0, 0.0]
+dt = 3.0
+output = {"theta" = 4.605170185988091, "sigma" = 0.0, "mu" = 0.0, "rho" = 1e-06, "half_life" = 0.1505149978319906, "stationary_std" = 0.0, "r2" = 0.0}
+
+[[fit]]
+values = [2.0, 2.0, 2.0, 2.0, 2.0]
+dt = 0.1
+output = {"theta" = 2.231435513142097, "sigma" = 0.0, "mu" = 2.0000000000000004, "rho" = 0.8, "half_life" = 0.31062837195053905, "stationary_std" = 0.0, "r2" = 0.0}
+
+[[fit]]
+values = [2.0, 2.0, 2.0, 2.0, 2.0]
+dt = 1.0
+output = {"theta" = 0.2231435513142097, "sigma" = 0.0, "mu" = 2.0000000000000004, "rho" = 0.8, "half_life" = 3.1062837195053903, "stationary_std" = 0.0, "r2" = 0.0}
+
+[[fit]]
+values = [2.0, 2.0, 2.0, 2.0, 2.0]
+dt = 3.0
+output = {"theta" = 0.07438118377140324, "sigma" = 0.0, "mu" = 2.0000000000000004, "rho" = 0.8, "half_life" = 9.318851158516171, "stationary_std" = 0.0, "r2" = 0.0}
+
+[[fit]]
+values = [-3.0, -3.0, -3.0, -3.0, -3.0]
+dt = 0.1
+output = {"theta" = 1.053605156578264, "sigma" = 0.0, "mu" = -2.999999999999997, "rho" = 0.8999999999999999, "half_life" = 0.6578813478960577, "stationary_std" = 0.0, "r2" = 0.0}
+
+[[fit]]
+values = [-3.0, -3.0, -3.0, -3.0, -3.0]
+dt = 1.0
+output = {"theta" = 0.1053605156578264, "sigma" = 0.0, "mu" = -2.999999999999997, "rho" = 0.8999999999999999, "half_life" = 6.578813478960577, "stationary_std" = 0.0, "r2" = 0.0}
+
+[[fit]]
+values = [-3.0, -3.0, -3.0, -3.0, -3.0]
+dt = 3.0
+output = {"theta" = 0.03512017188594214, "sigma" = 0.0, "mu" = -2.999999999999997, "rho" = 0.8999999999999999, "half_life" = 19.73644043688173, "stationary_std" = 0.0, "r2" = 0.0}
+
+[[fit]]
+values = [0.0, 1.0, 2.0, 3.0, 4.0]
+dt = 0.1
+output = {"theta" = 1.0000005000290891e-05, "sigma" = 1.6467276864675762e-15, "mu" = 999999.9999712444, "rho" = 0.999999, "half_life" = 69314.68339663652, "stationary_std" = 3.6821941267704885e-13, "r2" = 1.0}
+
+[[fit]]
+values = [0.0, 1.0, 2.0, 3.0, 4.0]
+dt = 1.0
+output = {"theta" = 1.000000500029089e-06, "sigma" = 5.207410175297175e-16, "mu" = 999999.9999712444, "rho" = 0.999999, "half_life" = 693146.8339663653, "stationary_std" = 3.6821941267704885e-13, "r2" = 1.0}
+
+[[fit]]
+values = [0.0, 1.0, 2.0, 3.0, 4.0]
+dt = 3.0
+output = {"theta" = 3.333335000096964e-07, "sigma" = 3.0064996664886205e-16, "mu" = 999999.9999712444, "rho" = 0.999999, "half_life" = 2079440.5018990957, "stationary_std" = 3.682194126770488e-13, "r2" = 1.0}
+
+[[fit]]
+values = [1.0, -1.0, 1.0, -1.0, 1.0]
+dt = 0.1
+output = {"theta" = 138.15510557964274, "sigma" = 2.6098989641431813e-15, "mu" = 0.0, "rho" = 1e-06, "half_life" = 0.005017166594399687, "stationary_std" = 1.57009245868456e-16, "r2" = 1.0}
+
+[[fit]]
+values = [1.0, -1.0, 1.0, -1.0, 1.0]
+dt = 1.0
+output = {"theta" = 13.815510557964274, "sigma" = 8.253225189606576e-16, "mu" = 0.0, "rho" = 1e-06, "half_life" = 0.050171665943996864, "stationary_std" = 1.57009245868456e-16, "r2" = 1.0}
+
+[[fit]]
+values = [1.0, -1.0, 1.0, -1.0, 1.0]
+dt = 3.0
+output = {"theta" = 4.605170185988091, "sigma" = 4.765001784901957e-16, "mu" = 0.0, "rho" = 1e-06, "half_life" = 0.1505149978319906, "stationary_std" = 1.57009245868456e-16, "r2" = 1.0}
+
+[[fit]]
+values = [2.0, 2.0, 2.0, 2.0, 3.0]
+dt = 0.1
+output = {"theta" = 1.0536051565782627, "sigma" = 2.039354732099163, "mu" = 4.500000000000001, "rho" = 0.9, "half_life" = 0.6578813478960586, "stationary_std" = 1.404878717372541, "r2" = 0.0}
+
+[[fit]]
+values = [2.0, 2.0, 2.0, 2.0, 3.0]
+dt = 1.0
+output = {"theta" = 0.10536051565782628, "sigma" = 0.6449005910475853, "mu" = 4.500000000000001, "rho" = 0.9, "half_life" = 6.578813478960585, "stationary_std" = 1.4048787173725412, "r2" = 0.0}
+
+[[fit]]
+values = [2.0, 2.0, 2.0, 2.0, 3.0]
+dt = 3.0
+output = {"theta" = 0.035120171885942096, "sigma" = 0.3723335298418721, "mu" = 4.500000000000001, "rho" = 0.9, "half_life" = 19.736440436881754, "stationary_std" = 1.404878717372541, "r2" = 0.0}
+
+[[fit]]
+values = [0.2, -0.009999999999999995, 0.17796947505896518, nan, inf, -inf, -0.05177585031381933, -0.08670526588462575, 0.08878633929834233, 0.05636008102419392, -0.14476141947148097]
+dt = 0.25
+output = {"theta" = 55.262042231857095, "sigma" = 1.224593188415955, "mu" = 0.019635911187621466, "rho" = 1e-06, "half_life" = 0.012542916485999216, "stationary_std" = 0.1164832223716427, "r2" = 0.08147660279847568}
+
+[[fit]]
+values = [0.2, -0.009999999999999995, 0.17796947505896518, nan, inf, -inf, -0.05177585031381933, -0.08670526588462575, 0.08878633929834233, 0.05636008102419392, -0.14476141947148097]
+dt = 1.0
+output = {"theta" = 13.815510557964274, "sigma" = 0.6122965942079776, "mu" = 0.019635911187621466, "rho" = 1e-06, "half_life" = 0.050171665943996864, "stationary_std" = 0.1164832223716427, "r2" = 0.08147660279847568}
+
+[[fit]]
+values = [20.2, 19.990000000000002, 20.177969475058966, nan, inf, -inf, 19.948224149686183, 19.91329473411537, 20.08878633929834, 20.05636008102419, 19.85523858052852]
+dt = 0.25
+output = {"theta" = 55.262042231857095, "sigma" = 1.2245931884159518, "mu" = 25.762741962265917, "rho" = 1e-06, "half_life" = 0.012542916485999216, "stationary_std" = 0.11648322237164238, "r2" = 0.08147660279847058}
+
+[[fit]]
+values = [20.2, 19.990000000000002, 20.177969475058966, nan, inf, -inf, 19.948224149686183, 19.91329473411537, 20.08878633929834, 20.05636008102419, 19.85523858052852]
+dt = 1.0
+output = {"theta" = 13.815510557964274, "sigma" = 0.6122965942079759, "mu" = 25.762741962265917, "rho" = 1e-06, "half_life" = 0.050171665943996864, "stationary_std" = 0.11648322237164238, "r2" = 0.08147660279847058}
+
+[[fit]]
+values = [0.2, 0.13, 0.22696947505896517, nan, inf, -inf, 0.09240278222745629, -0.06527690808778903, 0.036663996297839, 0.09766158133283222, -0.08878876263108991]
+dt = 0.25
+output = {"theta" = 4.516673217946664, "sigma" = 0.36906070426975385, "mu" = 0.04166560635434867, "rho" = 0.32330203348712333, "half_life" = 0.15346409782442896, "stationary_std" = 0.12279296132674122, "r2" = 0.0828741413674906}
+
+[[fit]]
+values = [0.2, 0.13, 0.22696947505896517, nan, inf, -inf, 0.09240278222745629, -0.06527690808778903, 0.036663996297839, 0.09766158133283222, -0.08878876263108991]
+dt = 1.0
+output = {"theta" = 1.129168304486666, "sigma" = 0.18453035213487692, "mu" = 0.04166560635434867, "rho" = 0.32330203348712333, "half_life" = 0.6138563912977159, "stationary_std" = 0.12279296132674122, "r2" = 0.0828741413674906}
+
+[[fit]]
+values = [20.2, 20.13, 20.226969475058965, nan, inf, -inf, 20.09240278222746, 19.93472309191221, 20.036663996297836, 20.09766158133283, 19.91121123736891]
+dt = 0.25
+output = {"theta" = 4.516673217946691, "sigma" = 0.3690607042697521, "mu" = 20.04166560635436, "rho" = 0.32330203348712117, "half_life" = 0.15346409782442808, "stationary_std" = 0.1227929613267403, "r2" = 0.08287414136750182}
+
+[[fit]]
+values = [20.2, 20.13, 20.226969475058965, nan, inf, -inf, 20.09240278222746, 19.93472309191221, 20.036663996297836, 20.09766158133283, 19.91121123736891]
+dt = 1.0
+output = {"theta" = 1.1291683044866727, "sigma" = 0.18453035213487606, "mu" = 20.04166560635436, "rho" = 0.32330203348712117, "half_life" = 0.6138563912977123, "stationary_std" = 0.1227929613267403, "r2" = 0.08287414136750182}
+
+[[fit]]
+values = [0.2, 0.24, 0.4029694750589652, nan, inf, -inf, 0.38443599350988716, 0.26297617285562125, 0.3126021237457948, 0.3799680003722017, 0.23311620518936882]
+dt = 0.25
+output = {"theta" = 55.262042231857095, "sigma" = 0.8382672595129129, "mu" = 0.3230410703323911, "rho" = 1e-06, "half_life" = 0.012542916485999216, "stationary_std" = 0.07973592579182597, "r2" = 0.0005163179769847037}
+
+[[fit]]
+values = [0.2, 0.24, 0.4029694750589652, nan, inf, -inf, 0.38443599350988716, 0.26297617285562125, 0.3126021237457948, 0.3799680003722017, 0.23311620518936882]
+dt = 1.0
+output = {"theta" = 13.815510557964274, "sigma" = 0.41913362975645646, "mu" = 0.3230410703323911, "rho" = 1e-06, "half_life" = 0.050171665943996864, "stationary_std" = 0.07973592579182597, "r2" = 0.0005163179769847037}
+
+[[fit]]
+values = [20.2, 20.24, 20.402969475058963, nan, inf, -inf, 20.38443599350989, 20.26297617285562, 20.31260212374579, 20.379968000372198, 20.233116205189365]
+dt = 0.25
+output = {"theta" = 55.262042231857095, "sigma" = 0.8382672595129305, "mu" = 20.737337796374465, "rho" = 1e-06, "half_life" = 0.012542916485999216, "stationary_std" = 0.07973592579182764, "r2" = 0.0005163179769627213}
+
+[[fit]]
+values = [20.2, 20.24, 20.402969475058963, nan, inf, -inf, 20.38443599350989, 20.26297617285562, 20.31260212374579, 20.379968000372198, 20.233116205189365]
+dt = 1.0
+output = {"theta" = 13.815510557964274, "sigma" = 0.41913362975646523, "mu" = 20.737337796374465, "rho" = 1e-06, "half_life" = 0.050171665943996864, "stationary_std" = 0.07973592579182764, "r2" = 0.0005163179769627213}
+
+[[fit]]
+values = [0.2, 0.254, 0.4340494750589652, nan, inf, -inf, 0.4443454567640147, 0.35099434492052345, 0.4207889913518886, 0.512200753992623, 0.3945913739082527]
+dt = 0.25
+output = {"theta" = 4.4679977016795895, "sigma" = 0.25244416044925616, "mu" = 0.4150901604150968, "rho" = 0.32726029177254334, "half_life" = 0.15513597518176442, "stationary_std" = 0.08444887349382847, "r2" = 0.20156096242699528}
+
+[[fit]]
+values = [0.2, 0.254, 0.4340494750589652, nan, inf, -inf, 0.4443454567640147, 0.35099434492052345, 0.4207889913518886, 0.512200753992623, 0.3945913739082527]
+dt = 1.0
+output = {"theta" = 1.1169994254198974, "sigma" = 0.12622208022462808, "mu" = 0.4150901604150968, "rho" = 0.32726029177254334, "half_life" = 0.6205439007270577, "stationary_std" = 0.08444887349382847, "r2" = 0.20156096242699528}
+
+[[fit]]
+values = [20.2, 20.254, 20.434049475058966, nan, inf, -inf, 20.44434545676402, 20.350994344920526, 20.42078899135189, 20.512200753992623, 20.394591373908252]
+dt = 0.25
+output = {"theta" = 4.467997701679438, "sigma" = 0.252444160449252, "mu" = 20.41509016041508, "rho" = 0.3272602917725558, "half_life" = 0.1551359751817697, "stationary_std" = 0.08444887349382851, "r2" = 0.2015609624269994}
+
+[[fit]]
+values = [20.2, 20.254, 20.434049475058966, nan, inf, -inf, 20.44434545676402, 20.350994344920526, 20.42078899135189, 20.512200753992623, 20.394591373908252]
+dt = 1.0
+output = {"theta" = 1.1169994254198594, "sigma" = 0.126222080224626, "mu" = 20.41509016041508, "rho" = 0.3272602917725558, "half_life" = 0.6205439007270788, "stationary_std" = 0.08444887349382851, "r2" = 0.2015609624269994}
+
+[[fit]]
+values = [0.2, -0.009999999999999995, 0.17796947505896518, nan, inf, -inf, -0.05177585031381933, -0.08670526588462575, 0.08878633929834233, 0.05636008102419392, -0.14476141947148097, -0.08404051578280294, 0.08698845187644769, -0.01935818187266188, -0.1518564004257244, 0.010820403272950503, 0.1311019052086342, -0.03002749540270131, -0.07854725540037932, 0.11825027697551396, 0.1284896608598496, -0.07120987793712233, -0.04290637071035804, 0.12596752898582886, 0.023715488809423774, -0.1513357466870197, -0.03346123489201039, 0.0894242282401772, -0.07077153780627707, -0.15021336051748674, 0.04509313988835281, 0.0990113278938382, -0.07913546426114342, -0.0547469394506121, 0.14574657263144697, 0.09003531534371526, -0.0872605097473564, 0.010082830479390483, 0.14598285236811137, -0.01237309415442583]
+dt = 0.25
+output = {"theta" = 55.262042231857095, "sigma" = 1.030762436209579, "mu" = 0.005288799527410731, "rho" = 1e-06, "half_life" = 0.012542916485999216, "stationary_std" = 0.0980460541550504, "r2" = 0.005764745075523492}
+
+[[fit]]
+values = [0.2, -0.009999999999999995, 0.17796947505896518, nan, inf, -inf, -0.05177585031381933, -0.08670526588462575, 0.08878633929834233, 0.05636008102419392, -0.14476141947148097, -0.08404051578280294, 0.08698845187644769, -0.01935818187266188, -0.1518564004257244, 0.010820403272950503, 0.1311019052086342, -0.03002749540270131, -0.07854725540037932, 0.11825027697551396, 0.1284896608598496, -0.07120987793712233, -0.04290637071035804, 0.12596752898582886, 0.023715488809423774, -0.1513357466870197, -0.03346123489201039, 0.0894242282401772, -0.07077153780627707, -0.15021336051748674, 0.04509313988835281, 0.0990113278938382, -0.07913546426114342, -0.0547469394506121, 0.14574657263144697, 0.09003531534371526, -0.0872605097473564, 0.010082830479390483, 0.14598285236811137, -0.01237309415442583]
+dt = 1.0
+output = {"theta" = 13.815510557964274, "sigma" = 0.5153812181047895, "mu" = 0.005288799527410731, "rho" = 1e-06, "half_life" = 0.050171665943996864, "stationary_std" = 0.0980460541550504, "r2" = 0.005764745075523492}
+
+[[fit]]
+values = [20.2, 19.990000000000002, 20.177969475058966, nan, inf, -inf, 19.948224149686183, 19.91329473411537, 20.08878633929834, 20.05636008102419, 19.85523858052852, 19.915959484217197, 20.086988451876447, 19.98064181812734, 19.84814359957427, 20.01082040327295, 20.131101905208634, 19.969972504597298, 19.92145274459962, 20.118250276975512, 20.128489660859852, 19.92879012206288, 19.95709362928964, 20.12596752898583, 20.023715488809422, 19.848664253312982, 19.966538765107988, 20.08942422824018, 19.92922846219372, 19.849786639482517, 20.045093139888348, 20.09901132789384, 19.920864535738858, 19.945253060549387, 20.145746572631445, 20.09003531534372, 19.912739490252644, 20.01008283047939, 20.14598285236811, 19.987626905845573]
+dt = 0.25
+output = {"theta" = 55.262042231857095, "sigma" = 1.0307624362095795, "mu" = 21.44562636321359, "rho" = 1e-06, "half_life" = 0.012542916485999216, "stationary_std" = 0.09804605415505044, "r2" = 0.005764745075522826}
+
+[[fit]]
+values = [20.2, 19.990000000000002, 20.177969475058966, nan, inf, -inf, 19.948224149686183, 19.91329473411537, 20.08878633929834, 20.05636008102419, 19.85523858052852, 19.915959484217197, 20.086988451876447, 19.98064181812734, 19.84814359957427, 20.01082040327295, 20.131101905208634, 19.969972504597298, 19.92145274459962, 20.118250276975512, 20.128489660859852, 19.92879012206288, 19.95709362928964, 20.12596752898583, 20.023715488809422, 19.848664253312982, 19.966538765107988, 20.08942422824018, 19.92922846219372, 19.849786639482517, 20.045093139888348, 20.09901132789384, 19.920864535738858, 19.945253060549387, 20.145746572631445, 20.09003531534372, 19.912739490252644, 20.01008283047939, 20.14598285236811, 19.987626905845573]
+dt = 1.0
+output = {"theta" = 13.815510557964274, "sigma" = 0.5153812181047898, "mu" = 21.44562636321359, "rho" = 1e-06, "half_life" = 0.050171665943996864, "stationary_std" = 0.09804605415505044, "r2" = 0.005764745075522826}
+
+[[fit]]
+values = [0.2, 0.13, 0.22696947505896517, nan, inf, -inf, 0.09240278222745629, -0.06527690808778903, 0.036663996297839, 0.09766158133283222, -0.08878876263108991, -0.16298444667668321, -0.003417481529066492, 0.005371361078645831, -0.15551531055606466, -0.09694264107719268, 0.09557096975964229, 0.047531464063745865, -0.06854291839569138, 0.06726893299712362, 0.19087231715135325, 0.043685947181373856, -0.04679495521894519, 0.09437763568514336, 0.09925680177922978, -0.10451837933250065, -0.12066931063111658, 0.031118133520127454, -0.03149701592617292, -0.18404362822983905, -0.07358831955882884, 0.0831039420368125, -0.016190489078266958, -0.08496377436026191, 0.09533698105215857, 0.17189407955401276, 0.008507716677363289, -0.012692235773871123, 0.14393080720238005, 0.0889940844369596]
+dt = 0.25
+output = {"theta" = 4.727175875922103, "sigma" = 0.3241304874233816, "mu" = 0.013471652804565396, "rho" = 0.3067279842415331, "half_life" = 0.14663029232538066, "stationary_std" = 0.10541538619173836, "r2" = 0.10111000449076779}
+
+[[fit]]
+values = [0.2, 0.13, 0.22696947505896517, nan, inf, -inf, 0.09240278222745629, -0.06527690808778903, 0.036663996297839, 0.09766158133283222, -0.08878876263108991, -0.16298444667668321, -0.003417481529066492, 0.005371361078645831, -0.15551531055606466, -0.09694264107719268, 0.09557096975964229, 0.047531464063745865, -0.06854291839569138, 0.06726893299712362, 0.19087231715135325, 0.043685947181373856, -0.04679495521894519, 0.09437763568514336, 0.09925680177922978, -0.10451837933250065, -0.12066931063111658, 0.031118133520127454, -0.03149701592617292, -0.18404362822983905, -0.07358831955882884, 0.0831039420368125, -0.016190489078266958, -0.08496377436026191, 0.09533698105215857, 0.17189407955401276, 0.008507716677363289, -0.012692235773871123, 0.14393080720238005, 0.0889940844369596]
+dt = 1.0
+output = {"theta" = 1.1817939689805257, "sigma" = 0.1620652437116908, "mu" = 0.013471652804565396, "rho" = 0.3067279842415331, "half_life" = 0.5865211693015226, "stationary_std" = 0.10541538619173836, "r2" = 0.10111000449076779}
+
+[[fit]]
+values = [20.2, 20.13, 20.226969475058965, nan, inf, -inf, 20.09240278222746, 19.93472309191221, 20.036663996297836, 20.09766158133283, 19.91121123736891, 19.837015553323315, 19.99658251847093, 20.005371361078645, 19.84448468944393, 19.903057358922805, 20.095570969759642, 20.047531464063745, 19.931457081604307, 20.067268932997123, 20.190872317151353, 20.043685947181373, 19.953205044781054, 20.09437763568514, 20.09925680177923, 19.8954816206675, 19.879330689368885, 20.031118133520128, 19.968502984073826, 19.815956371770163, 19.92641168044117, 20.083103942036814, 19.983809510921734, 19.915036225639735, 20.095336981052156, 20.171894079554015, 20.008507716677364, 19.98730776422613, 20.14393080720238, 20.08899408443696]
+dt = 0.25
+output = {"theta" = 4.7271758759221045, "sigma" = 0.3241304874233811, "mu" = 20.01347165280455, "rho" = 0.30672798424153297, "half_life" = 0.1466302923253806, "stationary_std" = 0.10541538619173818, "r2" = 0.10111000449077612}
+
+[[fit]]
+values = [20.2, 20.13, 20.226969475058965, nan, inf, -inf, 20.09240278222746, 19.93472309191221, 20.036663996297836, 20.09766158133283, 19.91121123736891, 19.837015553323315, 19.99658251847093, 20.005371361078645, 19.84448468944393, 19.903057358922805, 20.095570969759642, 20.047531464063745, 19.931457081604307, 20.067268932997123, 20.190872317151353, 20.043685947181373, 19.953205044781054, 20.09437763568514, 20.09925680177923, 19.8954816206675, 19.879330689368885, 20.031118133520128, 19.968502984073826, 19.815956371770163, 19.92641168044117, 20.083103942036814, 19.983809510921734, 19.915036225639735, 20.095336981052156, 20.171894079554015, 20.008507716677364, 19.98730776422613, 20.14393080720238, 20.08899408443696]
+dt = 1.0
+output = {"theta" = 1.1817939689805261, "sigma" = 0.16206524371169054, "mu" = 20.01347165280455, "rho" = 0.30672798424153297, "half_life" = 0.5865211693015224, "stationary_std" = 0.10541538619173818, "r2" = 0.10111000449077612}
+
+[[fit]]
+values = [0.2, 0.24, 0.4029694750589652, nan, inf, -inf, 0.38443599350988716, 0.26297617285562125, 0.3126021237457948, 0.3799680003722017, 0.23311620518936882, 0.0939914533056531, 0.15106817778197726, 0.15025312258315082, -0.01492338853352971, -0.04891373596162003, 0.08787997702698033, 0.09278905433552027, 0.0005940975975545285, 0.09525049307307698, 0.2544527123719269, 0.2090670970741631, 0.1343444081289602, 0.24072280549523364, 0.2901924127256444, 0.13146169204516958, 0.0460266485447948, 0.12311117389012916, 0.07301134586139879, -0.10208404329104101, -0.09695070939338217, 0.020436095936630976, -0.030017774753192526, -0.10700446474448802, 0.02766824928899972, 0.16004412395769907, 0.09179200261557229, 0.07110708003997723, 0.21655942754990687, 0.23715321772841907]
+dt = 0.25
+output = {"theta" = 1.2799515965205501, "sigma" = 0.22338855731171198, "mu" = 0.13649087051758535, "rho" = 0.7261578241618549, "half_life" = 0.5415417133305763, "stationary_std" = 0.13962048823439974, "r2" = 0.5222058222352293}
+
+[[fit]]
+values = [0.2, 0.24, 0.4029694750589652, nan, inf, -inf, 0.38443599350988716, 0.26297617285562125, 0.3126021237457948, 0.3799680003722017, 0.23311620518936882, 0.0939914533056531, 0.15106817778197726, 0.15025312258315082, -0.01492338853352971, -0.04891373596162003, 0.08787997702698033, 0.09278905433552027, 0.0005940975975545285, 0.09525049307307698, 0.2544527123719269, 0.2090670970741631, 0.1343444081289602, 0.24072280549523364, 0.2901924127256444, 0.13146169204516958, 0.0460266485447948, 0.12311117389012916, 0.07301134586139879, -0.10208404329104101, -0.09695070939338217, 0.020436095936630976, -0.030017774753192526, -0.10700446474448802, 0.02766824928899972, 0.16004412395769907, 0.09179200261557229, 0.07110708003997723, 0.21655942754990687, 0.23715321772841907]
+dt = 1.0
+output = {"theta" = 0.31998789913013753, "sigma" = 0.11169427865585599, "mu" = 0.13649087051758535, "rho" = 0.7261578241618549, "half_life" = 2.1661668533223053, "stationary_std" = 0.13962048823439974, "r2" = 0.5222058222352293}
+
+[[fit]]
+values = [20.2, 20.24, 20.402969475058963, nan, inf, -inf, 20.38443599350989, 20.26297617285562, 20.31260212374579, 20.379968000372198, 20.233116205189365, 20.093991453305648, 20.151068177781973, 20.15025312258315, 19.985076611466464, 19.951086264038373, 20.087879977026976, 20.092789054335515, 20.00059409759755, 20.09525049307307, 20.254452712371922, 20.20906709707416, 20.134344408128957, 20.24072280549523, 20.29019241272564, 20.131461692045168, 20.046026648544792, 20.123111173890127, 20.073011345861396, 19.897915956708957, 19.903049290606614, 20.020436095936628, 19.969982225246806, 19.89299553525551, 20.027668249288997, 20.1600441239577, 20.091792002615573, 20.07110708003998, 20.216559427549907, 20.23715321772842]
+dt = 0.25
+output = {"theta" = 1.279951596520569, "sigma" = 0.22338855731171436, "mu" = 20.136490870517537, "rho" = 0.7261578241618515, "half_life" = 0.5415417133305683, "stationary_std" = 0.13962048823440018, "r2" = 0.5222058222352259}
+
+[[fit]]
+values = [20.2, 20.24, 20.402969475058963, nan, inf, -inf, 20.38443599350989, 20.26297617285562, 20.31260212374579, 20.379968000372198, 20.233116205189365, 20.093991453305648, 20.151068177781973, 20.15025312258315, 19.985076611466464, 19.951086264038373, 20.087879977026976, 20.092789054335515, 20.00059409759755, 20.09525049307307, 20.254452712371922, 20.20906709707416, 20.134344408128957, 20.24072280549523, 20.29019241272564, 20.131461692045168, 20.046026648544792, 20.123111173890127, 20.073011345861396, 19.897915956708957, 19.903049290606614, 20.020436095936628, 19.969982225246806, 19.89299553525551, 20.027668249288997, 20.1600441239577, 20.091792002615573, 20.07110708003998, 20.216559427549907, 20.23715321772842]
+dt = 1.0
+output = {"theta" = 0.31998789913014225, "sigma" = 0.11169427865585718, "mu" = 20.136490870517537, "rho" = 0.7261578241618515, "half_life" = 2.1661668533222733, "stationary_std" = 0.13962048823440018, "r2" = 0.5222058222352259}
+
+[[fit]]
+values = [0.2, 0.254, 0.4340494750589652, nan, inf, -inf, 0.4443454567640147, 0.35099434492052345, 0.4207889913518886, 0.512200753992623, 0.3945913739082527, 0.2750142597621706, 0.3422908420990208, 0.35587501263127364, 0.2053286578963761, 0.17469871419953684, 0.31254071467404687, 0.3280946051274168, 0.24710099320877538, 0.34672911342835105, 0.5176284396494218, 0.49531802876324277, 0.44095505524701295, 0.5628697741246746, 0.6356329171123405, 0.5041244754103947, 0.43534500602048637, 0.5234377639134702, 0.4899622498575157, 0.32831667299529615, 0.3349121381883089, 0.4541496508124191, 0.4138005779356755, 0.34358901076543386, 0.4797832817770059, 0.6231382345456954, 0.5753510840923675, 0.5707627833293983, 0.7311857405079148, 0.7772312168740808]
+dt = 0.25
+output = {"theta" = 1.01246001721199, "sigma" = 0.21566586100923335, "mu" = 0.4900053885917636, "rho" = 0.77637858981077, "half_life" = 0.6846168429136233, "stationary_std" = 0.15155751121006475, "r2" = 0.5382403147951533}
+
+[[fit]]
+values = [0.2, 0.254, 0.4340494750589652, nan, inf, -inf, 0.4443454567640147, 0.35099434492052345, 0.4207889913518886, 0.512200753992623, 0.3945913739082527, 0.2750142597621706, 0.3422908420990208, 0.35587501263127364, 0.2053286578963761, 0.17469871419953684, 0.31254071467404687, 0.3280946051274168, 0.24710099320877538, 0.34672911342835105, 0.5176284396494218, 0.49531802876324277, 0.44095505524701295, 0.5628697741246746, 0.6356329171123405, 0.5041244754103947, 0.43534500602048637, 0.5234377639134702, 0.4899622498575157, 0.32831667299529615, 0.3349121381883089, 0.4541496508124191, 0.4138005779356755, 0.34358901076543386, 0.4797832817770059, 0.6231382345456954, 0.5753510840923675, 0.5707627833293983, 0.7311857405079148, 0.7772312168740808]
+dt = 1.0
+output = {"theta" = 0.2531150043029975, "sigma" = 0.10783293050461668, "mu" = 0.4900053885917636, "rho" = 0.77637858981077, "half_life" = 2.7384673716544934, "stationary_std" = 0.15155751121006475, "r2" = 0.5382403147951533}
+
+[[fit]]
+values = [20.2, 20.254, 20.434049475058966, nan, inf, -inf, 20.44434545676402, 20.350994344920526, 20.42078899135189, 20.512200753992623, 20.394591373908252, 20.27501425976217, 20.34229084209902, 20.355875012631273, 20.205328657896374, 20.174698714199533, 20.312540714674043, 20.32809460512741, 20.24710099320877, 20.346729113428346, 20.517628439649418, 20.49531802876324, 20.44095505524701, 20.56286977412467, 20.635632917112336, 20.50412447541039, 20.43534500602048, 20.523437763913464, 20.489962249857506, 20.32831667299529, 20.334912138188297, 20.454149650812408, 20.413800577935664, 20.34358901076542, 20.479783281776992, 20.623138234545685, 20.575351084092357, 20.57076278332939, 20.731185740507904, 20.77723121687407]
+dt = 0.25
+output = {"theta" = 1.012460017212026, "sigma" = 0.2156658610092343, "mu" = 20.490005388591776, "rho" = 0.776378589810763, "half_life" = 0.684616842913599, "stationary_std" = 0.1515575112100627, "r2" = 0.5382403147951416}
+
+[[fit]]
+values = [20.2, 20.254, 20.434049475058966, nan, inf, -inf, 20.44434545676402, 20.350994344920526, 20.42078899135189, 20.512200753992623, 20.394591373908252, 20.27501425976217, 20.34229084209902, 20.355875012631273, 20.205328657896374, 20.174698714199533, 20.312540714674043, 20.32809460512741, 20.24710099320877, 20.346729113428346, 20.517628439649418, 20.49531802876324, 20.44095505524701, 20.56286977412467, 20.635632917112336, 20.50412447541039, 20.43534500602048, 20.523437763913464, 20.489962249857506, 20.32831667299529, 20.334912138188297, 20.454149650812408, 20.413800577935664, 20.34358901076542, 20.479783281776992, 20.623138234545685, 20.575351084092357, 20.57076278332939, 20.731185740507904, 20.77723121687407]
+dt = 1.0
+output = {"theta" = 0.2531150043030065, "sigma" = 0.10783293050461715, "mu" = 20.490005388591776, "rho" = 0.776378589810763, "half_life" = 2.738467371654396, "stationary_std" = 0.1515575112100627, "r2" = 0.5382403147951416}
+
+[[fit]]
+values = [0.2, -0.009999999999999995, 0.17796947505896518, nan, inf, -inf, -0.05177585031381933, -0.08670526588462575, 0.08878633929834233, 0.05636008102419392, -0.14476141947148097, -0.08404051578280294, 0.08698845187644769, -0.01935818187266188, -0.1518564004257244, 0.010820403272950503, 0.1311019052086342, -0.03002749540270131, -0.07854725540037932, 0.11825027697551396, 0.1284896608598496, -0.07120987793712233, -0.04290637071035804, 0.12596752898582886, 0.023715488809423774, -0.1513357466870197, -0.03346123489201039, 0.0894242282401772, -0.07077153780627707, -0.15021336051748674, 0.04509313988835281, 0.0990113278938382, -0.07913546426114342, -0.0547469394506121, 0.14574657263144697, 0.09003531534371526, -0.0872605097473564, 0.010082830479390483, 0.14598285236811137, -0.01237309415442583, -0.13903669963561147, 0.019795631051932154, 0.07785109546468573, -0.11476578007420535, -0.1301838384835155, 0.07233951355597562, 0.05349744590876393, -0.11707852506348013, -0.02230207341153899, 0.15566797618658387, 0.04166242795740177, -0.08968750247791427, 0.06329578493017504, 0.1474321160236031, -0.04671536230972764, -0.10892093856626624, 0.06897779211817531, 0.05397891341384443, -0.14554879750872163, -0.09473501988280224, 0.08845326166184722, 5.687741941485386e-05, -0.13938061764411835, 0.013957281053847151, 0.14634924892728854, -0.010304664884997108, -0.07805936347049837, 0.10996122847955106, 0.13061427141302057, -0.07415006556374047, -0.0644269080375639, 0.10800971317437133, 0.021304785440497305, -0.15892185243099005, -0.04873627077333305, 0.09093130356842219, -0.05469355537848846, -0.14365378997883918, 0.0486254014854791, 0.11857002164564172, -0.05921858471769483, -0.05398589909457181, 0.14403024341836024, 0.0981533551415903, -0.09049115539112712, -0.01089885041830841, 0.1322453255311697, -0.015372594188007386, -0.1528487038971818, 0.001702079501391375, 0.07923562066204254, -0.10385859521489621, -0.1298699745799159, 0.07648726035512737, 0.07548771291290478, -0.09897288967917942, -0.02089881830056362, 0.16096907350708617, 0.05461816799346029, -0.09312806473642773, 0.04507896210747684, 0.13904309388055497, -0.05062806714336496, -0.1277473090093143, 0.050041718834795135, 0.054881542915759474, -0.14115176355136946, -0.10032156882454435, 0.0932611585677565, 0.022260037671219306, -0.12478325564760485, 0.016423561266783102, 0.15836299179037697, 0.005893856908432457, -0.08140822468112453, 0.09651617915093927, 0.12807125743549413, -0.07917606184348283, -0.08646530794812404, 0.09017333867379937, 0.02123919615870326, -0.16171222684714276, -0.05927952882822217]
+dt = 0.25
+output = {"theta" = 55.262042231857095, "sigma" = 1.0141560064143962, "mu" = -0.0006477996816895246, "rho" = 1e-06, "half_life" = 0.012542916485999216, "stationary_std" = 0.09646645166098988, "r2" = 0.0019492146506024932}
+
+[[fit]]
+values = [0.2, -0.009999999999999995, 0.17796947505896518, nan, inf, -inf, -0.05177585031381933, -0.08670526588462575, 0.08878633929834233, 0.05636008102419392, -0.14476141947148097, -0.08404051578280294, 0.08698845187644769, -0.01935818187266188, -0.1518564004257244, 0.010820403272950503, 0.1311019052086342, -0.03002749540270131, -0.07854725540037932, 0.11825027697551396, 0.1284896608598496, -0.07120987793712233, -0.04290637071035804, 0.12596752898582886, 0.023715488809423774, -0.1513357466870197, -0.03346123489201039, 0.0894242282401772, -0.07077153780627707, -0.15021336051748674, 0.04509313988835281, 0.0990113278938382, -0.07913546426114342, -0.0547469394506121, 0.14574657263144697, 0.09003531534371526, -0.0872605097473564, 0.010082830479390483, 0.14598285236811137, -0.01237309415442583, -0.13903669963561147, 0.019795631051932154, 0.07785109546468573, -0.11476578007420535, -0.1301838384835155, 0.07233951355597562, 0.05349744590876393, -0.11707852506348013, -0.02230207341153899, 0.15566797618658387, 0.04166242795740177, -0.08968750247791427, 0.06329578493017504, 0.1474321160236031, -0.04671536230972764, -0.10892093856626624, 0.06897779211817531, 0.05397891341384443, -0.14554879750872163, -0.09473501988280224, 0.08845326166184722, 5.687741941485386e-05, -0.13938061764411835, 0.013957281053847151, 0.14634924892728854, -0.010304664884997108, -0.07805936347049837, 0.10996122847955106, 0.13061427141302057, -0.07415006556374047, -0.0644269080375639, 0.10800971317437133, 0.021304785440497305, -0.15892185243099005, -0.04873627077333305, 0.09093130356842219, -0.05469355537848846, -0.14365378997883918, 0.0486254014854791, 0.11857002164564172, -0.05921858471769483, -0.05398589909457181, 0.14403024341836024, 0.0981533551415903, -0.09049115539112712, -0.01089885041830841, 0.1322453255311697, -0.015372594188007386, -0.1528487038971818, 0.001702079501391375, 0.07923562066204254, -0.10385859521489621, -0.1298699745799159, 0.07648726035512737, 0.07548771291290478, -0.09897288967917942, -0.02089881830056362, 0.16096907350708617, 0.05461816799346029, -0.09312806473642773, 0.04507896210747684, 0.13904309388055497, -0.05062806714336496, -0.1277473090093143, 0.050041718834795135, 0.054881542915759474, -0.14115176355136946, -0.10032156882454435, 0.0932611585677565, 0.022260037671219306, -0.12478325564760485, 0.016423561266783102, 0.15836299179037697, 0.005893856908432457, -0.08140822468112453, 0.09651617915093927, 0.12807125743549413, -0.07917606184348283, -0.08646530794812404, 0.09017333867379937, 0.02123919615870326, -0.16171222684714276, -0.05927952882822217]
+dt = 1.0
+output = {"theta" = 13.815510557964274, "sigma" = 0.5070780032071981, "mu" = -0.0006477996816895246, "rho" = 1e-06, "half_life" = 0.050171665943996864, "stationary_std" = 0.09646645166098988, "r2" = 0.0019492146506024932}
+
+[[fit]]
+values = [20.2, 19.990000000000002, 20.177969475058966, nan, inf, -inf, 19.948224149686183, 19.91329473411537, 20.08878633929834, 20.05636008102419, 19.85523858052852, 19.915959484217197, 20.086988451876447, 19.98064181812734, 19.84814359957427, 20.01082040327295, 20.131101905208634, 19.969972504597298, 19.92145274459962, 20.118250276975512, 20.128489660859852, 19.92879012206288, 19.95709362928964, 20.12596752898583, 20.023715488809422, 19.848664253312982, 19.966538765107988, 20.08942422824018, 19.92922846219372, 19.849786639482517, 20.045093139888348, 20.09901132789384, 19.920864535738858, 19.945253060549387, 20.145746572631445, 20.09003531534372, 19.912739490252644, 20.01008283047939, 20.14598285236811, 19.987626905845573, 19.86096330036439, 20.01979563105193, 20.077851095464688, 19.885234219925795, 19.869816161516486, 20.072339513555974, 20.053497445908764, 19.88292147493652, 19.97769792658846, 20.155667976186585, 20.0416624279574, 19.910312497522085, 20.063295784930176, 20.147432116023605, 19.95328463769027, 19.891079061433732, 20.068977792118176, 20.053978913413843, 19.85445120249128, 19.905264980117195, 20.08845326166185, 20.000056877419418, 19.860619382355882, 20.013957281053845, 20.146349248927294, 19.989695335114998, 19.921940636529502, 20.109961228479552, 20.13061427141302, 19.925849934436258, 19.935573091962436, 20.108009713174372, 20.0213047854405, 19.84107814756901, 19.951263729226664, 20.09093130356842, 19.945306444621515, 19.85634621002116, 20.048625401485477, 20.118570021645645, 19.940781415282306, 19.946014100905426, 20.144030243418364, 20.098153355141587, 19.909508844608876, 19.989101149581693, 20.13224532553117, 19.98462740581199, 19.847151296102822, 20.00170207950139, 20.079235620662043, 19.8961414047851, 19.870130025420085, 20.076487260355126, 20.075487712912906, 19.901027110320822, 19.979101181699438, 20.160969073507086, 20.05461816799346, 19.906871935263574, 20.045078962107475, 20.139043093880556, 19.949371932856636, 19.872252690990685, 20.050041718834795, 20.05488154291576, 19.858848236448633, 19.899678431175456, 20.093261158567756, 20.02226003767122, 19.875216744352393, 20.016423561266784, 20.15836299179038, 20.005893856908433, 19.918591775318877, 20.096516179150935, 20.128071257435494, 19.920823938156516, 19.913534692051876, 20.0901733386738, 20.021239196158703, 19.83828777315286, 19.940720471171776]
+dt = 0.25
+output = {"theta" = 55.262042231857095, "sigma" = 1.0141560064143973, "mu" = 20.86804093013242, "rho" = 1e-06, "half_life" = 0.012542916485999216, "stationary_std" = 0.09646645166099, "r2" = 0.001949214650601494}
+
+[[fit]]
+values = [20.2, 19.990000000000002, 20.177969475058966, nan, inf, -inf, 19.948224149686183, 19.91329473411537, 20.08878633929834, 20.05636008102419, 19.85523858052852, 19.915959484217197, 20.086988451876447, 19.98064181812734, 19.84814359957427, 20.01082040327295, 20.131101905208634, 19.969972504597298, 19.92145274459962, 20.118250276975512, 20.128489660859852, 19.92879012206288, 19.95709362928964, 20.12596752898583, 20.023715488809422, 19.848664253312982, 19.966538765107988, 20.08942422824018, 19.92922846219372, 19.849786639482517, 20.045093139888348, 20.09901132789384, 19.920864535738858, 19.945253060549387, 20.145746572631445, 20.09003531534372, 19.912739490252644, 20.01008283047939, 20.14598285236811, 19.987626905845573, 19.86096330036439, 20.01979563105193, 20.077851095464688, 19.885234219925795, 19.869816161516486, 20.072339513555974, 20.053497445908764, 19.88292147493652, 19.97769792658846, 20.155667976186585, 20.0416624279574, 19.910312497522085, 20.063295784930176, 20.147432116023605, 19.95328463769027, 19.891079061433732, 20.068977792118176, 20.053978913413843, 19.85445120249128, 19.905264980117195, 20.08845326166185, 20.000056877419418, 19.860619382355882, 20.013957281053845, 20.146349248927294, 19.989695335114998, 19.921940636529502, 20.109961228479552, 20.13061427141302, 19.925849934436258, 19.935573091962436, 20.108009713174372, 20.0213047854405, 19.84107814756901, 19.951263729226664, 20.09093130356842, 19.945306444621515, 19.85634621002116, 20.048625401485477, 20.118570021645645, 19.940781415282306, 19.946014100905426, 20.144030243418364, 20.098153355141587, 19.909508844608876, 19.989101149581693, 20.13224532553117, 19.98462740581199, 19.847151296102822, 20.00170207950139, 20.079235620662043, 19.8961414047851, 19.870130025420085, 20.076487260355126, 20.075487712912906, 19.901027110320822, 19.979101181699438, 20.160969073507086, 20.05461816799346, 19.906871935263574, 20.045078962107475, 20.139043093880556, 19.949371932856636, 19.872252690990685, 20.050041718834795, 20.05488154291576, 19.858848236448633, 19.899678431175456, 20.093261158567756, 20.02226003767122, 19.875216744352393, 20.016423561266784, 20.15836299179038, 20.005893856908433, 19.918591775318877, 20.096516179150935, 20.128071257435494, 19.920823938156516, 19.913534692051876, 20.0901733386738, 20.021239196158703, 19.83828777315286, 19.940720471171776]
+dt = 1.0
+output = {"theta" = 13.815510557964274, "sigma" = 0.5070780032071986, "mu" = 20.86804093013242, "rho" = 1e-06, "half_life" = 0.050171665943996864, "stationary_std" = 0.09646645166099, "r2" = 0.001949214650601494}
+
+[[fit]]
+values = [0.2, 0.13, 0.22696947505896517, nan, inf, -inf, 0.09240278222745629, -0.06527690808778903, 0.036663996297839, 0.09766158133283222, -0.08878876263108991, -0.16298444667668321, -0.003417481529066492, 0.005371361078645831, -0.15551531055606466, -0.09694264107719268, 0.09557096975964229, 0.047531464063745865, -0.06854291839569138, 0.06726893299712362, 0.19087231715135325, 0.043685947181373856, -0.04679495521894519, 0.09437763568514336, 0.09925680177922978, -0.10451837933250065, -0.12066931063111658, 0.031118133520127454, -0.03149701592617292, -0.18404362822983905, -0.07358831955882884, 0.0831039420368125, -0.016190489078266958, -0.08496377436026191, 0.09533698105215857, 0.17189407955401276, 0.008507716677363289, -0.012692235773871123, 0.14393080720238005, 0.0889940844369596, -0.10715099410715538, -0.06477577648161344, 0.05787947418762, -0.06825866175975162, -0.19191703720967776, -0.043482452872950134, 0.05780631882637656, -0.07790676376030033, -0.08858833643470315, 0.1135420195892409, 0.13377962864907328, -0.02367692263106444, 0.02691876513437498, 0.1771883575564056, 0.06838961551991553, -0.09557970105121831, -0.001930369872191872, 0.07390010310042025, -0.0997950822444002, -0.17831769203317882, -0.01129432111626498, 0.02207512747146303, -0.1305335034297087, -0.08007030561127183, 0.11850831099893393, 0.08100343419276303, -0.04874938925889229, 0.06704366373484463, 0.19042010545082377, 0.04120225804049521, -0.07019102449048797, 0.06060523096690696, 0.07794979177957148, -0.12135050008701227, -0.14495302653743497, 0.01832921172144828, -0.02008247961938249, -0.16809484844013872, -0.06170867488422814, 0.1084741721375942, 0.019742090631035367, -0.06385463825746611, 0.10229261838700227, 0.18227947552189927, 0.011866641360109675, -0.03329954049160268, 0.11565585420903608, 0.07056334515495795, -0.12923514409160083, -0.09584658930440351, 0.04140760879069854, -0.06352486550000402, -0.18643749934438636, -0.037048731756601935, 0.08361439831680222, -0.04288081647858709, -0.06774301179575228, 0.1276022232986162, 0.15394977936503262, -0.0151627025923766, 0.01107546164959788, 0.1569969671726372, 0.05388364788985642, -0.12138226999638124, -0.03683538186655165, 0.055159905819577346, -0.10262333834881068, -0.18371643322947945, -0.010321885371398581, 0.04610963109298683, -0.09966139190904433, -0.06087597219111608, 0.13893967129396545, 0.10897862296313174, -0.0360486184233421, 0.05767426437726507, 0.18009581693168197, 0.03128364215983819, -0.09770466963723362, 0.025151878434468707, 0.05835194913463055, -0.13199968834567954, -0.16059307222063682]
+dt = 0.25
+output = {"theta" = 5.752201884460369, "sigma" = 0.3432859434393002, "mu" = 0.000624635814454508, "rho" = 0.2373901067253058, "half_life" = 0.12050119145374388, "stationary_std" = 0.1012101253752312, "r2" = 0.056917340888942736}
+
+[[fit]]
+values = [0.2, 0.13, 0.22696947505896517, nan, inf, -inf, 0.09240278222745629, -0.06527690808778903, 0.036663996297839, 0.09766158133283222, -0.08878876263108991, -0.16298444667668321, -0.003417481529066492, 0.005371361078645831, -0.15551531055606466, -0.09694264107719268, 0.09557096975964229, 0.047531464063745865, -0.06854291839569138, 0.06726893299712362, 0.19087231715135325, 0.043685947181373856, -0.04679495521894519, 0.09437763568514336, 0.09925680177922978, -0.10451837933250065, -0.12066931063111658, 0.031118133520127454, -0.03149701592617292, -0.18404362822983905, -0.07358831955882884, 0.0831039420368125, -0.016190489078266958, -0.08496377436026191, 0.09533698105215857, 0.17189407955401276, 0.008507716677363289, -0.012692235773871123, 0.14393080720238005, 0.0889940844369596, -0.10715099410715538, -0.06477577648161344, 0.05787947418762, -0.06825866175975162, -0.19191703720967776, -0.043482452872950134, 0.05780631882637656, -0.07790676376030033, -0.08858833643470315, 0.1135420195892409, 0.13377962864907328, -0.02367692263106444, 0.02691876513437498, 0.1771883575564056, 0.06838961551991553, -0.09557970105121831, -0.001930369872191872, 0.07390010310042025, -0.0997950822444002, -0.17831769203317882, -0.01129432111626498, 0.02207512747146303, -0.1305335034297087, -0.08007030561127183, 0.11850831099893393, 0.08100343419276303, -0.04874938925889229, 0.06704366373484463, 0.19042010545082377, 0.04120225804049521, -0.07019102449048797, 0.06060523096690696, 0.07794979177957148, -0.12135050008701227, -0.14495302653743497, 0.01832921172144828, -0.02008247961938249, -0.16809484844013872, -0.06170867488422814, 0.1084741721375942, 0.019742090631035367, -0.06385463825746611, 0.10229261838700227, 0.18227947552189927, 0.011866641360109675, -0.03329954049160268, 0.11565585420903608, 0.07056334515495795, -0.12923514409160083, -0.09584658930440351, 0.04140760879069854, -0.06352486550000402, -0.18643749934438636, -0.037048731756601935, 0.08361439831680222, -0.04288081647858709, -0.06774301179575228, 0.1276022232986162, 0.15394977936503262, -0.0151627025923766, 0.01107546164959788, 0.1569969671726372, 0.05388364788985642, -0.12138226999638124, -0.03683538186655165, 0.055159905819577346, -0.10262333834881068, -0.18371643322947945, -0.010321885371398581, 0.04610963109298683, -0.09966139190904433, -0.06087597219111608, 0.13893967129396545, 0.10897862296313174, -0.0360486184233421, 0.05767426437726507, 0.18009581693168197, 0.03128364215983819, -0.09770466963723362, 0.025151878434468707, 0.05835194913463055, -0.13199968834567954, -0.16059307222063682]
+dt = 1.0
+output = {"theta" = 1.4380504711150923, "sigma" = 0.1716429717196501, "mu" = 0.000624635814454508, "rho" = 0.2373901067253058, "half_life" = 0.48200476581497553, "stationary_std" = 0.1012101253752312, "r2" = 0.056917340888942736}
+
+[[fit]]
+values = [20.2, 20.13, 20.226969475058965, nan, inf, -inf, 20.09240278222746, 19.93472309191221, 20.036663996297836, 20.09766158133283, 19.91121123736891, 19.837015553323315, 19.99658251847093, 20.005371361078645, 19.84448468944393, 19.903057358922805, 20.095570969759642, 20.047531464063745, 19.931457081604307, 20.067268932997123, 20.190872317151353, 20.043685947181373, 19.953205044781054, 20.09437763568514, 20.09925680177923, 19.8954816206675, 19.879330689368885, 20.031118133520128, 19.968502984073826, 19.815956371770163, 19.92641168044117, 20.083103942036814, 19.983809510921734, 19.915036225639735, 20.095336981052156, 20.171894079554015, 20.008507716677364, 19.98730776422613, 20.14393080720238, 20.08899408443696, 19.892849005892845, 19.935224223518386, 20.05787947418762, 19.93174133824025, 19.808082962790326, 19.956517547127053, 20.057806318826376, 19.9220932362397, 19.911411663565296, 20.11354201958924, 20.133779628649073, 19.976323077368935, 20.026918765134376, 20.177188357556407, 20.068389615519916, 19.904420298948782, 19.99806963012781, 20.07390010310042, 19.900204917755598, 19.82168230796682, 19.988705678883736, 20.022075127471467, 19.869466496570293, 19.919929694388728, 20.118508310998937, 20.081003434192763, 19.951250610741106, 20.067043663734847, 20.190420105450823, 20.041202258040492, 19.929808975509513, 20.060605230966907, 20.077949791779574, 19.87864949991299, 19.855046973462564, 20.018329211721444, 19.979917520380617, 19.831905151559862, 19.93829132511577, 20.108474172137594, 20.019742090631038, 19.936145361742533, 20.102292618387004, 20.1822794755219, 20.01186664136011, 19.9667004595084, 20.115655854209034, 20.07056334515496, 19.870764855908398, 19.904153410695592, 20.041407608790696, 19.936475134499993, 19.813562500655614, 19.962951268243398, 20.0836143983168, 19.957119183521414, 19.932256988204248, 20.127602223298613, 20.153949779365032, 19.984837297407623, 20.011075461649597, 20.15699696717264, 20.053883647889858, 19.87861773000362, 19.963164618133447, 20.05515990581958, 19.89737666165119, 19.816283566770522, 19.9896781146286, 20.046109631092985, 19.900338608090955, 19.939124027808884, 20.13893967129397, 20.108978622963132, 19.96395138157666, 20.057674264377265, 20.18009581693168, 20.031283642159835, 19.902295330362765, 20.02515187843447, 20.058351949134632, 19.868000311654324, 19.839406927779365]
+dt = 0.25
+output = {"theta" = 5.752201884460276, "sigma" = 0.3432859434392981, "mu" = 20.000624635814447, "rho" = 0.2373901067253113, "half_life" = 0.12050119145374583, "stationary_std" = 0.1012101253752314, "r2" = 0.05691734088894074}
+
+[[fit]]
+values = [20.2, 20.13, 20.226969475058965, nan, inf, -inf, 20.09240278222746, 19.93472309191221, 20.036663996297836, 20.09766158133283, 19.91121123736891, 19.837015553323315, 19.99658251847093, 20.005371361078645, 19.84448468944393, 19.903057358922805, 20.095570969759642, 20.047531464063745, 19.931457081604307, 20.067268932997123, 20.190872317151353, 20.043685947181373, 19.953205044781054, 20.09437763568514, 20.09925680177923, 19.8954816206675, 19.879330689368885, 20.031118133520128, 19.968502984073826, 19.815956371770163, 19.92641168044117, 20.083103942036814, 19.983809510921734, 19.915036225639735, 20.095336981052156, 20.171894079554015, 20.008507716677364, 19.98730776422613, 20.14393080720238, 20.08899408443696, 19.892849005892845, 19.935224223518386, 20.05787947418762, 19.93174133824025, 19.808082962790326, 19.956517547127053, 20.057806318826376, 19.9220932362397, 19.911411663565296, 20.11354201958924, 20.133779628649073, 19.976323077368935, 20.026918765134376, 20.177188357556407, 20.068389615519916, 19.904420298948782, 19.99806963012781, 20.07390010310042, 19.900204917755598, 19.82168230796682, 19.988705678883736, 20.022075127471467, 19.869466496570293, 19.919929694388728, 20.118508310998937, 20.081003434192763, 19.951250610741106, 20.067043663734847, 20.190420105450823, 20.041202258040492, 19.929808975509513, 20.060605230966907, 20.077949791779574, 19.87864949991299, 19.855046973462564, 20.018329211721444, 19.979917520380617, 19.831905151559862, 19.93829132511577, 20.108474172137594, 20.019742090631038, 19.936145361742533, 20.102292618387004, 20.1822794755219, 20.01186664136011, 19.9667004595084, 20.115655854209034, 20.07056334515496, 19.870764855908398, 19.904153410695592, 20.041407608790696, 19.936475134499993, 19.813562500655614, 19.962951268243398, 20.0836143983168, 19.957119183521414, 19.932256988204248, 20.127602223298613, 20.153949779365032, 19.984837297407623, 20.011075461649597, 20.15699696717264, 20.053883647889858, 19.87861773000362, 19.963164618133447, 20.05515990581958, 19.89737666165119, 19.816283566770522, 19.9896781146286, 20.046109631092985, 19.900338608090955, 19.939124027808884, 20.13893967129397, 20.108978622963132, 19.96395138157666, 20.057674264377265, 20.18009581693168, 20.031283642159835, 19.902295330362765, 20.02515187843447, 20.058351949134632, 19.868000311654324, 19.839406927779365]
+dt = 1.0
+output = {"theta" = 1.438050471115069, "sigma" = 0.17164297171964904, "mu" = 20.000624635814447, "rho" = 0.2373901067253113, "half_life" = 0.4820047658149833, "stationary_std" = 0.1012101253752314, "r2" = 0.05691734088894074}
+
+[[fit]]
+values = [0.2, 0.24, 0.4029694750589652, nan, inf, -inf, 0.38443599350988716, 0.26297617285562125, 0.3126021237457948, 0.3799680003722017, 0.23311620518936882, 0.0939914533056531, 0.15106817778197726, 0.15025312258315082, -0.01492338853352971, -0.04891373596162003, 0.08787997702698033, 0.09278905433552027, 0.0005940975975545285, 0.09525049307307698, 0.2544527123719269, 0.2090670970741631, 0.1343444081289602, 0.24072280549523364, 0.2901924127256444, 0.13146169204516958, 0.0460266485447948, 0.12311117389012916, 0.07301134586139879, -0.10208404329104101, -0.09695070939338217, 0.020436095936630976, -0.030017774753192526, -0.10700446474448802, 0.02766824928899972, 0.16004412395769907, 0.09179200261557229, 0.07110708003997723, 0.21655942754990687, 0.23715321772841907, 0.0825469289600589, 0.05650420367330468, 0.13746877826990483, 0.03918488792160995, -0.12738792898024764, -0.08773417052031429, -0.008148162018741953, -0.1087700452086558, -0.16075717387880603, -0.0037419610217435603, 0.08480795784272055, 0.003378785859890779, 0.039599380753697, 0.20404026321866775, 0.19135252255508764, 0.05884934916814873, 0.09220839225803674, 0.16227022369443192, 0.024801589025142, -0.11483814956153383, -0.04906348638645058, -0.020017456149159035, -0.158380137759995, -0.17831803511138358, -0.01886570011237172, 0.015677694686436323, -0.066256952983883, 0.0235993141037127, 0.18602198835541295, 0.14175510479780798, 0.04799542185123152, 0.1342772915217721, 0.18127112633849218, 0.019677153222726687, -0.07771953094103971, 0.0024768679424345477, -0.025061139762648982, -0.18386993936690227, -0.1691471779067298, -0.027532176920107874, -0.04980314629810479, -0.11906446349307981, 0.014723233371562887, 0.15534949987008312, 0.08653687602792892, 0.04416383519088593, 0.1709313138370188, 0.18668575161651135, 0.019890981882101755, -0.025256098879766497, 0.055752950576681774, -0.027122605968435763, -0.18679402881439874, -0.1399280593925262, -0.034497765403456906, -0.10909945293859202, -0.15423516549597985, 0.008176020795736247, 0.11067610980153557, 0.028399689973069124, 0.04412024816096419, 0.194481018265714, 0.17584182837322984, 0.024114007802244545, 0.034625833544133164, 0.1027886004331245, -0.02703813026517335, -0.16835332164186986, -0.09677096763938317, -0.04169403401586775, -0.15771457666131342, -0.1708402632557461, 0.0009918100774531022, 0.054344974019126, -0.02801234229042511, 0.04548198657069806, 0.2002339984229391, 0.14946761388895752, 0.03177610669334073, 0.09442104764803586, 0.1379911930264771, -0.024248834624378525, -0.13082958977552459]
+dt = 0.25
+output = {"theta" = 1.4277766758063177, "sigma" = 0.22270448382542768, "mu" = 0.040913670739111715, "rho" = 0.6998115678574682, "half_life" = 0.48547310815852884, "stationary_std" = 0.13179041381510773, "r2" = 0.48746192470737904}
+
+[[fit]]
+values = [0.2, 0.24, 0.4029694750589652, nan, inf, -inf, 0.38443599350988716, 0.26297617285562125, 0.3126021237457948, 0.3799680003722017, 0.23311620518936882, 0.0939914533056531, 0.15106817778197726, 0.15025312258315082, -0.01492338853352971, -0.04891373596162003, 0.08787997702698033, 0.09278905433552027, 0.0005940975975545285, 0.09525049307307698, 0.2544527123719269, 0.2090670970741631, 0.1343444081289602, 0.24072280549523364, 0.2901924127256444, 0.13146169204516958, 0.0460266485447948, 0.12311117389012916, 0.07301134586139879, -0.10208404329104101, -0.09695070939338217, 0.020436095936630976, -0.030017774753192526, -0.10700446474448802, 0.02766824928899972, 0.16004412395769907, 0.09179200261557229, 0.07110708003997723, 0.21655942754990687, 0.23715321772841907, 0.0825469289600589, 0.05650420367330468, 0.13746877826990483, 0.03918488792160995, -0.12738792898024764, -0.08773417052031429, -0.008148162018741953, -0.1087700452086558, -0.16075717387880603, -0.0037419610217435603, 0.08480795784272055, 0.003378785859890779, 0.039599380753697, 0.20404026321866775, 0.19135252255508764, 0.05884934916814873, 0.09220839225803674, 0.16227022369443192, 0.024801589025142, -0.11483814956153383, -0.04906348638645058, -0.020017456149159035, -0.158380137759995, -0.17831803511138358, -0.01886570011237172, 0.015677694686436323, -0.066256952983883, 0.0235993141037127, 0.18602198835541295, 0.14175510479780798, 0.04799542185123152, 0.1342772915217721, 0.18127112633849218, 0.019677153222726687, -0.07771953094103971, 0.0024768679424345477, -0.025061139762648982, -0.18386993936690227, -0.1691471779067298, -0.027532176920107874, -0.04980314629810479, -0.11906446349307981, 0.014723233371562887, 0.15534949987008312, 0.08653687602792892, 0.04416383519088593, 0.1709313138370188, 0.18668575161651135, 0.019890981882101755, -0.025256098879766497, 0.055752950576681774, -0.027122605968435763, -0.18679402881439874, -0.1399280593925262, -0.034497765403456906, -0.10909945293859202, -0.15423516549597985, 0.008176020795736247, 0.11067610980153557, 0.028399689973069124, 0.04412024816096419, 0.194481018265714, 0.17584182837322984, 0.024114007802244545, 0.034625833544133164, 0.1027886004331245, -0.02703813026517335, -0.16835332164186986, -0.09677096763938317, -0.04169403401586775, -0.15771457666131342, -0.1708402632557461, 0.0009918100774531022, 0.054344974019126, -0.02801234229042511, 0.04548198657069806, 0.2002339984229391, 0.14946761388895752, 0.03177610669334073, 0.09442104764803586, 0.1379911930264771, -0.024248834624378525, -0.13082958977552459]
+dt = 1.0
+output = {"theta" = 0.35694416895157943, "sigma" = 0.11135224191271384, "mu" = 0.040913670739111715, "rho" = 0.6998115678574682, "half_life" = 1.9418924326341154, "stationary_std" = 0.13179041381510773, "r2" = 0.48746192470737904}
+
+[[fit]]
+values = [20.2, 20.24, 20.402969475058963, nan, inf, -inf, 20.38443599350989, 20.26297617285562, 20.31260212374579, 20.379968000372198, 20.233116205189365, 20.093991453305648, 20.151068177781973, 20.15025312258315, 19.985076611466464, 19.951086264038373, 20.087879977026976, 20.092789054335515, 20.00059409759755, 20.09525049307307, 20.254452712371922, 20.20906709707416, 20.134344408128957, 20.24072280549523, 20.29019241272564, 20.131461692045168, 20.046026648544792, 20.123111173890127, 20.073011345861396, 19.897915956708957, 19.903049290606614, 20.020436095936628, 19.969982225246806, 19.89299553525551, 20.027668249288997, 20.1600441239577, 20.091792002615573, 20.07110708003998, 20.216559427549907, 20.23715321772842, 20.08254692896006, 20.056504203673306, 20.137468778269906, 20.039184887921614, 19.87261207101976, 19.912265829479693, 19.991851837981265, 19.891229954791353, 19.8392428261212, 19.99625803897826, 20.084807957842724, 20.003378785859894, 20.039599380753703, 20.204040263218676, 20.191352522555093, 20.058849349168153, 20.09220839225804, 20.162270223694435, 20.024801589025145, 19.885161850438468, 19.950936513613552, 19.979982543850845, 19.841619862240012, 19.821681964888622, 19.981134299887636, 20.015677694686442, 19.933743047016122, 20.02359931410372, 20.186021988355417, 20.14175510479781, 20.047995421851233, 20.134277291521773, 20.181271126338494, 20.01967715322273, 19.92228046905896, 20.002476867942434, 19.97493886023735, 19.8161300606331, 19.83085282209327, 19.972467823079892, 19.950196853701897, 19.88093553650692, 20.014723233371566, 20.155349499870084, 20.08653687602793, 20.04416383519089, 20.170931313837023, 20.186685751616515, 20.019890981882106, 19.974743901120235, 20.055752950576682, 19.972877394031563, 19.813205971185603, 19.860071940607476, 19.965502234596546, 19.89090054706141, 19.845764834504024, 20.00817602079574, 20.110676109801542, 20.028399689973075, 20.04412024816097, 20.19448101826572, 20.175841828373237, 20.02411400780225, 20.034625833544137, 20.10278860043313, 19.97296186973483, 19.831646678358133, 19.903229032360617, 19.95830596598413, 19.842285423338687, 19.829159736744256, 20.00099181007746, 20.05434497401913, 19.97198765770958, 20.0454819865707, 20.200233998422938, 20.149467613888955, 20.031776106693336, 20.094421047648034, 20.137991193026476, 19.975751165375623, 19.869170410224477]
+dt = 0.25
+output = {"theta" = 1.4277766758063075, "sigma" = 0.22270448382542726, "mu" = 20.040913670739148, "rho" = 0.69981156785747, "half_life" = 0.48547310815853234, "stationary_std" = 0.13179041381510795, "r2" = 0.48746192470737193}
+
+[[fit]]
+values = [20.2, 20.24, 20.402969475058963, nan, inf, -inf, 20.38443599350989, 20.26297617285562, 20.31260212374579, 20.379968000372198, 20.233116205189365, 20.093991453305648, 20.151068177781973, 20.15025312258315, 19.985076611466464, 19.951086264038373, 20.087879977026976, 20.092789054335515, 20.00059409759755, 20.09525049307307, 20.254452712371922, 20.20906709707416, 20.134344408128957, 20.24072280549523, 20.29019241272564, 20.131461692045168, 20.046026648544792, 20.123111173890127, 20.073011345861396, 19.897915956708957, 19.903049290606614, 20.020436095936628, 19.969982225246806, 19.89299553525551, 20.027668249288997, 20.1600441239577, 20.091792002615573, 20.07110708003998, 20.216559427549907, 20.23715321772842, 20.08254692896006, 20.056504203673306, 20.137468778269906, 20.039184887921614, 19.87261207101976, 19.912265829479693, 19.991851837981265, 19.891229954791353, 19.8392428261212, 19.99625803897826, 20.084807957842724, 20.003378785859894, 20.039599380753703, 20.204040263218676, 20.191352522555093, 20.058849349168153, 20.09220839225804, 20.162270223694435, 20.024801589025145, 19.885161850438468, 19.950936513613552, 19.979982543850845, 19.841619862240012, 19.821681964888622, 19.981134299887636, 20.015677694686442, 19.933743047016122, 20.02359931410372, 20.186021988355417, 20.14175510479781, 20.047995421851233, 20.134277291521773, 20.181271126338494, 20.01967715322273, 19.92228046905896, 20.002476867942434, 19.97493886023735, 19.8161300606331, 19.83085282209327, 19.972467823079892, 19.950196853701897, 19.88093553650692, 20.014723233371566, 20.155349499870084, 20.08653687602793, 20.04416383519089, 20.170931313837023, 20.186685751616515, 20.019890981882106, 19.974743901120235, 20.055752950576682, 19.972877394031563, 19.813205971185603, 19.860071940607476, 19.965502234596546, 19.89090054706141, 19.845764834504024, 20.00817602079574, 20.110676109801542, 20.028399689973075, 20.04412024816097, 20.19448101826572, 20.175841828373237, 20.02411400780225, 20.034625833544137, 20.10278860043313, 19.97296186973483, 19.831646678358133, 19.903229032360617, 19.95830596598413, 19.842285423338687, 19.829159736744256, 20.00099181007746, 20.05434497401913, 19.97198765770958, 20.0454819865707, 20.200233998422938, 20.149467613888955, 20.031776106693336, 20.094421047648034, 20.137991193026476, 19.975751165375623, 19.869170410224477]
+dt = 1.0
+output = {"theta" = 0.3569441689515769, "sigma" = 0.11135224191271363, "mu" = 20.040913670739148, "rho" = 0.69981156785747, "half_life" = 1.9418924326341294, "stationary_std" = 0.13179041381510795, "r2" = 0.48746192470737193}
+
+[[fit]]
+values = [0.2, 0.254, 0.4340494750589652, nan, inf, -inf, 0.4443454567640147, 0.35099434492052345, 0.4207889913518886, 0.512200753992623, 0.3945913739082527, 0.2750142597621706, 0.3422908420990208, 0.35587501263127364, 0.2053286578963761, 0.17469871419953684, 0.31254071467404687, 0.3280946051274168, 0.24710099320877538, 0.34672911342835105, 0.5176284396494218, 0.49531802876324277, 0.44095505524701295, 0.5628697741246746, 0.6356329171123405, 0.5041244754103947, 0.43534500602048637, 0.5234377639134702, 0.4899622498575157, 0.32831667299529615, 0.3349121381883089, 0.4541496508124191, 0.4138005779356755, 0.34358901076543386, 0.4797832817770059, 0.6231382345456954, 0.5753510840923675, 0.5707627833293983, 0.7311857405079148, 0.7772312168740808, 0.6500272133296232, 0.6411123787574644, 0.737724411112879, 0.6610684479003369, 0.5096762443525665, 0.5531541312505388, 0.6394165138511062, 0.5511755528372774, 0.50477343296344, 0.663846255785831, 0.7654860017149246, 0.7036069476585294, 0.7540686207985008, 0.9355708447171265, 0.9517965341088224, 0.8478969175318144, 0.9011563664307463, 0.9938517448086582, 0.884373656220263, 0.7636614702092496, 0.838967455310441, 0.8823396603346189, 0.7606228991230174, 0.7479784528660894, 0.9134744551668539, 0.9653440540633804, 0.9035001722086506, 1.0081135950912252, 1.1918785069499358, 1.1807502929491003, 1.1176933711013963, 1.2287288792865265, 1.3070111562650657, 1.1806209625915263, 1.1078205553407268, 1.2062873887839638, 1.2029989722516812, 1.066997095104329, 1.093866301498243, 1.2489012696194934, 1.2502317167878811, 1.2034848766137587, 1.3553890478360227, 1.5238592569598415, 1.4932912932503883, 1.4851109220797496, 1.6437888109270218, 1.7009655906169059, 1.57752442027566, 1.5649223770134102, 1.6759670690661383, 1.6293985014311778, 1.5009589183154166, 1.5685043646628776, 1.698308342975578, 1.6559479340297816, 1.6384762075060597, 1.825945159673098, 1.9653729529121462, 1.9279377976319998, 1.9836370962711884, 2.1758766207094102, 2.2104790141444, 2.1117528652749646, 2.165705448712465, 2.278913616252912, 2.199804587901329, 2.1011335817694, 2.2063209413251816, 2.3006857453932317, 2.2285942159548577, 2.2521546848464564, 2.4604878387137976, 2.5631003499336193, 2.534722289323697, 2.6575104468567727, 2.867686766974684, 2.8842858177013433, 2.8317534075542015, 2.9526222219946474, 3.0599658641953837, 2.9658247134797597, 2.91734801086699]
+dt = 0.25
+output = {"theta" = 4.000002000116356e-06, "sigma" = 0.1984028625455483, "mu" = 14685.9110512661, "rho" = 0.999999, "half_life" = 173286.70849159133, "stationary_std" = 70.14598721887498, "r2" = 0.983843623215358}
+
+[[fit]]
+values = [0.2, 0.254, 0.4340494750589652, nan, inf, -inf, 0.4443454567640147, 0.35099434492052345, 0.4207889913518886, 0.512200753992623, 0.3945913739082527, 0.2750142597621706, 0.3422908420990208, 0.35587501263127364, 0.2053286578963761, 0.17469871419953684, 0.31254071467404687, 0.3280946051274168, 0.24710099320877538, 0.34672911342835105, 0.5176284396494218, 0.49531802876324277, 0.44095505524701295, 0.5628697741246746, 0.6356329171123405, 0.5041244754103947, 0.43534500602048637, 0.5234377639134702, 0.4899622498575157, 0.32831667299529615, 0.3349121381883089, 0.4541496508124191, 0.4138005779356755, 0.34358901076543386, 0.4797832817770059, 0.6231382345456954, 0.5753510840923675, 0.5707627833293983, 0.7311857405079148, 0.7772312168740808, 0.6500272133296232, 0.6411123787574644, 0.737724411112879, 0.6610684479003369, 0.5096762443525665, 0.5531541312505388, 0.6394165138511062, 0.5511755528372774, 0.50477343296344, 0.663846255785831, 0.7654860017149246, 0.7036069476585294, 0.7540686207985008, 0.9355708447171265, 0.9517965341088224, 0.8478969175318144, 0.9011563664307463, 0.9938517448086582, 0.884373656220263, 0.7636614702092496, 0.838967455310441, 0.8823396603346189, 0.7606228991230174, 0.7479784528660894, 0.9134744551668539, 0.9653440540633804, 0.9035001722086506, 1.0081135950912252, 1.1918785069499358, 1.1807502929491003, 1.1176933711013963, 1.2287288792865265, 1.3070111562650657, 1.1806209625915263, 1.1078205553407268, 1.2062873887839638, 1.2029989722516812, 1.066997095104329, 1.093866301498243, 1.2489012696194934, 1.2502317167878811, 1.2034848766137587, 1.3553890478360227, 1.5238592569598415, 1.4932912932503883, 1.4851109220797496, 1.6437888109270218, 1.7009655906169059, 1.57752442027566, 1.5649223770134102, 1.6759670690661383, 1.6293985014311778, 1.5009589183154166, 1.5685043646628776, 1.698308342975578, 1.6559479340297816, 1.6384762075060597, 1.825945159673098, 1.9653729529121462, 1.9279377976319998, 1.9836370962711884, 2.1758766207094102, 2.2104790141444, 2.1117528652749646, 2.165705448712465, 2.278913616252912, 2.199804587901329, 2.1011335817694, 2.2063209413251816, 2.3006857453932317, 2.2285942159548577, 2.2521546848464564, 2.4604878387137976, 2.5631003499336193, 2.534722289323697, 2.6575104468567727, 2.867686766974684, 2.8842858177013433, 2.8317534075542015, 2.9526222219946474, 3.0599658641953837, 2.9658247134797597, 2.91734801086699]
+dt = 1.0
+output = {"theta" = 1.000000500029089e-06, "sigma" = 0.09920143127277414, "mu" = 14685.9110512661, "rho" = 0.999999, "half_life" = 693146.8339663653, "stationary_std" = 70.14598721887498, "r2" = 0.983843623215358}
+
+[[fit]]
+values = [20.2, 20.254, 20.434049475058966, nan, inf, -inf, 20.44434545676402, 20.350994344920526, 20.42078899135189, 20.512200753992623, 20.394591373908252, 20.27501425976217, 20.34229084209902, 20.355875012631273, 20.205328657896374, 20.174698714199533, 20.312540714674043, 20.32809460512741, 20.24710099320877, 20.346729113428346, 20.517628439649418, 20.49531802876324, 20.44095505524701, 20.56286977412467, 20.635632917112336, 20.50412447541039, 20.43534500602048, 20.523437763913464, 20.489962249857506, 20.32831667299529, 20.334912138188297, 20.454149650812408, 20.413800577935664, 20.34358901076542, 20.479783281776992, 20.623138234545685, 20.575351084092357, 20.57076278332939, 20.731185740507904, 20.77723121687407, 20.65002721332961, 20.64111237875745, 20.737724411112865, 20.661068447900327, 20.50967624435256, 20.55315413125053, 20.639416513851096, 20.551175552837268, 20.50477343296343, 20.66384625578582, 20.765486001714912, 20.703606947658518, 20.754068620798492, 20.93557084471712, 20.951796534108812, 20.847896917531802, 20.901156366430733, 20.993851744808644, 20.884373656220248, 20.763661470209232, 20.838967455310424, 20.882339660334605, 20.760622899123003, 20.747978452866075, 20.913474455166842, 20.965344054063365, 20.903500172208634, 21.00811359509121, 21.19187850694992, 21.18075029294908, 21.117693371101378, 21.228728879286507, 21.307011156265048, 21.180620962591508, 21.107820555340705, 21.206287388783938, 21.202998972251656, 21.066997095104306, 21.093866301498217, 21.24890126961947, 21.25023171678786, 21.203484876613736, 21.355389047836002, 21.523859256959817, 21.493291293250365, 21.485110922079727, 21.643788810927, 21.70096559061688, 21.577524420275637, 21.564922377013385, 21.675967069066115, 21.62939850143115, 21.50095891831539, 21.568504364662854, 21.698308342975555, 21.655947934029758, 21.638476207506038, 21.825945159673072, 21.96537295291212, 21.927937797631973, 21.98363709627116, 22.17587662070938, 22.210479014144372, 22.111752865274937, 22.165705448712433, 22.27891361625288, 22.199804587901298, 22.101133581769368, 22.206320941325146, 22.300685745393196, 22.22859421595482, 22.25215468484642, 22.460487838713764, 22.563100349933585, 22.534722289323664, 22.657510446856737, 22.867686766974646, 22.884285817701304, 22.83175340755416, 22.95262222199461, 23.059965864195345, 22.965824713479723, 22.917348010866952]
+dt = 0.25
+output = {"theta" = 4.000002000116356e-06, "sigma" = 0.1984028625455483, "mu" = -126383.5293214675, "rho" = 0.999999, "half_life" = 173286.70849159133, "stationary_std" = 70.14598721887498, "r2" = 0.9838436232153576}
+
+[[fit]]
+values = [20.2, 20.254, 20.434049475058966, nan, inf, -inf, 20.44434545676402, 20.350994344920526, 20.42078899135189, 20.512200753992623, 20.394591373908252, 20.27501425976217, 20.34229084209902, 20.355875012631273, 20.205328657896374, 20.174698714199533, 20.312540714674043, 20.32809460512741, 20.24710099320877, 20.346729113428346, 20.517628439649418, 20.49531802876324, 20.44095505524701, 20.56286977412467, 20.635632917112336, 20.50412447541039, 20.43534500602048, 20.523437763913464, 20.489962249857506, 20.32831667299529, 20.334912138188297, 20.454149650812408, 20.413800577935664, 20.34358901076542, 20.479783281776992, 20.623138234545685, 20.575351084092357, 20.57076278332939, 20.731185740507904, 20.77723121687407, 20.65002721332961, 20.64111237875745, 20.737724411112865, 20.661068447900327, 20.50967624435256, 20.55315413125053, 20.639416513851096, 20.551175552837268, 20.50477343296343, 20.66384625578582, 20.765486001714912, 20.703606947658518, 20.754068620798492, 20.93557084471712, 20.951796534108812, 20.847896917531802, 20.901156366430733, 20.993851744808644, 20.884373656220248, 20.763661470209232, 20.838967455310424, 20.882339660334605, 20.760622899123003, 20.747978452866075, 20.913474455166842, 20.965344054063365, 20.903500172208634, 21.00811359509121, 21.19187850694992, 21.18075029294908, 21.117693371101378, 21.228728879286507, 21.307011156265048, 21.180620962591508, 21.107820555340705, 21.206287388783938, 21.202998972251656, 21.066997095104306, 21.093866301498217, 21.24890126961947, 21.25023171678786, 21.203484876613736, 21.355389047836002, 21.523859256959817, 21.493291293250365, 21.485110922079727, 21.643788810927, 21.70096559061688, 21.577524420275637, 21.564922377013385, 21.675967069066115, 21.62939850143115, 21.50095891831539, 21.568504364662854, 21.698308342975555, 21.655947934029758, 21.638476207506038, 21.825945159673072, 21.96537295291212, 21.927937797631973, 21.98363709627116, 22.17587662070938, 22.210479014144372, 22.111752865274937, 22.165705448712433, 22.27891361625288, 22.199804587901298, 22.101133581769368, 22.206320941325146, 22.300685745393196, 22.22859421595482, 22.25215468484642, 22.460487838713764, 22.563100349933585, 22.534722289323664, 22.657510446856737, 22.867686766974646, 22.884285817701304, 22.83175340755416, 22.95262222199461, 23.059965864195345, 22.965824713479723, 22.917348010866952]
+dt = 1.0
+output = {"theta" = 1.000000500029089e-06, "sigma" = 0.09920143127277414, "mu" = -126383.5293214675, "rho" = 0.999999, "half_life" = 693146.8339663653, "stationary_std" = 70.14598721887498, "r2" = 0.9838436232153576}
+
+[[optimum]]
+theta = 0.1
+sigma = 1.0
+gap = 1.0
+cost = 0.0
+bounds = [0.25, 4.0]
+output = {"profit_take" = 0.25, "stop_loss" = 4.0, "return_rate" = 0.2047337618640143, "hit_probability" = 0.9818109339827512, "expected_gain" = 0.17269646942669264, "std_gain" = 0.5679473295099274, "expected_holding_time" = 0.8435172970709098, "time_scaled_sharpe" = 0.3310765346975124}
+
+[[optimum]]
+theta = 0.2
+sigma = 1.0
+gap = 1.5
+cost = 0.02
+bounds = [0.2, 3.0]
+output = {"profit_take" = 0.36566923414047753, "stop_loss" = 3.0, "return_rate" = 0.39350292475907245, "hit_probability" = 0.9860061230066623, "expected_gain" = 0.29857047287765476, "std_gain" = 0.3953486542735634, "expected_holding_time" = 0.7587503271048331, "time_scaled_sharpe" = 0.8669961031351442}
+
+[[optimum]]
+theta = 0.05
+sigma = 1.0
+gap = 0.5
+cost = 0.01
+bounds = [0.1, 2.0]
+output = {"profit_take" = 0.5516324876152024, "stop_loss" = 2.0, "return_rate" = 0.039550440388668576, "hit_probability" = 0.8049160514440235, "expected_gain" = 0.0438499466675198, "std_gain" = 1.011123456941545, "expected_holding_time" = 1.1087094413260454, "time_scaled_sharpe" = 0.04118660654228557}
+
+[[optimum]]
+theta = 0.3
+sigma = 1.0
+gap = 0.0
+cost = 0.02
+bounds = [0.25, 2.0]
+output = {"profit_take" = 0.32301888357962827, "stop_loss" = 2.0, "return_rate" = 0.12928726004474173, "hit_probability" = 0.9072778798798966, "expected_gain" = 0.08762364761508952, "std_gain" = 0.6737745119121784, "expected_holding_time" = 0.6777438672980315, "time_scaled_sharpe" = 0.15796975761279788}
+
+[[optimum]]
+theta = 0.2
+sigma = 1.0
+gap = -0.5
+cost = 0.01
+bounds = [0.25, 3.0]
+output = {"profit_take" = 0.25, "stop_loss" = 3.0, "return_rate" = 0.0691474120652364, "hit_probability" = 0.9443457465808743, "expected_gain" = 0.059123676387841585, "std_gain" = 0.7450716793007668, "expected_holding_time" = 0.8550381658833734, "time_scaled_sharpe" = 0.08581646583509663}
+
+[[optimum]]
+theta = 0.15
+sigma = 1.0
+gap = 1.0
+cost = 0.5
+bounds = [0.25, 4.0]
+output = {"profit_take" = 1.754267612888306, "stop_loss" = 4.0, "return_rate" = 0.13469288601741267, "hit_probability" = 0.9482573616608104, "expected_gain" = 0.9565266248877147, "std_gain" = 1.2746103829584945, "expected_holding_time" = 7.101537825569036, "time_scaled_sharpe" = 0.28160697592720046}
+
+[[invalid]]
+pt = 0.0
+sl = 1.0
+output = {"hit_probability" = nan, "expected_gain" = -inf, "std_gain" = nan, "expected_holding_time" = nan, "return_rate" = -inf, "time_scaled_sharpe" = -inf}
+
+[[invalid]]
+pt = 1.0
+sl = 0.0
+output = {"hit_probability" = nan, "expected_gain" = -inf, "std_gain" = nan, "expected_holding_time" = nan, "return_rate" = -inf, "time_scaled_sharpe" = -inf}
+
+[[invalid]]
+pt = -1.0
+sl = 2.0
+output = {"hit_probability" = nan, "expected_gain" = -inf, "std_gain" = nan, "expected_holding_time" = nan, "return_rate" = -inf, "time_scaled_sharpe" = -inf}
+
+[[invalid]]
+pt = 2.0
+sl = -1.0
+output = {"hit_probability" = nan, "expected_gain" = -inf, "std_gain" = nan, "expected_holding_time" = nan, "return_rate" = -inf, "time_scaled_sharpe" = -inf}

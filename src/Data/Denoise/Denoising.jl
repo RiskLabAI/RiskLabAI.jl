@@ -6,8 +6,10 @@ AFML Ch. 2): Marcenko–Pastur PDF, eigenvalue denoising, and cov↔corr helpers
 The closed-form pieces (`marcenko_pastur_pdf`, `pca`, `cov_to_corr`,
 `corr_to_cov`, `denoised_corr`, `optimal_portfolio`) match Python to numerical
 precision. The Marcenko–Pastur *fit* (`find_max_eval` / `denoise_cov`) uses a
-Gaussian KDE and a 1-D minimiser; these are implementation-defined (Python uses
-scikit-learn's KDE + SciPy's optimiser), so they are validated behaviourally.
+Gaussian KDE and a projected scalar local optimizer with the reference initial
+point, bounds, finite differences, line search and stopping rules. Shared cases
+check fitted cutoffs and downstream factor counts; roundoff remains relevant
+when an eigenvalue is close to the cutoff.
 
 Reference: De Prado, M. (2018), Advances in Financial Machine Learning, Ch. 2.
 """
@@ -27,7 +29,7 @@ function marcenko_pastur_pdf(variance::Real, q::Real; num_points::Integer = 1000
     lambda_min = variance * (1 - sqrt(1 / q))^2
     lambda_max = variance * (1 + sqrt(1 / q))^2
     e_min = max(lambda_min, 1e-10)
-    eigenvalues = collect(range(e_min, lambda_max; length = num_points))
+    eigenvalues = num_points == 1 ? [Float64(e_min)] : collect(range(e_min, lambda_max; length = num_points))
     pdf = similar(eigenvalues)
     for i in eachindex(eigenvalues)
         e = eigenvalues[i]
@@ -122,6 +124,41 @@ function _gaussian_kde_density(
     return density
 end
 
+"""Differentiate the existing MP-density loss, including its moving grid."""
+function _mp_pdf_fit_gradient(variance::Real, q::Real, eigenvalues::AbstractVector{<:Real}, bandwidth::Real)
+    grid, density = marcenko_pastur_pdf(variance, q; num_points=length(eigenvalues))
+    lower_rate = (1-sqrt(1/q))^2
+    upper_rate = (1+sqrt(1/q))^2
+    lower, upper = variance*lower_rate, variance*upper_rate
+    normalization = 1/(length(eigenvalues)*bandwidth*sqrt(2pi))
+    gradient = 0.0
+    for index in eachindex(grid)
+        position = length(grid)==1 ? 0.0 : (index-1)/(length(grid)-1)
+        if lower >= 1e-10
+            grid_gradient = lower_rate + position*(upper_rate-lower_rate)
+            density_gradient = -density[index]/variance
+        else
+            grid_gradient = position*upper_rate
+            density_gradient = 0.0
+            if upper > grid[index] > lower
+                density_gradient = density[index]*(-1/variance-grid_gradient/grid[index]+0.5*((upper_rate-grid_gradient)/(upper-grid[index])+(grid_gradient-lower_rate)/(grid[index]-lower)))
+            end
+        end
+        empirical, empirical_gradient = 0.0, 0.0
+        for value in eigenvalues
+            distance = grid[index]-value
+            kernel = exp(-0.5*(distance/bandwidth)^2)
+            empirical += kernel
+            empirical_gradient -= kernel*distance
+        end
+        empirical *= normalization
+        empirical_gradient *= normalization*grid_gradient/bandwidth^2
+        gradient += 2*(empirical-density[index])*(empirical_gradient-density_gradient)
+    end
+    return gradient
+end
+
+
 function _mp_pdf_fit_error(
     variance::Real,
     q::Real,
@@ -160,26 +197,31 @@ end
     find_max_eval(eigenvalues, q, bandwidth) -> (lambda_max, variance)
 
 Fit the Marcenko–Pastur distribution to the observed eigenvalues to find the
-noise cutoff `lambda_max` and the implied variance. Mirrors Python's
-`find_max_eval`; the KDE + minimiser are implementation-defined (behavioural
-parity only).
+noise cutoff `lambda_max` and the implied variance. The scalar local fit follows
+the reference bounded optimization contract, including variance one on failure.
+It does not guarantee a global minimum. Matrix inputs use their diagonal.
 """
 function find_max_eval(eigenvalues::AbstractVector{<:Real}, q::Real, bandwidth::Real)
-    variance = _golden_section_min(
-        v -> _mp_pdf_fit_error(v, q, eigenvalues, bandwidth),
-        1e-5,
-        1 - 1e-5,
-    )
+    isempty(eigenvalues) && throw(ArgumentError("at least one eigenvalue is required"))
+    all(isfinite, eigenvalues) || throw(ArgumentError("eigenvalues must be finite"))
+    isfinite(q) && q > 0 || throw(ArgumentError("q must be positive and finite"))
+    isfinite(bandwidth) && bandwidth > 0 || throw(ArgumentError("bandwidth must be positive and finite"))
+    fitted = _mp_bounded_local_min(v -> _mp_pdf_fit_error(v, q, eigenvalues, bandwidth); derivative = v -> _mp_pdf_fit_gradient(v, q, eigenvalues, bandwidth))
+    variance = fitted.converged ? fitted.variance : 1.
     lambda_max = variance * (1 + sqrt(1 / q))^2
     return lambda_max, variance
 end
+
+find_max_eval(eigenvalues::AbstractMatrix{<:Real}, q::Real, bandwidth::Real) =
+    find_max_eval(diag(eigenvalues), q, bandwidth)
 
 """
     denoise_cov(cov0, q; bandwidth=0.01) -> Matrix
 
 De-noise a covariance matrix: convert to correlation, fit Marcenko–Pastur to
 locate the signal eigenvalues, rebuild the denoised correlation, and convert
-back. Mirrors Python's `denoise_cov` (KDE-fit step is behavioural parity).
+back. Mirrors Python's `denoise_cov` with local MP fitting and strict cutoff
+comparison. Eigensolver roundoff near the cutoff can affect factor selection.
 """
 function denoise_cov(cov0::AbstractMatrix{<:Real}, q::Real; bandwidth::Real = 0.01)
     corr0 = cov_to_corr(cov0)
@@ -278,6 +320,11 @@ return matrix. `random_state` seeds Julia's RNG (see the divergence note above;
 the Python reference uses NumPy's PCG64). Mirrors Python's
 `nercome_denoised_covariance`.
 
+Optional `permutations` supplies an `n_splits × T` matrix of one-based row
+permutations for numerical replay. Repeated eigenvalues permit different
+orthonormal bases across linear-algebra implementations; exact eigenvectors
+inside such eigenspaces are not promised.
+
 Reference: Lam, C. (2016). Nonparametric eigenvalue-regularized precision or
 covariance matrix estimator. The Annals of Statistics, 44(3), 928–953.
 """
@@ -286,10 +333,15 @@ function nercome_denoised_covariance(
     n_splits::Integer = 50,
     split_fraction::Real = 2.0 / 3.0,
     random_state::Union{Integer,Nothing} = nothing,
+    permutations = nothing,
 )
     data = Float64.(returns)
     n, p = size(data)
     n >= 4 || throw(ArgumentError("NERCOME needs at least 4 observations"))
+    if permutations !== nothing
+        size(permutations) == (n_splits, n) || throw(ArgumentError("permutations must have shape n_splits by observations"))
+        all(row -> sort(collect(row)) == collect(1:n), eachrow(permutations)) || throw(ArgumentError("each supplied row must permute all observation indices"))
+    end
     sample_std = vec(std(data; dims = 1))                 # ddof=1 (corrected), per column
     sample_std = [s <= 0 ? 1.0 : s for s in sample_std]
     z = data ./ sample_std'
@@ -300,8 +352,8 @@ function nercome_denoised_covariance(
         random_state === nothing ? default_rng() : MersenneTwister(random_state)
     accumulated = zeros(p, p)
     used = 0
-    for _ = 1:n_splits
-        order = randperm(rng, n)
+    for split = 1:n_splits
+        order = permutations === nothing ? randperm(rng, n) : Int.(vec(permutations[split, :]))
         first, second = order[1:m], order[(m+1):end]
         length(second) < 2 && continue
         cov_first = cov(view(z, first, :))                # columns = variables (dims=1)

@@ -19,6 +19,7 @@ _cv_splits(cv::KFoldCV, n_samples) = cv_split(cv, n_samples)
 _cv_splits(cv::WalkForwardCV, n_samples) = cv_split(cv, n_samples)
 _cv_splits(cv::PurgedKFoldCV, _) = cv_split(cv)
 _cv_splits(cv::CombinatorialPurgedCV, _) = cv_split(cv)
+_cv_splits(cv::AdaptiveCombinatorialPurgedCV, _) = cv_split(cv)
 
 function _accuracy(forest, x_test, y_test)
     return sum(apply_forest(forest, x_test) .== y_test) / length(y_test)

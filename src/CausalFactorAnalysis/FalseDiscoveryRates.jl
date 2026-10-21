@@ -539,6 +539,10 @@ function max_selection_null_probability(
     absolute = _fdr_positive("absolute_tolerance", absolute_tolerance)
     relative = _fdr_positive("relative_tolerance", relative_tolerance)
     subdivisions = _fdr_positive_integer("max_subintervals", max_subintervals)
+    applicable(null_density, threshold_value) ||
+        throw(ArgumentError("null_density must be callable with a real value"))
+    applicable(mixture_cdf, threshold_value) ||
+        throw(ArgumentError("mixture_cdf must be callable with a real value"))
 
     checked_cdf(value) = _fdr_probability("mixture_cdf return value", mixture_cdf(value))
     mixture_at_threshold = checked_cdf(threshold_value)

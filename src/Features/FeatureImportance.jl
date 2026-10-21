@@ -3,15 +3,16 @@ Feature importance — native Julia port mirroring the Python
 `RiskLabAI.features.feature_importance` sub-package (López de Prado, AFML Ch. 8).
 
 This file wires the **backend-independent** pieces: PCA-based feature
-orthogonalisation and the weighted Kendall-τ. The classifier-driven importances
-(MDI, MDA, SFI and their clustered variants) build on a tree ensemble and are
-wired with the `DecisionTree.jl` backend in a follow-up.
+orthogonalisation and the weighted Kendall-τ. The existing classifier-driven
+convenience methods use DecisionTree.jl. Caller-estimator overloads and clustered
+aggregation are provided by FeatureImportanceContracts.jl.
 
 Parity notes:
   * `orthogonal_features` is **exact** up to the unavoidable sign ambiguity of
-    eigenvectors (eigenvalues, cumulative variance and the retained component
-    count match Python exactly; the transformed columns are sign-free
-    orthogonal). Verified in `test/runtests.jl`.
+    eigenvectors and bases of repeated eigenspaces. Eigenvalues and cumulative
+    variance match within floating-point tolerance; a 100% variance threshold
+    can retain different numbers of numerically zero components. Invariant
+    reconstruction and weighted-rank fixtures are checked in the test suite.
   * `calculate_weighted_tau` implements Vigna's additive-hyperbolic weighted
     Kendall-τ (the estimator `scipy.stats.weightedtau` computes); validated
     against its mathematical definition (perfect concordance → 1, perfect
@@ -30,7 +31,10 @@ using LinearAlgebra: eigen, Symmetric
 PCA orthogonalisation of a `observations × features` matrix: z-score normalise,
 eigendecompose `Xᵀ X` (eigenvalues descending), retain the leading components
 whose cumulative explained variance first reaches `variance_threshold`, and
-project. Returns the transformed (orthogonal) features and the retained
+project. Columns with undefined normalized observations, including constant or
+missing columns, are removed as in the public reference. At least one usable
+column is required. Returned eigenvector rows correspond to retained columns
+in their original order. Returns the transformed features and the retained
 eigenvalues/eigenvectors/cumulative variance. Mirrors Python's
 `orthogonal_features`.
 """
@@ -38,9 +42,12 @@ function orthogonal_features(
     features::AbstractMatrix{<:Real};
     variance_threshold::Real = 0.95,
 )
-    means = mean(features; dims = 1)
-    stds = std(features; dims = 1)                       # sample std (ddof = 1)
-    normalized = (features .- means) ./ stds
+    retained = [column for column in axes(features, 2) if all(isfinite, features[:, column]) && size(features, 1) >= 2 && std(features[:, column]) > 0]
+    isempty(retained) && throw(ArgumentError("PCA requires a nonconstant complete feature column"))
+    selected = features[:, retained]
+    means = mean(selected; dims = 1)
+    stds = std(selected; dims = 1)
+    normalized = (selected .- means) ./ stds
 
     dot_product = normalized' * normalized
     factorization = eigen(Symmetric(Matrix(dot_product)))
@@ -72,6 +79,7 @@ function calculate_weighted_tau(
     feature_importances::AbstractVector{<:Real},
     principal_component_ranks::AbstractVector{<:Real},
 )
+    length(feature_importances) == length(principal_component_ranks) || throw(DimensionMismatch("importance and rank vectors must align"))
     weights = 1.0 ./ principal_component_ranks
     return _weighted_tau(collect(float(feature_importances)), collect(weights))
 end
@@ -91,8 +99,8 @@ function _weighted_tau_one(x, y, key)
     denominator_y = 0.0
     for i = 1:n, j = (i+1):n
         weight = w[i] + w[j]
-        sign_x = sign(x[i] - x[j])
-        sign_y = sign(y[i] - y[j])
+        sign_x = cmp(x[i], x[j])
+        sign_y = cmp(y[i], y[j])
         numerator += weight * sign_x * sign_y
         denominator_x += weight * abs(sign_x)
         denominator_y += weight * abs(sign_y)
@@ -101,7 +109,14 @@ function _weighted_tau_one(x, y, key)
 end
 
 # Symmetric weighted-τ (scipy's rank=True): average over both orderings.
-_weighted_tau(x, y) = 0.5 * (_weighted_tau_one(x, y, x) + _weighted_tau_one(x, y, y))
+_tau_score(value) = isnan(value) ? (0, 0.0) : (1, value == 0 ? 0.0 : Float64(value))
+
+function _weighted_tau(x, y)
+    left, right = _tau_score.(x), _tau_score.(y)
+    forward = collect(zip(left, right))
+    backward = collect(zip(right, left))
+    return 0.5 * (_weighted_tau_one(left, right, forward) + _weighted_tau_one(left, right, backward))
+end
 
 # --------------------------------------------------------------------------- #
 # Classifier-driven importances (DecisionTree.jl backend).
@@ -511,7 +526,7 @@ function conditional_predictive_impact(
         d = differences[j]
         importance[j] = sum(d) / length(d)
         s = std(d)                                          # sample std (ddof = 1)
-        if s < 1e-12
+        if _std_pop(d) < 1e-12
             p_value[j] = 1.0
         else
             t_stat = importance[j] / (s / sqrt(length(d)))

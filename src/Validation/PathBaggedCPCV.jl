@@ -33,17 +33,20 @@ Moving-block bootstrap row indices (1-based) for a length-`n_observations` serie
 random block start points each contribute `block_size` consecutive wrap-around
 rows, truncated to `n_observations`. Blocks preserve the serial structure. Mirrors
 Python's `moving_block_bootstrap_indices` (which returns 0-based indices).
+Optional one-based `starts` permits exact primitive-draw replay.
 """
 function moving_block_bootstrap_indices(
     n_observations::Integer,
     block_size::Integer,
-    rng::AbstractRNG,
+    rng::AbstractRNG;
+    starts = nothing,
 )
     block_size = max(Int(block_size), 1)
     n_blocks = cld(n_observations, block_size)
-    starts = rand(rng, 0:(n_observations-1), n_blocks)
+    block_starts = starts === nothing ? rand(rng, 0:(n_observations-1), n_blocks) : Vector{Int}(starts) .- 1
+    length(block_starts) == n_blocks && all(start -> 0 <= start < n_observations, block_starts) || throw(ArgumentError("Supply one valid start per circular block."))
     out = Int[]
-    for s in starts, o = 0:(block_size-1)
+    for s in block_starts, o = 0:(block_size-1)
         push!(out, (s + o) % n_observations)
     end
     return out[1:n_observations] .+ 1
@@ -64,7 +67,9 @@ overfitting (PBO) estimate whenever the CPCV path set is small or noisy; it
 converges to plain CPCV in the data-rich limit and is neutral on which model is
 selected.
 
-Mirrors Python's `bagged_probability_of_backtest_overfitting`.
+Optional `bootstrap_rows` supplies one complete one-based row vector per bag,
+and `rank_order` forwards a tied-score ordering provider through every CSCV
+path. Equal native and NumPy seeds do not imply equal draws.
 """
 function bagged_probability_of_backtest_overfitting(
     performances::AbstractMatrix{<:Real};
@@ -74,20 +79,26 @@ function bagged_probability_of_backtest_overfitting(
     risk_free_return::Real = 0.0,
     metric = nothing,
     rng::AbstractRNG = MersenneTwister(0),
+    bootstrap_rows = nothing,
+    rank_order = nothing,
 )
     P = float.(performances)
     t_len = size(P, 1)
+    n_bag >= 0 || throw(ArgumentError("n_bag must be nonnegative."))
+    bootstrap_rows === nothing || length(bootstrap_rows) == n_bag || throw(DimensionMismatch("Supply one row vector per bag."))
     bs = block_size === nothing ? max(t_len ÷ 20, 5) : block_size
     pbos = Float64[]
-    for _ = 1:n_bag
-        rows = moving_block_bootstrap_indices(t_len, bs, rng)
+    for bag = 1:n_bag
+        rows = bootstrap_rows === nothing ? moving_block_bootstrap_indices(t_len, bs, rng) : Vector{Int}(bootstrap_rows[bag])
+        length(rows) == t_len && all(index -> 1 <= index <= t_len, rows) || throw(ArgumentError("Each bag must contain one valid row position per observation."))
         pbo, _ = probability_of_backtest_overfitting(
             P[rows, :];
             n_partitions = n_partitions,
             risk_free_return = risk_free_return,
             metric = metric,
+            rank_order = rank_order,
         )
         push!(pbos, pbo)
     end
-    return (mean(pbos), pbos)
+    return (isempty(pbos) ? NaN : mean(pbos), pbos)
 end

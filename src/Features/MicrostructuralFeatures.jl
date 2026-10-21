@@ -7,7 +7,7 @@ volatility estimator.
 Representation note (deliberate divergence): pandas Series become plain
 `Vector`s; the rolling statistics replicate pandas' `rolling(window=w)` exactly —
 a result is `NaN` for the first `w-1` points and whenever the window still
-contains a `NaN` — so the warm-up `NaN` pattern and values match the Python
+contains a nonfinite value — so the warm-up `NaN` pattern and values match the Python
 implementation exactly (verified in `test/runtests.jl`).
 
 Reference: De Prado, M. (2018), Advances in Financial Machine Learning, Ch. 19;
@@ -26,7 +26,7 @@ function _rolling(x::AbstractVector{<:Real}, w::Integer, agg)
     out = fill(NaN, n)
     for i = w:n
         window = @view x[(i-w+1):i]
-        any(isnan, window) || (out[i] = agg(window))
+        all(isfinite, window) && (out[i] = agg(window))
     end
     return out
 end

@@ -43,30 +43,40 @@ function construct_bars_from_data(
     bars_list = Vector{Union{DateTime,Int,Float64}}[]
     tick_counter = imbalance_bars.tick_counter
 
-    n_row = size(data, 1)
-    imbalance_bars.previous_tick_imbalances = zeros(Float64, n_row)
-
-    for (k, tick_data) in enumerate(eachrow(data))
+    for tick_data in eachrow(data)
         tick_counter += 1
+        imbalance_bars.tick_counter = tick_counter
         (date_time, price, volume) = tick_data
         price = Float64(price)
         volume = Float64(volume)
 
         signed_tick = tick_rule(imbalance_bars, price)
         update_base_fields(imbalance_bars, price, signed_tick, volume)
+        imbalance_bars.close_price = price
 
         imbalance = imbalance_at_tick(T, price, signed_tick, volume)
-        imbalance_bars.previous_tick_imbalances[k] = imbalance
+        push!(imbalance_bars.previous_tick_imbalances, imbalance)
         imbalance_bars.cumulative_theta += imbalance
 
         # First-time warm-up of E[b].
         if isnan(imbalance_bars.expected_imbalance)
             imbalance_bars.expected_imbalance = ewma_expected_imbalance(
                 imbalance_bars,
-                view(imbalance_bars.previous_tick_imbalances, 1:k),
+                imbalance_bars.previous_tick_imbalances,
                 imbalance_bars.expected_imbalance_window;
                 warm_up = true,
             )
+        end
+
+        if imbalance_bars.analyse_thresholds !== nothing
+            snapshot = _information_bar_snapshot(imbalance_bars, date_time)
+            merge!(snapshot, Dict(
+                CUMULATIVE_THETA => imbalance_bars.cumulative_theta,
+                EXPECTED_IMBALANCE => imbalance_bars.expected_imbalance,
+                PREVIOUS_BARS_N_TICKS_LIST => imbalance_bars.previous_bars_number_of_ticks,
+                PREVIOUS_TICK_IMBALANCES_LIST => imbalance_bars.previous_tick_imbalances,
+            ))
+            push!(imbalance_bars.analyse_thresholds, snapshot)
         end
 
         expected_ticks = imbalance_bars.expected_ticks_number
@@ -95,7 +105,7 @@ function construct_bars_from_data(
             imbalance_bars.expected_ticks_number = expected_number_of_ticks(imbalance_bars)
             imbalance_bars.expected_imbalance = ewma_expected_imbalance(
                 imbalance_bars,
-                view(imbalance_bars.previous_tick_imbalances, 1:k),
+                imbalance_bars.previous_tick_imbalances,
                 imbalance_bars.expected_imbalance_window;
                 warm_up = false,
             )

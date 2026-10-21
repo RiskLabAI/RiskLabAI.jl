@@ -4,12 +4,19 @@
 Feature-engineering submodule, mirroring the Python `RiskLabAI.features`
 sub-package.
 
-This PR wires the **entropy features** (Shannon, plug-in, Lempel–Ziv and
-Kontoyiannis entropy). Microstructural features and structural-break tests are
-wired in subsequent PRs; classifier-driven feature importance is deferred
-pending a Julia ML-backend decision.
+Includes entropy, microstructure, structural breaks, probability/order-flow
+features and feature importance. Importance supports both the existing native
+forest conveniences and explicit caller-estimator weighted contracts.
 """
 module Features
+
+include("FeatureInputs.jl")
+include("ProbabilityAmbiguity.jl")
+include("OrderFlow.jl")
+
+export probability_ambiguity, normal_prior_bin_probabilities,
+    hawkes_intensity, hawkes_integrated_intensity, hawkes_log_likelihood,
+    simulate_hawkes, fit_hawkes, volume_synchronized_pin
 
 # Entropy estimators (AFML Ch. 18).
 include("EntropyFeatures.jl")
@@ -23,6 +30,8 @@ include("StructuralBreaks.jl")
 # Feature importance — backend-independent pieces (PCA orthogonalisation, weighted-τ).
 # Classifier-driven importances (MDI/MDA/SFI) follow with the DecisionTree.jl backend.
 include("FeatureImportance.jl")
+include("FeatureImportanceContracts.jl")
+include("DebiasedImportanceContracts.jl")
 
 export
     # entropy features
@@ -64,6 +73,8 @@ export
     feature_importance_mdi,
     feature_importance_mda,
     feature_importance_sfi,
+    clustered_feature_importance_mdi,
+    clustered_feature_importance_mda,
     get_test_dataset,
     mdi_plus_importance,
     conditional_predictive_impact

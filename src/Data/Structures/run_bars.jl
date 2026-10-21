@@ -17,7 +17,7 @@ clamped to `expected_ticks_number_bounds`.
 """
 function ExpectedRunBars{T}(;
     bar_type::String,
-    window_size_for_expected_n_ticks_estimation::Int,
+    window_size_for_expected_n_ticks_estimation::Union{Int,Nothing},
     expected_imbalance_window::Int,
     initial_estimate_of_expected_n_ticks_in_bar::Float64,
     expected_ticks_number_bounds::Union{Tuple{Float64,Float64},Nothing} = nothing,
@@ -40,9 +40,12 @@ end
 
 function expected_number_of_ticks(bars::ExpectedRunBarsType)::Float64
     previous = bars.previous_bars_number_of_ticks
+    window = bars.window_size_for_expected_n_ticks_estimation
+    if isnothing(window) || window <= 0
+        return isempty(previous) ? NaN : mean(previous)
+    end
     isempty(previous) && return bars.expected_ticks_number
 
-    window = bars.window_size_for_expected_n_ticks_estimation
     expected = ewma(collect(Float64, last(previous, window)), window)[end]
     return min(
         max(expected, bars.expected_ticks_number_lower_bound),
@@ -68,7 +71,7 @@ function FixedRunBars{T}(;
 ) where {T<:Metric}
     base = AbstractRunBars{T}(
         bar_type = bar_type,
-        window_size_for_expected_n_ticks_estimation = window_size_for_expected_n_ticks_estimation,
+        window_size_for_expected_n_ticks_estimation = nothing,
         expected_imbalance_window = expected_imbalance_window,
         initial_estimate_of_expected_n_ticks_in_bar = initial_estimate_of_expected_n_ticks_in_bar,
         does_analyse_thresholds = does_analyse_thresholds,

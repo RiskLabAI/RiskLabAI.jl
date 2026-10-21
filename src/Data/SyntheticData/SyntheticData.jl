@@ -11,12 +11,13 @@ Parity notes:
   * `random_cov`, `form_true_matrix`, `simulates_cov_mu`,
     `heston_merton_log_returns`, `generate_prices_from_regimes` and
     `parallel_generate_prices` are **stochastic** (Monte-Carlo); they take an
-    optional `random_state`/`rng` and are validated structurally.
+    optional `random_state`/`rng`. Supplied draws allow numerical replay without
+    assuming equal random streams across languages.
 
 Deliberate divergence: numba/joblib/quantecon are replaced by native Julia
-(plain loops, a native Markov-chain simulate, `Distributions`). The optional
-Ledoit–Wolf shrinkage in `simulates_cov_mu` (`shrink=true`) is deferred to the
-covariance-estimation backend; the default `shrink=false` (`np.cov`) is exact.
+(plain loops, a native Markov-chain simulate, `Distributions`). Ledoit–Wolf
+shrinkage in `simulates_cov_mu` uses the centered maximum-likelihood covariance
+and scaled-identity target. The default `shrink=false` uses sample covariance.
 Price generators return a plain price vector (Python returns a business-day
 indexed Series).
 
@@ -25,8 +26,9 @@ Reference: De Prado, M. (2020), Machine Learning for Asset Managers, Ch. 2.
 
 using Random: AbstractRNG, MersenneTwister, default_rng, shuffle
 using Statistics: mean, cov
-using LinearAlgebra: Symmetric, Diagonal
+using LinearAlgebra: Symmetric, Diagonal, diag
 using Distributions: MvNormal, Poisson
+using CovarianceEstimation: LinearShrinkage, DiagonalCommonVariance
 
 _synth_rng(random_state) =
     random_state === nothing ? default_rng() :
@@ -59,11 +61,16 @@ end
 Random positive-definite covariance `W Wᵀ + diag(u)` with `W` a
 `num_columns × num_factors` standard-normal matrix and `u` uniform. Stochastic.
 Mirrors Python's `random_cov`.
+Optional `normal_draws` and `uniform_draws` provide the matrix and diagonal
+draws directly, with shapes `(num_columns, num_factors)` and `num_columns`.
 """
-function random_cov(num_columns::Integer, num_factors::Integer; rng = default_rng())
-    w = randn(rng, num_columns, num_factors)
+function random_cov(num_columns::Integer, num_factors::Integer; rng = default_rng(), normal_draws = nothing, uniform_draws = nothing)
+    w = normal_draws === nothing ? randn(rng, num_columns, num_factors) : Matrix{Float64}(normal_draws)
+    u = uniform_draws === nothing ? rand(rng, num_columns) : Float64.(uniform_draws)
+    size(w) == (num_columns, num_factors) && all(isfinite, w) || throw(ArgumentError("normal draws must have the requested finite matrix shape"))
+    length(u) == num_columns && all(x -> isfinite(x) && 0 <= x <= 1, u) || throw(ArgumentError("uniform draws must have num_columns entries in [0, 1]"))
     cov = w * w'
-    cov += Diagonal(rand(rng, num_columns))
+    cov += Diagonal(u)
     return cov
 end
 
@@ -73,19 +80,29 @@ end
 Shuffled block-diagonal correlation converted to a covariance matrix with random
 volatilities, plus a random mean vector. Stochastic. Mirrors Python's
 `form_true_matrix`.
+Optional `permutation`, `standard_deviation_draws` and standard `normal_draws`
+replay the public draws. The permutation uses Julia's one-based indices.
 """
 function form_true_matrix(
     n_blocks::Integer,
     block_size::Integer,
     block_correlation::Real;
     rng = default_rng(),
+    permutation = nothing,
+    standard_deviation_draws = nothing,
+    normal_draws = nothing,
 )
     correlation = form_block_matrix(n_blocks, block_size, block_correlation)
-    order = shuffle(rng, collect(1:size(correlation, 1)))
+    n = size(correlation, 1)
+    order = permutation === nothing ? shuffle(rng, collect(1:n)) : Int.(permutation)
+    sort(order) == collect(1:n) || throw(ArgumentError("permutation must contain every matrix index exactly once"))
     correlation = correlation[order, order]
-    standard_deviations = rand(rng, size(correlation, 1)) .* 0.15 .+ 0.05  # U(0.05, 0.2)
+    standard_deviations = standard_deviation_draws === nothing ? rand(rng, n) .* 0.15 .+ 0.05 : Float64.(standard_deviation_draws)
+    length(standard_deviations) == n && all(x -> isfinite(x) && .05 <= x <= .2, standard_deviations) || throw(ArgumentError("standard deviation draws must have n entries in [0.05, 0.2]"))
+    normal = normal_draws === nothing ? randn(rng, n) : Float64.(normal_draws)
+    length(normal) == n && all(isfinite, normal) || throw(ArgumentError("normal draws must have n finite entries"))
     covariance = corr_to_cov(correlation, standard_deviations)
-    mu = randn(rng, size(covariance, 1)) .* standard_deviations .+ standard_deviations
+    mu = normal .* standard_deviations .+ standard_deviations
     return mu, covariance
 end
 
@@ -94,8 +111,10 @@ end
 
 Draw `n_observations` multivariate-normal samples from `(mu, covariance)` and
 return their sample mean and covariance. Stochastic. Mirrors Python's
-`simulates_cov_mu` for the default `shrink=false` path; `shrink=true`
-(Ledoit–Wolf) is deferred to the covariance-estimation backend.
+`simulates_cov_mu`. The `shrink=false` path uses unbiased sample covariance;
+`shrink=true` uses centered Ledoit–Wolf scaled-identity shrinkage with
+maximum-likelihood normalization. Degenerate targets retain their empirical
+covariance. Native random streams need not match NumPy for equal seeds.
 """
 function simulates_cov_mu(
     mu::AbstractVecOrMat{<:Real},
@@ -104,18 +123,33 @@ function simulates_cov_mu(
     shrink::Bool = false,
     rng = default_rng(),
 )
-    shrink && throw(
-        ArgumentError(
-            "Ledoit–Wolf shrinkage (shrink=true) is deferred to the " *
-            "covariance-estimation backend; use shrink=false",
-        ),
-    )
     samples = permutedims(
         rand(rng, MvNormal(vec(mu), Symmetric(Matrix(covariance))), n_observations),
     )
     mu1 = vec(mean(samples; dims = 1))
-    cov1 = cov(samples)
+    cov1 = shrink ? _ledoit_wolf_covariance(samples) : cov(samples)
     return mu1, cov1
+end
+
+function _ledoit_wolf_covariance(samples::AbstractMatrix{<:Real})
+    n, p = size(samples)
+    n > 0 && p > 0 && all(isfinite, samples) || throw(ArgumentError("samples must be nonempty and finite"))
+    shifted = Float64.(samples) .- samples[1:1, :]
+    centered = shifted .- mean(shifted; dims = 1)
+    all(isfinite, centered) || throw(ArgumentError("centered samples exceed floating-point range"))
+    scale = maximum(abs, centered)
+    scale == 0 && return zeros(p, p)
+    normalized = centered / scale
+    empirical = normalized' * normalized / n
+    target = Diagonal(fill(sum(diag(empirical)) / p, p))
+    covariance = if p == 1 || all(iszero, empirical - target)
+        empirical
+    else
+        Matrix(cov(LinearShrinkage(DiagonalCommonVariance(), :lw; corrected = false), normalized; dims = 1))
+    end
+    result = covariance .* scale^2
+    all(isfinite, result) || throw(ArgumentError("covariance exceeds floating-point range"))
+    return result
 end
 
 """
@@ -136,7 +170,7 @@ function drift_volatility_burst(
     explosion_filter_width::Real = 0.1,
 )
     w = explosion_filter_width
-    steps = collect(range(0.0, 1.0; length = bubble_length))
+    steps = bubble_length == 1 ? [0.0] : collect(range(0.0, 1.0; length = bubble_length))
     filtered = copy(steps)
     for k in eachindex(steps)
         s = steps[k]
@@ -245,6 +279,10 @@ end
 
 Draw correlated Wiener increments and Poisson jumps, then evaluate
 `compute_log_returns`. Stochastic. Mirrors Python's `heston_merton_log_returns`.
+`gaussian_draws` supplies an `n_steps × 3` matrix of already-correlated stock,
+volatility and jump-size outcomes; `poisson_draws` supplies nonnegative integer
+counts. Native sampling supports positive-semidefinite covariance, including
+`rho = ±1` and zero jump dispersion. Equal language seeds need not agree.
 """
 function heston_merton_log_returns(
     total_time::Real,
@@ -259,9 +297,17 @@ function heston_merton_log_returns(
     v::AbstractVector,
     regime_change::AbstractVector{Bool};
     random_state = nothing,
+    gaussian_draws = nothing,
+    poisson_draws = nothing,
 )
-    all(length(p) == n_steps for p in (mu, kappa, theta, xi, rho, lambda, m, v)) ||
+    n_steps > 0 && isfinite(total_time) && total_time >= 0 || throw(ArgumentError("n_steps must be positive and total_time finite and nonnegative"))
+    all(length(p) == n_steps for p in (mu, kappa, theta, xi, rho, lambda, m, v, regime_change)) ||
         throw(ArgumentError("all parameter vectors must have length n_steps"))
+    all(x -> isfinite(x) && abs(x) <= 1, rho) || throw(ArgumentError("correlations must be finite and in [-1, 1]"))
+    all(x -> isfinite(x) && x >= 0, lambda) || throw(ArgumentError("jump intensities must be finite and nonnegative"))
+    all(isfinite, m) && all(isfinite, v) || throw(ArgumentError("jump means and dispersions must be finite"))
+    gaussian_draws === nothing || (size(gaussian_draws) == (n_steps, 3) && all(isfinite, gaussian_draws)) || throw(ArgumentError("gaussian_draws must be a finite n_steps by 3 matrix"))
+    poisson_draws === nothing || (length(poisson_draws) == n_steps && all(x -> isfinite(x) && x >= 0 && isinteger(x), poisson_draws)) || throw(ArgumentError("poisson_draws must contain n_steps nonnegative integer counts"))
 
     rng = _synth_rng(random_state)
     dt = total_time / n_steps
@@ -272,12 +318,11 @@ function heston_merton_log_returns(
     jump_comp = Vector{Float64}(undef, n_steps)
     poisson_var = Vector{Float64}(undef, n_steps)
     for i = 1:n_steps
-        block = [1.0 rho[i] 0.0; rho[i] 1.0 0.0; 0.0 0.0 v[i]^2]
-        z = rand(rng, MvNormal([0.0, 0.0, m[i]], Symmetric(block)))
+        z = gaussian_draws === nothing ? _heston_merton_gaussian(rho[i], m[i], v[i], randn(rng, 3)) : view(gaussian_draws, i, :)
         dw_stock[i] = z[1]
         dw_vol[i] = z[2]
         jump_comp[i] = z[3]
-        poisson_var[i] = rand(rng, Poisson(lambda[i] * dt))
+        poisson_var[i] = poisson_draws === nothing ? rand(rng, Poisson(lambda[i] * dt)) : poisson_draws[i]
     end
 
     return compute_log_returns(
@@ -299,22 +344,33 @@ function heston_merton_log_returns(
     )
 end
 
-# Native categorical sampler + Markov-chain simulate (replaces quantecon).
-function _sample_categorical(rng, probabilities)
-    u = rand(rng)
-    cumulative = 0.0
-    for i in eachindex(probabilities)
-        cumulative += probabilities[i]
-        u <= cumulative && return i
-    end
-    return length(probabilities)
+function _heston_merton_gaussian(rho, jump_mean, jump_dispersion, normal)
+    return (normal[1], rho * normal[1] + sqrt(max(1 - rho^2, 0)) * normal[2], jump_mean + abs(jump_dispersion) * normal[3])
 end
 
-function _markov_simulate(transition_matrix, n_steps, n_states; rng)
+# Native categorical sampler + Markov-chain simulate (replaces quantecon).
+function _sample_categorical(rng, probabilities; uniform = nothing)
+    u = uniform === nothing ? rand(rng) : uniform
+    isfinite(u) && 0 <= u < 1 || throw(ArgumentError("transition uniforms must be in [0, 1)"))
+    cumulative = 0.0
+    last_positive = 0
+    for i in eachindex(probabilities)
+        cumulative += probabilities[i]
+        probabilities[i] > 0 && (last_positive = i)
+        u < cumulative && return i
+    end
+    return last_positive
+end
+
+function _markov_simulate(transition_matrix, n_steps, n_states; rng, initial_state = nothing, transition_uniforms = nothing)
+    n_steps > 0 && n_states > 0 || throw(ArgumentError("state and step counts must be positive"))
+    size(transition_matrix) == (n_states, n_states) && all(x -> isfinite(x) && x >= 0, transition_matrix) && all(x -> isapprox(x, 1; rtol = 1e-12, atol = 1e-12), sum(transition_matrix; dims = 2)) || throw(ArgumentError("transition rows must be finite nonnegative probability vectors"))
+    transition_uniforms === nothing || length(transition_uniforms) == n_steps - 1 || throw(ArgumentError("transition_uniforms must have n_steps - 1 entries"))
     states = Vector{Int}(undef, n_steps)
-    states[1] = rand(rng, 1:n_states)
+    states[1] = initial_state === nothing ? rand(rng, 1:n_states) : initial_state
+    1 <= states[1] <= n_states || throw(ArgumentError("initial_state must index a regime"))
     for t = 2:n_steps
-        states[t] = _sample_categorical(rng, view(transition_matrix, states[t-1], :))
+        states[t] = _sample_categorical(rng, view(transition_matrix, states[t-1], :); uniform = transition_uniforms === nothing ? nothing : transition_uniforms[t-1])
     end
     return states
 end
@@ -326,6 +382,11 @@ Simulate a Markov-switching Heston–Merton price path. `regimes` maps a regime
 name to a parameter dictionary (keys `"mu","kappa","theta","xi","rho","lam","m","v"`).
 Returns the price vector and the per-step regime names. Stochastic. Mirrors
 Python's `generate_prices_from_regimes` (without the business-day index).
+`regime_order` supplies the ordering of transition-matrix rows and columns;
+its default is dictionary iteration order. For cross-language replay, provide
+Python's insertion order, one-based `initial_state`, `transition_uniforms`,
+and the `gaussian_draws`/`poisson_draws` accepted by `heston_merton_log_returns`.
+Missing log returns are forward-filled before cumulative price construction.
 """
 function generate_prices_from_regimes(
     regimes::AbstractDict,
@@ -333,11 +394,17 @@ function generate_prices_from_regimes(
     total_time::Real,
     n_steps::Integer;
     random_state = nothing,
+    regime_order = nothing,
+    initial_state = nothing,
+    transition_uniforms = nothing,
+    gaussian_draws = nothing,
+    poisson_draws = nothing,
 )
     rng = _synth_rng(random_state)
-    regime_names = collect(keys(regimes))
+    regime_names = regime_order === nothing ? collect(keys(regimes)) : collect(regime_order)
+    length(regime_names) == length(regimes) && Set(regime_names) == Set(keys(regimes)) || throw(ArgumentError("regime_order must contain each regime name exactly once"))
     simulated =
-        _markov_simulate(transition_matrix, n_steps, length(regime_names); rng = rng)
+        _markov_simulate(transition_matrix, n_steps, length(regime_names); rng = rng, initial_state = initial_state, transition_uniforms = transition_uniforms)
     simulated_regimes = [regime_names[s] for s in simulated]
 
     parameter_keys = ["mu", "kappa", "theta", "xi", "rho", "lam", "m", "v"]
@@ -348,6 +415,7 @@ function generate_prices_from_regimes(
     while step <= n_steps
         name = simulated_regimes[step]
         params, regime_length = align_params_length(regimes[name])
+        regime_length > 0 || throw(ArgumentError("each regime must supply at least one parameter step"))
         take = min(regime_length, n_steps - step + 1)
         for k in parameter_keys
             append!(parameter_lists[k], params[k][1:take])
@@ -370,9 +438,21 @@ function generate_prices_from_regimes(
         parameter_lists["v"],
         regime_change;
         random_state = rand(rng, 0:999_999),
+        gaussian_draws = gaussian_draws,
+        poisson_draws = poisson_draws,
     )
 
-    prices = 100.0 .* exp.(cumsum(log_returns))
+    prices = Vector{Float64}(undef, n_steps)
+    previous, cumulative = NaN, 0.0
+    for i in eachindex(log_returns)
+        isnan(log_returns[i]) || (previous = log_returns[i])
+        if isnan(previous)
+            prices[i] = NaN
+        else
+            cumulative += previous
+            prices[i] = 100 * exp(cumulative)
+        end
+    end
     return prices, regime_path
 end
 

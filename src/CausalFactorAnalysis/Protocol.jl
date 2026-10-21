@@ -81,11 +81,47 @@ Base.@kwdef struct FoldEvidence
     refit_components::Tuple{Vararg{String}}
 end
 
+function FoldEvidence(
+    fold_id,
+    path_id,
+    train_ids::AbstractVector,
+    test_ids::AbstractVector,
+    fit_ids::AbstractVector,
+    prediction_ids::AbstractVector,
+    refit_id,
+    refit_components::AbstractVector,
+)
+    return FoldEvidence(
+        String(fold_id),
+        String(path_id),
+        Tuple(String.(train_ids)),
+        Tuple(String.(test_ids)),
+        Tuple(String.(fit_ids)),
+        Tuple(String.(prediction_ids)),
+        String(refit_id),
+        Tuple(String.(refit_components)),
+    )
+end
+
 Base.@kwdef struct ValidationEvidence
     method_labels::Tuple{Vararg{String}}
     event_horizons::Tuple{Vararg{EventHorizon}}
     folds::Tuple{Vararg{FoldEvidence}}
     embargo::Real = 0.0
+end
+
+function ValidationEvidence(
+    method_labels::AbstractVector,
+    event_horizons::AbstractVector,
+    folds::AbstractVector,
+    embargo::Real = 0.0,
+)
+    return ValidationEvidence(
+        Tuple(String.(method_labels)),
+        Tuple(event_horizons),
+        Tuple(folds),
+        embargo,
+    )
 end
 
 Base.@kwdef struct VariableSelectionStage
@@ -105,6 +141,26 @@ Base.@kwdef struct CausalDiscoveryStage
     graph_kind::String
     ambiguous_edges::Tuple{Vararg{Tuple{String,String}}}
     assumptions::Tuple{Vararg{String}}
+end
+
+function CausalDiscoveryStage(
+    method_labels::AbstractVector,
+    graph_id,
+    graph_nodes::AbstractVector,
+    directed_edges::AbstractVector,
+    graph_kind,
+    ambiguous_edges::AbstractVector,
+    assumptions::AbstractVector,
+)
+    return CausalDiscoveryStage(
+        Tuple(String.(method_labels)),
+        String(graph_id),
+        Tuple(String.(graph_nodes)),
+        Tuple((String(edge[1]), String(edge[2])) for edge in directed_edges),
+        String(graph_kind),
+        Tuple((String(edge[1]), String(edge[2])) for edge in ambiguous_edges),
+        Tuple(String.(assumptions)),
+    )
 end
 
 Base.@kwdef struct CausalAdjustmentSetStage
@@ -175,6 +231,28 @@ Base.@kwdef struct MultipleTestingAdjustmentsStage
     skewness::Union{Nothing,Real} = nothing
     kurtosis::Union{Nothing,Real} = nothing
     selection_bias_evidence_id::Union{Nothing,String} = nothing
+end
+
+function MultipleTestingAdjustmentsStage(
+    method_labels::AbstractVector,
+    trial_family_id,
+    declared_trial_ids::AbstractVector,
+    family_partitions::AbstractVector,
+    alpha::Real,
+    backtests_independent::Bool,
+)
+    partitions = Tuple(
+        (String(partition[1]), Tuple(String.(partition[2]))) for
+        partition in family_partitions
+    )
+    return MultipleTestingAdjustmentsStage(
+        method_labels = Tuple(String.(method_labels)),
+        trial_family_id = String(trial_family_id),
+        declared_trial_ids = Tuple(String.(declared_trial_ids)),
+        family_partitions = partitions,
+        alpha = alpha,
+        backtests_independent = backtests_independent,
+    )
 end
 
 struct CausalFactorProtocolReport
@@ -674,7 +752,7 @@ function _protocol_d_separated(edges, left, right, conditioned)
     if left in conditioned || right in conditioned
         return true
     end
-    visited = Set(conditioned)
+    visited = Set{String}(conditioned)
     pending = String[left]
     while !isempty(pending)
         node = pop!(pending)
@@ -1543,6 +1621,8 @@ function validate_causal_factor_protocol(report::CausalFactorProtocolReport)
     return report
 end
 
+validate_causal_factor_protocol(report) =
+    throw(ArgumentError("Protocol: report type is invalid."))
 
 
 function _protocol_backdoor_d_separated(edges, exposure, outcome, conditioned)

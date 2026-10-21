@@ -27,10 +27,12 @@ function construct_bars_from_data(standard_bars::StandardBars{T}; data) where {T
     tick_counter = standard_bars.tick_counter
     for row in eachrow(data)
         tick_counter += 1
+        standard_bars.tick_counter = tick_counter
         (date_time, price, volume) = row
 
         signed_tick = tick_rule(standard_bars, Float64(price))
         update_base_fields(standard_bars, Float64(price), signed_tick, Float64(volume))
+        standard_bars.close_price = Float64(price)
 
         threshold = standard_bars.threshold
         if bar_construction_condition(standard_bars, threshold)

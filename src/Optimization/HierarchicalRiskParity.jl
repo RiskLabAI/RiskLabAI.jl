@@ -6,18 +6,16 @@ weights, cluster variance, quasi-diagonalisation, and recursive bisection.
 Representation note (deliberate divergence): pandas DataFrames become `Matrix`es
 and asset labels become 1-based integer indices. These deterministic building
 blocks match the Python implementation exactly (verified in `test/runtests.jl`).
-The top-level `hrp(cov, corr)` wrapper uses single-linkage hierarchical
-clustering (`Clustering.hclust`); the resulting leaf order is a **behavioural**
-match to SciPy's (dendrogram leaf order is not bit-identical across
-implementations), so `hrp` weights are validated structurally (sum to one,
-positive). The deterministic building blocks below match Python exactly.
+The top-level `hrp(cov, corr)` wrapper uses native single-linkage minimum-spanning
+tree construction with stable edge ordering and ascending cluster identifiers.
+These preserve the reference leaf order, including equal-distance ties that
+can affect subsequent recursive allocation.
 `quasi_diagonal` accepts a SciPy-format linkage matrix.
 
 Reference: De Prado, M. (2018), Advances in Financial Machine Learning, Ch. 16.
 """
 
 using LinearAlgebra: diag
-using Clustering: hclust
 
 """
     inverse_variance_weights(covariance_matrix) -> Vector{Float64}
@@ -122,9 +120,9 @@ distance_corr(correlation_matrix::AbstractMatrix{<:Real}) =
 
 Hierarchical Risk Parity portfolio weights (in original asset order): correlation
 distance → single-linkage clustering → quasi-diagonal leaf order → recursive
-bisection. Mirrors Python's `hrp`. Behavioural: the single-linkage leaf order
-(`Clustering.hclust`) is not bit-identical to SciPy's, but the weights remain a
-valid long-only allocation (positive, summing to one).
+bisection. Mirrors Python's `hrp`. The single-linkage leaf order
+uses the reference minimum-spanning-tree traversal, stable edge sorting and
+ascending child identifiers, including ties.
 """
 function hrp(
     covariance::AbstractMatrix{<:Real},
@@ -132,9 +130,52 @@ function hrp(
 )
     distance = distance_corr(correlation)
     distance = (distance .+ distance') ./ 2          # enforce exact symmetry for hclust
-    order = hclust(distance; linkage = :single).order
+    distance[diagind(distance)] .= 0.0
+    order = _single_linkage_order(distance)
     bisection = recursive_bisection(covariance, order)
     weights = zeros(Float64, length(order))
     weights[order] = bisection
     return weights
+end
+
+function _single_linkage_order(distance::AbstractMatrix{<:Real})
+    n = size(distance, 1)
+    size(distance, 2) == n && all(isfinite, distance) && all(>=(0), distance) || throw(ArgumentError("distance must be a finite nonnegative square matrix"))
+    n <= 1 && return collect(1:n)
+    visited = falses(n)
+    nearest = fill(Inf, n)
+    edge_start, edge_end, heights = Int[], Int[], Float64[]
+    current = 1
+    for step in 1:(n-1)
+        visited[current] = true
+        candidate, height = 0, Inf
+        for item in 1:n
+            visited[item] && continue
+            nearest[item] = min(nearest[item], distance[current, item])
+            if nearest[item] < height
+                candidate, height = item, nearest[item]
+            end
+        end
+        push!(edge_start, current)
+        push!(edge_end, candidate)
+        push!(heights, height)
+        current = candidate
+    end
+    parents = collect(1:(2n-1))
+    counts = ones(Int, 2n-1)
+    linkage = zeros(n-1, 4)
+    for (step, edge) in enumerate(sortperm(heights; alg = Base.Sort.MergeSort))
+        left, right = edge_start[edge], edge_end[edge]
+        while parents[left] != left
+            left = parents[left]
+        end
+        while parents[right] != right
+            right = parents[right]
+        end
+        combined = n + step
+        counts[combined] = counts[left] + counts[right]
+        linkage[step, :] = [min(left, right)-1, max(left, right)-1, heights[edge], counts[combined]]
+        parents[left] = parents[right] = combined
+    end
+    return quasi_diagonal(linkage)
 end

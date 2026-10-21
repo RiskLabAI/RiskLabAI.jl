@@ -74,7 +74,7 @@ function calculate_holding_period(
     holding = DataFrame(index = eltype(index)[], dT = Float64[], w = Float64[])
     time_entry = 0.0
     day_ms = 86_400_000.0
-    time_diff = [Dates.value(index[i] - index[1]) / day_ms for i = 1:n]
+    time_diff = [Dates.value(Dates.Millisecond(index[i] - index[1])) / day_ms for i = 1:n]
 
     for i = 2:n
         current = target_positions[i]
@@ -110,9 +110,10 @@ Mirrors Python's `calculate_hhi`.
 function calculate_hhi(bet_returns::AbstractVector{<:Real})
     n = length(bet_returns)
     n <= 2 && return NaN
-    total = sum(bet_returns)
+    valid = filter(value -> !isnan(value), bet_returns)
+    total = sum(valid)
     total == 0 && return NaN
-    weights = bet_returns ./ total
+    weights = valid ./ total
     hhi = sum(weights .^ 2)
     return (hhi - 1.0 / n) / (1.0 - 1.0 / n)
 end
@@ -126,8 +127,8 @@ monthly observation counts. Mirrors Python's `calculate_hhi_concentration`.
 function calculate_hhi_concentration(index::AbstractVector, returns::AbstractVector{<:Real})
     positive = calculate_hhi(returns[returns .>= 0])
     negative = calculate_hhi(returns[returns .< 0])
-    months = [(year(t), month(t)) for t in index]
-    counts = Float64[count(==(key), months) for key in unique(months)]
+    months = [12year(t)+month(t) for t in index]
+    counts = isempty(months) ? Float64[] : Float64[count(position -> months[position] == key && !isnan(returns[position]), eachindex(months)) for key in minimum(months):maximum(months)]
     time = calculate_hhi(counts)
     return (positive = positive, negative = negative, time = time)
 end
@@ -149,7 +150,7 @@ function compute_drawdowns_time_under_water(
     high_water_mark = Vector{Float64}(undef, n)
     running = -Inf
     for i = 1:n
-        running = max(running, pnl[i])
+        isnan(pnl[i]) || (running = max(running, pnl[i]))
         high_water_mark[i] = running
     end
 
@@ -163,7 +164,12 @@ function compute_drawdowns_time_under_water(
         while j < n && high_water_mark[j+1] == high_water_mark[i]
             j += 1
         end
-        group_min = minimum(@view pnl[i:j])
+        valid = filter(value -> !isnan(value), @view pnl[i:j])
+        if isempty(valid)
+            i = j + 1
+            continue
+        end
+        group_min = minimum(valid)
         if (j - i + 1) > 1 && high_water_mark[i] != group_min
             push!(starts, index[i])
             push!(
@@ -171,7 +177,7 @@ function compute_drawdowns_time_under_water(
                 dollars ? high_water_mark[i] - group_min :
                 1.0 - group_min / high_water_mark[i],
             )
-            years = (Dates.value(index[j] - index[i]) / day_ms) / 365.25
+            years = (Dates.value(Dates.Millisecond(index[j] - index[i])) / day_ms) / 365.25
             push!(time_under_water, years)
         end
         i = j + 1
@@ -312,7 +318,8 @@ end
 
 """
     sharpe_difference_test(returns_a, returns_b; method="ledoit_wolf",
-        block_length=nothing, n_boot=1000, bandwidth=nothing, random_state=0)
+        block_length=nothing, n_boot=1000, bandwidth=nothing, random_state=0,
+        bootstrap_indices=nothing)
 
 Test H0: SR_A = SR_B. `method="naive"` is the influence-function delta-method
 z-test using the i.i.d. variance (ignores serial dependence, over-rejects under
@@ -326,9 +333,11 @@ prefer the Ledoit-Wolf bootstrap Sharpe-difference test when comparing two Sharp
 under serial dependence/heavy tails (holds nominal size where the naive test
 inflates ~3×; converges on i.i.d.).
 
-Deliberate divergence: the LW bootstrap uses Julia's `rng`, so its p-value is
-reproducible under `random_state` but not bit-identical to Python (delta, se and
-stat are deterministic and parity-matched). Mirrors Python's
+The default bootstrap uses Julia's random stream. Supply `bootstrap_indices`
+as one vector of one-based positions per resample to replay shared circular-block
+draws exactly. Every sample must contain the full track length and preserve
+consecutive circular positions within each block. Equal language-specific seeds
+alone do not imply equal p-values. Mirrors Python's
 `sharpe_difference_test`. Reference: Ledoit & Wolf (2008), Journal of Empirical
 Finance 15(5).
 """
@@ -340,6 +349,7 @@ function sharpe_difference_test(
     n_boot::Integer = 1000,
     bandwidth::Union{Integer,Nothing} = nothing,
     random_state::Integer = 0,
+    bootstrap_indices = nothing,
 )
     (method in ("ledoit_wolf", "naive")) ||
         throw(ArgumentError("method must be 'ledoit_wolf' or 'naive'"))
@@ -359,12 +369,20 @@ function sharpe_difference_test(
     t = length(a)
     bl = block_length === nothing ? max(1, ceil(Int, t^(1.0 / 3.0))) : block_length
     bw = bandwidth === nothing ? bl : bandwidth
+    bl >= 1 && n_boot >= 0 && t >= 1 || throw(ArgumentError("bootstrap needs positive block length, nonnegative count and a nonempty track"))
+    if bootstrap_indices !== nothing
+        length(bootstrap_indices) == n_boot || throw(DimensionMismatch("bootstrap indices must provide one vector per resample"))
+        for indices in bootstrap_indices
+            length(indices) == t && all(index -> index isa Integer && 1 <= index <= t, indices) || throw(ArgumentError("bootstrap indices must index a full observation track"))
+            all((position-1)%bl == 0 || indices[position] == mod1(indices[position-1]+1, t) for position in 2:t) || throw(ArgumentError("bootstrap positions must follow consecutive circular blocks"))
+        end
+    end
     se_hat = sqrt(_bartlett_hac_var(influence, bw))
     z_hat = se_hat > 0 ? abs(delta / se_hat) : 0.0
     rng = MersenneTwister(random_state)
     count_ge = 0
-    for _ = 1:n_boot
-        idx = _circular_block_indices(t, bl, rng)
+    for sample = 1:n_boot
+        idx = bootstrap_indices === nothing ? _circular_block_indices(t, bl, rng) : Int.(bootstrap_indices[sample])
         delta_b, influence_b = _sharpe_influence(a[idx], b[idx])
         se_b = sqrt(_bartlett_hac_var(influence_b, bw))
         se_b <= 0 && continue

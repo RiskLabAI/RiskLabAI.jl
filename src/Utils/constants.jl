@@ -20,9 +20,9 @@ const CUMULATIVE_VOLUME = "Cumulative Volume"
 const CUMULATIVE_BUY_VOLUME = "Cumulative Buy Volume"
 const CUMULATIVE_SELL_VOLUME = "Cumulative Sell Volume"
 
-const CUMULATIVE_THETA = "Cumulative theta"
-const CUMULATIVE_BUY_THETA = "Cumulative Buy theta"
-const CUMULATIVE_SELL_THETA = "Cumulative Sell theta"
+const CUMULATIVE_THETA = "Cumulative θ"
+const CUMULATIVE_BUY_THETA = "Cumulative Buy θ"
+const CUMULATIVE_SELL_THETA = "Cumulative Sell θ"
 
 const EXPECTED_IMBALANCE = "expected_imbalance"
 const EXPECTED_TICKS_NUMBER = "exp_num_ticks"

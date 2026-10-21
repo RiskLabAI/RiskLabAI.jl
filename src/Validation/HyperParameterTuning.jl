@@ -184,7 +184,7 @@ function leakage_aware_hpo(
         n_trials = n_trials,
         trial_scores = scores,
         mean_trial_score = isempty(scores) ? NaN : mean(scores),
-        std_trial_score = length(scores) < 2 ? NaN : std(scores; corrected = false),
+        std_trial_score = isempty(scores) ? NaN : std(scores; corrected = false),
     )
 end
 

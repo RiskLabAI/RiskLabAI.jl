@@ -38,6 +38,14 @@ include("MultipleTesting.jl")
 
 # Closed-form optimal Ornstein–Uhlenbeck trading rules (Lipton–López de Prado 2020).
 include("OUTradingRules.jl")
+include("TailRisk.jl")
+include("AdvancedBetSizing.jl")
+include("Adaptation.jl")
+include("DeepHedging.jl")
+
+export prequential_adaptation
+export gbm_hedging_paths, hedging_pnl, entropic_risk, black_scholes_call_delta,
+    DeepHedge, train_deep_hedge
 
 export
     # backtest statistics
@@ -103,6 +111,16 @@ export
     mean_exit_time,
     ou_rule_metrics,
     optimal_ou_trading_rule,
-    fit_ornstein_uhlenbeck
+    fit_ornstein_uhlenbeck,
+    expected_shortfall,
+    generalized_pareto_tail_risk,
+    fit_pot_tail_risk,
+    quantile_exception_tests,
+    kelly_bet_fraction,
+    distributionally_robust_kelly_fraction,
+    expected_calibration_error,
+    PlattCalibrator,
+    fit!,
+    transform
 
 end # module Backtest

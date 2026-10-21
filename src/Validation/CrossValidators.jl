@@ -3,8 +3,8 @@ Cross-validators — native Julia port mirroring the Python
 `RiskLabAI.backtest.validation` sub-package (López de Prado, AFML Ch. 7):
 standard K-Fold, Purged K-Fold with embargo, Combinatorial Purged
 Cross-Validation (CPCV), and Walk-Forward. These produce **train/test index
-splits**; the estimator-driven `backtest_predictions` (which needs an ML backend)
-is wired with the cross-validation-scoring slice.
+splits** and chronological backtest paths. Estimator-driven predictions use
+explicit cloning, fitting and prediction callbacks.
 
 Representation note (deliberate divergence): pandas `times` (a Series indexed by
 observation-start, valued by observation-end) becomes two parallel vectors
@@ -63,7 +63,7 @@ function _purged_train_indices(
         current_start = sorted_starts[1]
         current_end = sorted_ends[1]
         for k = 2:length(sorted_starts)
-            if sorted_starts[k] > current_end
+            if sorted_starts[k] > sorted_ends[k-1]
                 push!(block_starts, current_start)
                 push!(block_ends, current_end)
                 current_start = sorted_starts[k]
@@ -127,13 +127,16 @@ get_n_splits(cv::KFoldCV) = cv.n_splits
 
 Train/test index splits (1-based) for `n_samples` observations.
 """
-function cv_split(cv::KFoldCV, n_samples::Integer)
-    indices = collect(1:n_samples)
-    cv.shuffle && shuffle!(cv.rng, indices)
+function cv_split(cv::KFoldCV, n_samples::Integer; permutation = nothing)
+    1 <= cv.n_splits <= n_samples || throw(ArgumentError("n_splits must be between one and the sample count"))
+    indices = permutation === nothing ? collect(1:n_samples) : Int.(permutation)
+    sort(indices) == collect(1:n_samples) || throw(ArgumentError("permutation must contain every observation exactly once"))
+    permutation !== nothing && !cv.shuffle && throw(ArgumentError("a supplied permutation requires shuffle=true"))
+    cv.shuffle && permutation === nothing && shuffle!(cv.rng, indices)
     splits = Tuple{Vector{Int},Vector{Int}}[]
     for fold in _array_split(n_samples, cv.n_splits)
         test = indices[fold]
-        train = setdiff(indices, test)
+        train = sort!(setdiff(indices, test))
         push!(splits, (train, test))
     end
     return splits
@@ -223,6 +226,10 @@ _combination_test(segments, combination) =
 function cv_split(cv::CombinatorialPurgedCV)
     n = length(cv.event_starts)
     segments = _array_split(n, cv.n_splits)
+    return _combinatorial_cv_split(cv, segments)
+end
+
+function _combinatorial_cv_split(cv, segments)
     splits = Tuple{Vector{Int},Vector{Int}}[]
     for combination in combinations(1:cv.n_splits, cv.n_test_groups)
         test = _combination_test(segments, combination)
@@ -250,6 +257,9 @@ function _path_locations(n_splits::Integer, combination_list)
             push!(get!(locations, path_id, Tuple{Int,Int}[]), (group, j))
         end
     end
+    for coordinates in values(locations)
+        sort!(coordinates; by = first)
+    end
     return locations
 end
 
@@ -264,6 +274,10 @@ path. Mirrors Python's `_single_backtest_paths`.
 function backtest_paths(cv::CombinatorialPurgedCV)
     n = length(cv.event_starts)
     segments = _array_split(n, cv.n_splits)
+    return _combinatorial_backtest_paths(cv, segments)
+end
+
+function _combinatorial_backtest_paths(cv, segments)
     combination_list = collect(combinations(1:cv.n_splits, cv.n_test_groups))
     locations = _path_locations(cv.n_splits, combination_list)
 
@@ -308,6 +322,9 @@ WalkForwardCV(n_splits::Integer; max_train_size = nothing, gap::Integer = 0) =
 get_n_splits(cv::WalkForwardCV) = cv.n_splits
 
 function cv_split(cv::WalkForwardCV, n_samples::Integer)
+    1 <= cv.n_splits <= n_samples || throw(ArgumentError("n_splits must be between one and the sample count"))
+    cv.gap >= 0 || throw(ArgumentError("gap must be nonnegative"))
+    cv.max_train_size === nothing || cv.max_train_size > 0 || throw(ArgumentError("max_train_size must be positive"))
     splits = Tuple{Vector{Int},Vector{Int}}[]
     for fold in _array_split(n_samples, cv.n_splits)
         test = collect(fold)

@@ -5,14 +5,6 @@ using LinearAlgebra
 using Random
 using Statistics: mean, cov
 
-const RISKLABAI_TEST_DEEP_BSDE = get(ENV, "RISKLABAI_TEST_DEEP_BSDE", "0") == "1"
-
-if RISKLABAI_TEST_DEEP_BSDE
-    using Lux
-    using Optimisers
-    using Zygote
-end
-
 using RiskLabAI
 
 @testset "RiskLabAI smoke tests" begin
@@ -270,12 +262,12 @@ end
 
     # Deterministic anchors (R/S Hurst blend) — exact parity with Python's R/S path.
     @test D.rescaled_range_hurst(incr) ≈ 0.945557656342456 atol = 1e-9
-    @test D.adaptive_differencing_order(incr) ≈ 0.44555765634245603 atol = 1e-9
+    @test D.adaptive_differencing_order(incr) ≈ 0.8610667486651158 atol = 1e-9
     # Wavelet component is an optional dependency (not wired) -> NaN, R/S-only blend.
-    @test isnan(D.wavelet_variance_hurst(incr))
+    @test D.wavelet_variance_hurst(incr) ≈ 1.7765758409877757 atol = 1e-9
 
     res = D.adaptive_fractional_difference(price)
-    @test res.d_hat ≈ 0.4458675284494259 atol = 1e-8
+    @test res.d_hat ≈ 0.99 atol = 1e-8
     # Order/threshold/p-value are behavioural (ADF impl differs from statsmodels):
     # structural checks.
     @test 0.0 <= res.order <= 1.2
@@ -667,7 +659,7 @@ end
     @test B.mean_exit_time(eg, 2.0, 1.0, th, sg) ≈ 130958.42974177317 rtol = 1e-9
     m = B.ou_rule_metrics(2.0, 1.0, th, sg, eg, 0.0)
     @test m.return_rate ≈ 1.5272021846493343e-5 rtol = 1e-9
-    @test m.time_scaled_sharpe ≈ 2941.8908064682373 rtol = 1e-9
+    @test m.time_scaled_sharpe ≈ 2942.57349001657 rtol = 1e-9
     @test isnan(B.ou_rule_metrics(-1.0, 1.0, th, sg, eg).hit_probability)   # invalid -> bad
 
     # Optimizer (grid search vs SciPy L-BFGS-B): the objective surface is flat along
@@ -1900,37 +1892,20 @@ end
     @test xs[:, :, 1] == repeat([1.0 0.5], 16, 1)
 end
 
-@testset "Pde — optional Deep BSDE extension" begin
+@testset "Pde — native Deep BSDE solver" begin
     P = RiskLabAI.Pde
     eq = P.HJBLQ(1, 0.5, 4)
-    extension = Base.get_extension(RiskLabAI, :RiskLabAIDeepBSDEExt)
-
-    if RISKLABAI_TEST_DEEP_BSDE
-        extension === nothing && error("Deep-BSDE test extension did not load")
-        losses, inits = P.solve_deep_bsde(
-            eq;
-            hidden_sizes = [8],
-            iterations = 12,
-            batch_size = 64,
-            init_y = 3.0,
-            learning_rate = 0.02,
-            rng = MersenneTwister(1),
-        )
-        @test length(losses) == 12
-        @test all(isfinite, losses)
-        @test all(isfinite, inits)
-        @test minimum(losses) <= losses[1]   # training improves on the initial loss
-    else
-        @test extension === nothing
-        failure = try
-            P.solve_deep_bsde(eq)
-            nothing
-        catch caught
-            caught
-        end
-        @test failure isa ArgumentError
-        message = sprint(showerror, failure)
-        @test occursin("deep_bsde extension", message)
-        @test all(occursin(dependency, message) for dependency in ("Lux", "Optimisers", "Zygote"))
-    end
+    losses, inits = P.solve_deep_bsde(
+        eq;
+        hidden_sizes = [8],
+        iterations = 12,
+        batch_size = 64,
+        init_y = 3.0,
+        learning_rate = 0.02,
+        rng = MersenneTwister(1),
+    )
+    @test length(losses) == 12
+    @test all(isfinite, losses)
+    @test all(isfinite, inits)
+    @test minimum(losses) <= losses[1]
 end

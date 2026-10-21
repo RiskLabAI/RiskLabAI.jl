@@ -16,14 +16,23 @@ using Statistics: cor
 
 # numpy.histogram2d with an integer bin count (equal-width; last bin closed).
 function _histogram2d(x::AbstractVector{<:Real}, y::AbstractVector{<:Real}, bins::Integer)
+    bins > 0 || throw(ArgumentError("bins must be positive"))
+    length(x) == length(y) || throw(DimensionMismatch("x and y must have the same length"))
+    all(isfinite, x) && all(isfinite, y) || throw(ArgumentError("histogram inputs must be finite"))
     counts = zeros(Float64, bins, bins)
-    bin_index(v, lo, hi) =
-        lo == hi ? 1 :
-        (v == hi ? bins : clamp(floor(Int, (v - lo) / (hi - lo) * bins) + 1, 1, bins))
-    xlo, xhi = minimum(x), maximum(x)
-    ylo, yhi = minimum(y), maximum(y)
+    isempty(x) && return counts
+    function bin_edges(values)
+        lower, upper = extrema(values)
+        if lower == upper
+            lower, upper = lower - .5, upper + .5
+        end
+        edges = lower .+ collect(0:bins) .* ((upper - lower) / bins)
+        edges[end] = upper
+        return edges
+    end
+    xedges, yedges = bin_edges(x), bin_edges(y)
     for k in eachindex(x)
-        counts[bin_index(x[k], xlo, xhi), bin_index(y[k], ylo, yhi)] += 1.0
+        counts[min(searchsortedlast(xedges, x[k]; lt = <), bins), min(searchsortedlast(yedges, y[k]; lt = <), bins)] += 1.0
     end
     return counts
 end
@@ -71,6 +80,7 @@ function calculate_variation_of_information(
     bins::Integer;
     norm::Bool = false,
 )
+    isempty(x) && throw(ArgumentError("variation of information requires observations"))
     hist = _histogram2d(x, y, bins)
     mutual_information = _mutual_info(hist)
     marginal_x = _entropy(vec(sum(hist; dims = 2)))
@@ -90,22 +100,23 @@ Optimal number of histogram bins (univariate when `correlation` is `nothing`,
 otherwise bivariate). Mirrors Python's `calculate_number_of_bins`.
 """
 function calculate_number_of_bins(num_observations::Integer; correlation = nothing)
+    observations = float(num_observations)
     if correlation === nothing
         z =
             (
                 8 +
-                324 * num_observations +
-                12 * sqrt(36 * num_observations + 729 * num_observations^2)
+                324 * observations +
+                12 * sqrt(36 * observations + 729 * observations^2)
             )^(1 / 3)
         return round(Int, z / 6 + 2 / (3z) + 1 / 3)
     end
-    if isapprox(correlation, 1.0) || isapprox(correlation, -1.0)
+    if abs(correlation - 1.0) <= 1e-8 + 1e-5 || abs(correlation + 1.0) <= 1e-8 + 1e-5
         correlation = sign(correlation) * (1 - 1e-10)
     end
     (1 - correlation^2) == 0 && return calculate_number_of_bins(num_observations)
     return round(
         Int,
-        2^-0.5 * sqrt(1 + sqrt(1 + 24 * num_observations / (1 - correlation^2))),
+        2^-0.5 * sqrt(1 + sqrt(1 + 24 * observations / (1 - correlation^2))),
     )
 end
 
@@ -224,15 +235,18 @@ using Statistics: mean, std
 using Random: MersenneTwister, randn
 
 # Break exact ties with negligible data-scaled noise (numpy population std).
-function _jitter(values, rng)
+function _jitter(values, rng, draws = nothing)
     v = float.(vec(values))
     scale = std(v; corrected = false)
     scale == 0.0 && (scale = 1.0)
-    return v .+ randn(rng, length(v)) .* scale .* 1e-10
+    noise = draws === nothing ? randn(rng, length(v)) : Float64.(collect(draws))
+    length(noise) == length(v) || throw(DimensionMismatch("jitter draws must match the observations"))
+    all(isfinite, noise) || throw(ArgumentError("jitter draws must be finite"))
+    return v .+ noise .* scale .* 1e-10
 end
 
 """
-    ksg_mutual_information(x, y; k=4, random_state=0) -> Float64
+    ksg_mutual_information(x, y; k=4, random_state=0, jitter_draws=nothing) -> Float64
 
 Kraskov–Stögbauer–Grassberger mutual information (algorithm 1), in nats, using the
 Chebyshev (max) norm in the joint space:
@@ -250,16 +264,24 @@ data (no free lunch there). Use raw KSG (the surrogate de-bias adds nothing).
 Brute-force O(N²) kNN (no kd-tree dependency). Mirrors Python's
 `ksg_mutual_information`. Reference: Kraskov, Stögbauer & Grassberger (2004),
 Physical Review E 69(6).
+
+Supply `jitter_draws=(x_noise, y_noise)` to replay standardized normal draws
+across runtimes. The public population-standard-deviation scaling is applied
+inside the estimator; native and NumPy seeds are not equivalent.
 """
 function ksg_mutual_information(
     x::AbstractVector{<:Real},
     y::AbstractVector{<:Real};
     k::Integer = 4,
     random_state::Union{Integer,Nothing} = 0,
+    jitter_draws = nothing,
 )
+    length(x) == length(y) || throw(DimensionMismatch("x and y must have the same length"))
+    k >= 1 || throw(ArgumentError("k must be positive"))
+    jitter_draws === nothing || length(jitter_draws) == 2 || throw(ArgumentError("jitter_draws must contain two vectors"))
     rng = MersenneTwister(random_state === nothing ? 0 : random_state)
-    xj = _jitter(x, rng)
-    yj = _jitter(y, rng)
+    xj = _jitter(x, rng, jitter_draws === nothing ? nothing : jitter_draws[1])
+    yj = _jitter(y, rng, jitter_draws === nothing ? nothing : jitter_draws[2])
     n = length(xj)
     n < 2 && return 0.0
     k = min(k, n - 1)

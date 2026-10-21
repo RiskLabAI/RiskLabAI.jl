@@ -79,6 +79,8 @@ const EXPECTED_CAUSAL_FACTOR_EXPORTS = Set((
     :compare_single_and_family_fdr,
     :conditional_upper_tail_probability,
     :evaluate_structural_causal_model,
+    :evaluate_policy,
+    :exposure_mean_contrast,
     :factor_control_roles,
     :family_level_false_discovery_rate,
     :fdr_nonidentification_witness,
@@ -91,8 +93,11 @@ const EXPECTED_CAUSAL_FACTOR_EXPORTS = Set((
     :generalized_confounder_undercontrolled_coefficient,
     :max_selection_family_errors,
     :max_selection_null_probability,
+    :manski_ate_bounds,
     :maximum_mixture_cdf,
     :single_trial_false_discovery_rate,
+    :select_policy,
+    :transported_ate,
 ))
 
 @testset "CausalFactorAnalysis" begin
@@ -111,3 +116,53 @@ const EXPECTED_CAUSAL_FACTOR_EXPORTS = Set((
     include("causal_factor_analysis/test_false_discovery_rates.jl")
     include("causal_factor_analysis/test_additive_numeric_parity.jl")
 end
+
+include("sample_weight_regressions.jl")
+include("causal_estimator_regressions.jl")
+include("portfolio_regressions.jl")
+include("convex_regressions.jl")
+include("covariance_regressions.jl")
+include("feature_contract_regressions.jl")
+include("graph_regressions.jl")
+include("density_tail_regressions.jl")
+include("factor_diagnostic_regressions.jl")
+include("allocation_regressions.jl")
+include("search_fdr_regressions.jl")
+include("bet_sizing_regressions.jl")
+include("protocol_regressions.jl")
+include("adaptation_regressions.jl")
+include("hedging_regressions.jl")
+include("timegan_regressions.jl")
+include("neural_sde_regressions.jl")
+include("pde_network_regressions.jl")
+include("pde_equation_regressions.jl")
+include("pde_solver_regressions.jl")
+include("differencing_regressions.jl")
+include("validation_regressions.jl")
+include("bagged_validation_regressions.jl")
+include("importance_regressions.jl")
+include("pipeline_regressions.jl")
+include("backtest_statistics_regressions.jl")
+include("risk_formula_regressions.jl")
+include("signal_sizing_regressions.jl")
+include("ou_regressions.jl")
+include("ou_boundary_regressions.jl")
+include("entropy_regressions.jl")
+include("microstructure_regressions.jl")
+include("distance_regressions.jl")
+include("trend_weight_regressions.jl")
+include("labeling_regressions.jl")
+include("structural_break_regressions.jl")
+include("synthetic_regressions.jl")
+include("constants_regressions.jl")
+include("covariance_algebra_regressions.jl")
+include("hierarchy_regressions.jl")
+include("clustering_regressions.jl")
+include("bar_stream_regressions.jl")
+include("debiased_importance_regressions.jl")
+include("ensemble_contract_regressions.jl")
+include("pbo_regressions.jl")
+include("hpo_regressions.jl")
+include("mp_fit_regressions.jl")
+include("infrastructure_regressions.jl")
+include("mp_gradient_regressions.jl")
