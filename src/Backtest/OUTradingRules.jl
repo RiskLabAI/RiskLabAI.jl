@@ -299,7 +299,7 @@ function fit_ornstein_uhlenbeck(series::AbstractVector{<:Real}; dt::Real = 1.0)
     theta = -log(b) / dt
     mu = a / (1.0 - b)
     n1 = length(x1)
-    var_eps = sum((residual .- mean(residual)) .^ 2) / (n1 - 2)              # ddof = 2
+    var_eps = sum((residual .- mean(residual)) .^ 2) / (n1 - 2)
     sigma = sqrt(var_eps * 2.0 * theta / (1.0 - b * b))
     ss_tot = sum((x1 .- mx1) .^ 2)
     r2 = ss_tot > 0 ? 1.0 - sum(residual .^ 2) / ss_tot : 0.0

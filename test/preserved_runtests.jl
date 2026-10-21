@@ -1907,5 +1907,5 @@ end
     @test length(losses) == 12
     @test all(isfinite, losses)
     @test all(isfinite, inits)
-    @test minimum(losses) <= losses[1]   # training improves on the initial loss
+    @test minimum(losses) <= losses[1]
 end

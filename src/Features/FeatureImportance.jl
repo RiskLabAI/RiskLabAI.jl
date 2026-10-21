@@ -46,7 +46,7 @@ function orthogonal_features(
     isempty(retained) && throw(ArgumentError("PCA requires a nonconstant complete feature column"))
     selected = features[:, retained]
     means = mean(selected; dims = 1)
-    stds = std(selected; dims = 1)                       # sample std (ddof = 1)
+    stds = std(selected; dims = 1)
     normalized = (selected .- means) ./ stds
 
     dot_product = normalized' * normalized

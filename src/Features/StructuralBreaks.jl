@@ -64,7 +64,7 @@ function prepare_data(log_price::AbstractVector{<:Real}, constant::AbstractStrin
         x[r, col] = log_price[k-1]                    # level_l1
         col += 1
         for i = 1:lags
-            x[r, col] = delta(difference_positions[difference_ordinal[k]-i])                  # delta_l{i}
+            x[r, col] = delta(difference_positions[difference_ordinal[k]-i])
             col += 1
         end
         if constant in ("c", "ct", "ctt")
@@ -412,7 +412,7 @@ function simulate_psy_critical_values(
     sadf_paths = fill(NaN, n_simulations, sample_length)
     bsadf_paths = fill(NaN, n_simulations, sample_length)
     for s = 1:n_simulations
-        y = cumsum(draws === nothing ? randn(rng, sample_length) : vec(draws[s, :]))           # random-walk null
+        y = cumsum(draws === nothing ? randn(rng, sample_length) : vec(draws[s, :]))
         if fast
             sadf, bsadf = _psy_sadf_bsadf_sequences(y, nmin)
         else
@@ -538,7 +538,7 @@ function volatility_robust_sadf(
     ge_gsadf = 0
     path = similar(y)
     for simulation = 1:n_bootstrap
-        signs = draws === nothing ? rand(rng, (-1.0, 1.0), length(residual)) : vec(draws[simulation, :])     # Rademacher ±1
+        signs = draws === nothing ? rand(rng, (-1.0, 1.0), length(residual)) : vec(draws[simulation, :])
         path[1] = y0
         path[2:end] = y0 .+ cumsum(signs .* residual)
         sadf_b, gsadf_b = _sup_adf_statistics(path, nmin)

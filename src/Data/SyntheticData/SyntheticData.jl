@@ -97,7 +97,7 @@ function form_true_matrix(
     order = permutation === nothing ? shuffle(rng, collect(1:n)) : Int.(permutation)
     sort(order) == collect(1:n) || throw(ArgumentError("permutation must contain every matrix index exactly once"))
     correlation = correlation[order, order]
-    standard_deviations = standard_deviation_draws === nothing ? rand(rng, n) .* 0.15 .+ 0.05 : Float64.(standard_deviation_draws)  # U(0.05, 0.2)
+    standard_deviations = standard_deviation_draws === nothing ? rand(rng, n) .* 0.15 .+ 0.05 : Float64.(standard_deviation_draws)
     length(standard_deviations) == n && all(x -> isfinite(x) && .05 <= x <= .2, standard_deviations) || throw(ArgumentError("standard deviation draws must have n entries in [0.05, 0.2]"))
     normal = normal_draws === nothing ? randn(rng, n) : Float64.(normal_draws)
     length(normal) == n && all(isfinite, normal) || throw(ArgumentError("normal draws must have n finite entries"))

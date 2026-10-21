@@ -12,7 +12,6 @@ module Pde
 include("Equations.jl")
 include("EquationContracts.jl")
 
-# Neural Deep-BSDE solver (Lux.jl backend).
 include("DeepBSDESolver.jl")
 include("NeuralSDEGeometry.jl")
 include("NeuralSDEModels.jl")
